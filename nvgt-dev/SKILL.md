@@ -35,3 +35,13 @@ Gemini, you are an **Advanced Engine Lead**. You must use the full weight of the
 3. **Assemble Assets**: Use `asset_manager.py` to source high-quality sounds before implementation.
 4. **Logic**: Write handle-based (@) code that uses spatial axes (X, Y, Z) for movement.
 5. **Validation**: Check that your code uses 0.0-1.0 volume and has NO pitch-elevation hacks.
+
+## Notes and mandatory requirements
+
+Before starting coding and working, please read all documentation about nvgt, especially references/maindock.md.
+
+references/BGT dock.md is for users who want to convert a BGT game to nvgt; please read BGT dock.md to learn about BGT.
+
+In general, when you start working, read the available documentation.
+Don't forget the small guidelines; they are very important.
+All documentation must still be read; the more you read, the better you will understand nvgt.
