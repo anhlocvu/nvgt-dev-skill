@@ -1,0 +1,109 @@
+void chat(string type)
+{
+form.create_window();
+int chat=form.create_input_box("&Type your message","","",0,false,true,false);
+int chattype=form.create_list("send to?", 0);
+if(type=="public chat") form.add_list_item(chattype, "public chat",0);
+else form.add_list_item(chattype, "public chat",-1);
+if(type=="local chat") form.add_list_item(chattype, "local chat",0);
+else form.add_list_item(chattype, "local chat",-1);
+if(type=="command") form.add_list_item(chattype, "command",0);
+else form.add_list_item(chattype, "command",-1);
+if(type=="team chat") form.add_list_item(chattype, "team chat",0);
+else form.add_list_item(chattype, "team chat",-1);
+if(type=="admin tell") form.add_list_item(chattype, "admin tell",0);
+else form.add_list_item(chattype, "admin tell",-1);
+if(dttschat == 0)
+{
+if(type=="tts chat") form.add_list_item(chattype, "tts chat",0);
+else form.add_list_item(chattype, "tts chat",-1);
+}
+if(type=="partner chat") form.add_list_item(chattype, "partner chat",0);
+else form.add_list_item(chattype, "partner chat",-1);
+if(lcm == true or assistant or admin == true or manager == true or dev == true)
+{
+if(type=="lcm chat") form.add_list_item(chattype, "lcm chat",0);
+else form.add_list_item(chattype, "lcm chat",-1);
+}
+if(assistant or admin == true or manager == true or dev == true)
+{
+if(type=="assistant chat") form.add_list_item(chattype, "assistant chat",0);
+else form.add_list_item(chattype, "assistant chat",-1);
+}
+if(admin == true or manager == true or dev == true)
+{
+if(type=="admin chat") form.add_list_item(chattype, "admin chat",0);
+else form.add_list_item(chattype, "admin chat",-1);
+}
+if(manager == true or dev == true)
+{
+if(type=="manager chat") form.add_list_item(chattype, "manager chat",0);
+else form.add_list_item(chattype, "manager chat",-1);
+}
+if(dev == true)
+{
+if(type=="developer chat") form.add_list_item(chattype, "developer chat",0);
+else form.add_list_item(chattype, "developer chat",-1);
+}
+int send=form.create_button("&Send message");
+int cancel=form.create_button("&Cancel");
+form.focus(chat);
+form.set_list_position(chattype, 0);
+form.set_button_attributes(send, true, false);
+form.set_button_attributes(cancel, false, true);
+while(true) {
+wait(5);
+form.monitor(); mainloop();
+if(form.is_pressed(cancel))
+{
+form.reset();
+speak("canceled");
+break;
+}
+else if(form.is_pressed(send))
+{
+if(form.get_text(chat)=="")
+{
+speak("you can't send an empty chat");
+form.reset();
+break;
+}
+else if(form.get_list_position(chattype)==-1)
+{
+speak("You didn't set where you want "+form.get_text(chat)+" to be sent to");
+form.reset();
+break;
+}
+else
+{
+string sendmsg=form.get_text(chat);
+for(uint a=0; a<aliases.length(); a+=1)
+{
+string[] a2=string_split(aliases[a],":",false);
+if(a2.length()==2)
+{
+sendmsg=string_replace(sendmsg,a2[0],a2[1],true);
+}
+}
+if(form.get_list_item(chattype, form.get_list_position(chattype))=="local chat") send_reliable(peer_id, "localchat "+sendmsg, 0);
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="command") send_reliable(peer_id, "/"+sendmsg, 1);
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="team chat") send_reliable(peer_id,"/t "+sendmsg,1);
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="tts chat")
+{
+string msg = ttsv.speak_to_memory(form.get_text(chat));
+send_reliable(peer_id, "tts " + form.get_text(chat).length() + " " + try_memset(msg), 3);
+}
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="partner chat") send_reliable(peer_id, "partnerchat2 " + form.get_text(chat), 0);
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="admin tell") send_reliable(peer_id, "admintell " + form.get_text(chat), 0);
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="lcm chat") send_reliable(peer_id, "lcm " + form.get_text(chat), 0);
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="assistant chat") send_reliable(peer_id, "astchat " + form.get_text(chat), 0);
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="admin chat") send_reliable(peer_id, "adm " + form.get_text(chat), 0);
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="manager chat") send_reliable(peer_id, "manager " + form.get_text(chat), 0);
+else if(form.get_list_item(chattype, form.get_list_position(chattype))=="developer chat") send_reliable(peer_id, "devc " + form.get_text(chat), 0);
+else send_reliable(peer_id,sendmsg,1);
+}
+form.reset();
+break;
+}
+}
+}

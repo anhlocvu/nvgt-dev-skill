@@ -1,0 +1,56 @@
+savedata ratelimit_storage("rl.dat","rlk");
+dictionary ratelimit_memory;
+timer ratelimit_timer;
+void rli(){
+ratelimit_storage.load();
+}
+double check_limit_and_ban(string key, string username, string comp_id, string node_id){
+string data_string;
+double last_time = 0;
+int count = 0;
+if(ratelimit_memory.exists(key)){
+ratelimit_memory.get(key, data_string);
+string[] parts = string_split(data_string, ":", false);
+if(parts.length() > 1){
+last_time = string_to_number(parts[0]);
+count = string_to_number(parts[1]);
+}
+}
+if(ratelimit_timer.elapsed - last_time > 60000){
+last_time = ratelimit_timer.elapsed;
+count = 1;
+}
+else{
+count++;
+}
+ratelimit_memory.set(key, "" + last_time + ":" + count);
+if(count >= 2){
+int ban_level = 0;
+if(ratelimit_storage.d.exists(key))
+ban_level = ratelimit_storage.readn(key);
+double multiplier = 1;
+for(int z = 0; z < ban_level; z++) multiplier *= 2;
+double duration = 60 * multiplier;
+ban new_ban(username);
+new_ban.compid = comp_id;
+new_ban.node_id = node_id;
+new_ban.minutes = duration;
+new_ban.reason = "Rate Limit Exceeded (Level " + ban_level + ")";
+datetime d;
+new_ban.date = join({d.year, d.month, d.day, d.hour, d.minute, d.second}, "/");
+new_ban.save();
+ratelimit_storage.add(key, ban_level + 1);
+ratelimit_storage.save();
+return duration;
+}
+return 0;
+}
+double rlc(string comp_id, string ip_address, string username, string node_id){
+double result = 0;
+if(ip_address != "")
+result = check_limit_and_ban("ip_" + ip_address, username, comp_id, node_id);
+if(result > 0) return result;
+if(comp_id != "")
+result = check_limit_and_ban("id_" + comp_id, username, comp_id, node_id);
+return result;
+}

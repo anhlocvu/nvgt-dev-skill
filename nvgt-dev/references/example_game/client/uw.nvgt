@@ -1,0 +1,3042 @@
+#pragma asset "docs"
+#pragma asset "unzip.bat"
+#pragma plugin legacy_sound
+#pragma namespace sound upcoming
+#pragma plugin nvgt_curl
+string[] store_owners_list;
+string[] player_stores_list;
+bool received_store_owners = false;
+bool received_player_stores = false;
+#include "includes.nvgt"
+double airtime = 225;
+double bmovetime = 500;
+double movetime;
+double walkspeed = 100;
+string sndtype = ".ogg";
+double walktime = 150;
+double runtime = 100;
+double runspeed = 100;
+double volume = 0;
+double pitch = 100;
+double allsoundsvolume = 0;
+double allsoundspitch = 100;
+double stepsoundvolume = 0;
+double stepsoundpitch = 100;
+double painsoundvolume = 0;
+double painsoundpitch = 100;
+double killsoundvolume = 0;
+double killsoundpitch = 100;
+double shootsoundvolume = 0;
+double shootsoundpitch = 100;
+double hitsoundvolume = 0;
+double hitsoundpitch = 100;
+double voicevolume = 0;
+double voicepitch = 100;
+double fallsoundvolume = 0;
+double fallsoundpitch = 100;
+double volumejogo = 0;
+int RandomPingSound = 0;
+int kh = 0;
+int gender = 0;
+int braille_support = 0;
+int microphone_samplerate = 44100;
+int microphonechannels = 1;
+int stereotyping = 0;
+int vmode = 0;
+int record;
+int vv;
+bool inplace = false;
+int scuffsec;
+string youtube_format;
+string urc;
+int speak_chars = 1;
+int behind_pitch_decrease = 1;
+bool camsz = false;
+bool following = false;
+bool looking = false;
+int have_cycle_inventory = 1;
+//int checkcfu=1;
+//int checkcmotd=1;
+string whofollowing;
+string wholooking;
+string lookname;
+int voiceindex = 0;
+voicechatting vc;
+application app;
+int voicechat = 1;
+int holdv = 1;
+int rectime = 30000;
+bool recording;
+int anumber;
+string projname = "uw";
+string up1, up2, up3, up4;
+sound stream;
+double volumestream = 0;
+int playerpos;
+string motd;
+int motdshow;
+string motdmotd = "";
+string[] klang;
+string[] aliases;
+string[] script_keys;
+string[] accounts;
+string musictrack = "menumus.ogg";
+string menuclick = "menuclick.ogg";
+string menuclose = "menuclose.ogg";
+string menuedge = "menuedge.ogg";
+string menuenter = "menuenter.ogg";
+string menuopen = "menuopen.ogg";
+string menuwrap = "menuwrap.ogg";
+string bell = ascii_to_character(7);
+string bell2 = ascii_to_character(9);
+string ap;
+string apl;
+string apv;
+int mv = 5000;
+int rules = 0;
+int lng = 0;
+int startlng = 0;
+int klangpos;
+string prefsdir = DIRECTORY_APPDATA + "UW";
+int inv_search_index = -1;
+bool pinging = false;
+sound sleeping, sleepstart, capbeep, svrsound, internal, chuvatelhado, chuvalivre, somguardachuva, windtelhado, windlivre, somguardawind, nighttelhado, nightlivre, somguardanight, s1, srcs, dreamsound;
+sound[]snds;
+int dreamtime = random(100, 1000);
+string[] sounds;
+int[] keys;
+int sleepmode = -1;
+int dreaming = 1;
+bool walkmod = false;
+int twitteraccess = 0;
+int voice;
+int seerange = 35;
+bool brancas = true, outras = true, portable = false, ausente = false;
+int autologin = 0;
+int autolower = 1;
+int sonaron = 0;
+int sonarrange = 10;
+int sonar = 2;
+int sonartime = 400;
+int vsonarrange = 50;
+int vsonar = 1;
+int vsonartime = 400;
+int readchats = 1;
+int readolmsg = 1;
+int readdeathmsg = 1;
+string chatsound = "chat1", localchatsound = "localchat1", onlinesound = "online1", offlinesound = "offline1", pmsound = "pm1", jumpsound = "jump1";
+int chsound, lcsound, onsound, offsound, pmsgsound;
+//int playlogo=1;
+int wrap = 0;
+int first_letter_navigation = 0;
+int multi_letter_navigation = 1;
+int letters_autoactivate = 0;
+int preloader = 0;
+int sidescrolling = 0;
+int buffermode = 0;
+int ssbuffermode = 0;
+int translator = 1;
+int droptime = 240;
+int asktoexit = 1;
+int askbid = 1;
+int askauction = 1;
+int sapiforce = 0;
+int spamtime = 600;
+bool overrun = false;
+int lcontrol = 1;
+int rcontrol = 0;
+int lshift = 1;
+int rshift = 1;
+int lalt = 1;
+int ralt = 1;
+int use = 1;
+int xx = 1;
+int scuffs;
+int itemsound = 1;
+int cpx, cpy, cpz;
+int dcoordinates = 0, dcamera = 0, dcamerawall = 1, dmfwc = 0, dcameraplayer = 0, dcameraitem = 0, dcameradoor = 0, dcamerapdoor = 0, dcameraicdoor = 0, dcameraitdoor = 0, dcameraigdoor = 0, dcameraautomover = 0, dcamerapautomover = 0, dcameraicautomover = 0, dcameraitautomover = 0, dcameraigautomover = 0, dcameraautomatic_travelpoint = 0, dcamerapautomatic_travelpoint = 0, dcameraicautomatic_travelpoint = 0, dcameraitautomatic_travelpoint = 0, dcameraigautomatic_travelpoint = 0, dcameratravelpoint = 0, dcameraptravelpoint = 0, dcameraictravelpoint = 0, dcameraittravelpoint = 0, dcameraigtravelpoint = 0, dcameravp = 0, dcameraff = 0, dcamerah = 0, dcameratp = 0, dcamerasign = 0, dcameratxt = 0, djump = 0, dspy = 0, dspyplayer = 0, dspyitem = 0, dspydoor = 0, dspypdoor = 0, dspyicdoor = 0, dspyitdoor = 0, dspyigdoor = 0, dspyautomover = 0, dspypautomover = 0, dspyicautomover = 0, dspyitautomover = 0, dspyigautomover = 0, dspyautomatic_travelpoint = 0, dspypautomatic_travelpoint = 0, dspyicautomatic_travelpoint = 0, dspyitautomatic_travelpoint = 0, dspyigautomatic_travelpoint = 0, dspytravelpoint = 0, dspyptravelpoint = 0, dspyictravelpoint = 0, dspyittravelpoint = 0, dspyigtravelpoint = 0, dspyvp = 0, dspyff = 0, dspyh = 0, dspytp = 0, dspysign = 0, dspytxt = 0, dlocalchat = 0, dvoicechat = 0, dttschat = 0, dtracking = 0, d2dsupport = 0;
+int mfwc = 0;
+int trackingmode = 0;
+int repeatingcamera = 1;
+double guardachuva = 0;
+double chuvaativa = 0;
+double numerochuva;
+double guardawind = 0;
+double windativa = 0;
+double numerowind;
+double guardanight = 0;
+double nightativa = 0;
+double numeronight;
+double cavando = 0, ouvirhits = 1;
+string soundcardname;
+int soundcard;
+int speechmode = 0;
+int ttsvoice = 0;
+tts_voice ttsv;
+int mouseativo = 1, ouviremoutrasjanelas = 0, ouvirpassos = 1;
+int wintext = 0;
+int mouse;
+int djoystick;
+int winsound;
+int mutetts;
+int sitting = 0;
+instance uwinstance();
+//string packname = "audio.dat";
+const string decryption_key = "meowza";
+int readerinterrupt = 0;
+int menumusvol = -5;
+int mvol = 0;
+bool x = false;
+bool lcm = false;
+string godir, godir2, godir3, go, go2, go3, go4;
+string tracking = "";
+double trackx = -1, tracky = -1, trackz = -1;
+string ttracking = "";
+double ttrackx = -1, ttracky = -1, ttrackz = -1;
+string ztracking = "";
+double ztrackx = -1, ztracky = -1, ztrackz = -1;
+bool falling = false;
+double falltime = 125;
+double falldistance = 5;
+int num;
+bool jumping = false;
+double jumptime = 100;
+double jumpup = 0;
+double jumplandz = 0;
+bool can_move = true;
+int importbufferlogs = 1;
+int savevoicechats = 1;
+int savettschats = 1;
+int hearyourvoicechat = 1;
+int hearyourttschat = 1;
+int hearothersvoicechat = 1;
+int hearothersttschat = 1;
+int hearotherspmsound = 1;
+int othershearyourpmsound = 1;
+string lefthand, righthand, draw, llastuse, rlastuse;
+double hands;
+sound ffile;
+string lngdata;
+string currentlangfile;
+string keyboarddata;
+string currentkeyboardlangfile;
+int zonestatus = 1;
+int inputhelp;
+int saveinputbox;
+double changerotationtime = 200;
+string latest, description;
+bool frozen = false;
+double volumetime = 40;
+double minvolume = -100;
+double maxvolume = 300;
+double pitchtime = 40;
+double minpitch = -350;
+double maxpitch = 350;
+double pantime = 30;
+double minpan = -100;
+double maxpan = 100;
+double facing = 0.0;
+double ffacing = 0;
+double cameraspeed = 80;
+key_hold kleft(KEY_LEFT, 300, 50);
+key_hold kright(KEY_RIGHT, 300, 50);
+key_hold kup(KEY_UP, 300, 50);
+key_hold kdown(KEY_DOWN, 300, 50);
+key_hold kq(KEY_Q, 300, 50);
+key_hold ke(KEY_E, 300, 50);
+key_hold kspace(KEY_SPACE, 300, 50);
+key_hold kr(KEY_R, 300, 50);
+key_hold kw(KEY_W, 300, 50);
+key_hold kpgdn(KEY_NEXT, 300, 50);
+key_hold kpgup(KEY_PRIOR, 300, 50);
+key_hold kmleft(KEY_LEFT, walktime, walktime);
+key_hold kmright(KEY_RIGHT, walktime, walktime);
+key_hold kmup(KEY_UP, walktime, walktime);
+key_hold kmdown(KEY_DOWN, walktime, walktime);
+key_hold kmpgdn(KEY_NEXT, walktime, walktime);
+key_hold kmpgup(KEY_PRIOR, walktime, walktime);
+key_hold kcleft(KEY_LEFT, 300, cameraspeed);
+key_hold kcright(KEY_RIGHT, 300, cameraspeed);
+key_hold kcup(KEY_UP, 300, cameraspeed);
+key_hold kcdown(KEY_DOWN, 300, cameraspeed);
+key_hold kcpgdn(KEY_NEXT, 300, cameraspeed);
+key_hold kcpgup(KEY_PRIOR, 300, cameraspeed);
+key_hold khome(KEY_HOME, 100, 100);
+key_hold kend(KEY_END, 100, 100);
+key_hold kcomma(KEY_COMMA, 300, 20);
+key_hold kperiod(KEY_PERIOD, 300, 20);
+key_hold klbracket(KEY_LBRACKET, 300, 20);
+key_hold krbracket(KEY_RBRACKET, 300, 20);
+int lastruns = 0;
+string runs;
+double kills;
+string password;
+savedata sd("data.dat", "charbhoom");
+string currentloc;
+float final_pan;
+float final_volume;
+bool dead = false;
+bool connected, playing;
+bool creating;
+sound_pool p, mpool, distpool, placedistpool, sourcepool, musicpool, signpool, itempool;
+joystick j;
+int defjoy = 0;
+string defjoyname = j.name;
+bool joyfix = false;
+int mousey, mousex, mousez;
+int npool1, npool2;
+int clap = 50, snap = 100;
+timer movetimer, airtimer, falltimer, changerotationtimer, chattimer, pantimer, pitchtimer, volumetimer, deathtimer, trackingtimer, largesawtimer, jumptimer, pingpongtimer, walktimer, xtimer, timeouttimer, scufftimer, bmovetimer, posetimer, vwindowtimer, bikebeeptimer, droptimer, spamtimer, rectimer, firetimer, sendfire, mousemenutimer, joymenutimer, startstoptimer, commandtimer, takeofftimer, serverboxcooldowntimer, sleeptimer, snoretimer, dreamtimer, tenter, doorknock, cectimer, ceftimer, gametracktimer, sonartimer, vsonartimer, canijumptimer, aptime, tpool1, tpool2, clapped, snapped, usetimer, socialtimer;
+double timeouttime = 10000;
+bool engexp;
+bool inbox = false;
+bool intextbox = false;
+string mapstring;
+string mapname = "main";
+string mapavoltar = "main";
+string name;
+vector me, place, min, max, camera;
+text_input v;
+phonetext_input pv;
+telefone tel;
+phone fone;
+string placemap;
+string currentcameratile;
+string cver;
+string langver;
+string keyboardlangver;
+string lbver;
+string readmever;
+string docsver;
+string rulesver;
+string gamever;
+bool canjump = true;
+int rapidfire = 0;
+typedef uint8 usmall; typedef int8 small;
+sound@ bleepy;
+tone_synth bleeper, ts;
+string banid = generate_computer_id("S���uafama�����decolecionartampasdecr�nios" + app.version, true);
+network n;
+network_event e;
+string sndloc = "audio.dat";
+pack@ sndpack = null;
+
+void main() {
+	if (!directory_exists("logs")) directory_create("logs");
+	@sndpack = pack();
+	sndpack.open(sndloc, PACK_OPEN_MODE_READ);
+	@sound_default_pack = @sndpack;
+	set_sound_global_hrtf(true);
+	@default_input_process_loop = process_loops;
+	invcats.insert_last("weapons");
+	invcats.insert_last("ammos");
+	invcats.insert_last("explosives");
+	invcats.insert_last("clothes");
+	invcats.insert_last("fruits and vegetables");
+	invcats.insert_last("unprepared food and beverages");
+	invcats.insert_last("food and beverages");
+	invcats.insert_last("medical items");
+	invcats.insert_last("materials");
+	invcats.insert_last("home appliances");
+	invcats.insert_last("currency");
+	invcats.insert_last("paid items");
+	invcats.insert_last("packages and  bottles");
+	invcats.insert_last("corpses");
+	@buffer_default_can_use = buffercu;
+	create_buffer("all");
+	create_buffer("chats", "Public chats");
+	create_buffer("local chats");
+	create_buffer("team chats");
+	create_buffer("teamn", "Team Notifications");
+	create_buffer("team events");
+	create_buffer("lcm chats");
+	create_buffer("astc", "Assistant Chats");
+	create_buffer("admin chats");
+	create_buffer("developer chats");
+	create_buffer("manager chats");
+	create_buffer("partner chats");
+	create_buffer("astt", "Assistant Notifications");
+	create_buffer("admintells");
+	create_buffer("private messages");
+	create_buffer("playere", "Player Events");
+	create_buffer("pings");
+	create_buffer("clothing");
+	create_buffer("notifications");
+	create_buffer("channel messages");
+	create_buffer("maps");
+	create_buffer("auctions");
+	create_buffer("kills");
+	create_buffer("connections");
+	create_buffer("robot");
+	create_buffer("misc");
+	if (!directory_exists(prefsdir))directory_create(prefsdir);
+	capbeep.load("cap.ogg");
+	readprefs();
+	set_sound_master_volume(mvol);
+	initialize_pools();
+	show_window(app.name + (app.status != "" ? " (" + app.status + ")" : "") + " version " + app.version);
+	set_application_name(app.name);
+	p.pan_step = 1;
+	p.volume_step = 1;
+	mpool.pan_step = 1;
+	mpool.volume_step = 1;
+	distpool.pan_step = 0.2;
+	distpool.volume_step = 0.05;
+	placedistpool.pan_step = 0.2;
+	placedistpool.volume_step = 0.05;
+	sourcepool.pan_step = 1;
+	sourcepool.volume_step = 1;
+	musicpool.pan_step = 1;
+	musicpool.volume_step = 1;
+	signpool.pan_step = 1;
+	signpool.volume_step = 1;
+	itempool.pan_step = 1;
+	itempool.volume_step = 1;
+	chuvalivre.load("telhado.ogg");
+	chuvalivre.volume = -100;
+	chuvalivre.load("rain" + random(1, 12) + ".ogg");
+	chuvalivre.volume = -100;
+	windlivre.load("silence.ogg");
+	windlivre.volume = -100;
+	windlivre.load("wind" + random(1, 5) + ".ogg");
+	windlivre.volume = -100;
+	nightlivre.load("silence.ogg");
+	nightlivre.volume = -100;
+	nightlivre.load("night" + random(2, 4) + ".ogg");
+	nightlivre.volume = -100;
+	garbage_collect();
+	if (uwinstance.is_already_running and overrun == false and SCRIPT_COMPILED) {
+		alert("error", "Can't have 2 instances of the game up");
+		exit();
+	}
+	if (rules == 0) {
+		int agree = question("Rules Agreement", "Do you accept these rules?\n(Yes = Play, No = Exit)");
+		if (agree == 1) {
+			rules = 1;
+			writeprefs();
+		} else
+			exit();
+	}
+	if (COMMAND_LINE != crc32("soundrestart")) {
+		if (autologin == 1) login();
+		else mainmenu();
+	} else {
+		overrun = true;
+		sound enterfake;
+		enterfake.load("menuenter.ogg");
+		enterfake.play();
+		speak("Ok. Using " + soundcardname);
+		mainmenu();
+	}
+	garbage_collect();
+}
+void game() {
+	if (overrun) overrun = false;
+	send_reliable(peer_id, "newplayer " + me.x + " " + me.y + " " + me.z + " " + mapname + " " + name + " " + compid + " " + app.version + " " + get_script_path(), 10);
+	send_reliable(peer_id, "compinfo " + read_environment_variable("username") + " (" + read_environment_variable("computername") + ") from directory " + get_script_path(), 10);
+	playing = true;
+	send_reliable(peer_id, "staffcheck", 10);
+	if (SCRIPT_COMPILED == false) send_reliable(peer_id, "dev", 10);
+	send_reliable(peer_id, "setvoice " + voice, 0);
+	if (pinging == true) pinging = false;
+	if (behind_pitch_decrease == 1) {
+		p.behind_pitch_decrease = 5;
+		mpool.behind_pitch_decrease = 5;
+		distpool.behind_pitch_decrease = 5;
+		placedistpool.behind_pitch_decrease = 5;
+		sourcepool.behind_pitch_decrease = 5;
+		musicpool.behind_pitch_decrease = 5;
+		signpool.behind_pitch_decrease = 5;
+		itempool.behind_pitch_decrease = 5;
+	} else {
+		p.behind_pitch_decrease = 1;
+		mpool.behind_pitch_decrease = 1;
+		distpool.behind_pitch_decrease = 1;
+		placedistpool.behind_pitch_decrease = 1;
+		sourcepool.behind_pitch_decrease = 1;
+		musicpool.behind_pitch_decrease = 1;
+		signpool.behind_pitch_decrease = 1;
+		itempool.behind_pitch_decrease = 1;
+	}
+	garbage_collect();
+	while (true) {
+		mainloop();
+		if (walktime < 150) walktime = 150;
+		if (airtime < 220) airtime = 220;
+		if (mouse == 1) {
+			mouse_update();
+			mousey = MOUSE_Y / 8;
+			mousex = MOUSE_X / 2;
+			mousez = MOUSE_Z / 4;
+		}
+		if (facing == 360) facing = 0;
+		gameloop();
+		wait(5);
+	}
+}
+void fallloop() {
+	if (jumptimer.elapsed > jumptime and jumping == true) {
+		jumptimer.restart();
+		if (jumpup == 1) {
+			if (me.z <= jumplandz + 5) {
+				me.z++;
+				send_reliable(peer_id, "move " + me.x + " " + me.y + " " + me.z, 8);
+				if (get_tile_at(me.x, me.y, me.z) != "" and get_tile_at(me.x, me.y, me.z) != "air")
+					jumpup = 0;
+			} else
+				jumpup = 0;
+		} else if (jumpup == 0) {
+			if (me.z > jumplandz) {
+				me.z--;
+				send_reliable(peer_id, "move " + me.x + " " + me.y + " " + me.z, 8);
+				if (get_tile_at(me.x, me.y, me.z) != "" and get_tile_at(me.x, me.y, me.z) != "air") {
+					rvp.play_stationary(get_tile_at(me.x, me.y, me.z) + "land.ogg", false);
+					send_reliable(peer_id, "draw " + get_tile_at(me.x, me.y, me.z) + "land.ogg", 7);
+					jumping = false;
+					movecheck();
+				}
+			} else {
+				if (get_tile_at(me.x, me.y, me.z) == "" or get_tile_at(me.x, me.y, me.z) == "air" and frozen == false and in_map) {
+					falling = true;
+					falldistance = 0;
+					falltimer.restart();
+					jumping = false;
+					return;
+				}
+				rvp.play_stationary(get_tile_at(me.x, me.y, me.z) + "land.ogg", false);
+				send_reliable(peer_id, "draw " + get_tile_at(me.x, me.y, me.z) + "land.ogg", 7);
+				jumping = false;
+				movecheck();
+			}
+		}
+	}
+}
+void fallcheck() {
+	if (!systemmoving and dmoving == false and amoving == false and in_map) {
+		if (get_tile_at(me.x, me.y, me.z) == "" and falling == false and playing == true and jumping == false or get_tile_at(me.x, me.y, me.z) == "air" and falling == false and jumping == false and playing == true) {
+			falling = true;
+			falldistance = 0;
+			falltimer.restart();
+			rvp.play_stationary("fall" + random(1, 3) + ".ogg", false);
+			send_reliable(peer_id, "draw fall" + random(1, 3) + ".ogg", 7);
+			send_reliable(peer_id, "fallstart", 8);
+		}
+	}
+}
+void fallingloop() {
+	if (!systemmoving and dmoving == false and amoving == false) {
+		if (falling == true and falltimer.elapsed > falltime) {
+			if (get_tile_at(me.x, me.y, me.z) != "" and get_tile_at(me.x, me.y, me.z) != "air") {
+				falling = false;
+				if (!in_map) falldistance = 0;
+				if (falldistance < 5) {
+					send_reliable(peer_id, "fallstop", 8);
+					rvp.play_stationary(get_tile_at(me.x, me.y, me.z) + "land.ogg", false);
+					send_reliable(peer_id, "draw " + get_tile_at(me.x, me.y, me.z) + "land.ogg", 7);
+					send_reliable(peer_id, "move " + me.x + " " + me.y + " " + me.z, 8);
+					falling = false;
+					movecheck();
+				} else {
+					send_reliable(peer_id, "fallstop", 8);
+					rvp.play_stationary(get_tile_at(me.x, me.y, me.z) + "fall.ogg", false);
+					send_reliable(peer_id, "draw " + get_tile_at(me.x, me.y, me.z) + "fall.ogg", 7);
+					send_reliable(peer_id, "move " + me.x + " " + me.y + " " + me.z, 8);
+					send_reliable(peer_id, "hardland " + falldistance, 8);
+					falling = false;
+					movecheck();
+				}
+				return;
+			}
+			falltimer.restart();
+			falldistance++;
+			me.z--;
+			send_reliable(peer_id, "move " + me.x + " " + me.y + " " + me.z, 8);
+			movecheck();
+		}
+	}
+}
+string read(string filename) {
+	file f;
+	f.open(filename, "rb");
+	return f.read();
+}
+string decrypt_and_read(string filename) {
+	file f;
+	f.open(filename, "rb");
+	return string_decrypt(f.read(), "y3U/@/IJho6L4X%_2)CcDhCjGTxRH(on3Nmw4z!UFfrDpD$Q)GlMqnKyN^0$,WIae8XSX<.2VNInTB<ml=wbFkP_64^Ay*BDYf6SQ1tJD)v`spO`cZFGS((7*U&>Z$n@>!1&*%Jf4+QNCTV?yCX7d*qeNAHw1p+<kl6l6ZVGYeSU/gG/Tv?m!,pfb&XKFbZVzHP?%4f&fQWR!._$T,p6DHsSwW($??Ok+2SEnb76zYhz0lSIFv)8ISM`4~N.yvSa=Y3bnzk<%rF%<%Zf%9Z5)C53EADs4$E?%Uh1nVi)goFn,s5Sbp*#/P~&F2)B+aczw)XQHq!=P5M236@a%M7KY%w^~pHKTRbRGBp8^EAdjl!+CXn9jXiMzl");
+}
+void playermapmenu(string[] users) {
+	get_characters();
+	string cl, char, multichar, test;
+	speak("users menu");
+	int counter = 0;
+	while (true) {
+		wait(5);
+		mainloop();
+		if (navtime.elapsed > 1000 and multichar != "")
+			multichar = "";
+		string c = get_characters().lower();
+		if (c != "" and multichar != c) {
+			navtime.restart();
+			multichar += c;
+		}
+		if (multichar != "" and c != "" and multichar != " " and c != " ") {
+			multichar = multichar.lower();
+			bool found = false;
+			for (uint i = counter; i < users.length(); i++) {
+				if (i == counter) continue;
+				test = users[i];
+				test = test.lower();
+				if (stringleft(test, multichar.length()) == multichar) {
+					if (stringleft(users[counter], multichar.length()).lower() == multichar and multichar.length() > 1) {
+						found = true;
+						break;
+					}
+					if (counter < i)
+						counter = i;
+					else if (counter > i)
+						counter = i;
+					speak(users[counter]);
+					found = true;
+					break;
+				} else continue;
+			}
+			if (found == false) {
+				multichar = multichar.lower();
+				for (uint i = 0; i < users.length(); i++) {
+					test = users[i];
+					test = test.lower();
+					if (stringleft(test, multichar.length()) == multichar) {
+						if (stringleft(users[counter], multichar.length()).lower() == multichar and multichar.length() > 1) {
+							found = true;
+							break;
+						}
+						if (counter < i)
+							counter = i;
+						else if (counter > i)
+							counter = i;
+						speak(users[counter]);
+						found = true;
+						break;
+					} else continue;
+				}
+			}
+			if (!found)
+				speak("No such player exists");
+		}
+		if (key_pressed(KEY_UP)) {
+			if (users.length() == 1) {
+				speak(users[0]);
+				counter = 0;
+			} else if (counter > 0) {
+				counter--;
+				speak(users[counter]);
+			}
+		}
+		if (key_pressed(KEY_DOWN)) {
+			if (users.length() == 1) {
+				speak(users[0]);
+				counter = 0;
+			} else if (counter < users.length() - 1) {
+				counter++;
+				speak(users[counter]);
+			}
+		}
+		if (counter > 0) {
+			if (key_pressed(KEY_F1) and users[counter] != "" and counter <= users.length() - 1) {
+				speak(users[counter] + " copyed to clipboard");
+				clipboard_copy_text(users[counter]);
+			}
+			if (key_pressed(KEY_F2) and users[counter] != "" and counter <= users.length() - 1) {
+				string message = input("Message", "enter the message that you want to send to " + users[counter], multiline = true);
+				if (message != "" and !is_eloquence_crash_word(message) and get_sequence(message, true) <= 3) send_reliable(peer_id, "/pm " + users[counter] + " " + message, 1);
+			}
+			if (key_pressed(KEY_F3))send_reliable(peer_id, "j1 " + users[counter], 0);
+			if (key_pressed(KEY_F4))send_reliable(peer_id, "j2 " + users[counter], 0);
+			if (key_pressed(KEY_F5) and users[counter] != "" and counter <= users.length() - 1) send_reliable(peer_id, "stats " + users[counter], 0);
+			if (key_pressed(KEY_F6))send_reliable(peer_id, "j3 " + users[counter], 0);
+			if (key_pressed(KEY_F7))send_reliable(peer_id, "look " + users[counter], 0);
+			if (key_pressed(KEY_F8))send_reliable(peer_id, "status " + users[counter], 0);
+			if (shift_is_down()) {
+				if (key_pressed(KEY_F9)) {
+					string stuff = v.input("Enter your tts message");
+					if (stuff != "") {
+						if (stuff.length() > 256)
+							speak("limit is 256 characters");
+						else {
+							string msg = ttsv.speak_to_memory(stuff);
+							send_reliable(peer_id, "ptts " + stuff.length() + " " + users[counter] + " " + try_memset(msg), 3);
+							//if (savettschats == 1)
+								//file_copy(DIRECTORY_TEMP + "\\ttsmsg.ogg", "voices/tts message " + DATE_WEEKDAY_NAME + ", " + DATE_MONTH_NAME + "-" + DATE_DAY + "-" + DATE_YEAR + ", " + TIME_HOUR + " " + TIME_MINUTE + " " + TIME_SECOND + ".ogg", true);
+							//file_delete(DIRECTORY_TEMP + "/ttsmsg.ogg");
+						}
+					}
+				}
+			}
+			if (key_up(KEY_LSHIFT) and key_up(KEY_RSHIFT)) {
+				if (key_pressed(KEY_F9) and spamtimer.elapsed >= spamtime and voicechat == 1) {
+					if (recording == false) {
+						urc = users[counter];
+						spamtimer.restart();
+						vc.record();
+						p.play_stationary("von.ogg", false);
+						recording = true;
+						rectimer.restart();
+					} else if (recording == true and holdv == 0) {
+						p.play_stationary("voff.ogg", false);
+						vc.stop(true, DIRECTORY_TEMP + "\\convert.ogg");
+						file f;
+						f.open(DIRECTORY_TEMP + "\\convert.ogg", "rb");
+						send_reliable(peer_id, "pvoice " + spamtimer.elapsed + " " + urc + " " + f.read(), 3);
+						f.close();
+						file_delete(DIRECTORY_TEMP + "\\convert.ogg");
+						recording = false;
+						spamtimer.restart();
+					}
+				}
+				if (recording == true and rectimer.elapsed >= rectime) {
+					p.play_stationary("voff.ogg", false);
+					vc.stop(true, DIRECTORY_TEMP + "\\convert.ogg");
+					file f;
+					f.open(DIRECTORY_TEMP + "\\convert.ogg", "rb");
+					send_reliable(peer_id, "pvoice " + spamtimer.elapsed + " " + urc + " " + f.read(), 3);
+					f.close();
+					file_delete(DIRECTORY_TEMP + "\\convert.ogg");
+					recording = false;
+					spamtimer.restart();
+				}
+				if (key_released(KEY_F9) and recording == true and voicechat == 1 and holdv == 1) {
+					p.play_stationary("voff.ogg", false);
+					vc.stop(true, DIRECTORY_TEMP + "\\convert.ogg");
+					file f;
+					f.open(DIRECTORY_TEMP + "\\convert.ogg", "rb");
+					send_reliable(peer_id, "pvoice " + spamtimer.elapsed + " " + urc + " " + f.read(), 3);
+					f.close();
+					file_delete(DIRECTORY_TEMP + "\\convert.ogg");
+					recording = false;
+					spamtimer.restart();
+				}
+			}
+		}
+		if (key_pressed(KEY_RETURN) and counter <= users.length() - 1 and users[counter] != "") {
+			if (counter > 0) {
+				p.play_stationary("tracked.ogg", false);
+				speak("tracking " + users[counter]);
+				tracking = users[counter];
+				return;
+			} else {
+				speak("tracking stopped");
+				tracking = "";
+				return;
+			}
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			return;
+		}
+	}
+	return;
+}
+void playermenu(string[] users) {
+	get_characters();
+	string cl, char, multichar, test;
+	speak("players menu");
+	int counter = 0;
+	while (true) {
+		wait(5);
+		mainloop();
+		if (navtime.elapsed > 1000 and multichar != "")
+			multichar = "";
+		string c = get_characters().lower();
+		if (c != "" and multichar != c) {
+			navtime.restart();
+			multichar += c;
+		}
+		if (multichar != "" and c != "" and multichar != " " and c != " ") {
+			multichar = multichar.lower();
+			bool found = false;
+			for (uint i = counter; i < users.length(); i++) {
+				if (i == counter) continue;
+				test = users[i];
+				test = test.lower();
+				if (stringleft(test, multichar.length()) == multichar) {
+					if (stringleft(users[counter], multichar.length()).lower() == multichar and multichar.length() > 1) {
+						found = true;
+						break;
+					}
+					if (counter < i)
+						counter = i;
+					else if (counter > i)
+						counter = i;
+					speak(users[counter]);
+					found = true;
+					break;
+				} else continue;
+			}
+			if (found == false) {
+				multichar = multichar.lower();
+				for (uint i = 0; i < users.length(); i++) {
+					test = users[i];
+					test = test.lower();
+					if (stringleft(test, multichar.length()) == multichar) {
+						if (stringleft(users[counter], multichar.length()).lower() == multichar and multichar.length() > 1) {
+							found = true;
+							break;
+						}
+						if (counter < i)
+							counter = i;
+						else if (counter > i)
+							counter = i;
+						speak(users[counter]);
+						found = true;
+						break;
+					} else continue;
+				}
+			}
+			if (!found)
+				speak("No such player exists");
+		}
+		if (key_pressed(KEY_UP)) {
+			if (users.length() == 1) {
+				speak(users[0]);
+				counter = 0;
+			} else if (counter > 0) {
+				counter--;
+				speak(users[counter]);
+			}
+		}
+		if (key_pressed(KEY_DOWN)) {
+			if (users.length() == 1) {
+				speak(users[0]);
+				counter = 0;
+			} else if (counter < users.length() - 1) {
+				counter++;
+				speak(users[counter]);
+			}
+		}
+		if (key_pressed(KEY_F1) and counter <= users.length() - 1 and users[counter] != "") {
+			string[] u = string_split(users[counter], " ", true);
+			if (shift_down && assistant) {
+				string rr = input("Respond", "Type the message to respond to " + u[0], multiline = true);
+				if (rr == "") continue;
+				sendcommand("/respond " + u[0] + " " + rr);
+				continue;
+			}
+			speak(u[0] + " copyed to clipboard");
+			clipboard_copy_text(u[0]);
+		}
+		if (key_pressed(KEY_F2) and users[counter] != "" and counter <= users.length() - 1) {
+			string[] u = string_split(users[counter], " ", true);
+			string message = input("PM", "enter the message that you want to send to " + u[0], multiline = true);
+			if (message != "" and !is_eloquence_crash_word(message) and get_sequence(message, true) <= 3) send_reliable(peer_id, "/pm " + u[0] + " " + message, 1);
+		}
+		if (key_pressed(KEY_F3)) {
+			string[] u = string_split(users[counter], " ", true);
+			send_reliable(peer_id, "j1 " + u[0], 0);
+		}
+		if (key_pressed(KEY_F4)) {
+			string[] u = string_split(users[counter], " ", true);
+			send_reliable(peer_id, "j2 " + u[0], 0);
+		}
+		if (key_pressed(KEY_F5) and users[counter] != "" and counter <= users.length() - 1) {
+			string[] u = string_split(users[counter], " ", true);
+			send_reliable(peer_id, "stats " + u[0], 0);
+		}
+		if (key_pressed(KEY_F6)) {
+			string[] u = string_split(users[counter], " ", true);
+			send_reliable(peer_id, "j3 " + u[0], 0);
+		}
+		if (key_pressed(KEY_F7)) {
+			string[] u = string_split(users[counter], " ", true);
+			send_reliable(peer_id, "look " + u[0], 0);
+		}
+		if (key_pressed(KEY_F8)) {
+			string[] u = string_split(users[counter], " ", true);
+			send_reliable(peer_id, "status " + u[0], 0);
+		}
+		if (shift_is_down()) {
+			if (key_pressed(KEY_F9)) {
+				string stuff = v.input("Enter your tts message");
+				if (stuff != "") {
+					if (stuff.length() > 256)
+						speak("limit is 256 characters");
+					else {
+						string msg = ttsv.speak_to_memory(stuff);
+						string[] u = string_split(users[counter], " ", true);
+						send_reliable(peer_id, "ptts " + stuff.length() + " " + u[0] + " " + try_memset(msg), 3);
+						//if (savettschats == 1)
+							//file_copy(DIRECTORY_TEMP + "\\ttsmsg.ogg", "voices/tts message " + DATE_WEEKDAY_NAME + ", " + DATE_MONTH_NAME + "-" + DATE_DAY + "-" + DATE_YEAR + ", " + TIME_HOUR + " " + TIME_MINUTE + " " + TIME_SECOND + ".ogg", true);
+						//file_delete(DIRECTORY_TEMP + "/ttsmsg.ogg");
+					}
+				}
+			}
+		}
+		if (key_up(KEY_LSHIFT) and key_up(KEY_RSHIFT)) {
+			if (key_pressed(KEY_F9) and spamtimer.elapsed >= spamtime and voicechat == 1) {
+				if (recording == false) {
+					string[] u = string_split(users[counter], " ", true);
+					urc = u[0];
+					spamtimer.restart();
+					vc.record();
+					p.play_stationary("von.ogg", false);
+					recording = true;
+					rectimer.restart();
+				} else if (recording == true and holdv == 0) {
+					p.play_stationary("voff.ogg", false);
+					vc.stop(true, DIRECTORY_TEMP + "\\convert.ogg");
+					file f;
+					f.open(DIRECTORY_TEMP + "\\convert.ogg", "rb");
+					send_reliable(peer_id, "pvoice " + spamtimer.elapsed + " " + urc + " " + f.read(), 3);
+					f.close();
+					file_delete(DIRECTORY_TEMP + "\\convert.ogg");
+					recording = false;
+					spamtimer.restart();
+				}
+			}
+			if (recording == true and rectimer.elapsed >= rectime) {
+				p.play_stationary("voff.ogg", false);
+				vc.stop(true, DIRECTORY_TEMP + "\\convert.ogg");
+				file f;
+				f.open(DIRECTORY_TEMP + "\\convert.ogg", "rb");
+				send_reliable(peer_id, "pvoice " + spamtimer.elapsed + " " + urc + " " + f.read(), 3);
+				f.close();
+				file_delete(DIRECTORY_TEMP + "\\convert.ogg");
+				recording = false;
+				spamtimer.restart();
+			}
+			if (key_released(KEY_F9) and recording == true and voicechat == 1 and holdv == 1) {
+				p.play_stationary("voff.ogg", false);
+				vc.stop(true, DIRECTORY_TEMP + "\\convert.ogg");
+				file f;
+				f.open(DIRECTORY_TEMP + "\\convert.ogg", "rb");
+				send_reliable(peer_id, "pvoice " + spamtimer.elapsed + " " + urc + " " + f.read(), 3);
+				f.close();
+				file_delete(DIRECTORY_TEMP + "\\convert.ogg");
+				recording = false;
+				spamtimer.restart();
+			}
+		}
+		if (control_is_down() and key_up(KEY_LSHIFT) and key_up(KEY_RSHIFT)) {
+			if (key_pressed(KEY_T)) {
+				string[] u = string_split(users[counter], " ", true);
+				send_reliable(peer_id, "/trust " + u[0], 1);
+			}
+			if (key_pressed(KEY_M)) {
+				string[] u = string_split(users[counter], " ", true);
+				send_reliable(peer_id, "/mute " + u[0], 1);
+			}
+		}
+		if (control_is_down() and shift_is_down()) {
+			if (key_pressed(KEY_T)) {
+				string[] u = string_split(users[counter], " ", true);
+				send_reliable(peer_id, "/untrust " + u[0], 1);
+			}
+			if (key_pressed(KEY_M)) {
+				string[] u = string_split(users[counter], " ", true);
+				send_reliable(peer_id, "/unmute " + u[0], 1);
+			}
+		}
+		if (key_pressed(KEY_RETURN) and counter <= users.length() - 1 and users[counter] != "")
+			return;
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			return;
+		}
+	}
+	return;
+}
+void tell_where(int x, int y, int z, string soundname, bool include_locations = false) {
+	if (z > me.z)
+		go = "above, ";
+	else if (z < me.z)
+		go = "below, ";
+	go4 = calculate_x_y_string(calculate_x_y_angle(me.x, me.y, x, y, facing));
+	string boing = "";
+	if (include_locations == true)
+		boing = " in " + get_zone_at(x, y, z) + " ";
+	int dist = get_3d_distance(me.x, me.y, me.z, x, y, z);
+	if (dcoordinates == 0) {
+		if (d2dsupport == 0)
+			speak(go + go4 + " (" + dist + " tiles away) " + boing + "at " + x + ", " + y + ", " + z);
+		else
+			speak(go + go4 + " (" + dist + " tiles away) " + boing + "at " + x + ", " + z);
+	} else if (dcoordinates == 1) speak(go + go4 + " (" + dist + " tiles away) " + boing + "");
+	p.play_3d(soundname + ".ogg", me.x, me.y, me.z, x, y, z, calculate_theta(facing), false);
+	go = "";
+}
+void fade_all(sound_pool@ handle, sound_pool@ handle2, sound_pool@ handle3, sound_pool@ handle4, sound_pool@ handle5, sound_pool@ handle6, sound_pool@ handle7, sound_pool@ handle8, double time = 0.25, double minvol = -40) {
+	for (double current = 0; current > minvol; current -= time) {
+		for (uint x = 0; x < handle.items.length(); x++) {
+			if (@handle.items[x].handle == null)
+				break;
+			if (handle.items[x].handle.playing == false)
+				break;
+			handle.items[x].handle.volume = handle.items[x].handle.volume - time;
+		}
+		for (uint y = 0; y < handle2.items.length(); y++) {
+			if (@handle2.items[y].handle == null)
+				break;
+			if (handle2.items[y].handle.playing == false)
+				break;
+			handle2.items[y].handle.volume = handle2.items[y].handle.volume - time;
+		}
+		for (uint z = 0; z < handle3.items.length(); z++) {
+			if (@handle3.items[z].handle == null)
+				break;
+			if (handle3.items[z].handle.playing == false)
+				break;
+			handle3.items[z].handle.volume = handle3.items[z].handle.volume - time;
+		}
+		for (uint w = 0; w < handle4.items.length(); w++) {
+			if (@handle4.items[w].handle == null)
+				break;
+			if (handle4.items[w].handle.playing == false)
+				break;
+			handle4.items[w].handle.volume = handle4.items[w].handle.volume - time;
+		}
+		for (uint sourcesounds = 0; sourcesounds < handle5.items.length(); sourcesounds++) {
+			if (@handle5.items[sourcesounds].handle == null)
+				break;
+			if (handle5.items[sourcesounds].handle.playing == false)
+				break;
+			handle5.items[sourcesounds].handle.volume = handle5.items[sourcesounds].handle.volume - time;
+		}
+		for (uint musicsounds = 0; musicsounds < handle6.items.length(); musicsounds++) {
+			if (@handle6.items[musicsounds].handle == null)
+				break;
+			if (handle6.items[musicsounds].handle.playing == false)
+				break;
+			handle6.items[musicsounds].handle.volume = handle6.items[musicsounds].handle.volume - time;
+		}
+		for (uint signsounds = 0; signsounds < handle7.items.length(); signsounds++) {
+			if (@handle7.items[signsounds].handle == null)
+				break;
+			if (handle7.items[signsounds].handle.playing == false)
+				break;
+			handle7.items[signsounds].handle.volume = handle7.items[signsounds].handle.volume - time;
+		}
+		for (uint mapitemsounds = 0; mapitemsounds < handle8.items.length(); mapitemsounds++) {
+			if (@handle8.items[mapitemsounds].handle == null)
+				break;
+			if (handle8.items[mapitemsounds].handle.playing == false)
+				break;
+			handle8.items[mapitemsounds].handle.volume = handle8.items[mapitemsounds].handle.volume - time;
+		}
+		wait(5);
+	}
+	handle.destroy_all();
+	handle2.destroy_all();
+	handle3.destroy_all();
+	handle4.destroy_all();
+	handle5.destroy_all();
+	handle6.destroy_all();
+	handle7.destroy_all();
+	handle8.destroy_all();
+}
+double convert_to_pan(double m1, double m2) {
+	try {
+		return (m1 * 100 / m2) - 50;
+	} catch {
+		return 0;
+	}
+}
+void fade_pool_out(sound_pool@ pool, bool destroy = true) {
+	int volume = 0;
+	while (volume > -20) {
+		volume--;
+		for (uint i = 0; i < pool.items.length(); i++) {
+			if (@pool.items[i].handle != null)
+				pool.items[i].handle.volume = volume;
+		}
+		wait(5);
+	}
+	if (destroy)
+		pool.destroy_all();
+}
+void fade_pool_in(sound_pool@ pool) {
+	int volume = -20;
+	while (volume < 0) {
+		volume++;
+		for (uint i = 0; i < pool.items.length(); i++) {
+			if (@pool.items[i].handle != null)
+				pool.items[i].handle.volume = volume;
+		}
+		wait(5);
+	}
+}
+void beep(int wavetype, string freqs, int ms) {
+	if (ms <= 0 || ms > 5000) return;
+	bleeper.waveform_type = wavetype;
+	bleeper.set_edge_fades(0, 0);
+	bleeper.volume = -10;
+	//bleeper.freq(freqs, ms);
+	@bleepy = bleeper.write_wave_sound();
+	bleeper.reset();
+	bleepy.play();
+}
+string get_script_path() {
+	string scriptpath;
+	if (SCRIPT_COMPILED == false)
+		scriptpath = SCRIPT_CURRENT_FILE;
+	else
+		scriptpath = SCRIPT_EXECUTABLE;
+	return scriptpath;
+}
+string get_game_path() {
+	string game_path;
+	if (SCRIPT_COMPILED == false)game_path = string_replace(get_script_path(), "\\uw.bgt", "", true);
+	else game_path = string_replace(get_script_path(), "\\uw.exe", "", true);
+	return game_path;
+}
+void change_master_volume(int change) {
+	mvol += change;
+	if (mvol > 0) mvol = 0;
+	if (mvol < -60) mvol = -60;
+	set_sound_master_volume(mvol);
+}
+void checarjanela() {
+	if (is_game_window_active() == true)
+		set_sound_master_volume(mvol);
+	else set_sound_master_volume(-100);
+}
+void exitgame(bool return_to_menu = true) {
+	send_reliable(peer_id, "close", 0);
+}
+void final_exit(bool return_to_menu = true) {
+	client::destruct();
+	reset_network();
+	m.reset(true);
+	if (return_to_menu) mainmenu();
+	players.resize(0);
+}
+void checkloc() {
+	string locate = get_zone_at(me.x, me.y, me.z);
+	if (locate != "") {
+		if (locate != currentloc) {
+			if (zonestatus == 1) speak(locate);
+			currentloc = locate;
+		}
+	} else {
+		locate = "unknown area";
+		if (currentloc != locate)
+			currentloc = locate;
+	}
+}
+void beep(int hz) {
+	ts.reset();
+	ts.set_edge_fades(0, 0);
+	ts.waveform_type = 4;
+	ts.freq_ms(hz, 50);
+	sound@ snd = ts.write_wave_sound();
+	snd.play_wait();
+}
+string random_string_from_array(string[] arraystring) {
+	string retval = arraystring[random(0, arraystring.length() - 1)];
+	return retval;
+}
+int stng(string the_string) {
+	return string_to_number(the_string);
+}
+void tell_where(int x, int y, int z, string name = "") {
+	if (me.x <= x) {
+		godir = "right";
+		go = x - me.x;
+	} else if (me.x >= x) {
+		godir = "left";
+		go = me.x - x;
+	}
+	if (me.y <= y) {
+		godir2 = "infrunt";
+		go2 = y - me.y;
+	} else if (me.y >= y) {
+		godir2 = "behined";
+		go2 = me.y - y;
+	}
+	if (me.z <= z) {
+		godir3 = "above";
+		go3 = z - me.z;
+	} else if (me.z >= z) {
+		godir3 = "below";
+		go3 = me.z - z;
+	}
+	speak((name == "" ? "" : name + ": ") + godir + " " + go + " and " + godir2 + " " + go2 + " and " + godir3 + " " + go3);
+}
+string[] find_closest_players() {
+	string[] dp, o;
+	int[] dx;
+	dp.reserve(players.length());
+	dx.reserve(players.length());
+	o.reserve(players.length());
+	for (uint i = 0; i < players.length(); i++) {
+		const int d = absolute(me.x - players[i].x);
+		dp.insert_last(d + "|" + players[i].name);
+		dx.insert_last(d);
+	}
+	dx.sort_ascending();
+	for (uint i = 0; i < dx.length(); i++) {
+		for (uint j = 0; j < dp.length(); j++) {
+			if (string_split(dp[j], "|", true)[1] != name and string_split(dp[j], "|", true)[0] == dx[i])
+				o.insert_last(string_split(dp[j], "|", true)[1]);
+		}
+	}
+	return o;
+}
+int find_player(const string un) {
+	for (uint i = 0; i < players.length(); i++) {
+		if (un == players[i].name)
+			return i;
+	}
+	return -1;
+}
+int mcb(dynamic_menu_pro@ d, string a = "") {
+	return 0;
+}
+void pause_all_naturals() {
+	if (chuvatelhado.playing) chuvatelhado.close();
+	chuvatelhado.volume = -12;
+	if (windtelhado.playing) windtelhado.close();
+	windtelhado.volume = -12;
+	if (nighttelhado.playing) nighttelhado.close();
+	nighttelhado.volume = -12;
+}
+void resume_all_naturals() {
+	if (chuvaativa == 1) {
+		chuvatelhado.load(somchuva);
+		chuvatelhado.play_looped();
+	}
+	if (windativa == 1) {
+		windtelhado.load(somwind);
+		windtelhado.play_looped();
+	}
+	if (nightativa == 1) {
+		nighttelhado.load(somnight);
+		nighttelhado.play_looped();
+	}
+}
+bool get_total_distance(double sx, double sy, double sz, double tx, double ty, double tz, int mindist = 20) {
+	return (sx < tx + mindist and sx > tx - mindist and sy < ty + mindist and sy > ty - mindist and sz < tz + mindist and sz > tz - mindist);
+}
+void entercheck() {
+	for (uint i = 0; i < doors.length(); i++) {
+		if (me.x >= doors[i].mindx and me.x <= doors[i].maxdx and me.y >= doors[i].mindy and me.y <= doors[i].maxdy and me.z >= doors[i].mindz and me.z <= doors[i].maxdz and amoving == false and dmoving == false and !systemmoving) {
+			if (doors[i].text != " ") speak(doors[i].text);
+			can_move = false;
+			if (doors[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(doors[i].ds3, false);
+			if (doors[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + doors[i].ds3, 7);
+			doors[i].doorsound2 = p.play_stationary(doors[i].ds2, true);
+			doors[i].moving = true;
+			dmoving = true;
+			send_reliable(peer_id, "iamdmoving " + doors[i].ds2, 0);
+		}
+	}
+	for (uint i = 0; i < pdoors.length(); i++) {
+		if (me.x >= pdoors[i].mindx and me.x <= pdoors[i].maxdx and me.y >= pdoors[i].mindy and me.y <= pdoors[i].maxdy and me.z >= pdoors[i].mindz and me.z <= pdoors[i].maxdz and amoving == false and dmoving == false and !systemmoving) {
+			string s = v.input(pdoors[i].text);
+			if (s != "" and !is_eloquence_crash_word(s) and get_sequence(s, true) <= 3) {
+				if (s == pdoors[i].password) {
+					can_move = false;
+					if (pdoors[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(pdoors[i].ds3, false);
+					if (pdoors[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + pdoors[i].ds3, 7);
+					pdoors[i].pdoorsound2 = p.play_stationary(pdoors[i].ds2, true);
+					pdoors[i].moving = true;
+					dmoving = true;
+					send_reliable(peer_id, "iamdmoving " + pdoors[i].ds2, 0);
+				} else
+					speak("wrong password");
+			} else
+				speak("wrong password");
+		}
+	}
+	for (uint i = 0; i < icdoors.length(); i++) {
+		if (me.x >= icdoors[i].mindx and me.x <= icdoors[i].maxdx and me.y >= icdoors[i].mindy and me.y <= icdoors[i].maxdy and me.z >= icdoors[i].mindz and me.z <= icdoors[i].maxdz and amoving == false and dmoving == false and !systemmoving) {
+			if (inv_item_number(icdoors[i].item) >= icdoors[i].amount) {
+				if (icdoors[i].text != " ") speak(icdoors[i].text);
+				can_move = false;
+				if (icdoors[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(icdoors[i].ds3, false);
+				if (icdoors[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + icdoors[i].ds3, 7);
+				icdoors[i].icdoorsound2 = p.play_stationary(icdoors[i].ds2, true);
+				icdoors[i].moving = true;
+				dmoving = true;
+				send_reliable(peer_id, "iamdmoving " + icdoors[i].ds2, 0);
+			} else
+				speak("not enough " + icdoors[i].item + ", you need " + icdoors[i].amount + " " + icdoors[i].item + "");
+		}
+	}
+	for (uint i = 0; i < itdoors.length(); i++) {
+		if (me.x >= itdoors[i].mindx and me.x <= itdoors[i].maxdx and me.y >= itdoors[i].mindy and me.y <= itdoors[i].maxdy and me.z >= itdoors[i].mindz and me.z <= itdoors[i].maxdz and amoving == false and dmoving == false) {
+			if (inv_item_number(itdoors[i].item) >= itdoors[i].amount) {
+				if (itdoors[i].text != " ") speak(itdoors[i].text);
+				send_reliable(peer_id, "doortake " + itdoors[i].item + " " + itdoors[i].amount, 0);
+				can_move = false;
+				if (itdoors[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(itdoors[i].ds3, false);
+				if (itdoors[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + itdoors[i].ds3, 7);
+				itdoors[i].itdoorsound2 = p.play_stationary(itdoors[i].ds2, true);
+				itdoors[i].moving = true;
+				dmoving = true;
+				send_reliable(peer_id, "iamdmoving " + itdoors[i].ds2, 0);
+			} else
+				speak("not enough " + itdoors[i].item + ", you need " + itdoors[i].amount + " " + itdoors[i].item + "");
+		}
+	}
+	for (uint i = 0; i < igdoors.length(); i++) {
+		if (me.x >= igdoors[i].mindx and me.x <= igdoors[i].maxdx and me.y >= igdoors[i].mindy and me.y <= igdoors[i].maxdy and me.z >= igdoors[i].mindz and me.z <= igdoors[i].maxdz and amoving == false and dmoving == false) {
+			if (igdoors[i].text != " ") speak(igdoors[i].text);
+			send_reliable(peer_id, "doorgive " + igdoors[i].item + " " + igdoors[i].amount, 0);
+			can_move = false;
+			if (igdoors[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(igdoors[i].ds3, false);
+			if (igdoors[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + igdoors[i].ds3, 7);
+			igdoors[i].igdoorsound2 = p.play_stationary(igdoors[i].ds2, true);
+			igdoors[i].moving = true;
+			dmoving = true;
+			send_reliable(peer_id, "iamdmoving " + igdoors[i].ds2, 0);
+		}
+	}
+	if (get_zone_at(me.x, me.y, me.z) == "civil registry office") civilregistrymenu();
+	if (get_zone_at(me.x, me.y, me.z) == "telephone") telephonemenu();
+	if (get_zone_at(me.x, me.y, me.z) == "download_box") dbmenu();
+	for (uint i = 0; i < signs.length(); i++) {
+		if (me.x >= signs[i].minx and me.x <= signs[i].maxx and me.y >= signs[i].miny and me.y <= signs[i].maxy and me.z >= signs[i].minz and me.z <= signs[i].maxz) {
+			rvp.play_3d("signpress.ogg", me.x, me.y, me.z, me.x, me.y, me.z, calculate_theta(facing), false);
+			speak(signs[i].text);
+		}
+	}
+	for (uint i = 0; i < dialogs.length(); i++) {
+		if (me.x >= dialogs[i].minx and me.x <= dialogs[i].maxx and me.y >= dialogs[i].miny and me.y <= dialogs[i].maxy and me.z >= dialogs[i].minz and me.z <= dialogs[i].maxz)
+			silencedialogs(dialogs[i].text);
+	}
+}
+void travelcheck() {
+	for (uint i = 0; i < travelpoints.length(); i++) {
+		if (me.x >= travelpoints[i].mindx and me.x <= travelpoints[i].maxdx and me.y >= travelpoints[i].mindy and me.y <= travelpoints[i].maxdy and me.z >= travelpoints[i].mindz and me.z <= travelpoints[i].maxdz) {
+			if (travelpoints[i].text != " ") speak(travelpoints[i].text);
+			if (travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(travelpoints[i].ds2, false);
+			if (travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + travelpoints[i].ds2, 0);
+			send_reliable(peer_id, "travelto " + travelpoints[i].nx + " " + travelpoints[i].ny + " " + travelpoints[i].nz + " " + travelpoints[i].nmap, 0);
+			if (travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + travelpoints[i].ds3, 7);
+			if (travelpoints[i].ds3 != "silence") rvp.play_stationary(travelpoints[i].ds3, false);
+		}
+	}
+	for (uint i = 0; i < ptravelpoints.length(); i++) {
+		if (me.x >= ptravelpoints[i].mindx and me.x <= ptravelpoints[i].maxdx and me.y >= ptravelpoints[i].mindy and me.y <= ptravelpoints[i].maxdy and me.z >= ptravelpoints[i].mindz and me.z <= ptravelpoints[i].maxdz) {
+			string s = v.input(ptravelpoints[i].text);
+			if (s != "" and !is_eloquence_crash_word(s) and get_sequence(s, true) <= 3) {
+				if (s == ptravelpoints[i].password) {
+					if (ptravelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(ptravelpoints[i].ds2, false);
+					if (ptravelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + ptravelpoints[i].ds2, 0);
+					send_reliable(peer_id, "ptravelto " + ptravelpoints[i].nx + " " + ptravelpoints[i].ny + " " + ptravelpoints[i].nz + " " + ptravelpoints[i].nmap, 0);
+					if (ptravelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + ptravelpoints[i].ds3, 7);
+					if (ptravelpoints[i].ds3 != "silence") rvp.play_stationary(ptravelpoints[i].ds3, false);
+				} else
+					speak("wrong password");
+			} else
+				speak("wrong password");
+		}
+	}
+	for (uint i = 0; i < ictravelpoints.length(); i++) {
+		if (me.x >= ictravelpoints[i].mindx and me.x <= ictravelpoints[i].maxdx and me.y >= ictravelpoints[i].mindy and me.y <= ictravelpoints[i].maxdy and me.z >= ictravelpoints[i].mindz and me.z <= ictravelpoints[i].maxdz) {
+			if (inv_item_number(ictravelpoints[i].item) >= 1) {
+				int s = inv_item_number(ictravelpoints[i].item);
+				if (s > ictravelpoints[i].amount) {
+					if (ictravelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(ictravelpoints[i].ds2, false);
+					if (ictravelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + ictravelpoints[i].ds2, 0);
+					send_reliable(peer_id, "ictravelto " + ictravelpoints[i].nx + " " + ictravelpoints[i].ny + " " + ictravelpoints[i].nz + " " + ictravelpoints[i].nmap, 0);
+					if (ictravelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + ictravelpoints[i].ds3, 7);
+					if (ictravelpoints[i].ds3 != "silence") rvp.play_stationary(ictravelpoints[i].ds3, false);
+				} else
+					speak("not enough " + ictravelpoints[i].item + ", you need " + ictravelpoints[i].amount + " " + ictravelpoints[i].item + "");
+			} else
+				speak("not enough " + ictravelpoints[i].item + ", you need " + ictravelpoints[i].amount + " " + ictravelpoints[i].item + "");
+		}
+	}
+	for (uint i = 0; i < ittravelpoints.length(); i++) {
+		if (me.x >= ittravelpoints[i].mindx and me.x <= ittravelpoints[i].maxdx and me.y >= ittravelpoints[i].mindy and me.y <= ittravelpoints[i].maxdy and me.z >= ittravelpoints[i].mindz and me.z <= ittravelpoints[i].maxdz) {
+			if (inv_item_number(ittravelpoints[i].item) >= 1) {
+				int s = inv_item_number(ittravelpoints[i].item);
+				if (s > ittravelpoints[i].amount) {
+					if (ittravelpoints[i].text != " ") speak(ittravelpoints[i].text);
+					if (ittravelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(ittravelpoints[i].ds2, false);
+					if (ittravelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + ittravelpoints[i].ds2, 0);
+					send_reliable(peer_id, "ittravelto " + ittravelpoints[i].nx + " " + ittravelpoints[i].ny + " " + ittravelpoints[i].nz + " " + ittravelpoints[i].nmap, 0);
+					if (ittravelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + ittravelpoints[i].ds3, 7);
+					if (ittravelpoints[i].ds3 != "silence") rvp.play_stationary(ittravelpoints[i].ds3, false);
+				} else
+					speak("not enough " + ittravelpoints[i].item + ", you need " + ittravelpoints[i].amount + " " + ittravelpoints[i].item + "");
+			} else
+				speak("not enough " + ittravelpoints[i].item + ", you need " + ittravelpoints[i].amount + " " + ittravelpoints[i].item + "");
+		}
+	}
+	for (uint i = 0; i < igtravelpoints.length(); i++) {
+		if (me.x >= igtravelpoints[i].mindx and me.x <= igtravelpoints[i].maxdx and me.y >= igtravelpoints[i].mindy and me.y <= igtravelpoints[i].maxdy and me.z >= igtravelpoints[i].mindz and me.z <= igtravelpoints[i].maxdz) {
+			if (igtravelpoints[i].text != " ") speak(igtravelpoints[i].text);
+			if (igtravelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(igtravelpoints[i].ds2, false);
+			if (igtravelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + igtravelpoints[i].ds2, 0);
+			send_reliable(peer_id, "igtravelto " + igtravelpoints[i].nx + " " + igtravelpoints[i].ny + " " + igtravelpoints[i].nz + " " + igtravelpoints[i].nmap, 0);
+			send_reliable(peer_id, "travelpointgive " + igtravelpoints[i].item + " " + igtravelpoints[i].amount, 0);
+			if (igtravelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + igtravelpoints[i].ds3, 7);
+			if (igtravelpoints[i].ds3 != "silence") rvp.play_stationary(igtravelpoints[i].ds3, false);
+		}
+	}
+}
+void movecheck() {
+	for (uint i = 0; i < automatic_travelpoints.length(); i++) {
+		if (me.x >= automatic_travelpoints[i].mindx and me.x <= automatic_travelpoints[i].maxdx and me.y >= automatic_travelpoints[i].mindy and me.y <= automatic_travelpoints[i].maxdy and me.z >= automatic_travelpoints[i].mindz and me.z <= automatic_travelpoints[i].maxdz) {
+			if (automatic_travelpoints[i].text != " ") speak(automatic_travelpoints[i].text);
+			if (automatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(automatic_travelpoints[i].ds2, false);
+			if (automatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + automatic_travelpoints[i].ds2, 0);
+			send_reliable(peer_id, "travelto " + automatic_travelpoints[i].nx + " " + automatic_travelpoints[i].ny + " " + automatic_travelpoints[i].nz + " " + automatic_travelpoints[i].nmap, 0);
+			if (automatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + automatic_travelpoints[i].ds3, 7);
+			if (automatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(automatic_travelpoints[i].ds3, false);
+		}
+	}
+	for (uint i = 0; i < pautomatic_travelpoints.length(); i++) {
+		if (me.x >= pautomatic_travelpoints[i].mindx and me.x <= pautomatic_travelpoints[i].maxdx and me.y >= pautomatic_travelpoints[i].mindy and me.y <= pautomatic_travelpoints[i].maxdy and me.z >= pautomatic_travelpoints[i].mindz and me.z <= pautomatic_travelpoints[i].maxdz) {
+			string s = v.input(pautomatic_travelpoints[i].text);
+			if (s != "" and !is_eloquence_crash_word(s) and get_sequence(s, true) <= 3) {
+				if (s == pautomatic_travelpoints[i].password) {
+					if (pautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(pautomatic_travelpoints[i].ds2, false);
+					if (pautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + pautomatic_travelpoints[i].ds2, 0);
+					send_reliable(peer_id, "ptravelto " + pautomatic_travelpoints[i].nx + " " + pautomatic_travelpoints[i].ny + " " + pautomatic_travelpoints[i].nz + " " + pautomatic_travelpoints[i].nmap, 0);
+					if (pautomatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + pautomatic_travelpoints[i].ds3, 7);
+					if (pautomatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(pautomatic_travelpoints[i].ds3, false);
+				} else
+					speak("wrong password");
+			} else
+				speak("wrong password");
+		}
+	}
+	for (uint i = 0; i < icautomatic_travelpoints.length(); i++) {
+		if (me.x >= icautomatic_travelpoints[i].mindx and me.x <= icautomatic_travelpoints[i].maxdx and me.y >= icautomatic_travelpoints[i].mindy and me.y <= icautomatic_travelpoints[i].maxdy and me.z >= icautomatic_travelpoints[i].mindz and me.z <= icautomatic_travelpoints[i].maxdz) {
+			if (inv_item_number(icautomatic_travelpoints[i].item) >= icautomatic_travelpoints[i].amount) {
+				if (icautomatic_travelpoints[i].text != " ") speak(icautomatic_travelpoints[i].text);
+				if (icautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(icautomatic_travelpoints[i].ds2, false);
+				if (icautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + icautomatic_travelpoints[i].ds2, 0);
+				send_reliable(peer_id, "ictravelto " + icautomatic_travelpoints[i].nx + " " + icautomatic_travelpoints[i].ny + " " + icautomatic_travelpoints[i].nz + " " + icautomatic_travelpoints[i].nmap, 0);
+				if (icautomatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + icautomatic_travelpoints[i].ds3, 7);
+				if (icautomatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(icautomatic_travelpoints[i].ds3, false);
+			} else
+				speak("not enough " + icautomatic_travelpoints[i].item + ", you need " + icautomatic_travelpoints[i].amount + " " + icautomatic_travelpoints[i].item + "");
+		}
+	}
+	for (uint i = 0; i < itautomatic_travelpoints.length(); i++) {
+		if (me.x >= itautomatic_travelpoints[i].mindx and me.x <= itautomatic_travelpoints[i].maxdx and me.y >= itautomatic_travelpoints[i].mindy and me.y <= itautomatic_travelpoints[i].maxdy and me.z >= itautomatic_travelpoints[i].mindz and me.z <= itautomatic_travelpoints[i].maxdz) {
+			if (inv_item_number(itautomatic_travelpoints[i].item) >= itautomatic_travelpoints[i].amount) {
+				if (itautomatic_travelpoints[i].text != " ") speak(itautomatic_travelpoints[i].text);
+				if (itautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(itautomatic_travelpoints[i].ds2, false);
+				if (itautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + itautomatic_travelpoints[i].ds2, 0);
+				send_reliable(peer_id, "ittravelto " + itautomatic_travelpoints[i].nx + " " + itautomatic_travelpoints[i].ny + " " + itautomatic_travelpoints[i].nz + " " + itautomatic_travelpoints[i].nmap, 0);
+				if (itautomatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + itautomatic_travelpoints[i].ds3, 7);
+				if (itautomatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(itautomatic_travelpoints[i].ds3, false);
+			} else
+				speak("not enough " + itautomatic_travelpoints[i].item + ", you need " + itautomatic_travelpoints[i].amount + " " + itautomatic_travelpoints[i].item + "");
+		}
+	}
+	for (uint i = 0; i < igautomatic_travelpoints.length(); i++) {
+		if (me.x >= igautomatic_travelpoints[i].mindx and me.x <= igautomatic_travelpoints[i].maxdx and me.y >= igautomatic_travelpoints[i].mindy and me.y <= igautomatic_travelpoints[i].maxdy and me.z >= igautomatic_travelpoints[i].mindz and me.z <= igautomatic_travelpoints[i].maxdz) {
+			if (igautomatic_travelpoints[i].text != " ") speak(igautomatic_travelpoints[i].text);
+			if (igautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(igautomatic_travelpoints[i].ds2, false);
+			if (igautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + igautomatic_travelpoints[i].ds2, 0);
+			send_reliable(peer_id, "igtravelto " + igautomatic_travelpoints[i].nx + " " + igautomatic_travelpoints[i].ny + " " + igautomatic_travelpoints[i].nz + " " + igautomatic_travelpoints[i].nmap, 0);
+			send_reliable(peer_id, "automatic_travelpointgive " + igautomatic_travelpoints[i].item + " " + igautomatic_travelpoints[i].amount, 0);
+			if (igautomatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + igautomatic_travelpoints[i].ds3, 7);
+			if (igautomatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(igautomatic_travelpoints[i].ds3, false);
+		}
+	}
+	for (uint i = 0; i < automovers.length(); i++) {
+		if (me.x >= automovers[i].mindx and me.x <= automovers[i].maxdx and me.y >= automovers[i].mindy and me.y <= automovers[i].maxdy and me.z >= automovers[i].mindz and me.z <= automovers[i].maxdz and amoving == false) {
+			if (automovers[i].text != " ") speak(automovers[i].text);
+			can_move = false;
+			if (automovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(automovers[i].ds3, false);
+			if (automovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + automovers[i].ds3, 7);
+			automovers[i].automoversound2 = p.play_stationary(automovers[i].ds2, true);
+			automovers[i].moving = true;
+			amoving = true;
+			send_reliable(peer_id, "iamamoving " + automovers[i].ds2, 0);
+		}
+	}
+	for (uint i = 0; i < pautomovers.length(); i++) {
+		if (me.x >= pautomovers[i].mindx and me.x <= pautomovers[i].maxdx and me.y >= pautomovers[i].mindy and me.y <= pautomovers[i].maxdy and me.z >= pautomovers[i].mindz and me.z <= pautomovers[i].maxdz and amoving == false and amoving == false) {
+			string s = v.input(pautomovers[i].text);
+			if (s != "" and !is_eloquence_crash_word(s) and get_sequence(s, true) <= 3) {
+				if (s == pautomovers[i].password) {
+					can_move = false;
+					if (pautomovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(pautomovers[i].ds3, false);
+					if (pautomovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + pautomovers[i].ds3, 7);
+					pautomovers[i].pautomoversound2 = p.play_stationary(pautomovers[i].ds2, true);
+					pautomovers[i].moving = true;
+					amoving = true;
+					send_reliable(peer_id, "iamamoving " + pautomovers[i].ds2, 0);
+				} else
+					speak("wrong password");
+			} else
+				speak("wrong password");
+		}
+	}
+	for (uint i = 0; i < icautomovers.length(); i++) {
+		if (me.x >= icautomovers[i].mindx and me.x <= icautomovers[i].maxdx and me.y >= icautomovers[i].mindy and me.y <= icautomovers[i].maxdy and me.z >= icautomovers[i].mindz and me.z <= icautomovers[i].maxdz and amoving == false and amoving == false) {
+			if (inv_item_number(icautomovers[i].item) >= 1) {
+				int s = inv_item_number(icautomovers[i].item);
+				if (s > icautomovers[i].amount) {
+					if (icautomovers[i].text != " ") speak(icautomovers[i].text);
+					can_move = false;
+					if (icautomovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(icautomovers[i].ds3, false);
+					if (icautomovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + icautomovers[i].ds3, 7);
+					icautomovers[i].icautomoversound2 = p.play_stationary(icautomovers[i].ds2, true);
+					icautomovers[i].moving = true;
+					amoving = true;
+					send_reliable(peer_id, "iamamoving " + icautomovers[i].ds2, 0);
+				} else
+					speak("not enough " + icautomovers[i].item + ", you need " + icautomovers[i].amount + " " + icautomovers[i].item + "");
+			} else
+				speak("not enough  " + icautomovers[i].item + ", you need " + icautomovers[i].amount + " " + icautomovers[i].item + "");
+		}
+	}
+	for (uint i = 0; i < itautomovers.length(); i++) {
+		if (me.x >= itautomovers[i].mindx and me.x <= itautomovers[i].maxdx and me.y >= itautomovers[i].mindy and me.y <= itautomovers[i].maxdy and me.z >= itautomovers[i].mindz and me.z <= itautomovers[i].maxdz and amoving == false and amoving == false) {
+			if (inv_item_number(itautomovers[i].item) >= 1) {
+				int s = inv_item_number(itautomovers[i].item);
+				if (s > itautomovers[i].amount) {
+					if (itautomovers[i].text != " ") speak(itautomovers[i].text);
+					send_reliable(peer_id, "automovertake " + itautomovers[i].item + " " + itautomovers[i].amount, 0);
+					can_move = false;
+					if (itautomovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(itautomovers[i].ds3, false);
+					if (itautomovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + itautomovers[i].ds3, 7);
+					itautomovers[i].itautomoversound2 = p.play_stationary(itautomovers[i].ds2, true);
+					itautomovers[i].moving = true;
+					amoving = true;
+					send_reliable(peer_id, "iamamoving " + itautomovers[i].ds2, 0);
+				} else
+					speak("not enough " + itautomovers[i].item + ", you need " + itautomovers[i].amount + " " + itautomovers[i].item + "");
+			} else
+				speak("not enough " + itautomovers[i].item + ", you need " + itautomovers[i].amount + " " + itautomovers[i].item + "");
+		}
+	}
+	for (uint i = 0; i < igautomovers.length(); i++) {
+		if (me.x >= igautomovers[i].mindx and me.x <= igautomovers[i].maxdx and me.y >= igautomovers[i].mindy and me.y <= igautomovers[i].maxdy and me.z >= igautomovers[i].mindz and me.z <= igautomovers[i].maxdz and amoving == false and amoving == false) {
+			if (igautomovers[i].text != " ") speak(igautomovers[i].text);
+			send_reliable(peer_id, "automovergive " + igautomovers[i].item + " " + igautomovers[i].amount, 0);
+			can_move = false;
+			if (igautomovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(igautomovers[i].ds3, false);
+			if (igautomovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + igautomovers[i].ds3, 7);
+			igautomovers[i].igautomoversound2 = p.play_stationary(igautomovers[i].ds2, true);
+			igautomovers[i].moving = true;
+			amoving = true;
+			send_reliable(peer_id, "iamamoving " + igautomovers[i].ds2, 0);
+		}
+	}
+	if (get_tile_at(me.x, me.y, me.z) == "hazard")
+		send_reliable(peer_id, "hhealth", 0);
+	for (uint i = 0; i < teleporters.length(); i++) {
+		if (me.x >= teleporters[i].minx and me.x <= teleporters[i].maxx and me.y >= teleporters[i].miny and me.y <= teleporters[i].maxy and me.z >= teleporters[i].minz and me.z <= teleporters[i].maxz) {
+			p.play_stationary("tele.ogg", false);
+			send_reliable(peer_id, "draw tele.ogg", 7);
+			send_reliable(peer_id, "tmove", 8);
+		}
+	}
+	for (uint i = 0; i < automatic_dialogs.length(); i++) {
+		if (me.x >= automatic_dialogs[i].minx and me.x <= automatic_dialogs[i].maxx and me.y >= automatic_dialogs[i].miny and me.y <= automatic_dialogs[i].maxy and me.z >= automatic_dialogs[i].minz and me.z <= automatic_dialogs[i].maxz)
+			silencedialogs(automatic_dialogs[i].text);
+	}
+	for (uint i = 0; i < txts.length(); i++) {
+		if (me.x >= txts[i].minx and me.x <= txts[i].maxx and me.y >= txts[i].miny and me.y <= txts[i].maxy and me.z >= txts[i].minz and me.z <= txts[i].maxz)
+			speak(txts[i].text);
+	}
+}
+void movecheck2() {
+	for (uint i = 0; i < automatic_travelpoints.length(); i++) {
+		if (me.x >= automatic_travelpoints[i].mindx and me.x <= automatic_travelpoints[i].maxdx and me.y >= automatic_travelpoints[i].mindy and me.y <= automatic_travelpoints[i].maxdy and me.z >= automatic_travelpoints[i].mindz and me.z <= automatic_travelpoints[i].maxdz) {
+			if (automatic_travelpoints[i].text != " ") speak(automatic_travelpoints[i].text);
+			if (automatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(automatic_travelpoints[i].ds2, false);
+			if (automatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + automatic_travelpoints[i].ds2, 0);
+			send_reliable(peer_id, "travelto " + automatic_travelpoints[i].nx + " " + automatic_travelpoints[i].ny + " " + automatic_travelpoints[i].nz + " " + automatic_travelpoints[i].nmap, 0);
+			if (automatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + automatic_travelpoints[i].ds3, 7);
+			if (automatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(automatic_travelpoints[i].ds3, false);
+		}
+	}
+	for (uint i = 0; i < pautomatic_travelpoints.length(); i++) {
+		if (me.x >= pautomatic_travelpoints[i].mindx and me.x <= pautomatic_travelpoints[i].maxdx and me.y >= pautomatic_travelpoints[i].mindy and me.y <= pautomatic_travelpoints[i].maxdy and me.z >= pautomatic_travelpoints[i].mindz and me.z <= pautomatic_travelpoints[i].maxdz) {
+			string s = v.input(pautomatic_travelpoints[i].text);
+			if (s != "" and !is_eloquence_crash_word(s) and get_sequence(s, true) <= 3) {
+				if (s == pautomatic_travelpoints[i].password) {
+					if (pautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(pautomatic_travelpoints[i].ds2, false);
+					if (pautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + pautomatic_travelpoints[i].ds2, 0);
+					send_reliable(peer_id, "ptravelto " + pautomatic_travelpoints[i].nx + " " + pautomatic_travelpoints[i].ny + " " + pautomatic_travelpoints[i].nz + " " + pautomatic_travelpoints[i].nmap, 0);
+					if (pautomatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + pautomatic_travelpoints[i].ds3, 7);
+					if (pautomatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(pautomatic_travelpoints[i].ds3, false);
+				} else
+					speak("wrong password");
+			} else
+				speak("wrong password");
+		}
+	}
+	for (uint i = 0; i < icautomatic_travelpoints.length(); i++) {
+		if (me.x >= icautomatic_travelpoints[i].mindx and me.x <= icautomatic_travelpoints[i].maxdx and me.y >= icautomatic_travelpoints[i].mindy and me.y <= icautomatic_travelpoints[i].maxdy and me.z >= icautomatic_travelpoints[i].mindz and me.z <= icautomatic_travelpoints[i].maxdz) {
+			if (inv_item_number(icautomatic_travelpoints[i].item) >= icautomatic_travelpoints[i].amount) {
+				if (icautomatic_travelpoints[i].text != " ") speak(icautomatic_travelpoints[i].text);
+				if (icautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(icautomatic_travelpoints[i].ds2, false);
+				if (icautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + icautomatic_travelpoints[i].ds2, 0);
+				send_reliable(peer_id, "ictravelto " + icautomatic_travelpoints[i].nx + " " + icautomatic_travelpoints[i].ny + " " + icautomatic_travelpoints[i].nz + " " + icautomatic_travelpoints[i].nmap, 0);
+				if (icautomatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + icautomatic_travelpoints[i].ds3, 7);
+				if (icautomatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(icautomatic_travelpoints[i].ds3, false);
+			} else
+				speak("not enough " + icautomatic_travelpoints[i].item + ", you need " + icautomatic_travelpoints[i].amount + " " + icautomatic_travelpoints[i].item + "");
+		}
+	}
+	for (uint i = 0; i < itautomatic_travelpoints.length(); i++) {
+		if (me.x >= itautomatic_travelpoints[i].mindx and me.x <= itautomatic_travelpoints[i].maxdx and me.y >= itautomatic_travelpoints[i].mindy and me.y <= itautomatic_travelpoints[i].maxdy and me.z >= itautomatic_travelpoints[i].mindz and me.z <= itautomatic_travelpoints[i].maxdz) {
+			if (inv_item_number(itautomatic_travelpoints[i].item) >= itautomatic_travelpoints[i].amount) {
+				if (itautomatic_travelpoints[i].text != " ") speak(itautomatic_travelpoints[i].text);
+				if (itautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(itautomatic_travelpoints[i].ds2, false);
+				if (itautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + itautomatic_travelpoints[i].ds2, 0);
+				send_reliable(peer_id, "ittravelto " + itautomatic_travelpoints[i].nx + " " + itautomatic_travelpoints[i].ny + " " + itautomatic_travelpoints[i].nz + " " + itautomatic_travelpoints[i].nmap, 0);
+				if (itautomatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + itautomatic_travelpoints[i].ds3, 7);
+				if (itautomatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(itautomatic_travelpoints[i].ds3, false);
+			} else
+				speak("not enough " + itautomatic_travelpoints[i].item + ", you need " + itautomatic_travelpoints[i].amount + " " + itautomatic_travelpoints[i].item + "");
+		}
+	}
+	for (uint i = 0; i < igautomatic_travelpoints.length(); i++) {
+		if (me.x >= igautomatic_travelpoints[i].mindx and me.x <= igautomatic_travelpoints[i].maxdx and me.y >= igautomatic_travelpoints[i].mindy and me.y <= igautomatic_travelpoints[i].maxdy and me.z >= igautomatic_travelpoints[i].mindz and me.z <= igautomatic_travelpoints[i].maxdz) {
+			if (igautomatic_travelpoints[i].text != " ") speak(igautomatic_travelpoints[i].text);
+			if (igautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) rvp.play_stationary(igautomatic_travelpoints[i].ds2, false);
+			if (igautomatic_travelpoints[i].ds2 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + igautomatic_travelpoints[i].ds2, 0);
+			send_reliable(peer_id, "igtravelto " + igautomatic_travelpoints[i].nx + " " + igautomatic_travelpoints[i].ny + " " + igautomatic_travelpoints[i].nz + " " + igautomatic_travelpoints[i].nmap, 0);
+			send_reliable(peer_id, "automatic_travelpointgive " + igautomatic_travelpoints[i].item + " " + igautomatic_travelpoints[i].amount, 0);
+			if (igautomatic_travelpoints[i].ds3 != "silence" and sleepmode != 0) send_reliable(0, "draw " + igautomatic_travelpoints[i].ds3, 7);
+			if (igautomatic_travelpoints[i].ds3 != "silence") rvp.play_stationary(igautomatic_travelpoints[i].ds3, false);
+		}
+	}
+	for (uint i = 0; i < automovers.length(); i++) {
+		if (me.x >= automovers[i].mindx and me.x <= automovers[i].maxdx and me.y >= automovers[i].mindy and me.y <= automovers[i].maxdy and me.z >= automovers[i].mindz and me.z <= automovers[i].maxdz and amoving == false) {
+			if (automovers[i].text != " ") speak(automovers[i].text);
+			can_move = false;
+			if (automovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(automovers[i].ds3, false);
+			if (automovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + automovers[i].ds3, 7);
+			automovers[i].automoversound2 = p.play_stationary(automovers[i].ds2, true);
+			automovers[i].moving = true;
+			amoving = true;
+			send_reliable(peer_id, "iamamoving " + automovers[i].ds2, 0);
+		}
+	}
+	for (uint i = 0; i < pautomovers.length(); i++) {
+		if (me.x >= pautomovers[i].mindx and me.x <= pautomovers[i].maxdx and me.y >= pautomovers[i].mindy and me.y <= pautomovers[i].maxdy and me.z >= pautomovers[i].mindz and me.z <= pautomovers[i].maxdz and amoving == false and amoving == false) {
+			string s = v.input(pautomovers[i].text);
+			if (s != "" and !is_eloquence_crash_word(s) and get_sequence(s, true) <= 3) {
+				if (s == pautomovers[i].password) {
+					can_move = false;
+					if (pautomovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(pautomovers[i].ds3, false);
+					if (pautomovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + pautomovers[i].ds3, 7);
+					pautomovers[i].pautomoversound2 = p.play_stationary(pautomovers[i].ds2, true);
+					pautomovers[i].moving = true;
+					amoving = true;
+					send_reliable(peer_id, "iamamoving " + pautomovers[i].ds2, 0);
+				} else
+					speak("wrong password");
+			} else
+				speak("wrong password");
+		}
+	}
+	for (uint i = 0; i < icautomovers.length(); i++) {
+		if (me.x >= icautomovers[i].mindx and me.x <= icautomovers[i].maxdx and me.y >= icautomovers[i].mindy and me.y <= icautomovers[i].maxdy and me.z >= icautomovers[i].mindz and me.z <= icautomovers[i].maxdz and amoving == false and amoving == false) {
+			if (inv_item_number(icautomovers[i].item) >= 1) {
+				int s = inv_item_number(icautomovers[i].item);
+				if (s > icautomovers[i].amount) {
+					if (icautomovers[i].text != " ") speak(icautomovers[i].text);
+					can_move = false;
+					if (icautomovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(icautomovers[i].ds3, false);
+					if (icautomovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + icautomovers[i].ds3, 7);
+					icautomovers[i].icautomoversound2 = p.play_stationary(icautomovers[i].ds2, true);
+					icautomovers[i].moving = true;
+					amoving = true;
+					send_reliable(peer_id, "iamamoving " + icautomovers[i].ds2, 0);
+				} else
+					speak("not enough " + icautomovers[i].item + ", you need " + icautomovers[i].amount + " " + icautomovers[i].item + "");
+			} else
+				speak("not enough " + icautomovers[i].item + ", you need " + icautomovers[i].amount + " " + icautomovers[i].item + "");
+		}
+	}
+	for (uint i = 0; i < itautomovers.length(); i++) {
+		if (me.x >= itautomovers[i].mindx and me.x <= itautomovers[i].maxdx and me.y >= itautomovers[i].mindy and me.y <= itautomovers[i].maxdy and me.z >= itautomovers[i].mindz and me.z <= itautomovers[i].maxdz and amoving == false and amoving == false) {
+			if (inv_item_number(itautomovers[i].item) >= 1) {
+				int s = inv_item_number(itautomovers[i].item);
+				if (s > itautomovers[i].amount) {
+					if (itautomovers[i].text != " ") speak(itautomovers[i].text);
+					send_reliable(peer_id, "automovertake " + itautomovers[i].item + " " + itautomovers[i].amount, 0);
+					can_move = false;
+					if (itautomovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(itautomovers[i].ds3, false);
+					if (itautomovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + itautomovers[i].ds3, 7);
+					itautomovers[i].itautomoversound2 = p.play_stationary(itautomovers[i].ds2, true);
+					itautomovers[i].moving = true;
+					amoving = true;
+					send_reliable(peer_id, "iamamoving " + itautomovers[i].ds2, 0);
+				} else
+					speak("not enough " + itautomovers[i].item + ", you need " + itautomovers[i].amount + " " + itautomovers[i].item + "");
+			} else
+				speak("not enough " + itautomovers[i].item + ", you need " + itautomovers[i].amount + " " + itautomovers[i].item + "");
+		}
+	}
+	for (uint i = 0; i < igautomovers.length(); i++) {
+		if (me.x >= igautomovers[i].mindx and me.x <= igautomovers[i].maxdx and me.y >= igautomovers[i].mindy and me.y <= igautomovers[i].maxdy and me.z >= igautomovers[i].mindz and me.z <= igautomovers[i].maxdz and amoving == false and amoving == false) {
+			if (igautomovers[i].text != " ") speak(igautomovers[i].text);
+			send_reliable(peer_id, "automovergive " + igautomovers[i].item + " " + igautomovers[i].amount, 0);
+			can_move = false;
+			if (igautomovers[i].ds3 != "silence" and sleepmode != 0) rvp.play_stationary(igautomovers[i].ds3, false);
+			if (igautomovers[i].ds3 != "silence" and sleepmode != 0) send_reliable(peer_id, "draw " + igautomovers[i].ds3, 7);
+			igautomovers[i].igautomoversound2 = p.play_stationary(igautomovers[i].ds2, true);
+			igautomovers[i].moving = true;
+			amoving = true;
+			send_reliable(peer_id, "iamamoving " + igautomovers[i].ds2, 0);
+		}
+	}
+	if (get_tile_at(me.x, me.y, me.z) == "hazard")
+		send_reliable(peer_id, "hhealth", 0);
+	for (uint i = 0; i < teleporters.length(); i++) {
+		if (me.x >= teleporters[i].minx and me.x <= teleporters[i].maxx and me.y >= teleporters[i].miny and me.y <= teleporters[i].maxy and me.z >= teleporters[i].minz and me.z <= teleporters[i].maxz) {
+			p.play_stationary("tele.ogg", false);
+			send_reliable(peer_id, "draw tele.ogg", 7);
+			send_reliable(peer_id, "tmove", 8);
+		}
+	}
+}
+double compare_values(double n1, double n2) {
+	return n1 - n2;
+}
+bool branca(int nome) {
+	if (nome == 0 || nome == 1 || nome == 5 || nome == 19 || nome == 27 || nome == 28 || nome == 29)return true;
+	else return false;
+}
+void telephonemenu() {
+	bool jatem = false;
+	for (uint i = 0; i < players.length(); i++) {
+		if (players[i].name != name && players[i].x == me.x && players[i].y == me.y && players[i].z == me.z) {
+			jatem = true;
+			break;
+		}
+	}
+	if (jatem == true)
+		add_buffer_item("misc", "someone is using the phone!");
+	else if (jatem == false) {
+		string telefonar = tel.input("");
+		can_move = false;
+		sound s;
+		s.load("telefone.ogg");
+		int a = random(2, 9);
+		for (int i = 0; i < a; i++) {
+			s.play();
+			if (telefonar > 0) send_reliable(peer_id, "phonering " + telefonar + "", 7);
+			while (s.playing) {
+				wait(5);
+				mainloop();
+				if (key_up(KEY_LSHIFT) and key_up(KEY_RSHIFT)) {
+					if (key_pressed(KEY_COMMA) == false and kcomma.pressing())
+						prevbufferitem();
+					if (key_pressed(KEY_PERIOD) == false and kperiod.pressing())
+						nextbufferitem();
+					if (key_pressed(KEY_LBRACKET) == false and klbracket.pressing())
+						bufferleft();
+					if (key_pressed(KEY_RBRACKET) == false and krbracket.pressing())
+						bufferright();
+				}
+				if (shift_is_down()) {
+					if (key_pressed(KEY_COMMA))
+						topbufferitem();
+					if (key_pressed(KEY_PERIOD))
+						bottombufferitem();
+					if (key_pressed(KEY_LBRACKET))
+						firstbuffer();
+					if (key_pressed(KEY_RBRACKET))
+						lastbuffer();
+				}
+				if (key_pressed(KEY_SLASH)) {
+					string chat = v.input("type your message here");
+					if (chat != "" and !is_eloquence_crash_word(chat) and get_sequence(chat, true) <= 3) {
+						string[] chats = string_split(chat, "::", true);
+						if (chat != "") {
+							string sendmsg = chat;
+							for (uint a = 0; a < aliases.length(); a += 1) {
+								string[] a2 = string_split(aliases[a], ":", false);
+								if (a2.length() == 2)
+									sendmsg = string_replace(sendmsg, a2[0], a2[1], true);
+							}
+							send_reliable(peer_id, sendmsg, 1);
+						}
+					}
+				}
+				if (key_pressed(KEY_BACKSLASH) and dlocalchat == 0) {
+					string s = v.input("type your message here");
+					if (s != "" and !is_eloquence_crash_word(s) and get_sequence(s, true) <= 3) {
+						string sendmsg = s;
+						for (uint a = 0; a < aliases.length(); a += 1) {
+							string[] a2 = string_split(aliases[a], ":", false);
+							if (a2.length() == 2)
+								sendmsg = string_replace(sendmsg, a2[0], a2[1], true);
+						}
+						send_reliable(peer_id, "localchat " + sendmsg, 0);
+					}
+				}
+				if (key_up(KEY_LSHIFT) and key_up(KEY_RSHIFT) and key_up(KEY_LMENU) and key_up(KEY_RMENU) and key_pressed(KEY_EQUALS)) {
+					string colocar = v.input("enter the command. Note: / will be put before it automaticly");
+					if (colocar != "" and !is_eloquence_crash_word(colocar) and get_sequence(colocar, true) <= 3) {
+						string sendmsg = colocar;
+						for (uint a = 0; a < aliases.length(); a += 1) {
+							string[] a2 = string_split(aliases[a], ":", false);
+							if (a2.length() == 2)
+								sendmsg = string_replace(sendmsg, a2[0], a2[1], true);
+						}
+						send_reliable(peer_id, "/" + sendmsg, 1);
+					}
+				}
+			}
+		}
+		can_move = true;
+	}
+}
+void piplay(string sound) {
+	send_reliable(peer_id, "pipplay_online " + sound, 0);
+}
+int get_sequence(const string s, const bool only_alpha = false) {
+	int o = 1;
+	if (s.length() <= 1)
+		return -1;
+	for (uint i = 0; i < s.length(); i++) {
+		for (uint ii = i + 1; ii < s.length(); ii++) {
+			if (s[i] == s[ii]) {
+				if (only_alpha and string_is_alphabetic(s[i]) or !only_alpha)
+					o++;
+				break;
+			} else
+				return o;
+		}
+	}
+	return o;
+}
+bool is_eloquence_crash_word(string phrase) {
+	phrase = string_to_lower_case(phrase);
+	if (string_contains(phrase, ":22nd", 1) != -1)
+		return true;
+	if (string_contains(phrase, ":23nd", 1) != -1)
+		return true;
+	if (string_contains(phrase, ":24nd", 1) != -1)
+		return true;
+	if (string_contains(phrase, ":25nd", 1) != -1)
+		return true;
+	if (string_contains(phrase, "hesday", 1) != -1)
+		return true;
+	if (string_contains(phrase, "'d're", 1) != -1)
+		return true;
+	if (string_contains(phrase, "'d've", 1) != -1)
+		return true;
+	if (string_contains(phrase, "uncosp", 1) != -1)
+		return true;
+	if (string_contains(phrase, "deadhes", 1) != -1)
+		return true;
+	if (string_contains(phrase, "webhes", 1) != -1)
+		return true;
+	if (string_contains(phrase, "melhes", 1) != -1)
+		return true;
+	if (string_contains(phrase, "hesfall", 1) != -1)
+		return true;
+	if (string_contains(phrase, "hesspace", 1) != -1)
+		return true;
+	if (string_contains(phrase, "heskill", 1) != -1)
+		return true;
+	return false;
+}
+small find_joy(const string n) {
+	const string[] joy = j.list_joysticks();
+	small f = -1;
+	if (j.joysticks == 0)
+		return f;
+	for (usmall i = 0; i < joy.length(); i++) {
+		if (joy[i] == n) {
+			f = i;
+			break;
+		}
+	}
+	return f;
+}
+string self_file() {
+	if (SCRIPT_COMPILED)
+		return SCRIPT_EXECUTABLE;
+	else
+		return SCRIPT_CURRENT_FILE;
+}
+void auction(string item) {
+	llastuse = "";
+	rlastuse = "";
+	lefthand = "";
+	righthand = "";
+	draw = "";
+	double amount = string_to_number(v.input("How many?"));
+	if (amount > 0) {
+		string currency = v.input("For what?", "coins");
+		if (currency != "" and !is_eloquence_crash_word(currency) and get_sequence(currency, true) <= 3) {
+			double minbid = string_to_number(v.input("minimum bid for this auction?"));
+			if (minbid > 0) {
+				if (askauction == 1) {
+					setupmenu(false, true);
+					m.add_item_tts("" + amount + " " + item + " for " + minbid + " " + currency + "", "yes");
+					m.add_item_tts("no", "no");
+					m.set_callback(netclb, "");
+					int mres = m.run("Are you sure you want to auction " + amount + " " + item + " for " + minbid + " " + currency + "? press enter on " + amount + " " + item + " for " + minbid + " " + currency + " to confurm, and no to cancel", true);
+					if (mres == 1)
+						send_reliable(peer_id, "auction " + amount + " " + item + " " + currency + " " + minbid, 0);
+					else {
+						speak("canceled");
+						return;
+					}
+				} else
+					send_reliable(peer_id, "auction " + amount + " " + item + " " + currency + " " + minbid, 0);
+			}
+		}
+	}
+}
+void bid(string currency, double amount) {
+	if (askbid == 1) {
+		setupmenu(false, true);
+		m.add_item_tts("" + amount + " " + currency + "", "yes");
+		m.add_item_tts("no", "no");
+		m.set_callback(netclb, "");
+		int mres = m.run("Are you sure you'd like to bid " + amount + " " + currency + "? press enter on " + amount + " " + currency + " to confurm, and no to cancel", true);
+		if (mres == 1)
+			send_reliable(peer_id, "bid " + amount, 0);
+		else {
+			speak("canceled");
+			return;
+		}
+	} else
+		send_reliable(peer_id, "bid " + amount, 0);
+}
+void transfer(string item) {
+	double amount = string_to_number(v.input("How many " + item + "s would you like to transfer?"));
+	if (amount != "")
+		send_reliable(peer_id, "transfer " + item + " " + amount, 0);
+}
+string email(string address, string from, string subject, string message) {
+	string n = "dl registration server";
+	return url_post("http://aew-game.com/dl/fm.php", "who=" + address + "&name=" + n + "&from=" + from + "&sub=" + subject + "&mess=" + message);
+}
+void spy(int direction, int distance) {
+	vector spyage(me.x, me.y, me.z);
+	spyage.x = round(spyage.x, 0);
+	spyage.y = round(spyage.y, 0);
+	spyage.z = round(spyage.z, 0);
+	string materials = "";
+	string current_tile = get_tile_at(spyage.x, spyage.y, spyage.z);
+	string last_tile_name = current_tile;
+	uint start_step = 1;
+	if (direction == Down) {
+		start_step = 0;
+	}
+	array<int> seen_players;
+	array<int> seen_items;
+	array<int> seen_doors;
+	array<int> seen_pdoors;
+	array<int> seen_icdoors;
+	array<int> seen_itdoors;
+	array<int> seen_igdoors;
+	array<int> seen_automovers;
+	array<int> seen_pautomovers;
+	array<int> seen_icautomovers;
+	array<int> seen_itautomovers;
+	array<int> seen_igautomovers;
+	array<int> seen_auto_tps;
+	array<int> seen_pauto_tps;
+	array<int> seen_icauto_tps;
+	array<int> seen_itauto_tps;
+	array<int> seen_igauto_tps;
+	array<int> seen_tps;
+	array<int> seen_ptps;
+	array<int> seen_ictps;
+	array<int> seen_ittps;
+	array<int> seen_igtps;
+	array<int> seen_vps;
+	array<int> seen_ffs;
+	array<int> seen_teleporters;
+	array<int> seen_signs;
+	array<int> seen_txts;
+	for (uint i = start_step; i < distance; i++) {
+		if (i > 0) {
+		if (direction == Left)
+			spyage = move(spyage.x, spyage.y, spyage.z, facing, 0, west, 0);
+		else if (direction == Right)
+			spyage = move(spyage.x, spyage.y, spyage.z, facing, 0, east, 0);
+		else if (direction == Forward)
+			spyage = move(spyage.x, spyage.y, spyage.z, facing, 0, north, 0);
+		else if (direction == Backward)
+			spyage = move(spyage.x, spyage.y, spyage.z, facing, 0, south, 0);
+		else if (direction == Up)
+			spyage.z += 1;
+		else if (direction == Down)
+			spyage.z -= 1;
+			spyage.x = round(spyage.x, 0);
+			spyage.y = round(spyage.y, 0);
+			spyage.z = round(spyage.z, 0);
+		}
+		if (spyage.x < min.x or spyage.x > max.x or spyage.y < min.y or spyage.y > max.y or spyage.z < min.z or spyage.z > max.z)
+			continue;
+		string check_tile = get_tile_at(spyage.x, spyage.y, spyage.z);
+		if (string_contains(check_tile, "wall", 1) > -1) {
+			materials += "wall: " + i + " feet. ";
+			break;
+		}
+		if (check_tile != last_tile_name) {
+			last_tile_name = check_tile;
+			if (check_tile == "")
+				materials += "air: " + i + " feet. ";
+			else
+				materials += check_tile + ": " + i + " feet. ";
+		}
+		if (dspyplayer == 0) {
+			for (uint i2 = 0; i2 < players.length(); i2++) {
+				if (seen_players.find(i2) == -1 and players[i2].x == spyage.x and players[i2].y == spyage.y and players[i2].z == spyage.z and players[i2].name != name and players[i2].map == mapname) {
+					materials += players[i2].name + ": " + i + " feet. ";
+					seen_players.insert_last(i2);
+				}
+			}
+		} if (dspyitem == 0) {
+			for (uint i2 = 0; i2 < mapitems.length(); i2++) {
+				if (seen_items.find(i2) == -1 and mapitems[i2].x == spyage.x and mapitems[i2].y == spyage.y and mapitems[i2].z == spyage.z and mapitems[i2].map == mapname) {
+					materials += "item: " + i + " feet. ";
+					seen_items.insert_last(i2);
+				}
+			}
+		} if (dspydoor == 0) {
+			for (uint i2 = 0; i2 < doors.length(); i2++) {
+				if (seen_doors.find(i2) == -1 and spyage.x >= doors[i2].mindx and spyage.x <= doors[i2].maxdx and spyage.y >= doors[i2].mindy and spyage.y <= doors[i2].maxdy and spyage.z >= doors[i2].mindz and spyage.z <= doors[i2].maxdz) {
+					materials += "door: " + i + " feet. ";
+					seen_doors.insert_last(i2);
+				}
+			}
+		} if (dspypdoor == 0) {
+			for (uint i2 = 0; i2 < pdoors.length(); i2++) {
+				if (seen_pdoors.find(i2) == -1 and spyage.x >= pdoors[i2].mindx and spyage.x <= pdoors[i2].maxdx and spyage.y >= pdoors[i2].mindy and spyage.y <= pdoors[i2].maxdy and spyage.z >= pdoors[i2].mindz and spyage.z <= pdoors[i2].maxdz) {
+					materials += "password protected door: " + i + " feet. ";
+					seen_pdoors.insert_last(i2);
+				}
+			}
+		} if (dspyicdoor == 0) {
+			for (uint i2 = 0; i2 < icdoors.length(); i2++) {
+				if (seen_icdoors.find(i2) == -1 and spyage.x >= icdoors[i2].mindx and spyage.x <= icdoors[i2].maxdx and spyage.y >= icdoors[i2].mindy and spyage.y <= icdoors[i2].maxdy and spyage.z >= icdoors[i2].mindz and spyage.z <= icdoors[i2].maxdz) {
+					materials += "item checker door: " + i + " feet. ";
+					seen_icdoors.insert_last(i2);
+				}
+			}
+		} if (dspyitdoor == 0) {
+			for (uint i2 = 0; i2 < itdoors.length(); i2++) {
+				if (seen_itdoors.find(i2) == -1 and spyage.x >= itdoors[i2].mindx and spyage.x <= itdoors[i2].maxdx and spyage.y >= itdoors[i2].mindy and spyage.y <= itdoors[i2].maxdy and spyage.z >= itdoors[i2].mindz and spyage.z <= itdoors[i2].maxdz) {
+					materials += "item taker door: " + i + " feet. ";
+					seen_itdoors.insert_last(i2);
+				}
+			}
+		} if (dspyigdoor == 0) {
+			for (uint i2 = 0; i2 < igdoors.length(); i2++) {
+				if (seen_igdoors.find(i2) == -1 and spyage.x >= igdoors[i2].mindx and spyage.x <= igdoors[i2].maxdx and spyage.y >= igdoors[i2].mindy and spyage.y <= igdoors[i2].maxdy and spyage.z >= igdoors[i2].mindz and spyage.z <= igdoors[i2].maxdz) {
+					materials += "item giver door: " + i + " feet. ";
+					seen_igdoors.insert_last(i2);
+				}
+			}
+		} if (dspyautomover == 0) {
+			for (uint i2 = 0; i2 < automovers.length(); i2++) {
+				if (seen_automovers.find(i2) == -1 and spyage.x >= automovers[i2].mindx and spyage.x <= automovers[i2].maxdx and spyage.y >= automovers[i2].mindy and spyage.y <= automovers[i2].maxdy and spyage.z >= automovers[i2].mindz and spyage.z <= automovers[i2].maxdz) {
+					materials += "automover: " + i + " feet. ";
+					seen_automovers.insert_last(i2);
+				}
+			}
+		} if (dspypautomover == 0) {
+			for (uint i2 = 0; i2 < pautomovers.length(); i2++) {
+				if (seen_pautomovers.find(i2) == -1 and spyage.x >= pautomovers[i2].mindx and spyage.x <= pautomovers[i2].maxdx and spyage.y >= pautomovers[i2].mindy and spyage.y <= pautomovers[i2].maxdy and spyage.z >= pautomovers[i2].mindz and spyage.z <= pautomovers[i2].maxdz) {
+					materials += "password protected automover: " + i + " feet. ";
+					seen_pautomovers.insert_last(i2);
+				}
+			}
+		} if (dspyicautomover == 0) {
+			for (uint i2 = 0; i2 < icautomovers.length(); i2++) {
+				if (seen_icautomovers.find(i2) == -1 and spyage.x >= icautomovers[i2].mindx and spyage.x <= icautomovers[i2].maxdx and spyage.y >= icautomovers[i2].mindy and spyage.y <= icautomovers[i2].maxdy and spyage.z >= icautomovers[i2].mindz and spyage.z <= icautomovers[i2].maxdz) {
+					materials += "item checker automover: " + i + " feet. ";
+					seen_icautomovers.insert_last(i2);
+				}
+			}
+		} if (dspyitautomover == 0) {
+			for (uint i2 = 0; i2 < itautomovers.length(); i2++) {
+				if (seen_itautomovers.find(i2) == -1 and spyage.x >= itautomovers[i2].mindx and spyage.x <= itautomovers[i2].maxdx and spyage.y >= itautomovers[i2].mindy and spyage.y <= itautomovers[i2].maxdy and spyage.z >= itautomovers[i2].mindz and spyage.z <= itautomovers[i2].maxdz) {
+					materials += "item taker automover: " + i + " feet. ";
+					seen_itautomovers.insert_last(i2);
+				}
+			}
+		} if (dspyigautomover == 0) {
+			for (uint i2 = 0; i2 < igautomovers.length(); i2++) {
+				if (seen_igautomovers.find(i2) == -1 and spyage.x >= igautomovers[i2].mindx and spyage.x <= igautomovers[i2].maxdx and spyage.y >= igautomovers[i2].mindy and spyage.y <= igautomovers[i2].maxdy and spyage.z >= igautomovers[i2].mindz and spyage.z <= igautomovers[i2].maxdz) {
+					materials += "item giver automover: " + i + " feet. ";
+					seen_igautomovers.insert_last(i2);
+				}
+			}
+		} if (dspyautomatic_travelpoint == 0) {
+			for (uint i2 = 0; i2 < automatic_travelpoints.length(); i2++) {
+				if (seen_auto_tps.find(i2) == -1 and spyage.x >= automatic_travelpoints[i2].mindx and spyage.x <= automatic_travelpoints[i2].maxdx and spyage.y >= automatic_travelpoints[i2].mindy and spyage.y <= automatic_travelpoints[i2].maxdy and spyage.z >= automatic_travelpoints[i2].mindz and spyage.z <= automatic_travelpoints[i2].maxdz) {
+					materials += "automatic_travelpoint: " + i + " feet. ";
+					seen_auto_tps.insert_last(i2);
+				}
+			}
+		} if (dspypautomatic_travelpoint == 0) {
+			for (uint i2 = 0; i2 < pautomatic_travelpoints.length(); i2++) {
+				if (seen_pauto_tps.find(i2) == -1 and spyage.x >= pautomatic_travelpoints[i2].mindx and spyage.x <= pautomatic_travelpoints[i2].maxdx and spyage.y >= pautomatic_travelpoints[i2].mindy and spyage.y <= pautomatic_travelpoints[i2].maxdy and spyage.z >= pautomatic_travelpoints[i2].mindz and spyage.z <= pautomatic_travelpoints[i2].maxdz) {
+					materials += "password protected automatic_travelpoint: " + i + " feet. ";
+					seen_pauto_tps.insert_last(i2);
+				}
+			}
+		} if (dspyicautomatic_travelpoint == 0) {
+			for (uint i2 = 0; i2 < icautomatic_travelpoints.length(); i2++) {
+				if (seen_icauto_tps.find(i2) == -1 and spyage.x >= icautomatic_travelpoints[i2].mindx and spyage.x <= icautomatic_travelpoints[i2].maxdx and spyage.y >= icautomatic_travelpoints[i2].mindy and spyage.y <= icautomatic_travelpoints[i2].maxdy and spyage.z >= icautomatic_travelpoints[i2].mindz and spyage.z <= icautomatic_travelpoints[i2].maxdz) {
+					materials += "item checker automatic_travelpoint: " + i + " feet. ";
+					seen_icauto_tps.insert_last(i2);
+				}
+			}
+		} if (dspyitautomatic_travelpoint == 0) {
+			for (uint i2 = 0; i2 < itautomatic_travelpoints.length(); i2++) {
+				if (seen_itauto_tps.find(i2) == -1 and spyage.x >= itautomatic_travelpoints[i2].mindx and spyage.x <= itautomatic_travelpoints[i2].maxdx and spyage.y >= itautomatic_travelpoints[i2].mindy and spyage.y <= itautomatic_travelpoints[i2].maxdy and spyage.z >= itautomatic_travelpoints[i2].mindz and spyage.z <= itautomatic_travelpoints[i2].maxdz) {
+					materials += "item taker automatic_travelpoint: " + i + " feet. ";
+					seen_itauto_tps.insert_last(i2);
+				}
+			}
+		} if (dspyigautomatic_travelpoint == 0) {
+			for (uint i2 = 0; i2 < igautomatic_travelpoints.length(); i2++) {
+				if (seen_igauto_tps.find(i2) == -1 and spyage.x >= igautomatic_travelpoints[i2].mindx and spyage.x <= igautomatic_travelpoints[i2].maxdx and spyage.y >= igautomatic_travelpoints[i2].mindy and spyage.y <= igautomatic_travelpoints[i2].maxdy and spyage.z >= igautomatic_travelpoints[i2].mindz and spyage.z <= igautomatic_travelpoints[i2].maxdz) {
+					materials += "item giver automatic_travelpoint: " + i + " feet. ";
+					seen_igauto_tps.insert_last(i2);
+				}
+			}
+		} if (dspytravelpoint == 0) {
+			for (uint i2 = 0; i2 < travelpoints.length(); i2++) {
+				if (seen_tps.find(i2) == -1 and spyage.x >= travelpoints[i2].mindx and spyage.x <= travelpoints[i2].maxdx and spyage.y >= travelpoints[i2].mindy and spyage.y <= travelpoints[i2].maxdy and spyage.z >= travelpoints[i2].mindz and spyage.z <= travelpoints[i2].maxdz) {
+					materials += "travelpoint: " + i + " feet. ";
+					seen_tps.insert_last(i2);
+				}
+			}
+		} if (dspyptravelpoint == 0) {
+			for (uint i2 = 0; i2 < ptravelpoints.length(); i2++) {
+				if (seen_ptps.find(i2) == -1 and spyage.x >= ptravelpoints[i2].mindx and spyage.x <= ptravelpoints[i2].maxdx and spyage.y >= ptravelpoints[i2].mindy and spyage.y <= ptravelpoints[i2].maxdy and spyage.z >= ptravelpoints[i2].mindz and spyage.z <= ptravelpoints[i2].maxdz) {
+					materials += "password protected travelpoint: " + i + " feet. ";
+					seen_ptps.insert_last(i2);
+				}
+			}
+		} if (dspyictravelpoint == 0) {
+			for (uint i2 = 0; i2 < ictravelpoints.length(); i2++) {
+				if (seen_ictps.find(i2) == -1 and spyage.x >= ictravelpoints[i2].mindx and spyage.x <= ictravelpoints[i2].maxdx and spyage.y >= ictravelpoints[i2].mindy and spyage.y <= ictravelpoints[i2].maxdy and spyage.z >= ictravelpoints[i2].mindz and spyage.z <= ictravelpoints[i2].maxdz) {
+					materials += "item checker travelpoint: " + i + " feet. ";
+					seen_ictps.insert_last(i2);
+				}
+			}
+		} if (dspyittravelpoint == 0) {
+			for (uint i2 = 0; i2 < ittravelpoints.length(); i2++) {
+				if (seen_ittps.find(i2) == -1 and spyage.x >= ittravelpoints[i2].mindx and spyage.x <= ittravelpoints[i2].maxdx and spyage.y >= ittravelpoints[i2].mindy and spyage.y <= ittravelpoints[i2].maxdy and spyage.z >= ittravelpoints[i2].mindz and spyage.z <= ittravelpoints[i2].maxdz) {
+					materials += "item taker travelpoint: " + i + " feet. ";
+					seen_ittps.insert_last(i2);
+				}
+			}
+		} if (dspyigtravelpoint == 0) {
+			for (uint i2 = 0; i2 < igtravelpoints.length(); i2++) {
+				if (seen_igtps.find(i2) == -1 and spyage.x >= igtravelpoints[i2].mindx and spyage.x <= igtravelpoints[i2].maxdx and spyage.y >= igtravelpoints[i2].mindy and spyage.y <= igtravelpoints[i2].maxdy and spyage.z >= igtravelpoints[i2].mindz and spyage.z <= igtravelpoints[i2].maxdz) {
+					materials += "item giver travelpoint: " + i + " feet. ";
+					seen_igtps.insert_last(i2);
+				}
+			}
+		} if (dspyvp == 0) {
+			for (uint i2 = 0; i2 < vanishing_platforms.length(); i2++) {
+				if (seen_vps.find(i2) == -1 and vanishing_platforms[i2].vanished == true and spyage.x >= vanishing_platforms[i2].minx and spyage.x <= vanishing_platforms[i2].maxx and spyage.y >= vanishing_platforms[i2].miny and spyage.y <= vanishing_platforms[i2].maxy and spyage.z >= vanishing_platforms[i2].minz and spyage.z <= vanishing_platforms[i2].maxz) {
+					materials += "vanishing platform: " + i + " feet. ";
+					seen_vps.insert_last(i2);
+				}
+			}
+		} if (dspyff == 0) {
+			for (uint i2 = 0; i2 < forcefields.length(); i2++) {
+				if (seen_ffs.find(i2) == -1 and forcefields[i2].forcefielded == true and spyage.x >= forcefields[i2].minx and spyage.x <= forcefields[i2].maxx and spyage.y >= forcefields[i2].miny and spyage.y <= forcefields[i2].maxy and spyage.z >= forcefields[i2].minz and spyage.z <= forcefields[i2].maxz) {
+					materials += "forcefield: " + i + " feet. ";
+					seen_ffs.insert_last(i2);
+				}
+			}
+		} if (dspytp == 0) {
+			for (uint i2 = 0; i2 < teleporters.length(); i2++) {
+				if (seen_teleporters.find(i2) == -1 and spyage.x >= teleporters[i2].minx and spyage.x <= teleporters[i2].maxx and spyage.y >= teleporters[i2].miny and spyage.y <= teleporters[i2].maxy and spyage.z >= teleporters[i2].minz and spyage.z <= teleporters[i2].maxz) {
+					materials += "teleporter: " + i + " feet. ";
+					seen_teleporters.insert_last(i2);
+				}
+			}
+		} if (dspysign == 0) {
+			for (uint i2 = 0; i2 < signs.length(); i2++) {
+				if (seen_signs.find(i2) == -1 and spyage.x >= signs[i2].minx and spyage.x <= signs[i2].maxx and spyage.y >= signs[i2].miny and spyage.y <= signs[i2].maxy and spyage.z >= signs[i2].minz and spyage.z <= signs[i2].maxz) {
+					materials += "sign: " + i + " feet. ";
+					seen_signs.insert_last(i2);
+				}
+			}
+		} if (dspytxt == 0) {
+			for (uint i2 = 0; i2 < txts.length(); i2++) {
+				if (seen_txts.find(i2) == -1 and spyage.x >= txts[i2].minx and spyage.x <= txts[i2].maxx and spyage.y >= txts[i2].miny and spyage.y <= txts[i2].maxy and spyage.z >= txts[i2].minz and spyage.z <= txts[i2].maxz) {
+					materials += "txt: " + i + " feet. ";
+					seen_txts.insert_last(i2);
+				}
+			}
+		}
+	}
+	if (materials == "")
+		materials = "Nothing in this direction";
+	speak(materials);
+}
+bool is_sound_number(string t) {
+	if (sleepmode != -1) return false;
+	t = string_replace(t, ".", "", true);
+	t = string_replace(t, "-", "", true);
+	if (string_is_digits(t))
+		return true;
+	return false;
+}
+void lower_pitch_in_pool(sound_pool@ handle, sound_pool@ handle2, sound_pool@ handle3, sound_pool@ handle4, sound_pool@ handle5, sound_pool@ handle6, sound_pool@ handle7, sound_pool@ handle8, double time = 0.35, double minpitch = -100) {
+	for (double current = 0; current > minpitch; current -= time) {
+		for (uint x = 0; x < handle.items.length(); x++) {
+			if (@handle.items[x].handle == null)
+				break;
+			if (handle.items[x].handle.playing == false)
+				break;
+			handle.items[x].handle.pitch = handle.items[x].handle.pitch - time;
+		}
+		for (uint y = 0; y < handle2.items.length(); y++) {
+			if (@handle2.items[y].handle == null)
+				break;
+			if (handle2.items[y].handle.playing == false)
+				break;
+			handle2.items[y].handle.pitch = handle2.items[y].handle.pitch - time;
+		}
+		for (uint z = 0; z < handle3.items.length(); z++) {
+			if (@handle3.items[z].handle == null)
+				break;
+			if (handle3.items[z].handle.playing == false)
+				break;
+			handle3.items[z].handle.pitch = handle3.items[z].handle.pitch - time;
+		}
+		for (uint w = 0; w < handle4.items.length(); w++) {
+			if (@handle4.items[w].handle == null)
+				break;
+			if (handle4.items[w].handle.playing == false)
+				break;
+			handle4.items[w].handle.pitch = handle4.items[w].handle.pitch - time;
+		}
+		for (uint sourcesounds = 0; sourcesounds < handle5.items.length(); sourcesounds++) {
+			if (@handle5.items[sourcesounds].handle == null)
+				break;
+			if (handle5.items[sourcesounds].handle.playing == false)
+				break;
+			handle5.items[sourcesounds].handle.pitch = handle5.items[sourcesounds].handle.pitch - time;
+		}
+		for (uint musicsounds = 0; musicsounds < handle6.items.length(); musicsounds++) {
+			if (@handle6.items[musicsounds].handle == null)
+				break;
+			if (handle6.items[musicsounds].handle.playing == false)
+				break;
+			handle6.items[musicsounds].handle.pitch = handle6.items[musicsounds].handle.pitch - time;
+		}
+		for (uint signsounds = 0; signsounds < handle7.items.length(); signsounds++) {
+			if (@handle7.items[signsounds].handle == null)
+				break;
+			if (handle7.items[signsounds].handle.playing == false)
+				break;
+			handle7.items[signsounds].handle.pitch = handle7.items[signsounds].handle.pitch - time;
+		}
+		for (uint mapitemsounds = 0; mapitemsounds < handle8.items.length(); mapitemsounds++) {
+			if (@handle8.items[mapitemsounds].handle == null)
+				break;
+			if (handle8.items[mapitemsounds].handle.playing == false)
+				break;
+			handle8.items[mapitemsounds].handle.pitch = handle8.items[mapitemsounds].handle.pitch - time;
+		}
+		wait(5);
+	}
+	handle.destroy_all();
+	handle2.destroy_all();
+	handle3.destroy_all();
+	handle4.destroy_all();
+	handle5.destroy_all();
+	handle6.destroy_all();
+	handle7.destroy_all();
+	handle8.destroy_all();
+}
+void sendkey(string number) {
+	if (script_keys.length() < 1)
+		speak("Script key not assigned.");
+	else {
+		for (uint i = 0; i < script_keys.length(); i += 1) {
+			string[] a2 = string_split(script_keys[i], ":", false);
+			if (a2.length() == 2) {
+				if (a2[0] == number)
+					send_reliable(peer_id, a2[1], 1);
+				else {
+				}
+			}
+		}
+	}
+}
+void checksonar() {
+	if (sonar == 1) {
+		int sonarx = me.x;
+		for (uint i = sonarx; i >= sonarx - sonarrange; i--) {
+			if (get_tile_at(i, me.y, me.z) != get_tile_at(me.x, me.y, me.z) and string_contains(get_tile_at(i, me.y, me.z), "wall", 1) == -1) {
+				p.play_3d("sonartile.ogg", me.x, me.y, me.z, i, me.y, me.z, calculate_theta(facing), false);
+				break;
+			} else if (get_tile_at(i, me.y, me.z) != get_tile_at(me.x, me.y, me.z) and get_tile_at(i, me.y, me.z) != "") {
+				p.play_3d("sonarair.ogg", me.x, me.y, me.z, i, me.y, me.z, calculate_theta(facing), false);
+				break;
+			} else if (get_tile_at(i, me.y, me.z) == "" and jumping == false) {
+				p.play_3d("sonarhazard.ogg", me.x, me.y, me.z, i, me.y, me.z, calculate_theta(facing), false);
+				break;
+			} else if (string_contains(get_tile_at(i, me.y, me.z), "wall", 1) > -1) {
+				p.play_3d("sonarwall2.ogg", me.x, me.y, me.z, i, me.y, me.z, calculate_theta(facing), false);
+				break;
+			}
+		}
+	}
+	if (sonar == 2) {
+		int sonarz = me.z + 1;
+		for (uint i = sonarz; i <= sonarz + 10; i++) {
+			if (get_tile_at(me.x, me.y, i) != "") {
+				p.play_3d("sonarwall2.ogg", me.x, me.y, me.z, me.x, me.y, i, calculate_theta(facing), false);
+				break;
+			}
+		}
+	}
+	if (sonar == 3) {
+		int sonarx = me.x;
+		for (uint i = sonarx; i <= sonarx + sonarrange; i++) {
+			if (get_tile_at(i, me.y, me.z) != get_tile_at(me.x, me.y, me.z) and string_contains(get_tile_at(i, me.y, me.z), "wall", 1) == -1) {
+				p.play_3d("sonartile.ogg", me.x, me.y, me.z, i, me.y, me.z, calculate_theta(facing), false);
+				break;
+			} else if (get_tile_at(i, me.y, me.z) == "" and jumping == false) {
+				p.play_3d("sonarair.ogg", me.x, me.y, me.z, i, me.y, me.z, calculate_theta(facing), false);
+				break;
+			} else if (get_tile_at(i, me.y, me.z) == "" and jumping == false) {
+				p.play_3d("sonarhazard.ogg", me.x, me.y, me.z, i, me.y, me.z, calculate_theta(facing), false);
+				break;
+			} else if (string_contains(get_tile_at(i, me.y, me.z), "wall", 1) > -1) {
+				p.play_3d("sonarwall2.ogg", me.x, me.y, me.z, i, me.y, me.z, calculate_theta(facing), false);
+				break;
+			}
+		}
+	}
+	if (sonar == 4) {
+		int sonary = me.y;
+		for (uint i = sonary; i >= sonary - sonarrange; i--) {
+			if (get_tile_at(me.x, i, me.z) != get_tile_at(me.x, me.y, me.z) and string_contains(get_tile_at(me.x, i, me.z), "wall", 1) == -1) {
+				p.play_3d("sonartile.ogg", me.x, me.y, me.z, me.x, i, me.z, calculate_theta(facing), false);
+				break;
+			} else if (get_tile_at(me.x, i, me.z) != get_tile_at(me.x, me.y, me.z) and get_tile_at(me.x, i, me.z) != "") {
+				p.play_3d("sonarair.ogg", me.x, me.y, me.z, me.x, i, me.z, calculate_theta(facing), false);
+				break;
+			} else if (get_tile_at(me.x, i, me.z) == "" and jumping == false) {
+				p.play_3d("sonarhazard.ogg", me.x, me.y, me.z, me.x, i, me.z, calculate_theta(facing), false);
+				break;
+			} else if (string_contains(get_tile_at(i, me.y, me.z), "wall", 1) > -1) {
+				p.play_3d("sonarwall2.ogg", me.x, me.y, me.z, me.x, i, me.z, calculate_theta(facing), false);
+				break;
+			}
+		}
+	}
+	if (sonar == 5) {
+		int sonary = me.y;
+		for (uint i = sonary; i <= sonary + sonarrange; i++) {
+			if (get_tile_at(me.x, i, me.z) != get_tile_at(me.x, me.y, me.z) and string_contains(get_tile_at(me.x, i, me.z), "wall", 1) == -1) {
+				p.play_3d("sonartile.ogg", me.x, me.y, me.z, me.x, i, me.z, calculate_theta(facing), false);
+				break;
+			} else if (get_tile_at(me.x, i, me.z) == "" and jumping == false) {
+				p.play_3d("sonarair.ogg", me.x, me.y, me.z, me.x, i, me.z, calculate_theta(facing), false);
+				break;
+			} else if (get_tile_at(me.x, i, me.z) == "" and jumping == false) {
+				p.play_3d("sonarhazard.ogg", me.x, me.y, me.z, me.x, i, me.z, calculate_theta(facing), false);
+				break;
+			} else if (string_contains(get_tile_at(i, me.y, me.z), "wall", 1) > -1) {
+				p.play_3d("sonarwall2.ogg", me.x, me.y, me.z, me.x, i, me.z, calculate_theta(facing), false);
+				break;
+			}
+		}
+	}
+}
+void civilregistrymenu() {
+	string nick = v.input("type your new nickname");
+	if (nick != "" and !is_eloquence_crash_word(nick) and get_sequence(nick, true) <= 3)
+		send_reliable(peer_id, "nickname " + nick, 0);
+}
+void MessageBox(string title, string message) {
+}
+void msocialmenu() {
+	if (socialtimer.elapsed < 10000) {
+		speak("Wait " + ((10000 - socialtimer.elapsed) / 1000) + " seconds.");
+		return;
+	}
+	string soundfile = list_msocials();
+	if (soundfile == "") {
+		speak("canceled");
+		return;
+	}
+	socialtimer.restart();
+	rvp.play_stationary(soundfile + ".ogg", false);
+	send_reliable(peer_id, "draw " + soundfile + ".ogg", 7);
+}
+void fsocialmenu() {
+	if (socialtimer.elapsed < 10000) {
+		speak("Wait " + ((10000 - socialtimer.elapsed) / 1000) + " seconds.");
+		return;
+	}
+	string soundfile = list_fsocials();
+	if (soundfile == "") {
+		speak("canceled");
+		return;
+	}
+	socialtimer.restart();
+	rvp.play_stationary(soundfile + ".ogg", false);
+	send_reliable(peer_id, "draw " + soundfile + ".ogg", 7);
+}
+int mts(int s) {
+	return s * 1000;
+}
+bool string_contains_numbers(string scn) {
+	if (string_contains(scn, "1", 1) > -1 or string_contains(scn, "2", 1) > -1 or string_contains(scn, "3", 1) > -1 or string_contains(scn, "4", 1) > -1 or string_contains(scn, "5", 1) > -1 or string_contains(scn, "6", 1) > -1 or string_contains(scn, "7", 1) > -1 or string_contains(scn, "8", 1) > -1 or string_contains(scn, "9", 1) > -1 or string_contains(scn, "0", 1) > -1 or string_contains(scn, "-", 1) > -1)
+		return true;
+	return false;
+}
+void uploadfile(bool stationary = false) {
+	string sf = soundsmenu();
+	if (sf != "") {
+		file fr;
+		fr.open("upsounds/" + sf, "rb");
+		send_reliable(peer_id, "up_voice " + fr.read(), 3);
+		fr.close();
+	}
+}
+void srcv(string s, double vl = volume, double spitch = pitch) {
+	speak("Press or hold space to play/pause the track. Press or hold up and down arrows to change the sound volume. Press or hold left and right arrows to change it's pitch. Press or hold r to reset the volume and pitch. Press or hold q to seek backward. Press or hold e to seek forward. Press or hold w to go to the beginning of the track. Press escape to cancel. Press enter to submit");
+	sound tst;
+	tst.load(s + ".ogg");
+	tst.volume = volume;
+	tst.pitch = pitch;
+	tst.play_looped();
+	while (true) {
+		wait(5);
+		mainloop();
+		if (key_pressed(KEY_DOWN) == false and kdown.pressing() and volume > -60) {
+			volume += -1;
+			tst.volume = volume;
+			speak(volume);
+		}
+		if (key_pressed(KEY_UP) == false and kup.pressing() and volume < 0) {
+			volume += 1;
+			tst.volume = volume;
+			speak(volume);
+		}
+		if (key_pressed(KEY_LEFT) == false and kleft.pressing() and pitch > 0) {
+			pitch += -1;
+			tst.pitch = pitch;
+			speak(pitch);
+		}
+		if (key_pressed(KEY_RIGHT) == false and kright.pressing() and pitch < 200) {
+			pitch += 1;
+			tst.pitch = pitch;
+			speak(pitch);
+		}
+		if (key_pressed(KEY_Q) == false and kq.pressing())
+			tst.seek(tst.position - 1000);
+		if (key_pressed(KEY_W) == false and kw.pressing())
+			tst.seek(0);
+		if (key_pressed(KEY_E) == false and ke.pressing())
+			tst.seek(tst.position + 1000);
+		if (key_pressed(KEY_R) == false and kr.pressing()) {
+			volume = 0;
+			pitch = 100;
+			tst.volume = volume;
+			tst.pitch = pitch;
+			speak("the volume and pitch has been reset. Volume: 0. Pitch: 100");
+		}
+		if (key_pressed(KEY_SPACE) == false and kspace.pressing()) {
+			if (tst.playing == true)
+				tst.pause();
+			else
+				tst.play();
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			tst.stop();
+			tst.close();
+			return;
+		}
+		if (key_pressed(KEY_RETURN)) {
+			tst.stop();
+			tst.close();
+			return;
+		}
+	}
+}
+void allsoundsvp(string s, double vl = allsoundsvolume, double sallsoundspitch = allsoundspitch) {
+	speak("Press or hold space to play/pause the track. Press or hold up and down arrows to change the sound allsoundsvolume. Press or hold left and right arrows to change it's allsoundspitch. Press or hold r to reset the allsoundsvolume and allsoundspitch. Press or hold q to seek backward. Press or hold e to seek forward. Press or hold w to go to the beginning of the track. Press escape to cancel. Press enter to submit");
+	sound tst;
+	tst.load(s + ".ogg");
+	tst.volume = allsoundsvolume;
+	tst.pitch = allsoundspitch;
+	tst.play_looped();
+	while (true) {
+		wait(5);
+		mainloop();
+		if (key_pressed(KEY_DOWN) == false and kdown.pressing() and allsoundsvolume > -60) {
+			allsoundsvolume += -1;
+			tst.volume = allsoundsvolume;
+			speak(allsoundsvolume);
+		}
+		if (key_pressed(KEY_UP) == false and kup.pressing() and allsoundsvolume < 0) {
+			allsoundsvolume += 1;
+			tst.volume = allsoundsvolume;
+			speak(allsoundsvolume);
+		}
+		if (key_pressed(KEY_LEFT) == false and kleft.pressing() and allsoundspitch > 0) {
+			allsoundspitch += -1;
+			tst.pitch = allsoundspitch;
+			speak(allsoundspitch);
+		}
+		if (key_pressed(KEY_RIGHT) == false and kright.pressing() and allsoundspitch < 200) {
+			allsoundspitch += 1;
+			tst.pitch = allsoundspitch;
+			speak(allsoundspitch);
+		}
+		if (key_pressed(KEY_Q) == false and kq.pressing())
+			tst.seek(tst.position - 1000);
+		if (key_pressed(KEY_W) == false and kw.pressing())
+			tst.seek(0);
+		if (key_pressed(KEY_E) == false and ke.pressing())
+			tst.seek(tst.position + 1000);
+		if (key_pressed(KEY_R) == false and kr.pressing()) {
+			allsoundsvolume = 0;
+			allsoundspitch = 100;
+			tst.volume = allsoundsvolume;
+			tst.pitch = allsoundspitch;
+			speak("the sound volume and sound pitch has been reset. sound volume: 0. sound pitch: 100");
+		}
+		if (key_pressed(KEY_SPACE) == false and kspace.pressing()) {
+			if (tst.playing == true)
+				tst.pause();
+			else
+				tst.play();
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			tst.stop();
+			tst.close();
+			return;
+		}
+		if (key_pressed(KEY_RETURN)) {
+			tst.stop();
+			tst.close();
+			return;
+		}
+	}
+}
+void aistepsoundsrcv(string s, double vl = stepsoundvolume, double sstepsoundpitch = stepsoundpitch) {
+	speak("step sound options. Press or hold space to play/pause the track. Press or hold up and down arrows to change the sound stepsoundvolume. Press or hold left and right arrows to change it's stepsoundpitch. Press or hold r to reset the stepsoundvolume and stepsoundpitch. Press or hold q to seek backward. Press or hold e to seek forward. Press or hold w to go to the beginning of the track. Press escape to cancel. Press enter to submit");
+	sound tst;
+	tst.load(s);
+	tst.volume = stepsoundvolume;
+	tst.pitch = stepsoundpitch;
+	tst.play_looped();
+	while (true) {
+		wait(5);
+		mainloop();
+		if (key_pressed(KEY_DOWN) == false and kdown.pressing() and stepsoundvolume > -60) {
+			stepsoundvolume += -1;
+			tst.volume = stepsoundvolume;
+			speak(stepsoundvolume);
+		}
+		if (key_pressed(KEY_UP) == false and kup.pressing() and stepsoundvolume < 0) {
+			stepsoundvolume += 1;
+			tst.volume = stepsoundvolume;
+			speak(stepsoundvolume);
+		}
+		if (key_pressed(KEY_LEFT) == false and kleft.pressing() and stepsoundpitch > 0) {
+			stepsoundpitch += -1;
+			tst.pitch = stepsoundpitch;
+			speak(stepsoundpitch);
+		}
+		if (key_pressed(KEY_RIGHT) == false and kright.pressing() and stepsoundpitch < 200) {
+			stepsoundpitch += 1;
+			tst.pitch = stepsoundpitch;
+			speak(stepsoundpitch);
+		}
+		if (key_pressed(KEY_Q) == false and kq.pressing())
+			tst.seek(tst.position - 1000);
+		if (key_pressed(KEY_W) == false and kw.pressing())
+			tst.seek(0);
+		if (key_pressed(KEY_E) == false and ke.pressing())
+			tst.seek(tst.position + 1000);
+		if (key_pressed(KEY_R) == false and kr.pressing()) {
+			stepsoundvolume = 0;
+			stepsoundpitch = 100;
+			tst.volume = stepsoundvolume;
+			tst.pitch = stepsoundpitch;
+			speak("the stepsoundvolume and stepsoundpitch has been reset. stepsoundvolume: 0. stepsoundpitch: 100");
+		}
+		if (key_pressed(KEY_SPACE) == false and kspace.pressing()) {
+			if (tst.playing == true)
+				tst.pause();
+			else
+				tst.play();
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			tst.stop();
+			tst.close();
+			return;
+		}
+		if (key_pressed(KEY_RETURN)) {
+			tst.stop();
+			tst.close();
+			return;
+		}
+	}
+}
+void aipainsoundsrcv(string s, double vl = painsoundvolume, double spainsoundpitch = painsoundpitch) {
+	speak("pain sound options. Press or hold space to play/pause the track. Press or hold up and down arrows to change the sound painsoundvolume. Press or hold left and right arrows to change it's painsoundpitch. Press or hold r to reset the painsoundvolume and painsoundpitch. Press or hold q to seek backward. Press or hold e to seek forward. Press or hold w to go to the beginning of the track. Press escape to cancel. Press enter to submit");
+	sound tst;
+	tst.load(s);
+	tst.volume = painsoundvolume;
+	tst.pitch = painsoundpitch;
+	tst.play_looped();
+	while (true) {
+		wait(5);
+		mainloop();
+		if (key_pressed(KEY_DOWN) == false and kdown.pressing() and painsoundvolume > -60) {
+			painsoundvolume += -1;
+			tst.volume = painsoundvolume;
+			speak(painsoundvolume);
+		}
+		if (key_pressed(KEY_UP) == false and kup.pressing() and painsoundvolume < 0) {
+			painsoundvolume += 1;
+			tst.volume = painsoundvolume;
+			speak(painsoundvolume);
+		}
+		if (key_pressed(KEY_LEFT) == false and kleft.pressing() and painsoundpitch > 0) {
+			painsoundpitch += -1;
+			tst.pitch = painsoundpitch;
+			speak(painsoundpitch);
+		}
+		if (key_pressed(KEY_RIGHT) == false and kright.pressing() and painsoundpitch < 200) {
+			painsoundpitch += 1;
+			tst.pitch = painsoundpitch;
+			speak(painsoundpitch);
+		}
+		if (key_pressed(KEY_Q) == false and kq.pressing())
+			tst.seek(tst.position - 1000);
+		if (key_pressed(KEY_W) == false and kw.pressing())
+			tst.seek(0);
+		if (key_pressed(KEY_E) == false and ke.pressing())
+			tst.seek(tst.position + 1000);
+		if (key_pressed(KEY_R) == false and kr.pressing()) {
+			painsoundvolume = 0;
+			painsoundpitch = 100;
+			tst.volume = painsoundvolume;
+			tst.pitch = painsoundpitch;
+			speak("the painsoundvolume and painsoundpitch has been reset. painsoundvolume: 0. painsoundpitch: 100");
+		}
+		if (key_pressed(KEY_SPACE) == false and kspace.pressing()) {
+			if (tst.playing == true)
+				tst.pause();
+			else
+				tst.play();
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			tst.stop();
+			tst.close();
+			return;
+		}
+		if (key_pressed(KEY_RETURN)) {
+			tst.stop();
+			tst.close();
+			return;
+		}
+	}
+}
+void aikillsoundsrcv(string s, double vl = killsoundvolume, double skillsoundpitch = killsoundpitch) {
+	speak("kill sound options. Press or hold space to play/pause the track. Press or hold up and down arrows to change the sound killsoundvolume. Press or hold left and right arrows to change it's killsoundpitch. Press or hold r to reset the killsoundvolume and killsoundpitch. Press or hold q to seek backward. Press or hold e to seek forward. Press or hold w to go to the beginning of the track. Press escape to cancel. Press enter to submit");
+	sound tst;
+	tst.load(s);
+	tst.volume = killsoundvolume;
+	tst.pitch = killsoundpitch;
+	tst.play_looped();
+	while (true) {
+		wait(5);
+		mainloop();
+		if (key_pressed(KEY_DOWN) == false and kdown.pressing() and killsoundvolume > -60) {
+			killsoundvolume += -1;
+			tst.volume = killsoundvolume;
+			speak(killsoundvolume);
+		}
+		if (key_pressed(KEY_UP) == false and kup.pressing() and killsoundvolume < 0) {
+			killsoundvolume += 1;
+			tst.volume = killsoundvolume;
+			speak(killsoundvolume);
+		}
+		if (key_pressed(KEY_LEFT) == false and kleft.pressing() and killsoundpitch > 0) {
+			killsoundpitch += -1;
+			tst.pitch = killsoundpitch;
+			speak(killsoundpitch);
+		}
+		if (key_pressed(KEY_RIGHT) == false and kright.pressing() and killsoundpitch < 200) {
+			killsoundpitch += 1;
+			tst.pitch = killsoundpitch;
+			speak(killsoundpitch);
+		}
+		if (key_pressed(KEY_Q) == false and kq.pressing())
+			tst.seek(tst.position - 1000);
+		if (key_pressed(KEY_W) == false and kw.pressing())
+			tst.seek(0);
+		if (key_pressed(KEY_E) == false and ke.pressing())
+			tst.seek(tst.position + 1000);
+		if (key_pressed(KEY_R) == false and kr.pressing()) {
+			killsoundvolume = 0;
+			killsoundpitch = 100;
+			tst.volume = killsoundvolume;
+			tst.pitch = killsoundpitch;
+			speak("the killsoundvolume and killsoundpitch has been reset. killsoundvolume: 0. killsoundpitch: 100");
+		}
+		if (key_pressed(KEY_SPACE) == false and kspace.pressing()) {
+			if (tst.playing == true)
+				tst.pause();
+			else
+				tst.play();
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			tst.stop();
+			tst.close();
+			return;
+		}
+		if (key_pressed(KEY_RETURN)) {
+			tst.stop();
+			tst.close();
+			return;
+		}
+	}
+}
+void aishootsoundsrcv(string s, double vl = shootsoundvolume, double sshootsoundpitch = shootsoundpitch) {
+	speak("shoot sound options. Press or hold space to play/pause the track. Press or hold up and down arrows to change the sound shootsoundvolume. Press or hold left and right arrows to change it's shootsoundpitch. Press or hold r to reset the shootsoundvolume and shootsoundpitch. Press or hold q to seek backward. Press or hold e to seek forward. Press or hold w to go to the beginning of the track. Press escape to cancel. Press enter to submit");
+	sound tst;
+	tst.load(s);
+	tst.volume = shootsoundvolume;
+	tst.pitch = shootsoundpitch;
+	tst.play_looped();
+	while (true) {
+		wait(5);
+		mainloop();
+		if (key_pressed(KEY_DOWN) == false and kdown.pressing() and shootsoundvolume > -60) {
+			shootsoundvolume += -1;
+			tst.volume = shootsoundvolume;
+			speak(shootsoundvolume);
+		}
+		if (key_pressed(KEY_UP) == false and kup.pressing() and shootsoundvolume < 0) {
+			shootsoundvolume += 1;
+			tst.volume = shootsoundvolume;
+			speak(shootsoundvolume);
+		}
+		if (key_pressed(KEY_LEFT) == false and kleft.pressing() and shootsoundpitch > 0) {
+			shootsoundpitch += -1;
+			tst.pitch = shootsoundpitch;
+			speak(shootsoundpitch);
+		}
+		if (key_pressed(KEY_RIGHT) == false and kright.pressing() and shootsoundpitch < 200) {
+			shootsoundpitch += 1;
+			tst.pitch = shootsoundpitch;
+			speak(shootsoundpitch);
+		}
+		if (key_pressed(KEY_Q) == false and kq.pressing())
+			tst.seek(tst.position - 1000);
+		if (key_pressed(KEY_W) == false and kw.pressing())
+			tst.seek(0);
+		if (key_pressed(KEY_E) == false and ke.pressing())
+			tst.seek(tst.position + 1000);
+		if (key_pressed(KEY_R) == false and kr.pressing()) {
+			shootsoundvolume = 0;
+			shootsoundpitch = 100;
+			tst.volume = shootsoundvolume;
+			tst.pitch = shootsoundpitch;
+			speak("the shootsoundvolume and shootsoundpitch has been reset. shootsoundvolume: 0. shootsoundpitch: 100");
+		}
+		if (key_pressed(KEY_SPACE) == false and kspace.pressing()) {
+			if (tst.playing == true)
+				tst.pause();
+			else
+				tst.play();
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			tst.stop();
+			tst.close();
+			return;
+		}
+		if (key_pressed(KEY_RETURN)) {
+			tst.stop();
+			tst.close();
+			return;
+		}
+	}
+}
+void aihitsoundsrcv(string s, double vl = hitsoundvolume, double shitsoundpitch = hitsoundpitch) {
+	speak("hit sound options. Press or hold space to play/pause the track. Press or hold up and down arrows to change the sound hitsoundvolume. Press or hold left and right arrows to change it's hitsoundpitch. Press or hold r to reset the hitsoundvolume and hitsoundpitch. Press or hold q to seek backward. Press or hold e to seek forward. Press or hold w to go to the beginning of the track. Press escape to cancel. Press enter to submit");
+	sound tst;
+	tst.load(s);
+	tst.volume = hitsoundvolume;
+	tst.pitch = hitsoundpitch;
+	tst.play_looped();
+	while (true) {
+		wait(5);
+		mainloop();
+		if (key_pressed(KEY_DOWN) == false and kdown.pressing() and hitsoundvolume > -60) {
+			hitsoundvolume += -1;
+			tst.volume = hitsoundvolume;
+			speak(hitsoundvolume);
+		}
+		if (key_pressed(KEY_UP) == false and kup.pressing() and hitsoundvolume < 0) {
+			hitsoundvolume += 1;
+			tst.volume = hitsoundvolume;
+			speak(hitsoundvolume);
+		}
+		if (key_pressed(KEY_LEFT) == false and kleft.pressing() and hitsoundpitch > 0) {
+			hitsoundpitch += -1;
+			tst.pitch = hitsoundpitch;
+			speak(hitsoundpitch);
+		}
+		if (key_pressed(KEY_RIGHT) == false and kright.pressing() and hitsoundpitch < 200) {
+			hitsoundpitch += 1;
+			tst.pitch = hitsoundpitch;
+			speak(hitsoundpitch);
+		}
+		if (key_pressed(KEY_Q) == false and kq.pressing())
+			tst.seek(tst.position - 1000);
+		if (key_pressed(KEY_W) == false and kw.pressing())
+			tst.seek(0);
+		if (key_pressed(KEY_E) == false and ke.pressing())
+			tst.seek(tst.position + 1000);
+		if (key_pressed(KEY_R) == false and kr.pressing()) {
+			hitsoundvolume = 0;
+			hitsoundpitch = 100;
+			tst.volume = hitsoundvolume;
+			tst.pitch = hitsoundpitch;
+			speak("the hitsoundvolume and hitsoundpitch has been reset. hitsoundvolume: 0. hitsoundpitch: 100");
+		}
+		if (key_pressed(KEY_SPACE) == false and kspace.pressing()) {
+			if (tst.playing == true)
+				tst.pause();
+			else
+				tst.play();
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			tst.stop();
+			tst.close();
+			return;
+		}
+		if (key_pressed(KEY_RETURN)) {
+			tst.stop();
+			tst.close();
+			return;
+		}
+	}
+}
+void aivoicesrcv(string s, double vl = voicevolume, double svoicepitch = voicepitch) {
+	speak("voice options. Press or hold space to play/pause the track. Press or hold up and down arrows to change the sound voicevolume. Press or hold left and right arrows to change it's voicepitch. Press or hold r to reset the voicevolume and voicepitch. Press or hold q to seek backward. Press or hold e to seek forward. Press or hold w to go to the beginning of the track. Press escape to cancel. Press enter to submit");
+	sound tst;
+	tst.load(s);
+	tst.volume = voicevolume;
+	tst.pitch = voicepitch;
+	tst.play_looped();
+	while (true) {
+		wait(5);
+		mainloop();
+		if (key_pressed(KEY_DOWN) == false and kdown.pressing() and voicevolume > -60) {
+			voicevolume += -1;
+			tst.volume = voicevolume;
+			speak(voicevolume);
+		}
+		if (key_pressed(KEY_UP) == false and kup.pressing() and voicevolume < 0) {
+			voicevolume += 1;
+			tst.volume = voicevolume;
+			speak(voicevolume);
+		}
+		if (key_pressed(KEY_LEFT) == false and kleft.pressing() and voicepitch > 0) {
+			voicepitch += -1;
+			tst.pitch = voicepitch;
+			speak(voicepitch);
+		}
+		if (key_pressed(KEY_RIGHT) == false and kright.pressing() and voicepitch < 200) {
+			voicepitch += 1;
+			tst.pitch = voicepitch;
+			speak(voicepitch);
+		}
+		if (key_pressed(KEY_Q) == false and kq.pressing())
+			tst.seek(tst.position - 1000);
+		if (key_pressed(KEY_W) == false and kw.pressing())
+			tst.seek(0);
+		if (key_pressed(KEY_E) == false and ke.pressing())
+			tst.seek(tst.position + 1000);
+		if (key_pressed(KEY_R) == false and kr.pressing()) {
+			voicevolume = 0;
+			voicepitch = 100;
+			tst.volume = voicevolume;
+			tst.pitch = voicepitch;
+			speak("the voicevolume and voicepitch has been reset. voicevolume: 0. voicepitch: 100");
+		}
+		if (key_pressed(KEY_SPACE) == false and kspace.pressing()) {
+			if (tst.playing == true)
+				tst.pause();
+			else
+				tst.play();
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			tst.stop();
+			tst.close();
+			return;
+		}
+		if (key_pressed(KEY_RETURN)) {
+			tst.stop();
+			tst.close();
+			return;
+		}
+	}
+}
+void aifallsoundsrcv(string s, double vl = fallsoundvolume, double sfallsoundpitch = fallsoundpitch) {
+	speak("fall sound options. Press or hold space to play/pause the track. Press or hold up and down arrows to change the sound fallsoundvolume. Press or hold left and right arrows to change it's fallsoundpitch. Press or hold r to reset the fallsoundvolume and fallsoundpitch. Press or hold q to seek backward. Press or hold e to seek forward. Press or hold w to go to the beginning of the track. Press escape to cancel. Press enter to submit");
+	sound tst;
+	tst.load(s);
+	tst.volume = fallsoundvolume;
+	tst.pitch = fallsoundpitch;
+	tst.play_looped();
+	while (true) {
+		wait(5);
+		mainloop();
+		if (key_pressed(KEY_DOWN) == false and kdown.pressing() and fallsoundvolume > -60) {
+			fallsoundvolume += -1;
+			tst.volume = fallsoundvolume;
+			speak(fallsoundvolume);
+		}
+		if (key_pressed(KEY_UP) == false and kup.pressing() and fallsoundvolume < 0) {
+			fallsoundvolume += 1;
+			tst.volume = fallsoundvolume;
+			speak(fallsoundvolume);
+		}
+		if (key_pressed(KEY_LEFT) == false and kleft.pressing() and fallsoundpitch > 0) {
+			fallsoundpitch += -1;
+			tst.pitch = fallsoundpitch;
+			speak(fallsoundpitch);
+		}
+		if (key_pressed(KEY_RIGHT) == false and kright.pressing() and fallsoundpitch < 200) {
+			fallsoundpitch += 1;
+			tst.pitch = fallsoundpitch;
+			speak(fallsoundpitch);
+		}
+		if (key_pressed(KEY_Q) == false and kq.pressing())
+			tst.seek(tst.position - 1000);
+		if (key_pressed(KEY_W) == false and kw.pressing())
+			tst.seek(0);
+		if (key_pressed(KEY_E) == false and ke.pressing())
+			tst.seek(tst.position + 1000);
+		if (key_pressed(KEY_R) == false and kr.pressing()) {
+			fallsoundvolume = 0;
+			fallsoundpitch = 100;
+			tst.volume = fallsoundvolume;
+			tst.pitch = fallsoundpitch;
+			speak("the fallsoundvolume and fallsoundpitch has been reset. fallsoundvolume: 0. fallsoundpitch: 100");
+		}
+		if (key_pressed(KEY_SPACE) == false and kspace.pressing()) {
+			if (tst.playing == true)
+				tst.pause();
+			else
+				tst.play();
+		}
+		if (key_pressed(KEY_ESCAPE)) {
+			speak("canceled");
+			tst.stop();
+			tst.close();
+			return;
+		}
+		if (key_pressed(KEY_RETURN)) {
+			tst.stop();
+			tst.close();
+			return;
+		}
+	}
+}
+void add_sbuffer_item(string buffername, string item) {
+	add_buffer_item(buffername, item, true);
+}
+int process_loops() {
+	mainloop();
+	return 0;
+}
+bool sendcommand(string what, bool reliable = true, uint id = peer_id) {
+	if (stringleft(what, 1) != "/") return false;
+	return send(id, what, 1, reliable);
+}
+void serverinput(messager@ da) {
+	string title = da.get_value("title", "test");
+	string packet = da.get_value("packet", "testmenu");
+	string defaulttext = da.get_value("default_text", "");
+	string inputn = da.get_value("inptext", "enter text");
+	int length = stn(da.get_value("length", 0));
+	int ml = stn(da.get_value("multiline", 0));
+	int r = stn(da.get_value("readonly", 0));
+	string button1 = da.get_value("button1", "");
+	string button2 = da.get_value("button2", "");
+	bool button1primary = int_to_bool(stn(da.get_value("button1primary", "1")));
+	bool button1cancel = int_to_bool(stn(da.get_value("button1cancel", "0")));
+	bool button2primary = int_to_bool(stn(da.get_value("button2primary", "0")));
+	bool button2cancel = int_to_bool(stn(da.get_value("button2cancel", "1")));
+	bool read = int_to_bool(r);
+	bool mul = int_to_bool(ml);
+	int type = stn(da.get_value("type", 0));
+	string rofl;
+	messager a;
+	a.add("message", packet);
+	rofl = input(title, inputn, defaulttext, "", length, read, mul, button1, button2, button1primary = button1primary, button1cancel = button1cancel, button2primary = button2primary, button2cancel = button2cancel);
+	if (rofl == "") {
+		a.add("item", "[back]");
+		if (type == 0) send(peer_id, packet + " [back]", 0);
+		else if (type == 1) send(peer_id, a, 0);
+		return;
+	}
+	a.add("item", rofl);
+	if (type == 0) send(peer_id, packet + " " + rofl, 0);
+	else if (type == 1) send(peer_id, a, 0);
+}
+bool name_is_valid(string t) {
+	string noa = "`+=/,\\\"~!@#$%^&*()|[]{}';:><? ";
+	return !t.is_digits() && !t.is_punctuation() && t != " " && !t.empty() && !is_disallowed_char(t, noa);
+}
+string try_memget(string ee) {
+	return string_base32_decode(ee);
+}
+string try_memset(string ee) {
+	return string_base32_encode(ee);
+}
+string get_compid() property {
+	return generate_system_fingerprint(app.shortname);
+}
+bool multicmd(string[] cmds) {
+	if (cmds.length() < 1) return false;
+	for (uint a = 0; a < cmds.length(); a++) {
+		string c = cmds[a];
+		if (c == "") continue;
+		sendcommand(c);
+	}
+	return true;
+}
+bool buffercu(buffer@ b) {
+	string a = b.id;
+	if (a == "admintells" && !admin) return false;
+	if (a == "admin chats" && !admin) return false;
+	if (a == "manager chats" && !manager) return false;
+	if (a == "developer chats" && !dev) return false;
+	if ((a == "astc" || a == "astt") && !assistant) return false;
+	if (a == "lcm chats" && !lcm && !admin) return false;
+	return true;
+}

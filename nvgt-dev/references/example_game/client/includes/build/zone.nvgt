@@ -1,0 +1,93 @@
+void buildzone() {
+					if (d2dsupport == 0) {
+						form.reset();
+						string nums = "1234567890-";
+						string mx, mmx, my, mmy, mz, mmz, t;
+						form.create_window("zone", false);
+						int a = form.create_input_box("type the minimum &x of the zone",lx);
+						int b = form.create_input_box("type the maximum &x of the zone",rx);
+						int c = form.create_input_box("type the minimum &y of the zone",by);
+						int d = form.create_input_box("type the maximum &y of the zone",fy);
+						int e = form.create_input_box("type the minimum &z of the zone",bz);
+						int f = form.create_input_box("type the maximum &z of the zone",tz);
+						int g = form.create_input_box("type the &text of the zone", "", "", 0, false, false);
+						form.set_disallowed_chars(a, nums, true);
+						form.set_disallowed_chars(b, nums, true);
+						form.set_disallowed_chars(c, nums, true);
+						form.set_disallowed_chars(d, nums, true);
+						form.set_disallowed_chars(e, nums, true);
+						form.set_disallowed_chars(f, nums, true);
+						int ok = form.create_button("finish", false);
+						int can = form.create_button("cancel", false, true);
+						form.focus(a);
+						while (true) {
+							wait(5);
+							form.monitor(); mainloop();
+							mx = form.get_text(a);
+							mmx = form.get_text(b);
+							my = form.get_text(c);
+							mmy = form.get_text(d);
+							mz = form.get_text(e);
+							mmz = form.get_text(f);
+							t = form.get_text(g);
+							if (form.is_pressed(ok)) {
+								form.reset();
+								break;
+							} else if (form.is_pressed(can)) {
+								form.reset();
+								return;
+							}
+						}//while
+						if (mx == "" || mmx == "" || my == "" || mmy == "" || mz == "" || mmz == "" || t == "") {
+							speak("canceled");
+							return;
+						}
+						string extra = "";
+						int track = yesno("would you like this zone to be trackable via the zone tracker menu?");
+						if (track == 1) extra = ":trackme";
+
+						send_reliable(peer_id, "addzone zone:" + mx + ":" + mmx + ":" + my + ":" + mmy + ":" + mz + ":" + mmz + ":" + t + extra, 0);
+					} else {
+						form.reset();
+						string nums = "1234567890-";
+						string mx, mmx, my, mmy, t;
+						form.create_window("zone", false);
+						int a = form.create_input_box("type the minimum &x of the zone",lx);
+						int b = form.create_input_box("type the maximum &x of the zone",rx);
+						int c = form.create_input_box("type the minimum &y of the zone",bz);
+						int d = form.create_input_box("type the maximum &y of the zone",tz);
+						int e = form.create_input_box("type the &text of the zone", "", "", 0, false, false);
+						form.set_disallowed_chars(a, nums, true);
+						form.set_disallowed_chars(b, nums, true);
+						form.set_disallowed_chars(c, nums, true);
+						form.set_disallowed_chars(d, nums, true);
+						int ok = form.create_button("finish", false);
+						int can = form.create_button("cancel", false, true);
+						form.focus(a);
+						while (true) {
+							wait(5);
+							form.monitor(); mainloop();
+							mx = form.get_text(a);
+							mmx = form.get_text(b);
+							my = form.get_text(c);
+							mmy = form.get_text(d);
+							t = form.get_text(e);
+							if (form.is_pressed(ok)) {
+								form.reset();
+								break;
+							} else if (form.is_pressed(can)) {
+								form.reset();
+								return;
+							}
+						}//while
+						if (mx == "" || mmx == "" || my == "" || mmy == "" || t == "") {
+							speak("canceled");
+							return;
+						}
+						string extra = "";
+						int track = yesno("would you like this zone to be trackable via the zone tracker menu?");
+						if (track == 1) extra = ":trackme";
+
+						send_reliable(peer_id, "addzone zone:" + mx + ":" + mmx + ":0:0:" + my + ":" + mmy + ":" + t + extra, 0);
+					}
+}
