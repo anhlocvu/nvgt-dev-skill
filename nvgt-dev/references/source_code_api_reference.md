@@ -1,4 +1,4 @@
-# NVGT API Reference (Extracted from Source)
+# NVGT API Reference (Core Engine)
 
 This document contains the API definitions automatically extracted from the NVGT C++ source code.
 
@@ -6,8 +6,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `ARCHITECTURE get_PROCESSOR_ARCHITECTURE() property`
 - `OPERATING_SYSTEM get_OS() property`
 - `aabb aabb_create_from_triangle(const vector[]@ points)`
-- `array<string>@ get_sound_input_devices() property`
-- `array<string>@ get_sound_output_devices() property`
 - `audio_engine@+ get_sound_default_engine() property`
 - `audio_error_state get_SOUNDSYSTEM_LAST_ERROR() property`
 - `bool android_request_permission(const string&in permission, android_permission_request_callback@ callback = null, const string&in callback_data = \`
@@ -41,7 +39,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool get_SCREEN_KEYBOARD_SUPPORTED() property`
 - `bool get_SCREEN_READER_AVAILABLE() property`
 - `bool get_SCRIPT_COMPILED() property`
-- `bool get_SOUND_AVAILABLE() property`
 - `bool get_cursor_visible() property`
 - `bool get_mouse_grab() property`
 - `bool get_sound_3d_attenuator_enabled(int attenuator_id)`
@@ -111,7 +108,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool mouse_released(uint8 button)`
 - `bool mouse_up(uint8 button)`
 - `bool natural_number_sort(const string&in string1, const string&in string2)`
-- `bool pack_set_global_identifier(const string&in)`
 - `bool parse_ip_address(const string&in addr_in, ip_address&out addr_out)`
 - `bool random_bool(int = 50)`
 - `bool random_set_state(const string& in)`
@@ -331,7 +327,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int popcount(uint8 x)`
 - `int question(const string& in title, const string& in text, bool can_cancel = false, uint flags = 0)`
 - `int random(int, int)`
-- `int systemd_notify(const string&in state)`
 - `int total_keys_down()`
 - `int utf8next(const string&in text, int cursor)`
 - `int utf8prev(const string&in text, int cursor)`
@@ -475,10 +470,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint font_string_to_tag(const string&in str)`
 - `uint fp_to_IEEE(float fp)`
 - `uint get_PROCESSOR_COUNT() property`
-- `uint get_sound_input_device() property`
-- `uint get_sound_input_device_count() property`
-- `uint get_sound_output_device() property`
-- `uint get_sound_output_device_count() property`
 - `uint random_seed()`
 - `uint string_distance(const string&in string1, const string&in string2, uint insert_cost = 1, uint delete_cost = 1, uint replace_cost = 1)`
 - `uint thread_current_id()`
@@ -543,8 +534,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void debug_add_file_breakpoint(const string&in, int)`
 - `void debug_add_func_breakpoint(const string&in)`
 - `void debug_break()`
-- `void do_exception()`
-- `void do_test()`
 - `void exit(int=0)`
 - `void garbage_collect(bool = true)`
 - `void memory_free(uint64 ptr)`
@@ -588,12 +577,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_sound_default_decryption_key(const string& in key) property`
 - `void set_sound_default_engine(audio_engine@ engine) property`
 - `void set_sound_default_pack(pack_interface@ storage) property`
-- `void set_sound_global_hrtf(bool) property`
-- `void set_sound_input_device(uint) property`
 - `void set_sound_master_volume(float db) property`
-- `void set_sound_master_volume(float) property`
 - `void set_sound_output_device(int device) property`
-- `void set_sound_output_device(uint) property`
 - `void sleep(uint)`
 - `void start_profiling()`
 - `void stop_profiling()`
@@ -646,10 +631,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `const int NVGT_VERSION_MAJOR`
 - `const int NVGT_VERSION_MINOR`
 - `const int NVGT_VERSION_PATCH`
-- `const int PACK_OPEN_MODE_APPEND`
-- `const int PACK_OPEN_MODE_CREATE`
-- `const int PACK_OPEN_MODE_NONE`
-- `const int PACK_OPEN_MODE_READ`
 - `const int64 DAYS`
 - `const int64 HOURS`
 - `const int64 MICROSECONDS`
@@ -698,12 +679,10 @@ This document contains the API definitions automatically extracted from the NVGT
 - `const string PLATFORM_DISPLAY_NAME`
 - `const string PLATFORM_VERSION`
 - `const string last_exception_call_stack`
-- `const string pack_global_identifier`
 - `const string[]@ ARGS`
 - `const timestamp SCRIPT_BUILD_TIME`
 - `const uint NVGT_VERSION_BUILD_TIMESTAMP`
 - `mixer@ sound_default_mixer`
-- `pack@ sound_default_pack`
 - `uint64 timer_default_accuracy`
 
 ## Enums
@@ -727,7 +706,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `ARCH_S390`
 - `ARCH_SH`
 - `ARCH_SPARC`
-
 ### `OPERATING_SYSTEM`
 - `OS_AIX`
 - `OS_ANDROID`
@@ -747,22 +725,18 @@ This document contains the API definitions automatically extracted from the NVGT
 - `OS_VMS`
 - `OS_VXWORKS`
 - `OS_WINDOWS_NT`
-
 ### `audio_attenuator`
 - `audio_attenuator_basic`
 - `audio_attenuator_phonon`
-
 ### `audio_encoder_flags`
 - `AUDIO_ENCODER_DEFAULTS`
 - `AUDIO_ENCODER_OVERWRITE`
-
 ### `audio_engine_flags`
 - `AUDIO_ENGINE_DURATIONS_IN_FRAMES`
 - `AUDIO_ENGINE_NO_AUTO_START`
 - `AUDIO_ENGINE_NO_CLIP`
 - `AUDIO_ENGINE_NO_DEVICE`
 - `AUDIO_ENGINE_PERCENTAGE_ATTRIBUTES`
-
 ### `audio_error_state`
 - `AUDIO_ERROR_STATE_ACCESS_DENIED`
 - `AUDIO_ERROR_STATE_ADDRESS_FAMILY_NOT_SUPPORTED`
@@ -835,7 +809,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `AUDIO_ERROR_STATE_TOO_MANY_LINKS`
 - `AUDIO_ERROR_STATE_TOO_MANY_OPEN_FILES`
 - `AUDIO_ERROR_STATE_UNAVAILABLE`
-
 ### `audio_format`
 - `AUDIO_FORMAT_F32`
 - `AUDIO_FORMAT_S16`
@@ -843,30 +816,24 @@ This document contains the API definitions automatically extracted from the NVGT
 - `AUDIO_FORMAT_S32`
 - `AUDIO_FORMAT_U8`
 - `AUDIO_FORMAT_UNKNOWN`
-
 ### `audio_node_state`
 - `AUDIO_NODE_STATE_STARTED`
 - `AUDIO_NODE_STATE_STOPPED`
-
 ### `audio_pan_mode`
 - `AUDIO_PAN_MODE_BALANCE`
 - `AUDIO_PAN_MODE_PAN`
-
 ### `audio_panner`
 - `audio_panner_basic`
 - `audio_panner_phonon_hrtf`
-
 ### `audio_positioning_mode`
 - `AUDIO_POSITIONING_ABSOLUTE`
 - `AUDIO_POSITIONING_RELATIVE`
-
 ### `audio_wav_encoder_flags`
 - `AUDIO_ENCODER_WAV_F32`
 - `AUDIO_ENCODER_WAV_S16`
 - `AUDIO_ENCODER_WAV_S24`
 - `AUDIO_ENCODER_WAV_S32`
 - `AUDIO_ENCODER_WAV_U8`
-
 ### `blend_mode`
 - `BLEND_MODE_ADD`
 - `BLEND_MODE_ADD_PREMULTIPLIED`
@@ -875,78 +842,64 @@ This document contains the API definitions automatically extracted from the NVGT
 - `BLEND_MODE_MOD`
 - `BLEND_MODE_MUL`
 - `BLEND_MODE_NONE`
-
 ### `compression_method`
 - `COMPRESSION_METHOD_GZIP`
 - `COMPRESSION_METHOD_ZLIB`
-
 ### `datastream_byte_order`
 - `STREAM_BYTE_ORDER_BIG_ENDIAN`
 - `STREAM_BYTE_ORDER_LITTLE_ENDIAN`
 - `STREAM_BYTE_ORDER_NATIVE`
 - `STREAM_BYTE_ORDER_NETWORK`
-
 ### `flip_mode`
 - `FLIP_HORIZONTAL`
 - `FLIP_NONE`
 - `FLIP_VERTICAL`
-
 ### `floating_point_classification`
 - `FP_INFINITE`
 - `FP_NAN`
 - `FP_NORMAL`
 - `FP_SUBNORMAL`
 - `FP_ZERO`
-
 ### `font_align`
 - `FONT_ALIGN_CENTER`
 - `FONT_ALIGN_LEFT`
 - `FONT_ALIGN_RIGHT`
-
 ### `font_direction`
 - `FONT_DIRECTION_BTT`
 - `FONT_DIRECTION_LTR`
 - `FONT_DIRECTION_RTL`
 - `FONT_DIRECTION_TTB`
-
 ### `font_hinting`
 - `FONT_HINTING_LIGHT`
 - `FONT_HINTING_LIGHT_SUBPIXEL`
 - `FONT_HINTING_MONO`
 - `FONT_HINTING_NONE`
 - `FONT_HINTING_NORMAL`
-
 ### `font_style`
 - `FONT_STYLE_BOLD`
 - `FONT_STYLE_ITALIC`
 - `FONT_STYLE_NORMAL`
 - `FONT_STYLE_STRIKETHROUGH`
 - `FONT_STYLE_UNDERLINE`
-
 ### `ftp_file_type`
 - `FTP_FILE_TYPE_BINARY`
 - `FTP_FILE_TYPE_TEXT`
-
 ### `glob_options`
 - `GLOB_CASELESS`
 - `GLOB_DEFAULT`
 - `GLOB_FOLLOW_SYMLINKS`
 - `GLOB_IGNORE_HIDDEN`
-
 ### `http_status`
-
 ### `ip_address_family`
 - `IP_FAMILY_IPV4`
 - `IP_FAMILY_IPV6`
 - `IP_FAMILY_UNKNOWN`
 - `IP_FAMILY_unix_local`
-
 ### `joystick_bind_type`
 - `JOYSTICK_BIND_TYPE_AXIS`
 - `JOYSTICK_BIND_TYPE_BUTTON`
 - `JOYSTICK_BIND_TYPE_HAT`
 - `JOYSTICK_BIND_TYPE_NONE`
-
 ### `joystick_control_type`
 - `JOYSTICK_BUTTON_A`
 - `JOYSTICK_BUTTON_B`
@@ -970,7 +923,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `JOYSTICK_CONTROL_RIGHT_SHOULDER`
 - `JOYSTICK_CONTROL_RIGHT_STICK`
 - `JOYSTICK_CONTROL_TOUCHPAD`
-
 ### `joystick_power_state`
 - `JOYSTICK_POWER_CHARGED`
 - `JOYSTICK_POWER_CHARGING`
@@ -978,7 +930,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `JOYSTICK_POWER_NO_BATTERY`
 - `JOYSTICK_POWER_ON_BATTERY`
 - `JOYSTICK_POWER_UNKNOWN`
-
 ### `joystick_type`
 - `JOYSTICK_TYPE_NINTENDO_SWITCH_JOYCON_LEFT`
 - `JOYSTICK_TYPE_NINTENDO_SWITCH_JOYCON_PAIR`
@@ -991,7 +942,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `JOYSTICK_TYPE_UNKNOWN`
 - `JOYSTICK_TYPE_XBOX1`
 - `JOYSTICK_TYPE_XBOX360`
-
 ### `key_code`
 - `KEY_0`
 - `KEY_1`
@@ -1227,7 +1177,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `KEY_X`
 - `KEY_Y`
 - `KEY_Z`
-
 ### `key_modifier`
 - `KEYMOD_ALT`
 - `KEYMOD_CAPS`
@@ -1246,110 +1195,88 @@ This document contains the API definitions automatically extracted from the NVGT
 - `KEYMOD_RSHIFT`
 - `KEYMOD_SCROLL`
 - `KEYMOD_SHIFT`
-
 ### `mail_priority`
 - `MAIL_PRIORITY_HIGH`
 - `MAIL_PRIORITY_HIGHEST`
 - `MAIL_PRIORITY_LOW`
 - `MAIL_PRIORITY_LOWEST`
 - `MAIL_PRIORITY_NORMAL`
-
 ### `mail_recipient_type`
 - `RECIPIENT_BCC`
 - `RECIPIENT_CC`
 - `RECIPIENT_TO`
-
 ### `memory_order`
 - `MEMORY_ORDER_ACQUIRE`
 - `MEMORY_ORDER_ACQ_REL`
 - `MEMORY_ORDER_RELAXED`
 - `MEMORY_ORDER_RELEASE`
 - `MEMORY_ORDER_SEQ_CST`
-
 ### `message_box_flags`
-
 ### `network_event_type`
 - `event_connect`
 - `event_disconnect`
 - `event_disconnect_timeout`
 - `event_none`
 - `event_receive`
-
 ### `opus_application_type`
 - `OPUS_APPLICATION_AUDIO`
 - `OPUS_APPLICATION_RESTRICTED_LOWDELAY`
 - `OPUS_APPLICATION_VOIP`
-
 ### `opus_signal_type`
 - `OPUS_AUTO`
 - `OPUS_SIGNAL_MUSIC`
 - `OPUS_SIGNAL_VOICE`
-
 ### `path_style`
-
 ### `physics_body_type`
 - `PHYSICS_BODY_DYNAMIC`
 - `PHYSICS_BODY_KINEMATIC`
 - `PHYSICS_BODY_STATIC`
-
 ### `physics_contact_event_type`
 - `PHYSICS_CONTACT_EXIT`
 - `PHYSICS_CONTACT_START`
 - `PHYSICS_CONTACT_STAY`
-
 ### `physics_contact_position_correction_technique`
 - `POSITION_CORRECTION_TECHNIQUE_BAUMGARTE_CONTACTS`
 - `POSITION_CORRECTION_TECHNIQUE_SPLIT_IMPULSES`
-
 ### `physics_height_data_type`
 - `PHYSICS_HEIGHT_DOUBLE_TYPE`
 - `PHYSICS_HEIGHT_FLOAT_TYPE`
 - `PHYSICS_HEIGHT_INT_TYPE`
-
 ### `physics_joint_type`
 - `BALL_SOCKET_JOINT`
 - `FIXED_JOINT`
 - `HINGE_JOINT`
 - `SLIDER_JOINT`
-
 ### `physics_joints_position_correction_technique`
 - `JOINTS_CORRECTION_TECHNIQUE_BAUMGARTE_JOINTS`
 - `JOINTS_CORRECTION_TECHNIQUE_NON_LINEAR_GAUSS_SEIDEL`
-
 ### `physics_logger_category`
 - `LOGGER_CATEGORY_BODY`
 - `LOGGER_CATEGORY_COLLIDER`
 - `LOGGER_CATEGORY_JOINT`
 - `LOGGER_CATEGORY_PHYSICS_COMMON`
 - `LOGGER_CATEGORY_WORLD`
-
 ### `physics_logger_format`
 - `LOGGER_FORMAT_HTML`
 - `LOGGER_FORMAT_TEXT`
-
 ### `physics_logger_level`
 - `LOGGER_LEVEL_ERROR`
 - `LOGGER_LEVEL_INFORMATION`
 - `LOGGER_LEVEL_WARNING`
-
 ### `physics_message_type`
 - `PHYSICS_MESSAGE_ERROR`
 - `PHYSICS_MESSAGE_INFORMATION`
 - `PHYSICS_MESSAGE_WARNING`
-
 ### `physics_overlap_event_type`
 - `PHYSICS_OVERLAP_EXIT`
 - `PHYSICS_OVERLAP_START`
 - `PHYSICS_OVERLAP_STAY`
-
 ### `physics_polygon_index_data_type`
 - `POLYGON_INDEX_INTEGER_TYPE`
 - `POLYGON_INDEX_SHORT_TYPE`
-
 ### `physics_polygon_vertex_data_type`
 - `POLYGON_VERTEX_DOUBLE_TYPE`
 - `POLYGON_VERTEX_FLOAT_TYPE`
-
 ### `physics_shape_name`
 - `SHAPE_BOX`
 - `SHAPE_CAPSULE`
@@ -1358,34 +1285,27 @@ This document contains the API definitions automatically extracted from the NVGT
 - `SHAPE_SPHERE`
 - `SHAPE_TRIANGLE`
 - `SHAPE_TRIANGLE_MESH`
-
 ### `physics_shape_type`
 - `SHAPE_TYPE_CAPSULE`
 - `SHAPE_TYPE_CONCAVE`
 - `SHAPE_TYPE_CONVEX_POLYHEDRON`
 - `SHAPE_TYPE_SPHERE`
-
 ### `physics_triangle_index_data_type`
 - `TRIANGLE_INDEX_INTEGER_TYPE`
 - `TRIANGLE_INDEX_SHORT_TYPE`
-
 ### `physics_triangle_normal_data_type`
 - `TRIANGLE_NORMAL_DOUBLE_TYPE`
 - `TRIANGLE_NORMAL_FLOAT_TYPE`
-
 ### `physics_triangle_raycast_side`
 - `TRIANGLE_RAYCAST_SIDE_BACK`
 - `TRIANGLE_RAYCAST_SIDE_FRONT`
 - `TRIANGLE_RAYCAST_SIDE_FRONT_AND_BACK`
-
 ### `physics_triangle_vertex_data_type`
 - `TRIANGLE_VERTEX_DOUBLE_TYPE`
 - `TRIANGLE_VERTEX_FLOAT_TYPE`
-
 ### `physics_vertex_data_type`
 - `VERTEX_DOUBLE_TYPE`
 - `VERTEX_FLOAT_TYPE`
-
 ### `pixel_format`
 - `PIXELFORMAT_ABGR32`
 - `PIXELFORMAT_ABGR8888`
@@ -1401,17 +1321,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `PIXELFORMAT_UNKNOWN`
 - `PIXELFORMAT_XBGR8888`
 - `PIXELFORMAT_XRGB8888`
-
 ### `process_flags`
-
-### `redis_type`
-- `REDIS_TYPE_HASH`
-- `REDIS_TYPE_LIST`
-- `REDIS_TYPE_NONE`
-- `REDIS_TYPE_SET`
-- `REDIS_TYPE_STRING`
-- `REDIS_TYPE_ZSET`
-
 ### `regexp_options`
 - `RE_ANCHORED`
 - `RE_CASELESS`
@@ -1436,24 +1346,20 @@ This document contains the API definitions automatically extracted from the NVGT
 - `RE_NO_VARS`
 - `RE_UNGREEDY`
 - `RE_UTF8`
-
 ### `renderer_logical_presentation`
 - `LOGICAL_PRESENTATION_DISABLED`
 - `LOGICAL_PRESENTATION_INTEGER_SCALE`
 - `LOGICAL_PRESENTATION_LETTERBOX`
 - `LOGICAL_PRESENTATION_OVERSCAN`
 - `LOGICAL_PRESENTATION_STRETCH`
-
 ### `reverb3d_placement`
 - `reverb3d_postattenuate`
 - `reverb3d_postpan`
 - `reverb3d_prepan`
-
 ### `sdl_hint_priority`
 - `SDL_HINT_DEFAULT`
 - `SDL_HINT_NORMAL`
 - `SDL_HINT_OVERRIDE`
-
 ### `smtp_auth_method`
 - `SMTP_AUTH_CRAM_MD5`
 - `SMTP_AUTH_CRAM_SHA1`
@@ -1462,23 +1368,19 @@ This document contains the API definitions automatically extracted from the NVGT
 - `SMTP_AUTH_NTLM`
 - `SMTP_AUTH_PLAIN`
 - `SMTP_AUTH_XOAUTH2`
-
 ### `socket_select_mode`
 - `SOCKET_SELECT_ERROR`
 - `SOCKET_SELECT_READ`
 - `SOCKET_SELECT_WRITE`
-
 ### `socket_type`
 - `SOCKET_TYPE_DATAGRAM`
 - `SOCKET_TYPE_RAW`
 - `SOCKET_TYPE_STREAM`
-
 ### `string_base64_options`
 - `STRING_BASE64_DEFAULT`
 - `STRING_BASE64_PADLESS`
 - `STRING_BASE64_URL`
 - `STRING_BASE64_URL_PADLESS`
-
 ### `system_power_state`
 - `POWER_STATE_CHARGED`
 - `POWER_STATE_CHARGING`
@@ -1486,30 +1388,25 @@ This document contains the API definitions automatically extracted from the NVGT
 - `POWER_STATE_NO_BATTERY`
 - `POWER_STATE_ON_BATTERY`
 - `POWER_STATE_UNKNOWN`
-
 ### `system_tray_menu_item_type`
 - `SYSTEM_TRAY_CHECKBOX`
 - `SYSTEM_TRAY_ITEM`
 - `SYSTEM_TRAY_SEPARATOR`
 - `SYSTEM_TRAY_SUBMENU`
-
 ### `thread_event_type`
 - `THREAD_EVENT_AUTO_RESET`
 - `THREAD_EVENT_MANUAL_RESET`
-
 ### `thread_priority`
 - `THREAD_PRIORITY_HIGH`
 - `THREAD_PRIORITY_HIGHEST`
 - `THREAD_PRIORITY_LOW`
 - `THREAD_PRIORITY_LOWEST`
 - `THREAD_PRIORITY_NORMAL`
-
 ### `touch_device_type`
 - `TOUCH_DEVICE_DIRECT`
 - `TOUCH_DEVICE_INDIRECT_ABSOLUTE`
 - `TOUCH_DEVICE_INDIRECT_RELATIVE`
 - `TOUCH_DEVICE_TYPE_INVALID`
-
 ### `web_socket_error_codes`
 - `WS_ERR_HANDSHAKE_ACCEPT`
 - `WS_ERR_HANDSHAKE_NO_KEY`
@@ -1519,10 +1416,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `WS_ERR_NO_HANDSHAKE`
 - `WS_ERR_PAYLOAD_TOO_BIG`
 - `WS_ERR_UNAUTHORIZED`
-
 ### `web_socket_frame_flags`
 - `WS_FRAME_FLAG_FIN`
-
 ### `web_socket_frame_opcodes`
 - `WS_FRAME_OP_BINARY`
 - `WS_FRAME_OP_BITMASK`
@@ -1532,15 +1427,12 @@ This document contains the API definitions automatically extracted from the NVGT
 - `WS_FRAME_OP_PONG`
 - `WS_FRAME_OP_SETRAW`
 - `WS_FRAME_OP_TEXT`
-
 ### `web_socket_mode`
 - `WS_CLIENT`
 - `WS_SERVER`
-
 ### `web_socket_send_flags`
 - `WS_FRAME_BINARY`
 - `WS_FRAME_TEXT`
-
 ### `web_socket_status_codes`
 - `WS_ENDPOINT_GOING_AWAY`
 - `WS_EXTENSION_REQUIRED`
@@ -1555,7 +1447,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `WS_RESERVED_NO_STATUS_CODE`
 - `WS_RESERVED_TLS_FAILURE`
 - `WS_UNEXPECTED_CONDITION`
-
 ### `window_flags`
 - `WINDOW_FLAG_ALWAYS_ON_TOP`
 - `WINDOW_FLAG_BORDERLESS`
@@ -1564,12 +1455,10 @@ This document contains the API definitions automatically extracted from the NVGT
 - `WINDOW_FLAG_MAXIMIZED`
 - `WINDOW_FLAG_MINIMIZED`
 - `WINDOW_FLAG_RESIZABLE`
-
 ### `window_flash_operation`
 - `FLASH_BRIEFLY`
 - `FLASH_CANCEL`
 - `FLASH_UNTIL_FOCUSED`
-
 ### `window_progress_state`
 - `PROGRESS_STATE_ERROR`
 - `PROGRESS_STATE_INDETERMINATE`
@@ -1577,7 +1466,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `PROGRESS_STATE_NONE`
 - `PROGRESS_STATE_NORMAL`
 - `PROGRESS_STATE_PAUSED`
-
 
 ## Classes
 ### Class `aabb`
@@ -1915,24 +1803,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `audio_wav_encoder@ e(audio_engine@ engine = sound_default_engine)`
 #### Methods
 - `audio_format get_wav_format() const property`
-
-### Class `blocking_redis_subscriber`
-#### Behaviours / Constructors
-- `blocking_redis_subscriber@ f()`
-- `void f()`
-#### Methods
-- `array<string>@ get_messages(const string&in)`
-- `bool get_is_running() const property`
-- `bool has_messages(const string&in)`
-- `bool subscribe(array<string>@)`
-- `int get_port() const property`
-- `string get_host() const property`
-- `string get_last_error() const property`
-- `string get_password() const property`
-- `void set_host(const string&in) property`
-- `void set_password(const string&in) property`
-- `void set_port(int) property`
-- `void stop()`
 
 ### Class `calendar`
 #### Behaviours / Constructors
@@ -2725,33 +2595,11 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `mixer`
 #### Behaviours / Constructors
-- `mixer @m()`
 - `mixer@ m()`
-- `void f()`
-#### Methods
-- `bool get_pan_sliding() const property`
-- `bool get_pitch_sliding() const property`
-- `bool get_sliding() const property`
-- `bool get_volume_sliding() const property`
-- `bool set_fx(const string &in, int = -1)`
-- `bool set_mixer(mixer@ = null)`
-- `bool set_position(float, float, float, float, float, float, float, float, float)`
-- `bool slide_pan(float, uint)`
-- `bool slide_pitch(float, uint)`
-- `bool slide_volume(float, uint)`
-- `float get_pan() const property`
-- `float get_pitch() const property`
-- `float get_volume() const property`
-- `void set_hrtf(bool = true)`
-- `void set_pan(float) property`
-- `void set_pitch(float) property`
-- `void set_volume(float) property`
 
 ### Class `network`
 
 ### Class `network_event`
-
-### Class `pack`
 
 ### Class `pack_file`
 #### Behaviours / Constructors
@@ -3393,175 +3241,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `vector world_normal`
 - `vector world_point`
 
-### Class `redis_client`
-#### Behaviours / Constructors
-- `redis_client@ f()`
-- `void f()`
-#### Methods
-- `array<array<double>@>@ geopos(const string&in, array<string>@)`
-- `array<redis_value@>@ pipeline_execute()`
-- `array<string>@ acl_getuser(const string&in)`
-- `array<string>@ acl_list()`
-- `array<string>@ client_list()`
-- `array<string>@ georadius(const string&in, double, double, double, const string&in, bool = false, bool = false, bool = false, int64 = -1)`
-- `array<string>@ georadiusbymember(const string&in, const string&in, double, const string&in, bool = false, bool = false, bool = false, int64 = -1)`
-- `array<string>@ hkeys(const string&in)`
-- `array<string>@ hvals(const string&in)`
-- `array<string>@ keys(const string&in)`
-- `array<string>@ lrange(const string&in, int64, int64)`
-- `array<string>@ mget(array<string>@)`
-- `array<string>@ scan(int64, const string&in = \`
-- `array<string>@ sdiff(array<string>@)`
-- `array<string>@ sinter(array<string>@)`
-- `array<string>@ smembers(const string&in)`
-- `array<string>@ srandmember_count(const string&in, int64)`
-- `array<string>@ sunion(array<string>@)`
-- `array<string>@ zrange(const string&in, int64, int64, bool = false)`
-- `array<string>@ zrangebyscore(const string&in, double, double, bool = false, int64 = -1, int64 = -1)`
-- `array<string>@ zrevrange(const string&in, int64, int64, bool = false)`
-- `bool acl_deluser(const string&in)`
-- `bool acl_setuser(const string&in, const string&in)`
-- `bool bgrewriteaof()`
-- `bool bgsave()`
-- `bool client_pause(int64)`
-- `bool client_setname(const string&in)`
-- `bool config_resetstat()`
-- `bool config_rewrite()`
-- `bool config_set(const string&in, const string&in)`
-- `bool connect()`
-- `bool connect(const string&in, int, const string&in = \`
-- `bool del(const string&in)`
-- `bool discard()`
-- `bool exists(const string&in)`
-- `bool expire(const string&in, int64)`
-- `bool flushall()`
-- `bool flushdb()`
-- `bool get_is_connected() const property`
-- `bool getbit(const string&in, int64)`
-- `bool hexists(const string&in, const string&in)`
-- `bool hset(const string&in, const string&in, const string&in)`
-- `bool hsetnx(const string&in, const string&in, const string&in)`
-- `bool lset(const string&in, int64, const string&in)`
-- `bool ltrim(const string&in, int64, int64)`
-- `bool migrate(const string&in, int, const string&in, int, int, bool = false, bool = false)`
-- `bool mset(array<string>@)`
-- `bool mset(dictionary@)`
-- `bool multi()`
-- `bool pfadd(const string&in, array<string>@)`
-- `bool pfadd(const string&in, const string&in)`
-- `bool pfmerge(const string&in, array<string>@)`
-- `bool pipeline_add(array<string>@)`
-- `bool pipeline_begin()`
-- `bool psetex(const string&in, int64, const string&in)`
-- `bool restore(const string&in, int64, const string&in, bool = false)`
-- `bool save()`
-- `bool script_exists(const string&in)`
-- `bool script_flush()`
-- `bool select(int64)`
-- `bool set(const string&in, const string&in, int64 = 0)`
-- `bool setbit(const string&in, int64, bool)`
-- `bool setex(const string&in, int64, const string&in)`
-- `bool setnx(const string&in, const string&in)`
-- `bool sismember(const string&in, const string&in)`
-- `bool smove(const string&in, const string&in, const string&in)`
-- `bool unwatch()`
-- `bool watch(array<string>@)`
-- `bool watch(const string&in)`
-- `dictionary@ config_get(const string&in)`
-- `dictionary@ hgetall(const string&in)`
-- `dictionary@ memory_stats()`
-- `dictionary@ object(const string&in, const string&in)`
-- `double geodist(const string&in, const string&in, const string&in, const string&in = \`
-- `double hincrbyfloat(const string&in, const string&in, double)`
-- `double zincrby(const string&in, double, const string&in)`
-- `double zscore(const string&in, const string&in)`
-- `int get_database() const property`
-- `int get_port() const property`
-- `int get_timeout() const property`
-- `int64 append(const string&in, const string&in)`
-- `int64 bitcount(const string&in, int64 = -1, int64 = -1)`
-- `int64 bitop(const string&in, const string&in, array<string>@)`
-- `int64 bitpos(const string&in, bool, int64 = -1, int64 = -1)`
-- `int64 client_id()`
-- `int64 dbsize()`
-- `int64 decr(const string&in)`
-- `int64 decrby(const string&in, int64)`
-- `int64 geoadd(const string&in, double, double, const string&in)`
-- `int64 hdel(const string&in, const string&in)`
-- `int64 hincrby(const string&in, const string&in, int64)`
-- `int64 hlen(const string&in)`
-- `int64 incr(const string&in)`
-- `int64 incrby(const string&in, int64)`
-- `int64 lastsave()`
-- `int64 linsert(const string&in, const string&in, const string&in, const string&in)`
-- `int64 llen(const string&in)`
-- `int64 lpush(const string&in, const string&in)`
-- `int64 lrem(const string&in, int64, const string&in)`
-- `int64 memory_usage(const string&in, int = -1)`
-- `int64 pfcount(array<string>@)`
-- `int64 pfcount(const string&in)`
-- `int64 publish(const string&in, const string&in)`
-- `int64 rpush(const string&in, const string&in)`
-- `int64 sadd(const string&in, array<string>@)`
-- `int64 sadd(const string&in, const string&in)`
-- `int64 scard(const string&in)`
-- `int64 setrange(const string&in, int64, const string&in)`
-- `int64 srem(const string&in, const string&in)`
-- `int64 strlen(const string&in)`
-- `int64 ttl(const string&in)`
-- `int64 zadd(const string&in, double, const string&in)`
-- `int64 zcard(const string&in)`
-- `int64 zcount(const string&in, double, double)`
-- `int64 zrank(const string&in, const string&in)`
-- `int64 zrem(const string&in, const string&in)`
-- `int64 zremrangebyrank(const string&in, int64, int64)`
-- `int64 zremrangebyscore(const string&in, double, double)`
-- `int64 zrevrank(const string&in, const string&in)`
-- `redis_value@ eval(const string&in, array<string>@ = null, array<string>@ = null)`
-- `redis_value@ evalsha(const string&in, array<string>@ = null, array<string>@ = null)`
-- `redis_value@ exec()`
-- `redis_value@ execute(array<string>@)`
-- `string acl_whoami()`
-- `string client_getname()`
-- `string dump(const string&in)`
-- `string geohash(const string&in, const string&in)`
-- `string get(const string&in)`
-- `string get_host() const property`
-- `string get_last_error() const property`
-- `string get_password() const property`
-- `string getrange(const string&in, int64, int64)`
-- `string hget(const string&in, const string&in)`
-- `string info(const string&in = \`
-- `string lindex(const string&in, int64)`
-- `string lpop(const string&in)`
-- `string memory_doctor()`
-- `string ping(const string&in = \`
-- `string rpop(const string&in)`
-- `string script_load(const string&in)`
-- `string spop(const string&in)`
-- `string srandmember(const string&in)`
-- `string type(const string&in)`
-- `void disconnect()`
-- `void set_database(int) property`
-- `void set_host(const string&in) property`
-- `void set_password(const string&in) property`
-- `void set_port(int) property`
-- `void set_timeout(int) property`
-
-### Class `redis_value`
-#### Behaviours / Constructors
-- `redis_value@ f()`
-- `void f()`
-#### Methods
-- `array<redis_value@>@ get_array() const`
-- `bool get_is_array() const property`
-- `bool get_is_error() const property`
-- `bool get_is_integer() const property`
-- `bool get_is_nil() const property`
-- `bool get_is_string() const property`
-- `int64 get_integer() const`
-- `string get_string() const`
-
 ### Class `ref`
 #### Behaviours / Constructors
 - `void f()`
@@ -3680,11 +3359,7 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `sound`
 #### Behaviours / Constructors
-- `sound @s()`
 - `sound@ s()`
-- `void f()`
-#### Properties
-- `const string loaded_filename`
 #### Methods
 - `audio_data_source@+ get_datasource() const property`
 - `bool close()`
@@ -3694,16 +3369,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool get_data_format(audio_format&out format, uint32&out channels, uint32&out sample_rate)`
 - `bool get_load_complete() const property`
 - `bool get_looping() const property`
-- `bool get_pan_sliding() const property`
 - `bool get_paused() const property`
-- `bool get_pitch_sliding() const property`
-- `bool get_playing() const property`
-- `bool get_sliding() const property`
-- `bool get_volume_sliding() const property`
-- `bool load(const string &in filename, pack@ packfile = @sound_default_pack, bool allow_preloads = !system_is_mobile)`
 - `bool load(const string&in filename, const pack_interface@ pack = sound_default_pack)`
-- `bool load(sound_close_callback@, sound_length_callback@, sound_read_callback@, sound_seek_callback@, const string &in, const string&in = \`
-- `bool load(string& data, uint size, const string&in preload_filename = \`
 - `bool load_memory(const string&in data)`
 - `bool load_pcm(const float[]@ data, int samplerate, int channels)`
 - `bool load_pcm(const int16[]@ data, int samplerate, int channels)`
@@ -3713,28 +3380,15 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool load_pcm(const memory_buffer<int>&in data, int samplerate, int channels)`
 - `bool load_pcm(const memory_buffer<uint8>&in data, int samplerate, int channels)`
 - `bool load_pcm(const uint8[]@ data, int samplerate, int channels)`
-- `bool load_url(const string &in url)`
 - `bool open(audio_data_source@ datasource)`
 - `bool pause()`
 - `bool pause_fade(const uint64 length)`
 - `bool pause_fade_in_frames(const uint64 length_in_frames)`
 - `bool pause_fade_in_milliseconds(const uint64 length_in_milliseconds)`
-- `bool play(bool reset_loop_state = true)`
-- `bool play_looped()`
 - `bool play_wait()`
-- `bool push_memory(const string &in data, bool end_stream = false, int pcm_rate = 0, int pcm_channels = 0)`
 - `bool seek(const uint64 position)`
-- `bool seek(float position)`
 - `bool seek_in_frames(const uint64 position)`
 - `bool seek_in_milliseconds(const uint64 position)`
-- `bool set_fx(const string &in fx, int index = -1)`
-- `bool set_mixer(mixer@ mixer = null)`
-- `bool set_position(float listener_x, float listener_y, float listener_z, float sound_x, float sound_y, float sound_z, float rotation = 0.0, float pan_step = 1.0, float volume_step = 1.0)`
-- `bool slide_pan(float, uint)`
-- `bool slide_pitch(float, uint)`
-- `bool slide_volume(float, uint)`
-- `bool stop()`
-- `bool stream(const string &in filename, pack@ containing_pack = sound_default_pack)`
 - `bool stream(const string&in filename, const pack_interface@ pack = sound_default_pack)`
 - `bool stream_pcm(const float[]@ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
 - `bool stream_pcm(const int16[]@ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
@@ -3747,11 +3401,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool stream_url(const string&in url)`
 - `const string& get_loaded_filename() const property`
 - `double get_pitch_lower_limit() const property`
-- `float get_length() const property`
-- `float get_pan() const property`
-- `float get_pitch() const property`
-- `float get_position() const property`
-- `float get_volume() const property`
 - `uint64 get_length() property`
 - `uint64 get_length_in_frames( ) const property`
 - `uint64 get_length_in_ms() const property`
@@ -3759,18 +3408,13 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint64 get_position_in_frames() const property`
 - `uint64 get_position_in_milliseconds() const property`
 - `void set_autoclose(bool enabled = true) property`
-- `void set_hrtf(bool enable = true)`
-- `void set_length(float length = 0.0)`
 - `void set_looping(bool looping) property`
-- `void set_pan(float) property`
-- `void set_pitch(float) property`
 - `void set_stop_time_with_fade(uint64 absolute_time, uint64 fade_length)`
 - `void set_stop_time_with_fade_in_frames(uint64 absolute_time, uint64 fade_length)`
 - `void set_stop_time_with_fade_in_milliseconds(uint64 absolute_time, uint64 fade_length)`
 - `void set_timed_fade(float start_volume, float end_volume, uint64 length, uint64 absolute_time)`
 - `void set_timed_fade_in_frames(float start_volume, float end_volume, uint64 length, uint64 absolute_time)`
 - `void set_timed_fade_in_milliseconds(float start_volume, float end_volume, uint64 length, uint64 absolute_time)`
-- `void set_volume(float) property`
 
 ### Class `sound_aabb_shape`
 #### Behaviours / Constructors
@@ -3783,18 +3427,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int lower_range`
 - `int right_range`
 - `int upper_range`
-
-### Class `sound_environment`
-#### Behaviours / Constructors
-- `sound_environment @s()`
-- `void f()`
-#### Methods
-- `bool add_box(const string&in, float, float, float, float, float, float)`
-- `bool add_material(const string&in, float, float, float, float, float, float, float, bool = false)`
-- `mixer@ new_mixer()`
-- `sound@ new_sound()`
-- `void set_listener(float, float, float, float)`
-- `void update()`
 
 ### Class `string`
 #### Behaviours / Constructors
