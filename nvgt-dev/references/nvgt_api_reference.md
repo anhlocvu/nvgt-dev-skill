@@ -106,8 +106,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool parse_ip_address(const string&in addr_in, ip_address&out addr_out)`
 - `bool random_bool(int = 50)`
 - `bool random_set_state(const string& in)`
-- `bool regexp_match(const string&in, const string&in, int = RE_UTF8)`
-- `bool regexp_search(const string&in, const string&in, int = RE_UTF8)`
+- `bool regexp_match(const string&in text, const string&in pattern, int options = RE_UTF8)`
+- `bool regexp_search(const string&in text, const string&in pattern, int options = RE_UTF8)`
 - `bool run(const string& in filename, const string& in arguments, bool wait_for_completion, bool background)`
 - `bool screen_reader_braille(const string &in text)`
 - `bool screen_reader_has_braille()`
@@ -418,7 +418,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string random_character(const string& in, const string& in)`
 - `string random_get_state()`
 - `string read_environment_variable(const string&in variable, const string&in default_value = \`
-- `string regexp_replace(const string&in, const string&in, const string&in, int = RE_UTF8)`
+- `string regexp_replace(const string&in text, const string&in pattern, const string&in replacement, int options = RE_UTF8)`
 - `string save_file_dialog(const string &in filters = \`
 - `string screen_reader_detect()`
 - `string sdl_get_hint(const string&in hint)`
@@ -1624,57 +1624,57 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `path`
 ##### Behaviours / Constructors
 - `void f()`
-- `void f(bool)`
-- `void f(const path&in)`
-- `void f(const path&in, const path&in)`
-- `void f(const path&in, const string&in)`
-- `void f(const string&in)`
-- `void f(const string&in, path_style)`
+- `void f(bool absolute)`
+- `void f(const path&in other)`
+- `void f(const path&in parent, const path&in relative)`
+- `void f(const path&in parent, const string&in filename)`
+- `void f(const string&in path)`
+- `void f(const string&in path, path_style style)`
 ##### Methods
 - `bool get_is_absolute() const property`
 - `bool get_is_directory() const property`
 - `bool get_is_file() const property`
 - `bool get_is_relative() const property`
-- `bool parse(const string&in)`
-- `bool parse(const string&in, path_style)`
+- `bool parse(const string&in path)`
+- `bool parse(const string&in path, path_style style)`
 - `const string& get_device() const property`
 - `const string& get_filename() const property`
 - `const string& get_node() const property`
-- `const string& get_opIndex(int) const property`
+- `const string& get_opIndex(int directory_level) const property`
 - `const string& get_vms_version() const property`
 - `int get_depth() const property`
 - `path absolute() const`
 - `path absolute(const path&in) const`
 - `path get_parent() const property`
-- `path opDiv(const path&in) const`
-- `path opDiv(const string&in) const`
-- `path& append(const path&in)`
-- `path& assign(const path&in)`
-- `path& assign(const string&in)`
-- `path& assign(const string&in, path_style)`
-- `path& assign_directory(const string&in)`
-- `path& assign_directory(const string&in, path_style)`
+- `path opDiv(const path&in append) const`
+- `path opDiv(const string&in append) const`
+- `path& append(const path&in path)`
+- `path& assign(const path&in other)`
+- `path& assign(const string&in path)`
+- `path& assign(const string&in path, path_style style)`
+- `path& assign_directory(const string&in directory)`
+- `path& assign_directory(const string&in directory, path_style style)`
 - `path& clear()`
 - `path& make_absolute()`
-- `path& make_absolute(const path&in)`
+- `path& make_absolute(const path&in base)`
 - `path& make_directory()`
 - `path& make_file()`
 - `path& make_parent()`
-- `path& opAssign(const path&in)`
-- `path& opAssign(const string&in)`
+- `path& opAssign(const path&in other)`
+- `path& opAssign(const string&in path)`
 - `path& pop_directory()`
 - `path& pop_front_directory()`
-- `path& push_directory(const string&in)`
-- `path& resolve(const path&in)`
-- `path& set_basename(const string&in)`
-- `path& set_device(const string&in)`
-- `path& set_extension(const string&in)`
-- `path& set_filename(const string&in)`
-- `path& set_node(const string&in)`
+- `path& push_directory(const string&in directory_name)`
+- `path& resolve(const path&in path)`
+- `path& set_basename(const string&in basename)`
+- `path& set_device(const string&in device)`
+- `path& set_extension(const string&in extension)`
+- `path& set_filename(const string&in filename)`
+- `path& set_node(const string&in node)`
 - `string get_basename() const property`
 - `string get_extension() const property`
 - `string opImplConv() const`
-- `string to_string(path_style = spec::PATH_STYLE_NATIVE) const`
+- `string to_string(path_style style = spec::PATH_STYLE_NATIVE) const`
 
 ### Class `pathfinder`
 ##### Behaviours / Constructors
@@ -2240,17 +2240,17 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `regexp`
 ##### Behaviours / Constructors
 - `void f()`
-- `void f(const string&in, regexp_options = RE_UTF8)`
+- `void f(const string&in pattern, regexp_options options = RE_UTF8)`
 ##### Methods
-- `bool match(const string&in, uint64 = 0) const`
-- `bool match(const string&in, uint64, int) const`
-- `bool opEquals(const string&in) const`
-- `int subst(string&, const string&in, int = RE_UTF8) const`
-- `int subst(string&, uint64, const string&in, int = RE_UTF8) const`
-- `string extract(const string&in, uint64 = 0) const`
-- `string extract(const string&in, uint64, int) const`
-- `string[]@ split(const string&in, uint64 = 0) const`
-- `string[]@ split(const string&in, uint64, int) const`
+- `bool match(const string&in text, uint64 offset = 0) const`
+- `bool match(const string&in text, uint64 offset, int options) const`
+- `bool opEquals(const string&in text) const`
+- `int subst(string& text, const string&in replacement, int options = RE_UTF8) const`
+- `int subst(string& text, uint64 offset, const string&in replacement, int options = RE_UTF8) const`
+- `string extract(const string&in text, uint64 offset = 0) const`
+- `string extract(const string&in text, uint64 offset, int options) const`
+- `string[]@ split(const string&in text, uint64 offset = 0) const`
+- `string[]@ split(const string&in text, uint64 offset, int options) const`
 
 ### Class `reverb3d`
 ##### Behaviours / Constructors
@@ -2411,20 +2411,20 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `string`
 ##### Methods
-- `bool ends_with(const string&in) const`
-- `bool is_alphabetic(const string&in = \`
-- `bool is_alphanumeric(const string&in = \`
-- `bool is_digits(const string&in = \`
-- `bool is_lower(const string&in = \`
-- `bool is_punctuation(const string&in = \`
-- `bool is_upper(const string&in = \`
-- `bool is_whitespace(const string&in = \`
-- `bool starts_with(const string&in) const`
-- `string escape(bool = false) const`
+- `bool ends_with(const string&in text) const`
+- `bool is_alphabetic(const string&in encoding = \`
+- `bool is_alphanumeric(const string&in encoding = \`
+- `bool is_digits(const string&in encoding = \`
+- `bool is_lower(const string&in encoding = \`
+- `bool is_punctuation(const string&in encoding = \`
+- `bool is_upper(const string&in encoding = \`
+- `bool is_whitespace(const string&in encoding = \`
+- `bool starts_with(const string&in text) const`
+- `string escape(bool strict_json = false) const`
 - `string lower() const`
 - `string opAdd(const var&in) const`
-- `string replace_characters(const string&in, const string&in) const`
-- `string reverse(const string&in = \`
+- `string replace_characters(const string&in characters, const string&in replace_with) const`
+- `string reverse(const string&in encoding = \`
 - `string trim_whitespace() const`
 - `string trim_whitespace_left() const`
 - `string trim_whitespace_right() const`
@@ -2433,7 +2433,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string& lower_this()`
 - `string& opAddAssign(const var&in)`
 - `string& opAssign(const var&in)`
-- `string& replace_characters_this(const string&in, const string&in)`
+- `string& replace_characters_this(const string&in characters, const string&in replace_with)`
 - `string& trim_whitespace_left_this()`
 - `string& trim_whitespace_right_this()`
 - `string& trim_whitespace_this()`
