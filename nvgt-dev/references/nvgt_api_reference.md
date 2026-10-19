@@ -3,14 +3,13 @@
 This document contains the API definitions automatically extracted from the NVGT C++ source code.
 
 ## Global Functions
-- `ARCHITECTURE get_PROCESSOR_ARCHITECTURE() property`
-- `OPERATING_SYSTEM get_OS() property`
 - `aabb aabb_create_from_triangle(const vector[]@ points)`
+- `ARCHITECTURE get_PROCESSOR_ARCHITECTURE() property`
 - `audio_engine@+ get_sound_default_engine() property`
 - `audio_error_state get_SOUNDSYSTEM_LAST_ERROR() property`
-- `bool android_request_permission(const string&in permission, android_permission_request_callback@ callback = null, const string&in callback_data = \`
+- `bool android_request_permission(const string&in permission, android_permission_request_callback@ callback = null, const string&in callback_data = "")`
 - `bool android_show_toast(const string&in message, int duration, int gravity = -1, int x_offset = 0, int y_offset = 0)`
-- `bool boxes_intersect(float, float, float, float, float, float, float, float, float, float)`
+- `bool boxes_intersect(float minx1, float maxx1, float miny1, float maxy1, float r1, float minx2, float maxx2, float miny2, float maxy2, float r2)`
 - `bool chdir(const string& in directory)`
 - `bool clipboard_set_raw_text(const string& in text)`
 - `bool clipboard_set_text(const string& in text)`
@@ -25,7 +24,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool directory_delete(const string& in path, bool recursive = true)`
 - `bool directory_exists(const string& in path)`
 - `bool environment_variable_exists(const string&in variable)`
-- `bool file_copy(const string& in source, const string& in destination, bool)`
+- `bool file_copy(const string& in source, const string& in destination, bool overwrite)`
 - `bool file_delete(const string& in path)`
 - `bool file_exists(const string& in path)`
 - `bool file_hard_link(const string& in source, const string&in destination)`
@@ -34,26 +33,24 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool file_touch(const string& in path, const timestamp& in new_time = timestamp())`
 - `bool fnmatch(const string& in text, const string& in pattern)`
 - `bool focus_window()`
+- `bool get_cursor_visible() property`
 - `bool get_KEYBOARD_AVAILABLE() property`
 - `bool get_MOUSE_AVAILABLE() property`
+- `bool get_mouse_grab() property`
 - `bool get_SCREEN_KEYBOARD_SUPPORTED() property`
 - `bool get_SCREEN_READER_AVAILABLE() property`
 - `bool get_SCRIPT_COMPILED() property`
-- `bool get_cursor_visible() property`
-- `bool get_mouse_grab() property`
 - `bool get_sound_3d_attenuator_enabled(int attenuator_id)`
 - `bool get_sound_3d_panner_enabled(int panner_id)`
 - `bool get_sound_global_hrtf() property`
-- `bool get_system_is_DeX_mode() property`
 - `bool get_system_is_chromebook() property`
+- `bool get_system_is_DeX_mode() property`
 - `bool get_system_is_mobile() property`
 - `bool get_system_is_tablet() property`
 - `bool get_system_is_unix() property`
 - `bool get_system_is_windows() property`
 - `bool get_thread_is_main() property`
 - `bool hide_window()`
-- `bool http_credentials_extract(const spec::uri&in uri, string&out username, string&out password)`
-- `bool http_credentials_extract(const string&in user_info, string&out username, string&out password)`
 - `bool http_credentials_is_basic(const http_request&in request)`
 - `bool http_credentials_is_basic(const string&in header)`
 - `bool http_credentials_is_digest(const http_request&in request)`
@@ -104,21 +101,26 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool mouse_up(uint8 button)`
 - `bool natural_number_sort(const string&in string1, const string&in string2)`
 - `bool parse_ip_address(const string&in addr_in, ip_address&out addr_out)`
-- `bool random_bool(int = 50)`
-- `bool random_set_state(const string& in)`
+- `bool random_bool(int percent = 50)`
+- `bool random_set_state(const string& in state)`
 - `bool regexp_match(const string&in text, const string&in pattern, int options = RE_UTF8)`
 - `bool regexp_search(const string&in text, const string&in pattern, int options = RE_UTF8)`
 - `bool run(const string& in filename, const string& in arguments, bool wait_for_completion, bool background)`
 - `bool screen_reader_braille(const string &in text)`
+- `bool screen_reader_braille(const string&in text)`
 - `bool screen_reader_has_braille()`
 - `bool screen_reader_has_speech()`
 - `bool screen_reader_is_speaking()`
 - `bool screen_reader_output(const string &in text, bool interrupt = true)`
+- `bool screen_reader_output(const string&in text, bool interrupt = true)`
 - `bool screen_reader_silence()`
 - `bool screen_reader_speak(const string &in text, bool interrupt = true)`
+- `bool screen_reader_speak(const string&in text, bool interrupt = true)`
 - `bool sdl_set_hint(const string&in hint, const string&in value, int priority = SDL_HINT_NORMAL)`
 - `bool set_application_name(const string& in name)`
 - `bool set_key_name(int key, const string&in name)`
+- `bool set_linux_thread_priority(int64 thread_id, int priority)`
+- `bool set_linux_thread_priority_and_policy(int64 thread_id, int priority, int policy)`
 - `bool set_sound_global_hrtf(bool enabled)`
 - `bool set_window_fullscreen(bool fullscreen)`
 - `bool simulate_key_down(int key)`
@@ -131,16 +133,20 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool text_input_active()`
 - `bool thread_sleep(uint ms)`
 - `bool urlopen(const string &in url)`
+- `bool urlopen(const string&in url)`
 - `bool utf8valid(const string&in text, bool ban_ascii_special = true)`
-- `bool validate_email_address(const string &in)`
+- `bool validate_email_address(const string &in address)`
+- `bool validate_email_address(const string&in address)`
 - `const string[]@+ get_sound_input_devices() property`
 - `const string[]@+ get_sound_output_devices() property`
 - `datastream@ get_cerr() property`
 - `datastream@ get_cin() property`
 - `datastream@ get_cout() property`
 - `datetime@ parse_datetime(const string&in fmt, const string&in str, int& tzd)`
+- `datetime@ parse_datetime(const string&in fmt, const string&in str, int&inout tzd)`
 - `datetime@ parse_datetime(const string&in str, int& tzd)`
-- `dictionary@ deserialize(const string& in)`
+- `datetime@ parse_datetime(const string&in str, int&inout tzd)`
+- `dictionary@ deserialize(const string& in data)`
 - `dns_host_entry dns_resolve(const string&in address)`
 - `dns_host_entry system_dns_host_entry()`
 - `double abs(double v)`
@@ -186,6 +192,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `double nextafter(double from, double to)`
 - `double nexttoward(double from, double to)`
 - `double parse_double(const string &in number)`
+- `double parse_double(const string&in number)`
 - `double pow(double a, double b)`
 - `double remainder(double a, double b)`
 - `double remquo(double a, double b, int& out quo)`
@@ -199,6 +206,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `double tan(double x)`
 - `double tanh(double x)`
 - `double tinyexpr(const string &in expression)`
+- `double tinyexpr(const string&in expression)`
 - `double trunc(double x)`
 - `float absf(float v)`
 - `float acosf(float x)`
@@ -245,6 +253,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `float nextafter(float from, float to)`
 - `float nexttoward(float from, double to)`
 - `float parse_float(const string &in number)`
+- `float parse_float(const string&in number)`
 - `float powf(float a, float b)`
 - `float random_float()`
 - `float remainder(float a, float b)`
@@ -258,14 +267,16 @@ This document contains the API definitions automatically extracted from the NVGT
 - `float tanf(float x)`
 - `float tanh(float x)`
 - `float trunc(float x)`
-- `funcdef bool coordinate_map_filter_callback(coordinate_map_area@)`
+- `funcdef bool array<T>::less(const T&in if_handle_then_const a, const T&in if_handle_then_const b)`
+- `funcdef bool coordinate_map_filter_callback(coordinate_map_area@ area)`
 - `funcdef float physics_raycast_callback(const raycast_info&in info)`
-- `funcdef int pathfinder_callback(int, int, int, any@ = null)`
-- `funcdef int pathfinder_callback_ex(int, int, int, int, int, int, any@ = null)`
-- `funcdef int pathfinder_callback_legacy(int, int, int, int, string)`
+- `funcdef int pathfinder_callback(int x, int y, int z, any@ callback_data = null)`
+- `funcdef int pathfinder_callback_ex(int x, int y, int z, int parent_x, int parent_y, int parent_z, any@ callback_data = null)`
+- `funcdef int pathfinder_callback_legacy(int x, int y, int parent_x, int parent_y, string user_data)`
 - `funcdef uint timer_callback(string timer_id, string user_data)`
 - `funcdef void android_permission_request_callback(string permission, bool granted, string user_data)`
 - `funcdef void audio_engine_processing_callback(audio_engine@ engine, memory_buffer<float>& data, uint64 frames)`
+- `funcdef void coroutine(dictionary@ args)`
 - `funcdef void physics_collision_callback(const physics_collision_callback_data& data)`
 - `funcdef void physics_overlap_callback(const physics_overlap_callback_data& data)`
 - `funcdef void system_tray_callback(system_tray_menu_item@ item)`
@@ -274,26 +285,35 @@ This document contains the API definitions automatically extracted from the NVGT
 - `game_window@+ get_window() property`
 - `graphic@ create_surface(int width, int height, pixel_format pixel_format)`
 - `graphic@ load_bmp(const string&in file)`
+- `graphic@ load_bmp(const string&in file, const pack_interface@ pack_file)`
 - `graphic@ load_png(const string&in file)`
+- `graphic@ load_png(const string&in file, const pack_interface@ pack_file)`
 - `graphic@ load_surface(const string&in file)`
+- `graphic@ load_surface(const string&in file, const pack_interface@ pack_file)`
 - `int alert(const string &in title, const string &in text, bool can_cancel = false, uint flags = 0)`
+- `int alert(const string&in title, const string&in text, bool can_cancel = false, uint flags = 0)`
+- `int bit_width(const uint x)`
 - `int bit_width(const uint16 x)`
 - `int bit_width(const uint32 x)`
 - `int bit_width(const uint64 x)`
 - `int bit_width(const uint8 x)`
 - `int clamp(int value, int min, int max)`
+- `int count_leading_ones(uint x)`
 - `int count_leading_ones(uint16 x)`
 - `int count_leading_ones(uint32 x)`
 - `int count_leading_ones(uint64 x)`
 - `int count_leading_ones(uint8 x)`
+- `int count_leading_zeroes(uint x)`
 - `int count_leading_zeroes(uint16 x)`
 - `int count_leading_zeroes(uint32 x)`
 - `int count_leading_zeroes(uint64 x)`
 - `int count_leading_zeroes(uint8 x)`
+- `int count_trailing_ones(uint x)`
 - `int count_trailing_ones(uint16 x)`
 - `int count_trailing_ones(uint32 x)`
 - `int count_trailing_ones(uint64 x)`
 - `int count_trailing_ones(uint8 x)`
+- `int count_trailing_zeroes(uint x)`
 - `int count_trailing_zeroes(uint16 x)`
 - `int count_trailing_zeroes(uint32 x)`
 - `int count_trailing_zeroes(uint64 x)`
@@ -302,51 +322,58 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int fpclassify(double x)`
 - `int fpclassify(float x)`
 - `int get_ANDROID_SDK_VERSION() property`
+- `int get_call_stack_size() property`
 - `int get_DATE_DAY() property`
 - `int get_DATE_MONTH() property`
 - `int get_DATE_WEEKDAY() property`
 - `int get_DATE_YEAR() property`
-- `int get_SCRIPT_CURRENT_LINE() property`
-- `int get_TIMEZONE_BASE_OFFSET() property`
-- `int get_TIMEZONE_DST_OFFSET() property`
-- `int get_TIMEZONE_OFFSET() property`
-- `int get_TIME_HOUR() property`
-- `int get_TIME_MINUTE() property`
-- `int get_TIME_SECOND() property`
-- `int get_call_stack_size() property`
+- `int get_exception_line()`
 - `int get_garbage_collect_auto_frequency() property`
 - `int get_garbage_collect_mode() property`
 - `int get_key_code(const string&in name)`
 - `int get_last_error()`
+- `int get_SCRIPT_CURRENT_LINE() property`
 - `int get_sound_default_3d_attenuator() property`
 - `int get_sound_default_3d_panner() property`
 - `int get_sound_output_device() property`
+- `int get_TIME_HOUR() property`
+- `int get_TIME_MINUTE() property`
+- `int get_TIME_SECOND() property`
+- `int get_TIMEZONE_BASE_OFFSET() property`
+- `int get_TIMEZONE_DST_OFFSET() property`
+- `int get_TIMEZONE_OFFSET() property`
 - `int get_window_height()`
 - `int get_window_width()`
 - `int ilogb(double x)`
 - `int ilogb(float x)`
-- `int joystick_count(bool = true)`
-- `int message_box(const string& in title, const string& in message, string[]@ buttons, uint flags = 0)`
+- `int joystick_count(bool gamepads_only = true)`
+- `int message_box(const string& in title, const string& in message, string[]@+ buttons, uint flags = 0)`
+- `int popcount(uint x)`
 - `int popcount(uint16 x)`
 - `int popcount(uint32 x)`
 - `int popcount(uint64 x)`
 - `int popcount(uint8 x)`
 - `int question(const string& in title, const string& in text, bool can_cancel = false, uint flags = 0)`
-- `int random(int, int)`
+- `int random(int min, int max)`
 - `int total_keys_down()`
 - `int utf8next(const string&in text, int cursor)`
 - `int utf8prev(const string&in text, int cursor)`
 - `int utf8size(const string&in character)`
 - `int64 file_get_size(const string& in path)`
-- `int64 random64(int64, int64)`
+- `int64 parse_int(const string &in str, uint base = 10, uint &out byteCount = 0)`
+- `int64 parse_int(const string&in str, uint base = 10, uint&out byteCount = 0)`
+- `int64 random64(int64 min, int64 max)`
 - `int[]@ keys_down()`
 - `int[]@ keys_pressed()`
 - `int[]@ keys_released()`
 - `ip_address broadcast_ip_address()`
-- `ip_address wildcard_ip_address(spec::ip_address_family)`
+- `ip_address wildcard_ip_address(ip_address_family family)`
+- `ip_address wildcard_ip_address(spec::ip_address_family family)`
 - `key_modifier get_keyboard_modifiers() property`
-- `mail_message@ parse_email_message(const string &in)`
+- `mail_message@ parse_email_message(const string &in data)`
+- `mail_message@ parse_email_message(const string&in data)`
 - `matrix3x3 get_IDENTITY_MATRIX() property`
+- `OPERATING_SYSTEM get_OS() property`
 - `pack_interface@ get_sound_default_pack() property`
 - `physics_convex_mesh@ physics_convex_mesh_create(physics_vertex_data@ vertex_data)`
 - `physics_convex_mesh@ physics_convex_mesh_create_from_polygon(physics_polygon_data@ polygon_data)`
@@ -358,27 +385,38 @@ This document contains the API definitions automatically extracted from the NVGT
 - `physics_transform get_IDENTITY_TRANSFORM() property`
 - `physics_transform transforms_interpolate()`
 - `physics_triangle_mesh@ physics_triangle_mesh_create(physics_triangle_data@ triangle_data)`
-- `process@ run(const string[]& in args, int flags = 0, const string& in workdir = \`
+- `process@ run(const string[]& in args, int flags = 0, const string& in workdir = "")`
 - `quaternion get_IDENTITY_QUATERNION() property`
 - `quaternion quaternion_from_euler_angles(const vector& angles)`
+- `quaternion quaternion_from_euler_angles(const vector&inout angles)`
 - `quaternion quaternion_from_euler_angles(float angle_x, float angle_y, float angle_z)`
 - `quaternion quaternion_slerp(const quaternion& q1, const quaternion& q2, float t)`
+- `quaternion quaternion_slerp(const quaternion&inout q1, const quaternion&inout q2, float t)`
 - `random_interface@ get_default_random()`
-- `script_module@ script_get_module(const string&in, int=1)`
+- `script_module@ script_get_module(const string&in name, int mode = 1)`
 - `sound@ sound_play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = 0.0, float pan = 0.0, float pitch = 100.0, mixer@ mix = null, const pack_interface@ pack_file = sound_default_pack, bool autoplay = true)`
+- `sound@ sound_play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = 0.0, float pan = 0.0, float pitch = 100.0, mixer@+ mix = null, const pack_interface@+ pack_file = sound_default_pack, bool autoplay = true)`
 - `spec::ip_address dns_resolve_single(const string&in address)`
-- `string DIRECTORY_PREFERENCES(const string&in company_name, const string&in application_name)`
 - `string ascii_to_character(uint8 character_code)`
 - `string clipboard_get_text()`
 - `string cwdir()`
+- `string DIRECTORY_PREFERENCES(const string&in company_name, const string&in application_name)`
 - `string double_to_bytes(double number)`
 - `string expand_environment_variables(const string& in text)`
 - `string file_get_contents(const string&in filename)`
 - `string float_to_bytes(float number)`
 - `string font_tag_to_string(uint tag)`
-- `string generate_profile(bool = true)`
-- `string generate_system_fingerprint(const string&in application_id =`
-- `string generate_system_fingerprint_legacy1(const string&in application_id =`
+- `string format_float(double val, const string &in options = "", uint width = 0, uint precision = 0)`
+- `string format_float(double val, const string&in options = "", uint width = 0, uint precision = 0)`
+- `string format_int(int64 val, const string &in options = "", uint width = 0)`
+- `string format_int(int64 val, const string&in options = "", uint width = 0)`
+- `string format_uint(uint64 val, const string &in options = "", uint width = 0)`
+- `string format_uint(uint64 val, const string&in options = "", uint width = 0)`
+- `string generate_profile(bool reset = true)`
+- `string generate_system_fingerprint(const string&in application_id = "")`
+- `string generate_system_fingerprint_legacy1(const string&in application_id = "")`
+- `string get_call_stack() property`
+- `string get_characters()`
 - `string get_COMMAND_LINE() property`
 - `string get_DATE_MONTH_NAME() property`
 - `string get_DATE_WEEKDAY_NAME() property`
@@ -387,45 +425,49 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string get_DIRECTORY_HOME() property`
 - `string get_DIRECTORY_LOCAL_APPDATA() property`
 - `string get_DIRECTORY_TEMP() property`
-- `string get_SCRIPT_CURRENT_FILE() property`
-- `string get_SCRIPT_CURRENT_FUNCTION() property`
-- `string get_SCRIPT_EXECUTABLE() property`
-- `string get_SCRIPT_MAIN_PATH() property`
-- `string get_SOUNDSYSTEM_LAST_ERROR_TEXT() property`
-- `string get_TIMEZONE_DST_NAME() property`
-- `string get_TIMEZONE_NAME() property`
-- `string get_TIMEZONE_STANDARD_NAME() property`
-- `string get_call_stack() property`
-- `string get_characters()`
+- `string get_exception_file()`
+- `string get_exception_function()`
+- `string get_exception_info()`
 - `string get_function_signature(?&in)`
 - `string get_key_name(int key)`
 - `string get_keyboard_name(uint id)`
 - `string get_mouse_name(uint id)`
 - `string get_preferences_path(const string&in company_name, const string&in application_name)`
+- `string get_SCRIPT_CURRENT_FILE() property`
+- `string get_SCRIPT_CURRENT_FUNCTION() property`
+- `string get_SCRIPT_EXECUTABLE() property`
+- `string get_SCRIPT_MAIN_PATH() property`
+- `string get_SOUNDSYSTEM_LAST_ERROR_TEXT() property`
 - `string get_system_node_id() property`
 - `string get_system_node_name() property`
+- `string get_TIMEZONE_DST_NAME() property`
+- `string get_TIMEZONE_NAME() property`
+- `string get_TIMEZONE_STANDARD_NAME() property`
 - `string get_touch_device_name(uint64 device_id)`
 - `string get_window_text()`
+- `string getExceptionInfo()`
 - `string hex_to_string(const string& in hex)`
 - `string html_entities_decode(const string&in input)`
-- `string http_status_reason(http_status)`
+- `string http_status_reason(http_status status)`
 - `string input_box(const string& in title, const string& in caption, const string& in default_value = '', uint64 flags = 0)`
+- `string join(const array<string> &in arr, const string &in delimiter, int start = 0, int count = -1)`
+- `string join(const array<string>&in arr, const string&in delimiter, int start = 0, int count = -1)`
 - `string number_to_words(int64 number, bool include_and = true)`
-- `string open_file_dialog(const string &in filters = \`
+- `string open_file_dialog(const string &in filters = "", const string&in default_location = "")`
+- `string open_file_dialog(const string&in filters = "", const string&in default_location = "")`
 - `string physics_logger_get_category_name(physics_logger_category category)`
 - `string physics_logger_get_level_name(physics_logger_level level)`
 - `string random_bytes(uint count)`
-- `string random_character(const string& in, const string& in)`
+- `string random_character(const string& in min, const string& in max)`
 - `string random_get_state()`
-- `string read_environment_variable(const string&in variable, const string&in default_value = \`
+- `string read_environment_variable(const string&in variable, const string&in default_value = "")`
 - `string regexp_replace(const string&in text, const string&in pattern, const string&in replacement, int options = RE_UTF8)`
-- `string save_file_dialog(const string &in filters = \`
+- `string save_file_dialog(const string &in filters = "", const string&in default_location = "")`
+- `string save_file_dialog(const string&in filters = "", const string&in default_location = "")`
 - `string screen_reader_detect()`
 - `string sdl_get_hint(const string&in hint)`
-- `string select_folder_dialog(const string&in default_location = \`
-- `string set_linux_thread_priority(int64 thread_id, int priority)`
-- `string set_linux_thread_priority_and_policy(int64 thread_id, int priority, int policy)`
-- `string string_aes_decrypt(const string&in ciphertext, string)`
+- `string select_folder_dialog(const string&in default_location = "")`
+- `string string_aes_decrypt(const string&in ciphertext, string key)`
 - `string string_aes_encrypt(const string&in plaintext, string key)`
 - `string string_base32_decode(const string& in encoded)`
 - `string string_base32_encode(const string& in binary)`
@@ -444,10 +486,10 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string string_recode(const string&in text, const string&in in_encoding, const string&in out_encoding, int&out error_count = void)`
 - `string string_to_hex(const string& in binary)`
 - `string url_decode(const string&in url, bool plus_as_space = true)`
-- `string url_encode(const string&in url, const string&in reserved = \`
+- `string url_encode(const string&in url, const string&in reserved = "")`
 - `string url_get(const string&in url, http_response&out response = void)`
 - `string url_post(const string&in url, const string&in data, http_response&out response = void)`
-- `string url_request(const string&in method, const string&in url, const string&in data = \`
+- `string url_request(const string&in method, const string&in url, const string&in data = "", http_response&out response = void)`
 - `string[]@ find_directories(const string& in pattern)`
 - `string[]@ find_files(const string& in pattern)`
 - `string[]@ get_preferred_locales()`
@@ -461,21 +503,21 @@ This document contains the API definitions automatically extracted from the NVGT
 - `timestamp timestamp_from_UTC_time(int64 UTC)`
 - `touch_device_type get_touch_device_type(uint64 device_id)`
 - `touch_finger[]@ query_touch_device(uint64 device_id = 0)`
-- `uint HOTP(const string& in key, uint64 counter, uint digits = 6)`
 - `uint adler32(const string& in data)`
 - `uint crc32(const string& in data)`
 - `uint font_string_to_tag(const string&in str)`
 - `uint fp_to_IEEE(float fp)`
 - `uint get_PROCESSOR_COUNT() property`
+- `uint HOTP(const string& in key, uint64 counter, uint digits = 6)`
 - `uint random_seed()`
 - `uint string_distance(const string&in string1, const string&in string2, uint insert_cost = 1, uint delete_cost = 1, uint replace_cost = 1)`
 - `uint thread_current_id()`
 - `uint64 fpToIEEE(double fp)`
+- `uint64 get_process_id()`
 - `uint64 get_SYSTEM_PERFORMANCE_COUNTER() property`
 - `uint64 get_SYSTEM_PERFORMANCE_FREQUENCY() property`
 - `uint64 get_TIME_STAMP() property`
 - `uint64 get_TIME_SYSTEM_RUNNING_MILLISECONDS() property`
-- `uint64 get_process_id()`
 - `uint64 get_window_os_handle()`
 - `uint64 idle_ticks()`
 - `uint64 memory_allocate(uint64 size)`
@@ -483,6 +525,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint64 memory_reallocate(uint64 ptr, uint64 size)`
 - `uint64 microticks(bool secure = false)`
 - `uint64 nanoticks()`
+- `uint64 parseUInt(const string &in str, uint base = 10, uint &out byteCount = 0)`
+- `uint64 parseUInt(const string&in str, uint base = 10, uint&out byteCount = 0)`
 - `uint64 random_seed64()`
 - `uint64 secure_ticks()`
 - `uint64 ticks(bool secure = false)`
@@ -490,8 +534,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint8 character_to_ascii(const string&in character)`
 - `uint[]@ get_keyboards()`
 - `uint[]@ get_mice()`
-- `uuid uuid_create_from_name(const uuid&in, const string&in)`
-- `uuid uuid_create_from_name_sha1(const uuid&in, const string&in)`
+- `uuid uuid_create_from_name(const uuid&in namespace_id, const string&in name)`
+- `uuid uuid_create_from_name_sha1(const uuid&in namespace_id, const string&in name)`
 - `uuid uuid_generate()`
 - `uuid uuid_generate_random()`
 - `uuid uuid_generate_time()`
@@ -502,22 +546,26 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uuid uuid_namespace_url()`
 - `uuid uuid_namespace_x500()`
 - `var@ parse_json(const string&in payload)`
-- `var@ parse_json(datastream@ stream)`
+- `var@ parse_json(datastream@+ stream)`
 - `vector rotate(const vector&in point, const vector&in origin, double theta, bool maintain_z = true)`
 - `vector sound_get_listener_position(uint listener_index = 0)`
 - `void acquire_exclusive_lock()`
 - `void acquire_shared_lock()`
 - `void android_send_back_button()`
-- `void assert(bool, const string&in = \`
+- `void assert(bool expression, const string&in fail_text = "")`
 - `void atomic_thread_fence(memory_order order)`
 - `void c_debug_break()`
 - `void c_debug_break(const string&in message)`
 - `void c_debug_message(const string&in message)`
-- `void debug_add_file_breakpoint(const string&in, int)`
-- `void debug_add_func_breakpoint(const string&in)`
+- `void create_coroutine(coroutine @+ func, dictionary @+ args)`
+- `void create_coroutine(coroutine@ func, dictionary@ args)`
+- `void debug_add_file_breakpoint(const string&in filename, int line)`
+- `void debug_add_func_breakpoint(const string&in function_name)`
 - `void debug_break()`
-- `void exit(int=0)`
-- `void garbage_collect(bool = true)`
+- `void exit(int retcode = 0)`
+- `void garbage_collect(bool full = true)`
+- `void http_credentials_extract(const spec::uri&in uri, string&out username, string&out password)`
+- `void http_credentials_extract(const string&in user_info, string&out username, string&out password)`
 - `void memory_free(uint64 ptr)`
 - `void mouse_update()`
 - `void nanosleep(uint64 ns)`
@@ -535,18 +583,26 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void physics_sphere_shape_destroy(physics_sphere_shape@ shape)`
 - `void physics_triangle_mesh_destroy(physics_triangle_mesh@ mesh)`
 - `void physics_triangle_shape_compute_smooth_triangle_mesh_contact(const physics_collision_shape &in shape1, const physics_collision_shape &in shape2, vector & local_contact_point_shape1, vector & local_contact_point_shape2, const physics_transform &in shape1_to_world, const physics_transform &in shape2_to_world, float penitration_depth, vector & out_smooth_vertex_normal)`
+- `void physics_triangle_shape_compute_smooth_triangle_mesh_contact(const physics_collision_shape&in shape1, const physics_collision_shape&in shape2, vector&inout local_contact_point_shape1, vector&inout local_contact_point_shape2, const physics_transform&in shape1_to_world, const physics_transform&in shape2_to_world, float penitration_depth, vector&inout out_smooth_vertex_normal)`
 - `void physics_world_destroy(physics_world& world)`
+- `void physics_world_destroy(physics_world&inout world)`
+- `void print(`
+- `void print(const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null)`
+- `void printf(const string &in format,`
+- `void printf(const string&in format, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null)`
+- `void println(`
+- `void println(const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null)`
 - `void refresh_window()`
 - `void release_exclusive_lock()`
 - `void release_shared_lock()`
 - `void reset_keyboard()`
 - `void reset_profiler()`
-- `void script_dump_engine_configuration(datastream@+)`
+- `void script_dump_engine_configuration(datastream@+ output)`
 - `void set_cursor_visible(bool state) property`
-- `void set_default_random(random_generator@)`
-- `void set_default_random(random_interface@)`
-- `void set_garbage_collect_auto_frequency(int) property`
-- `void set_garbage_collect_mode(int) property`
+- `void set_default_random(random_generator@+ generator)`
+- `void set_default_random(random_interface@ generator)`
+- `void set_garbage_collect_auto_frequency(int frequency) property`
+- `void set_garbage_collect_mode(int mode) property`
 - `void set_keyboard_modifiers(key_modifier modifier) property`
 - `void set_mouse_grab(bool grabbed) property`
 - `void set_sound_3d_attenuator_enabled(int attenuator_id, bool enabled)`
@@ -555,15 +611,19 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_sound_default_3d_panner(int panner_id)`
 - `void set_sound_default_decryption_key(const string& in key) property`
 - `void set_sound_default_engine(audio_engine@ engine) property`
-- `void set_sound_default_pack(pack_interface@ storage) property`
+- `void set_sound_default_pack(pack_interface@+ storage) property`
 - `void set_sound_master_volume(float db) property`
 - `void set_sound_output_device(int device) property`
+- `void sleep(uint milliseconds)`
 - `void start_profiling()`
 - `void stop_profiling()`
 - `void thread_yield()`
+- `void throw(const string &in message)`
+- `void throw(const string&in message)`
 - `void uninstall_keyhook()`
 - `void wait(int ms)`
 - `void write_environment_variable(const string&in variable, const string&in value)`
+- `void yield()`
 
 ## Global Properties
 - `bool speedhack_protection`
@@ -642,6 +702,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `const string HTTP_POST`
 - `const string HTTP_PUT`
 - `const string HTTP_UNKNOWN_CONTENT_TYPE`
+- `const string last_exception_call_stack`
 - `const string NEWLINE_CR`
 - `const string NEWLINE_CRLF`
 - `const string NEWLINE_DEFAULT`
@@ -654,16 +715,25 @@ This document contains the API definitions automatically extracted from the NVGT
 - `const string PLATFORM_ARCHITECTURE`
 - `const string PLATFORM_DISPLAY_NAME`
 - `const string PLATFORM_VERSION`
-- `const string last_exception_call_stack`
 - `const string[]@ ARGS`
 - `const timestamp SCRIPT_BUILD_TIME`
 - `const uint NVGT_VERSION_BUILD_TIMESTAMP`
+- `engine_character_event on_characters`
+- `engine_key_event on_key_press`
+- `engine_key_event on_key_release`
+- `engine_key_event on_key_repeat`
+- `engine_touch_event on_touch_finger_cancel`
+- `engine_touch_event on_touch_finger_down`
+- `engine_touch_event on_touch_finger_up`
+- `engine_touch_motion_event on_touch_finger_move`
 - `mixer@ sound_default_mixer`
 - `uint64 timer_default_accuracy`
 
 ## Classes
 ### Class `aabb`
 ##### Behaviours / Constructors
+- `void aabb()`
+- `void aabb(const vector&in min, const vector&in max)`
 - `void f()`
 - `void f(const vector&in min, const vector&in max)`
 ##### Methods
@@ -686,10 +756,320 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_max(const vector&in max) property`
 - `void set_min(const vector&in min) property`
 
+### Class `any`
+##### Behaviours / Constructors
+- `any@ any()`
+- `any@ any(?&in value)`
+- `any@ any(const double&in value)`
+- `any@ any(const int64&in value)`
+- `any@ f()`
+- `any@ f(?&in value)`
+- `any@ f(?&in value) explicit`
+- `any@ f(const double&in value)`
+- `any@ f(const double&in value) explicit`
+- `any@ f(const int64&in value)`
+- `any@ f(const int64&in value) explicit`
+- `bool f()`
+- `int f()`
+- `void f()`
+- `void f(int&in)`
+##### Methods
+- `any &opAssign(any&in other)`
+- `any& opAssign(any&in other)`
+- `bool retrieve(?&out value)`
+- `bool retrieve(?&out value) const`
+- `bool retrieve(double&out value)`
+- `bool retrieve(double&out value) const`
+- `bool retrieve(int64&out value)`
+- `bool retrieve(int64&out value) const`
+- `void store(?&in value)`
+- `void store(const double&in value)`
+- `void store(const int64&in value)`
+
+### Class `array<class T>`
+
+### Class `array<T>`
+##### Behaviours / Constructors
+- `array<T>@ $list(int&in type, int&in list) { repeat T }`
+- `array<T>@ array(int&in)`
+- `array<T>@ array(int&in, uint length)`
+- `array<T>@ array(int&in, uint length, const T&in value)`
+- `array<T>@ f(int&in type, int&in list) {repeat T}`
+- `array<T>@ f(int&in)`
+- `array<T>@ f(int&in, uint length) explicit`
+- `array<T>@ f(int&in, uint length, const T &in value)`
+- `bool f()`
+- `bool f(int&in, bool&out)`
+- `int f()`
+- `void f()`
+- `void f(int&in)`
+##### Methods
+- `array<T> &opAssign(const array<T>&in other)`
+- `array<T>& opAssign(const array<T>&in other)`
+- `bool empty() const`
+- `bool is_empty() const`
+- `bool opEquals(const array<T>&in other) const`
+- `bool opForEnd(int64 iterator) const`
+- `const T &opForValue0(int64 index) const`
+- `const T &opIndex(int64 index) const`
+- `const T& opForValue0(int64 index) const`
+- `const T& opIndex(int64 index) const`
+- `const T& random() const`
+- `const T& random(const random_gamerand&in generator) const`
+- `const T& random(const random_pcg&in generator) const`
+- `const T& random(const random_well&in generator) const`
+- `const T& random(const random_xorshift&in generator) const`
+- `const T& random(random_gamerand@ generator) const`
+- `const T& random(random_generator@ rng) const`
+- `const T& random(random_interface@ rng) const`
+- `const T& random(random_pcg@ generator) const`
+- `const T& random(random_well@ generator) const`
+- `const T& random(random_xorshift@ generator) const`
+- `int find(const T&in if_handle_then_const value) const`
+- `int find(const T&in value) const`
+- `int find(uint startAt, const T&in if_handle_then_const value) const`
+- `int find(uint startAt, const T&in value) const`
+- `int find_by_ref(const T&in if_handle_then_const value) const`
+- `int find_by_ref(const T&in value) const`
+- `int find_by_ref(uint startAt, const T&in if_handle_then_const value) const`
+- `int find_by_ref(uint startAt, const T&in value) const`
+- `int64 opForBegin() const`
+- `int64 opForNext(int64 iterator) const`
+- `int64 opForValue1(int64 index) const`
+- `T &back()`
+- `T &front()`
+- `T &opIndex(int64 index)`
+- `T& back()`
+- `T& front()`
+- `T& opIndex(int64 index)`
+- `uint get_length() const property`
+- `uint length() const`
+- `uint size() const`
+- `void erase(uint index)`
+- `void extend(const array<T>& arr)`
+- `void extend(const array<T>&inout arr)`
+- `void insert(uint index, const array<T>& arr)`
+- `void insert(uint index, const array<T>&inout arr)`
+- `void insert(uint index, const T&in value)`
+- `void insert_at(uint index, const array<T>& arr)`
+- `void insert_at(uint index, const array<T>&inout arr)`
+- `void insert_at(uint index, const T&in value)`
+- `void insert_last(const T&in value)`
+- `void pop_back()`
+- `void push_back(const T&in value)`
+- `void remove_at(uint index)`
+- `void remove_last()`
+- `void remove_range(uint start, uint count)`
+- `void reserve(uint length)`
+- `void resize(uint length)`
+- `void reverse()`
+- `void set_length(uint length) property`
+- `void shuffle()`
+- `void shuffle(random_gamerand@ generator)`
+- `void shuffle(random_generator@+ rng)`
+- `void shuffle(random_interface@ rng)`
+- `void shuffle(random_pcg@ generator)`
+- `void shuffle(random_well@ generator)`
+- `void shuffle(random_xorshift@ generator)`
+- `void sort(array<T>::less&in callback, uint startAt = 0, uint count = uint(-1))`
+- `void sort(const less &in callback, uint startAt = 0, uint count = uint(-1))`
+- `void sort_ascending()`
+- `void sort_ascending(uint startAt, uint count)`
+- `void sort_descending()`
+- `void sort_descending(uint startAt, uint count)`
+
+### Class `asset_decryptor`
+##### Behaviours / Constructors
+- `asset_decryptor@ asset_decryptor()`
+- `asset_decryptor@ asset_decryptor(datastream@ stream, const string&in key, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `asset_decryptor& opShl(double value)`
+- `asset_decryptor& opShl(float value)`
+- `asset_decryptor& opShl(int value)`
+- `asset_decryptor& opShl(int16 value)`
+- `asset_decryptor& opShl(int64 value)`
+- `asset_decryptor& opShl(int8 value)`
+- `asset_decryptor& opShl(string value)`
+- `asset_decryptor& opShl(uint value)`
+- `asset_decryptor& opShl(uint16 value)`
+- `asset_decryptor& opShl(uint64 value)`
+- `asset_decryptor& opShl(uint8 value)`
+- `asset_decryptor& opShr(double&out value)`
+- `asset_decryptor& opShr(float&out value)`
+- `asset_decryptor& opShr(int&out value)`
+- `asset_decryptor& opShr(int16&out value)`
+- `asset_decryptor& opShr(int64&out value)`
+- `asset_decryptor& opShr(int8&out value)`
+- `asset_decryptor& opShr(string&out value)`
+- `asset_decryptor& opShr(uint&out value)`
+- `asset_decryptor& opShr(uint16&out value)`
+- `asset_decryptor& opShr(uint64&out value)`
+- `asset_decryptor& opShr(uint8&out value)`
+- `asset_decryptor& write_double(double value)`
+- `asset_decryptor& write_float(float value)`
+- `asset_decryptor& write_int(int value)`
+- `asset_decryptor& write_int16(int16 value)`
+- `asset_decryptor& write_int64(int64 value)`
+- `asset_decryptor& write_int8(int8 value)`
+- `asset_decryptor& write_string(string value)`
+- `asset_decryptor& write_uint(uint value)`
+- `asset_decryptor& write_uint16(uint16 value)`
+- `asset_decryptor& write_uint64(uint64 value)`
+- `asset_decryptor& write_uint8(uint8 value)`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, const string&in key, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `asset_encryptor`
+##### Behaviours / Constructors
+- `asset_encryptor@ asset_encryptor()`
+- `asset_encryptor@ asset_encryptor(datastream@ stream, string&in key, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `asset_encryptor& opShl(double value)`
+- `asset_encryptor& opShl(float value)`
+- `asset_encryptor& opShl(int value)`
+- `asset_encryptor& opShl(int16 value)`
+- `asset_encryptor& opShl(int64 value)`
+- `asset_encryptor& opShl(int8 value)`
+- `asset_encryptor& opShl(string value)`
+- `asset_encryptor& opShl(uint value)`
+- `asset_encryptor& opShl(uint16 value)`
+- `asset_encryptor& opShl(uint64 value)`
+- `asset_encryptor& opShl(uint8 value)`
+- `asset_encryptor& opShr(double&out value)`
+- `asset_encryptor& opShr(float&out value)`
+- `asset_encryptor& opShr(int&out value)`
+- `asset_encryptor& opShr(int16&out value)`
+- `asset_encryptor& opShr(int64&out value)`
+- `asset_encryptor& opShr(int8&out value)`
+- `asset_encryptor& opShr(string&out value)`
+- `asset_encryptor& opShr(uint&out value)`
+- `asset_encryptor& opShr(uint16&out value)`
+- `asset_encryptor& opShr(uint64&out value)`
+- `asset_encryptor& opShr(uint8&out value)`
+- `asset_encryptor& write_double(double value)`
+- `asset_encryptor& write_float(float value)`
+- `asset_encryptor& write_int(int value)`
+- `asset_encryptor& write_int16(int16 value)`
+- `asset_encryptor& write_int64(int64 value)`
+- `asset_encryptor& write_int8(int8 value)`
+- `asset_encryptor& write_string(string value)`
+- `asset_encryptor& write_uint(uint value)`
+- `asset_encryptor& write_uint16(uint16 value)`
+- `asset_encryptor& write_uint64(uint64 value)`
+- `asset_encryptor& write_uint8(uint8 value)`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, string&in key, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `async<class T>`
+
 ### Class `async<T>`
 ##### Behaviours / Constructors
+- `async<T>@ async(int&in)`
+- `async<T>@ async(int&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
+- `async<T>@ async(int&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in, const ?&in)`
 - `async<T>@ f(int&in)`
-- `void f()`
 ##### Methods
 - `bool get_complete() const property`
 - `bool get_failed() const property`
@@ -698,10 +1078,51 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string get_exception() const property`
 - `void wait()`
 
-### Class `async<class T>`
+### Class `atomic_bool`
+##### Behaviours / Constructors
+- `void atomic_bool()`
+##### Methods
+- `bool compare_exchange_strong(bool&inout expected, bool desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(bool&inout expected, bool desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(bool&inout expected, bool desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(bool&inout expected, bool desired, memory_order success, memory_order failure)`
+- `bool exchange(bool desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `bool load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `bool opAssign(bool val)`
+- `bool opImplConv() const`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(bool val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(bool old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_double`
+##### Behaviours / Constructors
+- `void atomic_double()`
+##### Methods
+- `bool compare_exchange_strong(double&inout expected, double desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(double&inout expected, double desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(double&inout expected, double desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(double&inout expected, double desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `double exchange(double desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `double fetch_add(double arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `double fetch_sub(double arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `double load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `double opAddAssign(double arg)`
+- `double opAssign(double val)`
+- `double opImplConv() const`
+- `double opSubAssign(double arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(double val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(double old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
 
 ### Class `atomic_flag`
 ##### Behaviours / Constructors
+- `void atomic_flag()`
 - `void f()`
 ##### Methods
 - `bool test(memory_order order = MEMORY_ORDER_SEQ_CST) const`
@@ -711,49 +1132,645 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void notify_one()`
 - `void wait(bool old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
 
+### Class `atomic_float`
+##### Behaviours / Constructors
+- `void atomic_float()`
+##### Methods
+- `bool compare_exchange_strong(float&inout expected, float desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(float&inout expected, float desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(float&inout expected, float desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(float&inout expected, float desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `float exchange(float desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `float fetch_add(float arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `float fetch_sub(float arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `float load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `float opAddAssign(float arg)`
+- `float opAssign(float val)`
+- `float opImplConv() const`
+- `float opSubAssign(float arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(float val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(float old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_int`
+##### Behaviours / Constructors
+- `void atomic_int()`
+##### Methods
+- `bool compare_exchange_strong(int&inout expected, int desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(int&inout expected, int desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(int&inout expected, int desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(int&inout expected, int desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `int exchange(int desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_add(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_and(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_or(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_sub(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_xor(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `int opAddAssign(int arg)`
+- `int opAndAssign(int arg)`
+- `int opAssign(int val)`
+- `int opImplConv() const`
+- `int opOrAssign(int arg)`
+- `int opPostDec(int arg)`
+- `int opPostInc(int arg)`
+- `int opPreDec()`
+- `int opPreInc()`
+- `int opSubAssign(int arg)`
+- `int opXorAssign(int arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(int val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(int old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_int16`
+##### Behaviours / Constructors
+- `void atomic_int16()`
+##### Methods
+- `bool compare_exchange_strong(int16&inout expected, int16 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(int16&inout expected, int16 desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(int16&inout expected, int16 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(int16&inout expected, int16 desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `int16 exchange(int16 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int16 fetch_add(int16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int16 fetch_and(int16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int16 fetch_or(int16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int16 fetch_sub(int16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int16 fetch_xor(int16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int16 load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `int16 opAddAssign(int16 arg)`
+- `int16 opAndAssign(int16 arg)`
+- `int16 opAssign(int16 val)`
+- `int16 opImplConv() const`
+- `int16 opOrAssign(int16 arg)`
+- `int16 opPostDec(int16 arg)`
+- `int16 opPostInc(int16 arg)`
+- `int16 opPreDec()`
+- `int16 opPreInc()`
+- `int16 opSubAssign(int16 arg)`
+- `int16 opXorAssign(int16 arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(int16 val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(int16 old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_int32`
+##### Behaviours / Constructors
+- `void atomic_int32()`
+##### Methods
+- `bool compare_exchange_strong(int&inout expected, int desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(int&inout expected, int desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(int&inout expected, int desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(int&inout expected, int desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `int exchange(int desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_add(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_and(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_or(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_sub(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int fetch_xor(int arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `int opAddAssign(int arg)`
+- `int opAndAssign(int arg)`
+- `int opAssign(int val)`
+- `int opImplConv() const`
+- `int opOrAssign(int arg)`
+- `int opPostDec(int arg)`
+- `int opPostInc(int arg)`
+- `int opPreDec()`
+- `int opPreInc()`
+- `int opSubAssign(int arg)`
+- `int opXorAssign(int arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(int val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(int old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_int64`
+##### Behaviours / Constructors
+- `void atomic_int64()`
+##### Methods
+- `bool compare_exchange_strong(int64&inout expected, int64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(int64&inout expected, int64 desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(int64&inout expected, int64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(int64&inout expected, int64 desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `int64 exchange(int64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_add(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_and(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_or(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_sub(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_xor(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `int64 opAddAssign(int64 arg)`
+- `int64 opAndAssign(int64 arg)`
+- `int64 opAssign(int64 val)`
+- `int64 opImplConv() const`
+- `int64 opOrAssign(int64 arg)`
+- `int64 opPostDec(int64 arg)`
+- `int64 opPostInc(int64 arg)`
+- `int64 opPreDec()`
+- `int64 opPreInc()`
+- `int64 opSubAssign(int64 arg)`
+- `int64 opXorAssign(int64 arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(int64 val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(int64 old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_int8`
+##### Behaviours / Constructors
+- `void atomic_int8()`
+##### Methods
+- `bool compare_exchange_strong(int8&inout expected, int8 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(int8&inout expected, int8 desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(int8&inout expected, int8 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(int8&inout expected, int8 desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `int8 exchange(int8 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int8 fetch_add(int8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int8 fetch_and(int8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int8 fetch_or(int8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int8 fetch_sub(int8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int8 fetch_xor(int8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int8 load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `int8 opAddAssign(int8 arg)`
+- `int8 opAndAssign(int8 arg)`
+- `int8 opAssign(int8 val)`
+- `int8 opImplConv() const`
+- `int8 opOrAssign(int8 arg)`
+- `int8 opPostDec(int8 arg)`
+- `int8 opPostInc(int8 arg)`
+- `int8 opPreDec()`
+- `int8 opPreInc()`
+- `int8 opSubAssign(int8 arg)`
+- `int8 opXorAssign(int8 arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(int8 val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(int8 old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_signed_lock_free`
+##### Behaviours / Constructors
+- `void atomic_signed_lock_free()`
+##### Methods
+- `bool compare_exchange_strong(int64&inout expected, int64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(int64&inout expected, int64 desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(int64&inout expected, int64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(int64&inout expected, int64 desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `int64 exchange(int64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_add(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_and(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_or(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_sub(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 fetch_xor(int64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `int64 load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `int64 opAddAssign(int64 arg)`
+- `int64 opAndAssign(int64 arg)`
+- `int64 opAssign(int64 val)`
+- `int64 opImplConv() const`
+- `int64 opOrAssign(int64 arg)`
+- `int64 opPostDec(int64 arg)`
+- `int64 opPostInc(int64 arg)`
+- `int64 opPreDec()`
+- `int64 opPreInc()`
+- `int64 opSubAssign(int64 arg)`
+- `int64 opXorAssign(int64 arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(int64 val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(int64 old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_uint`
+##### Behaviours / Constructors
+- `void atomic_uint()`
+##### Methods
+- `bool compare_exchange_strong(uint&inout expected, uint desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(uint&inout expected, uint desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(uint&inout expected, uint desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(uint&inout expected, uint desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `uint exchange(uint desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_add(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_and(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_or(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_sub(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_xor(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `uint opAddAssign(uint arg)`
+- `uint opAndAssign(uint arg)`
+- `uint opAssign(uint val)`
+- `uint opImplConv() const`
+- `uint opOrAssign(uint arg)`
+- `uint opPostDec(uint arg)`
+- `uint opPostInc(uint arg)`
+- `uint opPreDec()`
+- `uint opPreInc()`
+- `uint opSubAssign(uint arg)`
+- `uint opXorAssign(uint arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(uint val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(uint old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_uint16`
+##### Behaviours / Constructors
+- `void atomic_uint16()`
+##### Methods
+- `bool compare_exchange_strong(uint16&inout expected, uint16 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(uint16&inout expected, uint16 desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(uint16&inout expected, uint16 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(uint16&inout expected, uint16 desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `uint16 exchange(uint16 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint16 fetch_add(uint16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint16 fetch_and(uint16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint16 fetch_or(uint16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint16 fetch_sub(uint16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint16 fetch_xor(uint16 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint16 load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `uint16 opAddAssign(uint16 arg)`
+- `uint16 opAndAssign(uint16 arg)`
+- `uint16 opAssign(uint16 val)`
+- `uint16 opImplConv() const`
+- `uint16 opOrAssign(uint16 arg)`
+- `uint16 opPostDec(uint16 arg)`
+- `uint16 opPostInc(uint16 arg)`
+- `uint16 opPreDec()`
+- `uint16 opPreInc()`
+- `uint16 opSubAssign(uint16 arg)`
+- `uint16 opXorAssign(uint16 arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(uint16 val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(uint16 old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_uint32`
+##### Behaviours / Constructors
+- `void atomic_uint32()`
+##### Methods
+- `bool compare_exchange_strong(uint&inout expected, uint desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(uint&inout expected, uint desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(uint&inout expected, uint desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(uint&inout expected, uint desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `uint exchange(uint desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_add(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_and(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_or(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_sub(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint fetch_xor(uint arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `uint opAddAssign(uint arg)`
+- `uint opAndAssign(uint arg)`
+- `uint opAssign(uint val)`
+- `uint opImplConv() const`
+- `uint opOrAssign(uint arg)`
+- `uint opPostDec(uint arg)`
+- `uint opPostInc(uint arg)`
+- `uint opPreDec()`
+- `uint opPreInc()`
+- `uint opSubAssign(uint arg)`
+- `uint opXorAssign(uint arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(uint val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(uint old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_uint64`
+##### Behaviours / Constructors
+- `void atomic_uint64()`
+##### Methods
+- `bool compare_exchange_strong(uint64&inout expected, uint64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(uint64&inout expected, uint64 desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(uint64&inout expected, uint64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(uint64&inout expected, uint64 desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `uint64 exchange(uint64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_add(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_and(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_or(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_sub(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_xor(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `uint64 opAddAssign(uint64 arg)`
+- `uint64 opAndAssign(uint64 arg)`
+- `uint64 opAssign(uint64 val)`
+- `uint64 opImplConv() const`
+- `uint64 opOrAssign(uint64 arg)`
+- `uint64 opPostDec(uint64 arg)`
+- `uint64 opPostInc(uint64 arg)`
+- `uint64 opPreDec()`
+- `uint64 opPreInc()`
+- `uint64 opSubAssign(uint64 arg)`
+- `uint64 opXorAssign(uint64 arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(uint64 val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(uint64 old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_uint8`
+##### Behaviours / Constructors
+- `void atomic_uint8()`
+##### Methods
+- `bool compare_exchange_strong(uint8&inout expected, uint8 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(uint8&inout expected, uint8 desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(uint8&inout expected, uint8 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(uint8&inout expected, uint8 desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `uint8 exchange(uint8 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint8 fetch_add(uint8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint8 fetch_and(uint8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint8 fetch_or(uint8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint8 fetch_sub(uint8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint8 fetch_xor(uint8 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint8 load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `uint8 opAddAssign(uint8 arg)`
+- `uint8 opAndAssign(uint8 arg)`
+- `uint8 opAssign(uint8 val)`
+- `uint8 opImplConv() const`
+- `uint8 opOrAssign(uint8 arg)`
+- `uint8 opPostDec(uint8 arg)`
+- `uint8 opPostInc(uint8 arg)`
+- `uint8 opPreDec()`
+- `uint8 opPreInc()`
+- `uint8 opSubAssign(uint8 arg)`
+- `uint8 opXorAssign(uint8 arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(uint8 val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(uint8 old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
+### Class `atomic_unsigned_lock_free`
+##### Behaviours / Constructors
+- `void atomic_unsigned_lock_free()`
+##### Methods
+- `bool compare_exchange_strong(uint64&inout expected, uint64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_strong(uint64&inout expected, uint64 desired, memory_order success, memory_order failure)`
+- `bool compare_exchange_weak(uint64&inout expected, uint64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `bool compare_exchange_weak(uint64&inout expected, uint64 desired, memory_order success, memory_order failure)`
+- `bool get_is_always_lock_free() property`
+- `bool is_lock_free() const`
+- `uint64 exchange(uint64 desired, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_add(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_and(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_or(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_sub(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 fetch_xor(uint64 arg, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `uint64 load(memory_order order = MEMORY_ORDER_SEQ_CST) const`
+- `uint64 opAddAssign(uint64 arg)`
+- `uint64 opAndAssign(uint64 arg)`
+- `uint64 opAssign(uint64 val)`
+- `uint64 opImplConv() const`
+- `uint64 opOrAssign(uint64 arg)`
+- `uint64 opPostDec(uint64 arg)`
+- `uint64 opPostInc(uint64 arg)`
+- `uint64 opPreDec()`
+- `uint64 opPreInc()`
+- `uint64 opSubAssign(uint64 arg)`
+- `uint64 opXorAssign(uint64 arg)`
+- `void notify_all()`
+- `void notify_one()`
+- `void store(uint64 val, memory_order order = MEMORY_ORDER_SEQ_CST)`
+- `void wait(uint64 old, memory_order order = MEMORY_ORDER_SEQ_CST) const`
+
 ### Class `audio_band_pass_filter`
 ##### Behaviours / Constructors
-- `audio_band_pass_filter@ f(double cutoff_frequency, uint order, audio_engine@ engine = sound_default_engine)`
+- `audio_band_pass_filter@ audio_band_pass_filter(double cutoff_frequency, uint order, audio_engine@ engine = sound_default_engine)`
+- `audio_band_pass_filter@ f(double cutoff_frequency, uint order, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `double get_cutoff_frequency() const property`
+- `float get_output_bus_volume(uint bus)`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
 - `uint get_order() const property`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_cutoff_frequency(double frequency) property`
 - `void set_order(uint order) property`
 
+### Class `audio_data_source`
+##### Methods
+- `array<float>@ read(uint64 frame_count = 0)`
+- `audio_data_source@ get_current() const property`
+- `audio_data_source@ get_next() const property`
+- `audio_decoder@ opCast()`
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `audio_ring_buffer@ opCast()`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool get_active() const property`
+- `bool get_looping() const property`
+- `bool seek_frames(uint64 frame_index)`
+- `bool seek_milliseconds(float ms)`
+- `bool set_current(audio_data_source@ new_current)`
+- `bool set_loop_point(uint64 start_frame, uint64 end_frame)`
+- `bool set_looping(bool looping)`
+- `bool set_next(audio_data_source@ new_next)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_range(uint64 start_frame, uint64 end_frame)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_cursor_milliseconds() const property`
+- `float get_length_milliseconds() const property`
+- `float get_output_bus_volume(uint bus)`
+- `float skip_milliseconds(float ms)`
+- `microphone@ opCast()`
+- `uint get_advised_read_frame_count() const property`
+- `uint get_channels() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint get_sample_rate() const property`
+- `uint64 get_cursor_frames() const property`
+- `uint64 get_length_frames() const property`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+- `uint64 skip_frames(uint64 frame_count)`
+- `void get_loop_point(uint64&out start_frame, uint64&out end_frame) const`
+- `void get_range(uint64&out start_frame, uint64&out end_frame) const`
+
 ### Class `audio_decoder`
 ##### Behaviours / Constructors
-- `audio_decoder@ d(audio_engine@ engine = sound_default_engine)`
+- `audio_decoder@ audio_decoder(audio_engine@ engine = sound_default_engine)`
+- `audio_decoder@ d(audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `array<float>@ read(uint64 frame_count = 0)`
+- `audio_data_source@ get_current() const property`
+- `audio_data_source@ get_next() const property`
+- `audio_data_source@ opImplCast()`
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
 - `bool close()`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool get_active() const property`
+- `bool get_looping() const property`
 - `bool open(const string&in filename, const pack_interface@+ pack_file = sound_default_pack, uint sample_rate = 0, uint channels = 0)`
 - `bool open(datastream@ stream, uint sample_rate = 0, uint channels = 0)`
+- `bool seek_frames(uint64 frame_index)`
+- `bool seek_milliseconds(float ms)`
+- `bool set_current(audio_data_source@ new_current)`
+- `bool set_loop_point(uint64 start_frame, uint64 end_frame)`
+- `bool set_looping(bool looping)`
+- `bool set_next(audio_data_source@ new_next)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_range(uint64 start_frame, uint64 end_frame)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_cursor_milliseconds() const property`
+- `float get_length_milliseconds() const property`
+- `float get_output_bus_volume(uint bus)`
+- `float skip_milliseconds(float ms)`
+- `uint get_advised_read_frame_count() const property`
+- `uint get_channels() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint get_sample_rate() const property`
+- `uint64 get_cursor_frames() const property`
+- `uint64 get_length_frames() const property`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+- `uint64 skip_frames(uint64 frame_count)`
+- `void get_loop_point(uint64&out start_frame, uint64&out end_frame) const`
+- `void get_range(uint64&out start_frame, uint64&out end_frame) const`
 
 ### Class `audio_delay_node`
 ##### Behaviours / Constructors
-- `audio_delay_node@ d(uint delay_in_frames, float decay, audio_engine@ engine = sound_default_engine)`
+- `audio_delay_node@ audio_delay_node(uint delay_in_frames, float decay, audio_engine@ engine = sound_default_engine)`
+- `audio_delay_node@ d(uint delay_in_frames, float decay, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `float get_decay() const property`
 - `float get_dry() const property`
+- `float get_output_bus_volume(uint bus)`
 - `float get_wet() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_decay(float decay) property`
 - `void set_dry(float dry) property`
 - `void set_wet(float wet) property`
 
+### Class `audio_encoder`
+##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `audio_opus_encoder@ opCast()`
+- `audio_wav_encoder@ opCast()`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool close()`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool get_active() const property`
+- `bool open(const string&in filename, uint sample_rate, uint channels, uint flags = AUDIO_ENCODER_DEFAULTS)`
+- `bool open(datastream@ stream, uint sample_rate, uint channels, uint flags = AUDIO_ENCODER_DEFAULTS)`
+- `bool open(uint sample_rate, uint channels, uint flags = AUDIO_ENCODER_DEFAULTS)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_output_bus_volume(uint bus)`
+- `string get_format() const property`
+- `string read()`
+- `uint get_channels() const property`
+- `uint get_default_open_flags() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint get_sample_rate() const property`
+- `uint write(const array<float>@ frames)`
+- `uint write(const memory_buffer<float>&inout frames)`
+- `uint64 get_frames_written() const property`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+
 ### Class `audio_engine`
 ##### Behaviours / Constructors
+- `audio_engine@ audio_engine(int flags, int sample_rate = 0, int channels = 0)`
 - `audio_engine@ e(int flags, int sample_rate = 0, int channels = 0)`
 ##### Methods
 - `audio_engine_processing_callback@+ get_processing_callback() const property`
+- `audio_node@ opImplCast()`
 - `audio_node@+ get_endpoint() const property`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
 - `bool get_listener_enabled(int index) const`
 - `bool set_device(int device)`
 - `bool set_gain(float gain)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `bool set_time_in_frames(uint64 time_frames)`
 - `bool set_time_in_milliseconds(uint64 time_ms)`
 - `bool set_volume(float volume)`
 - `bool start()`
 - `bool stop()`
 - `float get_gain() const property`
+- `float get_output_bus_volume(uint bus)`
 - `float get_volume() const property`
 - `float[]@ read(uint64 frame_count)`
 - `int find_closest_listener(const vector&in position) const`
@@ -764,8 +1781,15 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_sample_rate() const property`
 - `mixer@ mixer()`
 - `sound@ play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = 0.0, float pan = 0.0, float pitch = 100.0, mixer@ mix = null, const pack_interface@ pack_file = sound_default_pack, bool autoplay = true)`
+- `sound@ play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = 0.0, float pan = 0.0, float pitch = 100.0, mixer@+ mix = null, const pack_interface@+ pack_file = sound_default_pack, bool autoplay = true)`
 - `sound@ sound()`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
 - `uint get_listener_count() const property`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `uint64 get_time_in_frames() const property`
 - `uint64 get_time_in_milliseconds() const property`
 - `vector get_listener_direction(int index) const`
@@ -787,15 +1811,34 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `audio_freeverb_node`
 ##### Behaviours / Constructors
-- `audio_freeverb_node@ n(audio_engine@ engine = sound_default_engine)`
+- `audio_freeverb_node@ audio_freeverb_node(audio_engine@ engine = sound_default_engine)`
+- `audio_freeverb_node@ n(audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
 - `bool get_frozen() const property`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `float get_damping() const property`
 - `float get_dry() const property`
 - `float get_input_width() const property`
+- `float get_output_bus_volume(uint bus)`
 - `float get_room_size() const property`
 - `float get_wet() const property`
 - `float get_width() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_damping(float damping) property`
 - `void set_dry(float dry) property`
 - `void set_frozen(bool frozen) property`
@@ -806,82 +1849,272 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `audio_high_pass_filter`
 ##### Behaviours / Constructors
-- `audio_high_pass_filter@ f(double cutoff_frequency, uint order, audio_engine@ engine = sound_default_engine)`
+- `audio_high_pass_filter@ audio_high_pass_filter(double cutoff_frequency, uint order, audio_engine@ engine = sound_default_engine)`
+- `audio_high_pass_filter@ f(double cutoff_frequency, uint order, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `double get_cutoff_frequency() const property`
+- `float get_output_bus_volume(uint bus)`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
 - `uint get_order() const property`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_cutoff_frequency(double frequency) property`
 - `void set_order(uint order) property`
 
 ### Class `audio_high_shelf_filter`
 ##### Behaviours / Constructors
-- `audio_high_shelf_filter@ f(double gain_db, double q, double frequency, audio_engine@ engine = sound_default_engine)`
+- `audio_high_shelf_filter@ audio_high_shelf_filter(double gain_db, double q, double frequency, audio_engine@ engine = sound_default_engine)`
+- `audio_high_shelf_filter@ f(double gain_db, double q, double frequency, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `double get_frequency() const property`
 - `double get_gain() const property`
 - `double get_q() const property`
+- `float get_output_bus_volume(uint bus)`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_frequency(double frequency) property`
 - `void set_gain(double gain) property`
 - `void set_q(double q) property`
 
 ### Class `audio_low_pass_filter`
 ##### Behaviours / Constructors
-- `audio_low_pass_filter@ f(double cutoff_frequency, uint order, audio_engine@ engine = sound_default_engine)`
+- `audio_low_pass_filter@ audio_low_pass_filter(double cutoff_frequency, uint order, audio_engine@ engine = sound_default_engine)`
+- `audio_low_pass_filter@ f(double cutoff_frequency, uint order, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `double get_cutoff_frequency() const property`
+- `float get_output_bus_volume(uint bus)`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
 - `uint get_order() const property`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_cutoff_frequency(double frequency) property`
 - `void set_order(uint order) property`
 
 ### Class `audio_low_shelf_filter`
 ##### Behaviours / Constructors
-- `audio_low_shelf_filter@ f(double gain_db, double q, double frequency, audio_engine@ engine = sound_default_engine)`
+- `audio_low_shelf_filter@ audio_low_shelf_filter(double gain_db, double q, double frequency, audio_engine@ engine = sound_default_engine)`
+- `audio_low_shelf_filter@ f(double gain_db, double q, double frequency, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `double get_frequency() const property`
 - `double get_gain() const property`
 - `double get_q() const property`
+- `float get_output_bus_volume(uint bus)`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_frequency(double frequency) property`
 - `void set_gain(double gain) property`
 - `void set_q(double q) property`
 
+### Class `audio_node`
+##### Methods
+- `audio_band_pass_filter@ opCast()`
+- `audio_data_source@ opCast()`
+- `audio_decoder@ opCast()`
+- `audio_delay_node@ opCast()`
+- `audio_encoder@ opCast()`
+- `audio_engine@ opCast()`
+- `audio_freeverb_node@ opCast()`
+- `audio_high_pass_filter@ opCast()`
+- `audio_high_shelf_filter@ opCast()`
+- `audio_low_pass_filter@ opCast()`
+- `audio_low_shelf_filter@ opCast()`
+- `audio_node_chain@ opCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `audio_notch_filter@ opCast()`
+- `audio_opus_encoder@ opCast()`
+- `audio_peak_filter@ opCast()`
+- `audio_ring_buffer@ opCast()`
+- `audio_splitter_node@ opCast()`
+- `audio_wav_encoder@ opCast()`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_output_bus_volume(uint bus)`
+- `microphone@ opCast()`
+- `mixer@ opCast()`
+- `phonon_binaural_node@ opCast()`
+- `reverb3d@ opCast()`
+- `sound@ opCast()`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+
 ### Class `audio_node_chain`
 ##### Behaviours / Constructors
-- `audio_node_chain@ c(audio_node@ source = null, audio_node@ endpoint = null, audio_engine@+ engine = sound_default_engine)`
+- `audio_node_chain@ audio_node_chain(audio_node@ source = null, audio_node@ endpoint = null, audio_engine@ engine = sound_default_engine)`
+- `audio_node_chain@ c(audio_node@+ source = null, audio_node@+ endpoint = null, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
 - `audio_node@+ get_endpoint() const property`
 - `audio_node@+ get_first() const property`
 - `audio_node@+ get_last() const property`
 - `audio_node@+ opIndex(uint index) const`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
 - `bool add_node(audio_node@+ node, audio_node@+ after = null, uint input_bus_index = 0)`
 - `bool add_node(audio_node@+ node, int after, uint input_bus_index = 0)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
 - `bool clear(bool detach_nodes = true)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
 - `bool remove_node(audio_node@+ node)`
 - `bool remove_node(uint index)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_output_bus_volume(uint bus)`
 - `int find(audio_node@+ node) const`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
 - `uint get_node_count() const property`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_endpoint(audio_node@+ endpoint, uint input_bus_index = 0)`
 
 ### Class `audio_notch_filter`
 ##### Behaviours / Constructors
-- `audio_notch_filter@ f(double q, double frequency, audio_engine@ engine = sound_default_engine)`
+- `audio_notch_filter@ audio_notch_filter(double q, double frequency, audio_engine@ engine = sound_default_engine)`
+- `audio_notch_filter@ f(double q, double frequency, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `double get_frequency() const property`
 - `double get_q() const property`
+- `float get_output_bus_volume(uint bus)`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_frequency(double frequency) property`
 - `void set_q(double q) property`
 
 ### Class `audio_opus_encoder`
 ##### Behaviours / Constructors
-- `audio_opus_encoder@ e(audio_engine@ engine = sound_default_engine)`
+- `audio_opus_encoder@ audio_opus_encoder(audio_engine@ engine = sound_default_engine)`
+- `audio_opus_encoder@ e(audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_encoder@ opImplCast()`
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool close()`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool get_active() const property`
 - `bool get_cvbr() const property`
 - `bool get_dtx() const property`
 - `bool get_vbr() const property`
+- `bool open(const string&in filename, uint sample_rate, uint channels, uint flags = AUDIO_ENCODER_DEFAULTS)`
+- `bool open(datastream@ stream, uint sample_rate, uint channels, uint flags = AUDIO_ENCODER_DEFAULTS)`
+- `bool open(uint sample_rate, uint channels, uint flags = AUDIO_ENCODER_DEFAULTS)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_output_bus_volume(uint bus)`
 - `int get_application() const property`
 - `int get_bitrate() const property`
 - `int get_complexity() const property`
 - `int get_packet_loss_percent() const property`
 - `int get_signal_type() const property`
+- `string get_format() const property`
+- `string read()`
+- `uint get_channels() const property`
+- `uint get_default_open_flags() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint get_sample_rate() const property`
+- `uint write(const array<float>@ frames)`
+- `uint write(const memory_buffer<float>&inout frames)`
+- `uint64 get_frames_written() const property`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_application(int application) property`
 - `void set_bitrate(int bitrate) property`
 - `void set_complexity(int complexity) property`
@@ -893,49 +2126,525 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `audio_peak_filter`
 ##### Behaviours / Constructors
-- `audio_peak_filter@ f(double gain_db, double q, double frequency, audio_engine@ engine = sound_default_engine)`
+- `audio_peak_filter@ audio_peak_filter(double gain_db, double q, double frequency, audio_engine@ engine = sound_default_engine)`
+- `audio_peak_filter@ f(double gain_db, double q, double frequency, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `double get_frequency() const property`
 - `double get_gain() const property`
 - `double get_q() const property`
+- `float get_output_bus_volume(uint bus)`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_frequency(double frequency) property`
 - `void set_gain(double gain) property`
 - `void set_q(double q) property`
 
 ### Class `audio_ring_buffer`
 ##### Behaviours / Constructors
-- `audio_ring_buffer@ r(uint channels, uint size, audio_engine@ engine = sound_default_engine)`
+- `audio_ring_buffer@ audio_ring_buffer(uint channels, uint size, audio_engine@ engine = sound_default_engine)`
+- `audio_ring_buffer@ r(uint channels, uint size, audio_engine@+ engine = sound_default_engine)`
+##### Methods
+- `array<float>@ read(uint64 frame_count = 0)`
+- `audio_data_source@ get_current() const property`
+- `audio_data_source@ get_next() const property`
+- `audio_data_source@ opImplCast()`
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool get_active() const property`
+- `bool get_looping() const property`
+- `bool seek_frames(uint64 frame_index)`
+- `bool seek_milliseconds(float ms)`
+- `bool set_current(audio_data_source@ new_current)`
+- `bool set_loop_point(uint64 start_frame, uint64 end_frame)`
+- `bool set_looping(bool looping)`
+- `bool set_next(audio_data_source@ new_next)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_range(uint64 start_frame, uint64 end_frame)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_cursor_milliseconds() const property`
+- `float get_length_milliseconds() const property`
+- `float get_output_bus_volume(uint bus)`
+- `float skip_milliseconds(float ms)`
+- `microphone@ opCast()`
+- `uint get_advised_read_frame_count() const property`
+- `uint get_available_read() const property`
+- `uint get_available_write() const property`
+- `uint get_channels() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint get_sample_rate() const property`
+- `uint write(const array<float>@ frames)`
+- `uint write(const memory_buffer<float>&inout frames)`
+- `uint64 get_cursor_frames() const property`
+- `uint64 get_length_frames() const property`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+- `uint64 skip_frames(uint64 frame_count)`
+- `void get_loop_point(uint64&out start_frame, uint64&out end_frame) const`
+- `void get_range(uint64&out start_frame, uint64&out end_frame) const`
+- `void reset()`
 
 ### Class `audio_splitter_node`
 ##### Behaviours / Constructors
-- `audio_splitter_node@ n(audio_engine@ engine, int channels)`
+- `audio_splitter_node@ audio_splitter_node(audio_engine@ engine, int channels)`
+- `audio_splitter_node@ n(audio_engine@+ engine, int channels)`
+##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_output_bus_volume(uint bus)`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 
 ### Class `audio_wav_encoder`
 ##### Behaviours / Constructors
-- `audio_wav_encoder@ e(audio_engine@ engine = sound_default_engine)`
+- `audio_wav_encoder@ audio_wav_encoder(audio_engine@ engine = sound_default_engine)`
+- `audio_wav_encoder@ e(audio_engine@+ engine = sound_default_engine)`
 ##### Methods
+- `audio_encoder@ opImplCast()`
 - `audio_format get_wav_format() const property`
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool close()`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool get_active() const property`
+- `bool open(const string&in filename, uint sample_rate, uint channels, uint flags = AUDIO_ENCODER_DEFAULTS)`
+- `bool open(datastream@ stream, uint sample_rate, uint channels, uint flags = AUDIO_ENCODER_DEFAULTS)`
+- `bool open(uint sample_rate, uint channels, uint flags = AUDIO_ENCODER_DEFAULTS)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_output_bus_volume(uint bus)`
+- `string get_format() const property`
+- `string read()`
+- `uint get_channels() const property`
+- `uint get_default_open_flags() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint get_sample_rate() const property`
+- `uint write(const array<float>@ frames)`
+- `uint write(const memory_buffer<float>&inout frames)`
+- `uint64 get_frames_written() const property`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+
+### Class `base32_decoder`
+##### Behaviours / Constructors
+- `base32_decoder@ base32_decoder()`
+- `base32_decoder@ base32_decoder(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `base32_decoder& opShl(double value)`
+- `base32_decoder& opShl(float value)`
+- `base32_decoder& opShl(int value)`
+- `base32_decoder& opShl(int16 value)`
+- `base32_decoder& opShl(int64 value)`
+- `base32_decoder& opShl(int8 value)`
+- `base32_decoder& opShl(string value)`
+- `base32_decoder& opShl(uint value)`
+- `base32_decoder& opShl(uint16 value)`
+- `base32_decoder& opShl(uint64 value)`
+- `base32_decoder& opShl(uint8 value)`
+- `base32_decoder& opShr(double&out value)`
+- `base32_decoder& opShr(float&out value)`
+- `base32_decoder& opShr(int&out value)`
+- `base32_decoder& opShr(int16&out value)`
+- `base32_decoder& opShr(int64&out value)`
+- `base32_decoder& opShr(int8&out value)`
+- `base32_decoder& opShr(string&out value)`
+- `base32_decoder& opShr(uint&out value)`
+- `base32_decoder& opShr(uint16&out value)`
+- `base32_decoder& opShr(uint64&out value)`
+- `base32_decoder& opShr(uint8&out value)`
+- `base32_decoder& write_double(double value)`
+- `base32_decoder& write_float(float value)`
+- `base32_decoder& write_int(int value)`
+- `base32_decoder& write_int16(int16 value)`
+- `base32_decoder& write_int64(int64 value)`
+- `base32_decoder& write_int8(int8 value)`
+- `base32_decoder& write_string(string value)`
+- `base32_decoder& write_uint(uint value)`
+- `base32_decoder& write_uint16(uint16 value)`
+- `base32_decoder& write_uint64(uint64 value)`
+- `base32_decoder& write_uint8(uint8 value)`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `base32_encoder`
+##### Behaviours / Constructors
+- `base32_encoder@ base32_encoder()`
+- `base32_encoder@ base32_encoder(datastream@ stream, bool padding = true, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `base32_encoder& opShl(double value)`
+- `base32_encoder& opShl(float value)`
+- `base32_encoder& opShl(int value)`
+- `base32_encoder& opShl(int16 value)`
+- `base32_encoder& opShl(int64 value)`
+- `base32_encoder& opShl(int8 value)`
+- `base32_encoder& opShl(string value)`
+- `base32_encoder& opShl(uint value)`
+- `base32_encoder& opShl(uint16 value)`
+- `base32_encoder& opShl(uint64 value)`
+- `base32_encoder& opShl(uint8 value)`
+- `base32_encoder& opShr(double&out value)`
+- `base32_encoder& opShr(float&out value)`
+- `base32_encoder& opShr(int&out value)`
+- `base32_encoder& opShr(int16&out value)`
+- `base32_encoder& opShr(int64&out value)`
+- `base32_encoder& opShr(int8&out value)`
+- `base32_encoder& opShr(string&out value)`
+- `base32_encoder& opShr(uint&out value)`
+- `base32_encoder& opShr(uint16&out value)`
+- `base32_encoder& opShr(uint64&out value)`
+- `base32_encoder& opShr(uint8&out value)`
+- `base32_encoder& write_double(double value)`
+- `base32_encoder& write_float(float value)`
+- `base32_encoder& write_int(int value)`
+- `base32_encoder& write_int16(int16 value)`
+- `base32_encoder& write_int64(int64 value)`
+- `base32_encoder& write_int8(int8 value)`
+- `base32_encoder& write_string(string value)`
+- `base32_encoder& write_uint(uint value)`
+- `base32_encoder& write_uint16(uint16 value)`
+- `base32_encoder& write_uint64(uint64 value)`
+- `base32_encoder& write_uint8(uint8 value)`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, bool padding = true, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `base64_decoder`
+##### Behaviours / Constructors
+- `base64_decoder@ base64_decoder()`
+- `base64_decoder@ base64_decoder(datastream@ stream, int options = 0, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `base64_decoder& opShl(double value)`
+- `base64_decoder& opShl(float value)`
+- `base64_decoder& opShl(int value)`
+- `base64_decoder& opShl(int16 value)`
+- `base64_decoder& opShl(int64 value)`
+- `base64_decoder& opShl(int8 value)`
+- `base64_decoder& opShl(string value)`
+- `base64_decoder& opShl(uint value)`
+- `base64_decoder& opShl(uint16 value)`
+- `base64_decoder& opShl(uint64 value)`
+- `base64_decoder& opShl(uint8 value)`
+- `base64_decoder& opShr(double&out value)`
+- `base64_decoder& opShr(float&out value)`
+- `base64_decoder& opShr(int&out value)`
+- `base64_decoder& opShr(int16&out value)`
+- `base64_decoder& opShr(int64&out value)`
+- `base64_decoder& opShr(int8&out value)`
+- `base64_decoder& opShr(string&out value)`
+- `base64_decoder& opShr(uint&out value)`
+- `base64_decoder& opShr(uint16&out value)`
+- `base64_decoder& opShr(uint64&out value)`
+- `base64_decoder& opShr(uint8&out value)`
+- `base64_decoder& write_double(double value)`
+- `base64_decoder& write_float(float value)`
+- `base64_decoder& write_int(int value)`
+- `base64_decoder& write_int16(int16 value)`
+- `base64_decoder& write_int64(int64 value)`
+- `base64_decoder& write_int8(int8 value)`
+- `base64_decoder& write_string(string value)`
+- `base64_decoder& write_uint(uint value)`
+- `base64_decoder& write_uint16(uint16 value)`
+- `base64_decoder& write_uint64(uint64 value)`
+- `base64_decoder& write_uint8(uint8 value)`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, int options = 0, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `base64_encoder`
+##### Behaviours / Constructors
+- `base64_encoder@ base64_encoder()`
+- `base64_encoder@ base64_encoder(datastream@ stream, int options = 0, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `base64_encoder& opShl(double value)`
+- `base64_encoder& opShl(float value)`
+- `base64_encoder& opShl(int value)`
+- `base64_encoder& opShl(int16 value)`
+- `base64_encoder& opShl(int64 value)`
+- `base64_encoder& opShl(int8 value)`
+- `base64_encoder& opShl(string value)`
+- `base64_encoder& opShl(uint value)`
+- `base64_encoder& opShl(uint16 value)`
+- `base64_encoder& opShl(uint64 value)`
+- `base64_encoder& opShl(uint8 value)`
+- `base64_encoder& opShr(double&out value)`
+- `base64_encoder& opShr(float&out value)`
+- `base64_encoder& opShr(int&out value)`
+- `base64_encoder& opShr(int16&out value)`
+- `base64_encoder& opShr(int64&out value)`
+- `base64_encoder& opShr(int8&out value)`
+- `base64_encoder& opShr(string&out value)`
+- `base64_encoder& opShr(uint&out value)`
+- `base64_encoder& opShr(uint16&out value)`
+- `base64_encoder& opShr(uint64&out value)`
+- `base64_encoder& opShr(uint8&out value)`
+- `base64_encoder& write_double(double value)`
+- `base64_encoder& write_float(float value)`
+- `base64_encoder& write_int(int value)`
+- `base64_encoder& write_int16(int16 value)`
+- `base64_encoder& write_int64(int64 value)`
+- `base64_encoder& write_int8(int8 value)`
+- `base64_encoder& write_string(string value)`
+- `base64_encoder& write_uint(uint value)`
+- `base64_encoder& write_uint16(uint16 value)`
+- `base64_encoder& write_uint64(uint64 value)`
+- `base64_encoder& write_uint8(uint8 value)`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, int options = 0, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
 
 ### Class `calendar`
 ##### Behaviours / Constructors
+- `calendar@ calendar()`
+- `calendar@ calendar(const calendar&in other)`
+- `calendar@ calendar(const datetime&in value)`
+- `calendar@ calendar(double julian_day)`
+- `calendar@ calendar(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, int millisecond = 0, int microsecond = 0)`
 - `calendar@ f()`
-- `calendar@ f(const calendar&in)`
-- `calendar@ f(const datetime&in)`
+- `calendar@ f(const calendar&in other)`
+- `calendar@ f(const datetime&in value)`
 - `calendar@ f(double julian_day)`
 - `calendar@ f(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, int millisecond = 0, int microsecond = 0)`
 ##### Methods
+- `bool add_days(int amount)`
+- `bool add_hours(int amount)`
+- `bool add_minutes(int amount)`
+- `bool add_months(int amount)`
+- `bool add_seconds(int amount)`
+- `bool add_years(int amount)`
 - `bool get_AM() const property`
+- `bool get_leap_year()`
 - `bool get_PM() const property`
-- `bool opEquals(const calendar&in) const`
-- `calendar& opAddAssign(const timespan&in)`
-- `calendar& opAssign(const calendar&in)`
-- `calendar& opAssign(const timestamp&in)`
+- `bool get_valid() const property`
+- `bool opEquals(const calendar&in other) const`
+- `calendar& opAddAssign(const timespan&in value)`
+- `calendar& opAssign(const calendar&in other)`
+- `calendar& opAssign(const timestamp&in value)`
 - `calendar& opAssign(double julian_day)`
-- `calendar& opSubAssign(const timespan&in)`
+- `calendar& opSubAssign(const timespan&in value)`
 - `calendar& set(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, int millisecond = 0, int microsecond = 0)`
-- `calendar@ opAdd(const timespan&in) const`
-- `calendar@ opSub(const timespan&in) const`
+- `calendar@ opAdd(const timespan&in value) const`
+- `calendar@ opSub(const timespan&in value) const`
 - `datetime@ get_UTC() const property`
+- `double diff_years(const calendar&in other)`
 - `double get_julian_day() const property`
 - `int get_day() const property`
 - `int get_hour() const property`
@@ -949,18 +2658,25 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_weekday() const property`
 - `int get_year() const property`
 - `int get_yearday() const property`
-- `int opCmp(const calendar&in) const`
+- `int opCmp(const calendar&in other) const`
 - `int week(int first_day_of_week = 1) const`
+- `int64 diff_days(const calendar&in other)`
+- `int64 diff_hours(const calendar&in other)`
+- `int64 diff_minutes(const calendar&in other)`
+- `int64 diff_months(const calendar&in other)`
+- `int64 diff_seconds(const calendar&in other)`
 - `int64 get_UTC_time() const property`
 - `string format(const string&in fmt)`
-- `timespan opSub(const calendar&in) const`
+- `string get_month_name() const property`
+- `string get_weekday_name() const property`
+- `timespan opSub(const calendar&in other) const`
 - `timestamp get_timestamp() const property`
 - `void reset()`
 
 ### Class `combination`
 ##### Behaviours / Constructors
+- `combination@ combination()`
 - `combination@ f()`
-- `void f()`
 ##### Methods
 - `bool generate_all_combinations(int items, int min_size, int max_size)`
 - `bool generate_all_combinations(int items, int size)`
@@ -968,41 +2684,447 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool generate_unique_combinations(int items, int min_size, int max_size)`
 - `bool generate_unique_combinations(int items, int size)`
 - `bool get_active() property`
-- `bool next(int[]@ list)`
+- `bool next(int[]@+ list)`
 - `void reset()`
 
+### Class `complex`
+##### Behaviours / Constructors
+- `void $list(const int&in) { float, float }`
+- `void complex()`
+- `void complex(const complex&in other)`
+- `void complex(float real)`
+- `void complex(float real, float imaginary)`
+- `void f()`
+- `void f(const complex &in other)`
+- `void f(const int &in) {float, float}`
+- `void f(float real)`
+- `void f(float real, float imaginary)`
+##### Properties
+- `float i`
+- `float r`
+##### Methods
+- `bool opEquals(const complex &in other) const`
+- `bool opEquals(const complex&in other) const`
+- `complex &opAddAssign(const complex &in other)`
+- `complex &opDivAssign(const complex &in other)`
+- `complex &opMulAssign(const complex &in other)`
+- `complex &opSubAssign(const complex &in other)`
+- `complex get_ir() const property`
+- `complex get_ri() const property`
+- `complex opAdd(const complex &in other) const`
+- `complex opAdd(const complex&in other) const`
+- `complex opDiv(const complex &in other) const`
+- `complex opDiv(const complex&in other) const`
+- `complex opMul(const complex &in other) const`
+- `complex opMul(const complex&in other) const`
+- `complex opSub(const complex &in other) const`
+- `complex opSub(const complex&in other) const`
+- `complex& opAddAssign(const complex&in other)`
+- `complex& opDivAssign(const complex&in other)`
+- `complex& opMulAssign(const complex&in other)`
+- `complex& opSubAssign(const complex&in other)`
+- `float abs() const`
+- `void set_ir(const complex &in value) property`
+- `void set_ir(const complex&in value) property`
+- `void set_ri(const complex &in value) property`
+- `void set_ri(const complex&in value) property`
+
+### Class `const_weakref<class T>`
+
+### Class `const_weakref<T>`
+##### Behaviours / Constructors
+- `bool f(int&in, bool&out)`
+- `void const_weakref()`
+- `void const_weakref(int&in)`
+- `void const_weakref(int&in, const T@ object)`
+- `void f(int&in)`
+- `void f(int&in, const T@+ object) explicit`
+##### Methods
+- `bool opEquals(const const_weakref<T> &in other) const`
+- `bool opEquals(const const_weakref<T>&in other) const`
+- `bool opEquals(const T@+ object) const`
+- `bool opEquals(const weakref<T> &in other) const`
+- `bool opEquals(const weakref<T>&in other) const`
+- `const T@ get() const`
+- `const T@ opImplCast() const`
+- `const_weakref<T> &opAssign(const const_weakref<T> &in other)`
+- `const_weakref<T> &opHndlAssign(const const_weakref<T> &in other)`
+- `const_weakref<T> &opHndlAssign(const T@ object)`
+- `const_weakref<T> &opHndlAssign(const weakref<T> &in other)`
+- `const_weakref<T>& opAssign(const const_weakref<T>&in other)`
+- `const_weakref<T>& opHndlAssign(const const_weakref<T>&in other)`
+- `const_weakref<T>& opHndlAssign(const T@ object)`
+- `const_weakref<T>& opHndlAssign(const weakref<T>&in other)`
+
 ### Class `coordinate_map`
+##### Behaviours / Constructors
+- `coordinate_map @m()`
+- `coordinate_map@ coordinate_map()`
+##### Methods
+- `array<coordinate_map_area@>@ get_areas(float minx, float maxx, float miny, float maxy, float minz, float maxz, float d = 0.0, coordinate_map_filter_callback@ filter_callback = null, int64 required_flags = 0, int64 excluded_flags = 0) const`
+- `array<coordinate_map_area@>@ get_areas(float x, float y, float z, float d = 0.0, coordinate_map_filter_callback@ filter_callback = null, int64 required_flags = 0, int64 excluded_flags = 0) const`
+- `coordinate_map_area@ add_area(float minx, float maxx, float miny, float maxy, float minz, float maxz, float rotation, any@ primary_data, const string&in data1, const string&in data2, const string&in data3, int priority, int64 flags = 0)`
+- `coordinate_map_area@ get_area(float x, float y, float z, int priority = -1, float d = 0.0, coordinate_map_filter_callback@ filter_callback = null, int64 required_flags = 0, int64 excluded_flags = 0) const`
+- `coordinate_map_area@[]@ get_areas(float minx, float maxx, float miny, float maxy, float minz, float maxz, float d = 0.0, coordinate_map_filter_callback@ filter_callback = null, int64 required_flags = 0, int64 excluded_flags = 0) const`
+- `coordinate_map_area@[]@ get_areas(float x, float y, float z, float d = 0.0, coordinate_map_filter_callback@ filter_callback = null, int64 required_flags = 0, int64 excluded_flags = 0) const`
+- `void reset()`
 
 ### Class `coordinate_map_area`
+##### Properties
+- `any@ primary_data`
+- `const bool framed`
+- `const coordinate_map@ map`
+- `const float maxx`
+- `const float maxy`
+- `const float maxz`
+- `const float minx`
+- `const float miny`
+- `const float minz`
+- `const float rotation`
+- `const int priority`
+- `const string data1`
+- `const string data2`
+- `const string data3`
+- `int64 flags`
+##### Methods
+- `bool is_in_area(float x, float y, float z, float d = 0.0, coordinate_map_filter_callback@+ filter_callback = null, int64 required_flags = 0, int64 excluded_flags = 0) const`
+- `void reframe()`
+- `void set(float minx, float maxx, float miny, float maxy, float minz, float maxz, float theta)`
+- `void set_area(float minx, float maxx, float miny, float maxy, float minz, float maxz)`
+- `void set_rotation(float theta)`
+- `void unframe()`
+
+### Class `counting_reader`
+##### Behaviours / Constructors
+- `counting_reader@ counting_reader()`
+- `counting_reader@ counting_reader(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `counting_reader& opShl(double value)`
+- `counting_reader& opShl(float value)`
+- `counting_reader& opShl(int value)`
+- `counting_reader& opShl(int16 value)`
+- `counting_reader& opShl(int64 value)`
+- `counting_reader& opShl(int8 value)`
+- `counting_reader& opShl(string value)`
+- `counting_reader& opShl(uint value)`
+- `counting_reader& opShl(uint16 value)`
+- `counting_reader& opShl(uint64 value)`
+- `counting_reader& opShl(uint8 value)`
+- `counting_reader& opShr(double&out value)`
+- `counting_reader& opShr(float&out value)`
+- `counting_reader& opShr(int&out value)`
+- `counting_reader& opShr(int16&out value)`
+- `counting_reader& opShr(int64&out value)`
+- `counting_reader& opShr(int8&out value)`
+- `counting_reader& opShr(string&out value)`
+- `counting_reader& opShr(uint&out value)`
+- `counting_reader& opShr(uint16&out value)`
+- `counting_reader& opShr(uint64&out value)`
+- `counting_reader& opShr(uint8&out value)`
+- `counting_reader& write_double(double value)`
+- `counting_reader& write_float(float value)`
+- `counting_reader& write_int(int value)`
+- `counting_reader& write_int16(int16 value)`
+- `counting_reader& write_int64(int64 value)`
+- `counting_reader& write_int8(int8 value)`
+- `counting_reader& write_string(string value)`
+- `counting_reader& write_uint(uint value)`
+- `counting_reader& write_uint16(uint16 value)`
+- `counting_reader& write_uint64(uint64 value)`
+- `counting_reader& write_uint8(uint8 value)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_chars() property`
+- `int64 get_current_line() property`
+- `int64 get_lines() property`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void add_chars(int64 count)`
+- `void add_lines(int64 count)`
+- `void add_pos(int64 count)`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void reset()`
+- `void set_current_line(int64 line)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `counting_writer`
+##### Behaviours / Constructors
+- `counting_writer@ counting_writer()`
+- `counting_writer@ counting_writer(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `counting_writer& opShl(double value)`
+- `counting_writer& opShl(float value)`
+- `counting_writer& opShl(int value)`
+- `counting_writer& opShl(int16 value)`
+- `counting_writer& opShl(int64 value)`
+- `counting_writer& opShl(int8 value)`
+- `counting_writer& opShl(string value)`
+- `counting_writer& opShl(uint value)`
+- `counting_writer& opShl(uint16 value)`
+- `counting_writer& opShl(uint64 value)`
+- `counting_writer& opShl(uint8 value)`
+- `counting_writer& opShr(double&out value)`
+- `counting_writer& opShr(float&out value)`
+- `counting_writer& opShr(int&out value)`
+- `counting_writer& opShr(int16&out value)`
+- `counting_writer& opShr(int64&out value)`
+- `counting_writer& opShr(int8&out value)`
+- `counting_writer& opShr(string&out value)`
+- `counting_writer& opShr(uint&out value)`
+- `counting_writer& opShr(uint16&out value)`
+- `counting_writer& opShr(uint64&out value)`
+- `counting_writer& opShr(uint8&out value)`
+- `counting_writer& write_double(double value)`
+- `counting_writer& write_float(float value)`
+- `counting_writer& write_int(int value)`
+- `counting_writer& write_int16(int16 value)`
+- `counting_writer& write_int64(int64 value)`
+- `counting_writer& write_int8(int8 value)`
+- `counting_writer& write_string(string value)`
+- `counting_writer& write_uint(uint value)`
+- `counting_writer& write_uint16(uint16 value)`
+- `counting_writer& write_uint64(uint64 value)`
+- `counting_writer& write_uint8(uint8 value)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_chars() property`
+- `int64 get_current_line() property`
+- `int64 get_lines() property`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void add_chars(int64 count)`
+- `void add_lines(int64 count)`
+- `void add_pos(int64 count)`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void reset()`
+- `void set_current_line(int64 line)`
+- `void write_7bit_encoded(uint64 integer)`
 
 ### Class `datastream`
 ##### Behaviours / Constructors
-- `datastream@ d(const string&in = \`
+- `datastream@ d(const string&in initial_data = "")`
 - `datastream@ d(const string&in initial_data, const string&in encoding, int byteorder = STREAM_BYTE_ORDER_NATIVE)`
+- `datastream@ datastream(const string&in initial_data = "")`
+- `datastream@ datastream(const string&in initial_data, const string&in encoding, int byteorder = STREAM_BYTE_ORDER_NATIVE)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
 ##### Methods
-- `bool open(const string&in initial_data = \`
+- `asset_decryptor@ opCast()`
+- `asset_encryptor@ opCast()`
+- `base32_decoder@ opCast()`
+- `base32_encoder@ opCast()`
+- `base64_decoder@ opCast()`
+- `base64_encoder@ opCast()`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(const string&in initial_data = "", const string&in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `counting_reader@ opCast()`
+- `counting_writer@ opCast()`
+- `datastream& opShl(double value)`
+- `datastream& opShl(float value)`
+- `datastream& opShl(int value)`
+- `datastream& opShl(int16 value)`
+- `datastream& opShl(int64 value)`
+- `datastream& opShl(int8 value)`
+- `datastream& opShl(string value)`
+- `datastream& opShl(uint value)`
+- `datastream& opShl(uint16 value)`
+- `datastream& opShl(uint64 value)`
+- `datastream& opShl(uint8 value)`
+- `datastream& opShr(double&out value)`
+- `datastream& opShr(float&out value)`
+- `datastream& opShr(int&out value)`
+- `datastream& opShr(int16&out value)`
+- `datastream& opShr(int64&out value)`
+- `datastream& opShr(int8&out value)`
+- `datastream& opShr(string&out value)`
+- `datastream& opShr(uint&out value)`
+- `datastream& opShr(uint16&out value)`
+- `datastream& opShr(uint64&out value)`
+- `datastream& opShr(uint8&out value)`
+- `datastream& write_double(double value)`
+- `datastream& write_float(float value)`
+- `datastream& write_int(int value)`
+- `datastream& write_int16(int16 value)`
+- `datastream& write_int64(int64 value)`
+- `datastream& write_int8(int8 value)`
+- `datastream& write_string(string value)`
+- `datastream& write_uint(uint value)`
+- `datastream& write_uint16(uint16 value)`
+- `datastream& write_uint64(uint64 value)`
+- `datastream& write_uint8(uint8 value)`
+- `datastream@ opCast()`
+- `deflating_reader@ opCast()`
+- `deflating_writer@ opCast()`
+- `discarding_writer@ opCast()`
+- `double read_double()`
+- `duplicating_reader@ opCast()`
+- `duplicating_writer@ opCast()`
+- `file@ opCast()`
+- `float read_float()`
+- `hex_decoder@ opCast()`
+- `hex_encoder@ opCast()`
+- `inflating_reader@ opCast()`
+- `inflating_writer@ opCast()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `line_converting_reader@ opCast()`
+- `line_converting_writer@ opCast()`
+- `memory_reader@ opCast()`
+- `memory_writer@ opCast()`
+- `random_reader@ opCast()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
 - `string str()`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
 - `void str(const string&in new_data)`
+- `void write_7bit_encoded(uint64 integer)`
 
 ### Class `datetime`
 ##### Behaviours / Constructors
+- `datetime@ datetime()`
+- `datetime@ datetime(const datetime&in other)`
+- `datetime@ datetime(const timestamp&in timestamp)`
+- `datetime@ datetime(double julian_day)`
+- `datetime@ datetime(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, int millisecond = 0, int microsecond = 0)`
 - `datetime@ f()`
-- `datetime@ f(const datetime&in)`
+- `datetime@ f(const datetime&in other)`
 - `datetime@ f(const timestamp&in timestamp)`
 - `datetime@ f(double julian_day)`
 - `datetime@ f(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, int millisecond = 0, int microsecond = 0)`
 ##### Methods
+- `bool add_days(int amount)`
+- `bool add_hours(int amount)`
+- `bool add_minutes(int amount)`
+- `bool add_months(int amount)`
+- `bool add_seconds(int amount)`
+- `bool add_years(int amount)`
 - `bool get_AM() const property`
+- `bool get_leap_year()`
 - `bool get_PM() const property`
-- `bool opEquals(const datetime&in) const`
-- `datetime& opAddAssign(const timespan&in)`
-- `datetime& opAssign(const datetime&in)`
-- `datetime& opAssign(const timestamp&in)`
+- `bool get_valid() const property`
+- `bool opEquals(const datetime&in other) const`
+- `datetime& opAddAssign(const timespan&in value)`
+- `datetime& opAssign(const datetime&in other)`
+- `datetime& opAssign(const timestamp&in value)`
 - `datetime& opAssign(double julian_day)`
-- `datetime& opSubAssign(const timespan&in)`
+- `datetime& opSubAssign(const timespan&in value)`
 - `datetime& set(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, int millisecond = 0, int microsecond = 0)`
-- `datetime@ opAdd(const timespan&in) const`
-- `datetime@ opSub(const timespan&in) const`
+- `datetime@ opAdd(const timespan&in value) const`
+- `datetime@ opSub(const timespan&in value) const`
+- `double diff_years(const datetime&in other)`
 - `double get_julian_day() const property`
 - `int get_day() const property`
 - `int get_hour() const property`
@@ -1015,53 +3137,779 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_weekday() const property`
 - `int get_year() const property`
 - `int get_yearday() const property`
-- `int opCmp(const datetime&in) const`
+- `int opCmp(const datetime&in other) const`
 - `int week(int first_day_of_week = 1) const`
+- `int64 diff_days(const datetime&in other)`
+- `int64 diff_hours(const datetime&in other)`
+- `int64 diff_minutes(const datetime&in other)`
+- `int64 diff_months(const datetime&in other)`
+- `int64 diff_seconds(const datetime&in other)`
 - `int64 get_UTC_time() const property`
 - `string format(const string&in fmt, int tzd = 0xffff)`
-- `timespan opSub(const datetime&in) const`
+- `string get_month_name() const property`
+- `string get_weekday_name() const property`
+- `timespan opSub(const datetime&in other) const`
 - `timestamp get_timestamp() const property`
-- `void make_UTC(int timezone_offset)`
 - `void make_local(int timezone_offset)`
+- `void make_UTC(int timezone_offset)`
 - `void reset()`
 
-### Class `dictionary`
+### Class `deflating_reader`
+##### Behaviours / Constructors
+- `deflating_reader@ deflating_reader()`
+- `deflating_reader@ deflating_reader(datastream@ stream, compression_method compression = COMPRESSION_METHOD_ZLIB, int level = 9, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
 ##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, compression_method compression = COMPRESSION_METHOD_ZLIB, int level = 9, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `deflating_reader& opShl(double value)`
+- `deflating_reader& opShl(float value)`
+- `deflating_reader& opShl(int value)`
+- `deflating_reader& opShl(int16 value)`
+- `deflating_reader& opShl(int64 value)`
+- `deflating_reader& opShl(int8 value)`
+- `deflating_reader& opShl(string value)`
+- `deflating_reader& opShl(uint value)`
+- `deflating_reader& opShl(uint16 value)`
+- `deflating_reader& opShl(uint64 value)`
+- `deflating_reader& opShl(uint8 value)`
+- `deflating_reader& opShr(double&out value)`
+- `deflating_reader& opShr(float&out value)`
+- `deflating_reader& opShr(int&out value)`
+- `deflating_reader& opShr(int16&out value)`
+- `deflating_reader& opShr(int64&out value)`
+- `deflating_reader& opShr(int8&out value)`
+- `deflating_reader& opShr(string&out value)`
+- `deflating_reader& opShr(uint&out value)`
+- `deflating_reader& opShr(uint16&out value)`
+- `deflating_reader& opShr(uint64&out value)`
+- `deflating_reader& opShr(uint8&out value)`
+- `deflating_reader& write_double(double value)`
+- `deflating_reader& write_float(float value)`
+- `deflating_reader& write_int(int value)`
+- `deflating_reader& write_int16(int16 value)`
+- `deflating_reader& write_int64(int64 value)`
+- `deflating_reader& write_int8(int8 value)`
+- `deflating_reader& write_string(string value)`
+- `deflating_reader& write_uint(uint value)`
+- `deflating_reader& write_uint16(uint16 value)`
+- `deflating_reader& write_uint64(uint64 value)`
+- `deflating_reader& write_uint8(uint8 value)`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `deflating_writer`
+##### Behaviours / Constructors
+- `deflating_writer@ deflating_writer()`
+- `deflating_writer@ deflating_writer(datastream@ stream, compression_method compression = COMPRESSION_METHOD_ZLIB, int level = 9, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, compression_method compression = COMPRESSION_METHOD_ZLIB, int level = 9, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `deflating_writer& opShl(double value)`
+- `deflating_writer& opShl(float value)`
+- `deflating_writer& opShl(int value)`
+- `deflating_writer& opShl(int16 value)`
+- `deflating_writer& opShl(int64 value)`
+- `deflating_writer& opShl(int8 value)`
+- `deflating_writer& opShl(string value)`
+- `deflating_writer& opShl(uint value)`
+- `deflating_writer& opShl(uint16 value)`
+- `deflating_writer& opShl(uint64 value)`
+- `deflating_writer& opShl(uint8 value)`
+- `deflating_writer& opShr(double&out value)`
+- `deflating_writer& opShr(float&out value)`
+- `deflating_writer& opShr(int&out value)`
+- `deflating_writer& opShr(int16&out value)`
+- `deflating_writer& opShr(int64&out value)`
+- `deflating_writer& opShr(int8&out value)`
+- `deflating_writer& opShr(string&out value)`
+- `deflating_writer& opShr(uint&out value)`
+- `deflating_writer& opShr(uint16&out value)`
+- `deflating_writer& opShr(uint64&out value)`
+- `deflating_writer& opShr(uint8&out value)`
+- `deflating_writer& write_double(double value)`
+- `deflating_writer& write_float(float value)`
+- `deflating_writer& write_int(int value)`
+- `deflating_writer& write_int16(int16 value)`
+- `deflating_writer& write_int64(int64 value)`
+- `deflating_writer& write_int8(int8 value)`
+- `deflating_writer& write_string(string value)`
+- `deflating_writer& write_uint(uint value)`
+- `deflating_writer& write_uint16(uint16 value)`
+- `deflating_writer& write_uint64(uint64 value)`
+- `deflating_writer& write_uint8(uint8 value)`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `dictionary`
+##### Behaviours / Constructors
+- `bool f()`
+- `dictionary @f(int &in) {repeat {string, ?}}`
+- `dictionary@ $list(int&in) { repeat { string, ? } }`
+- `dictionary@ dictionary()`
+- `dictionary@ f()`
+- `int f()`
+- `void f()`
+- `void f(int&in)`
+##### Methods
+- `array<string> @get_keys() const`
+- `array<string>@ get_keys() const`
+- `bool delete(const string &in key)`
+- `bool delete(const string&in key)`
+- `bool empty() const`
+- `bool exists(const string &in key) const`
+- `bool exists(const string&in key) const`
+- `bool get(const string &in key, ?&out value) const`
+- `bool get(const string &in key, double&out value) const`
+- `bool get(const string &in key, int64&out value) const`
+- `bool get(const string&in key, ?&out value) const`
+- `bool get(const string&in key, double&out value) const`
+- `bool get(const string&in key, int64&out value) const`
+- `bool is_empty() const`
+- `bool opForEnd(dictionaryIter @+ iter) const`
+- `bool opForEnd(dictionaryIter@ iter) const`
+- `const dictionaryValue &opForValue0(dictionaryIter @+ iter) const`
+- `const dictionaryValue &opIndex(const string &in key) const`
+- `const dictionaryValue& opForValue0(dictionaryIter@ iter) const`
+- `const dictionaryValue& opIndex(const string&in key) const`
+- `const string &opForValue1(dictionaryIter @+ iter) const`
+- `const string& opForValue1(dictionaryIter@ iter) const`
+- `dictionary &opAssign(const dictionary &in other)`
+- `dictionary& opAssign(const dictionary&in other)`
+- `dictionaryIter @+ opForNext(dictionaryIter @+ iter) const`
+- `dictionaryIter @opForBegin() const`
+- `dictionaryIter@ opForBegin() const`
+- `dictionaryIter@ opForNext(dictionaryIter@ iter) const`
+- `dictionaryValue &opIndex(const string &in key)`
+- `dictionaryValue& opIndex(const string&in key)`
 - `string serialize()`
+- `uint get_size() const`
+- `uint size() const`
+- `void clear()`
+- `void delete_all()`
+- `void erase(const string &in key)`
+- `void erase(const string&in key)`
+- `void set(const string &in key, const ?&in value)`
+- `void set(const string &in key, const double&in value)`
+- `void set(const string &in key, const int64&in value)`
+- `void set(const string&in key, const ?&in value)`
+- `void set(const string&in key, const double&in value)`
+- `void set(const string&in key, const int64&in value)`
+
+### Class `dictionaryIter`
+
+### Class `dictionaryValue`
+##### Behaviours / Constructors
+- `void dictionaryValue()`
+- `void f()`
+- `void f(int&in)`
+##### Methods
+- `dictionaryValue &opAssign(const ?&in value)`
+- `dictionaryValue &opAssign(const dictionaryValue &in other)`
+- `dictionaryValue &opAssign(double value)`
+- `dictionaryValue &opAssign(int64 value)`
+- `dictionaryValue &opHndlAssign(const ?&in value)`
+- `dictionaryValue &opHndlAssign(const dictionaryValue &in other)`
+- `dictionaryValue& opAssign(const ?&in value)`
+- `dictionaryValue& opAssign(const dictionaryValue&in other)`
+- `dictionaryValue& opAssign(double value)`
+- `dictionaryValue& opAssign(int64 value)`
+- `dictionaryValue& opHndlAssign(const ?&in value)`
+- `dictionaryValue& opHndlAssign(const dictionaryValue&in other)`
+- `double opConv()`
+- `int64 opConv()`
+- `void opCast(?&out value)`
+- `void opConv(?&out value)`
+
+### Class `discarding_writer`
+##### Behaviours / Constructors
+- `discarding_writer@ discarding_writer(const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `discarding_writer& opShl(double value)`
+- `discarding_writer& opShl(float value)`
+- `discarding_writer& opShl(int value)`
+- `discarding_writer& opShl(int16 value)`
+- `discarding_writer& opShl(int64 value)`
+- `discarding_writer& opShl(int8 value)`
+- `discarding_writer& opShl(string value)`
+- `discarding_writer& opShl(uint value)`
+- `discarding_writer& opShl(uint16 value)`
+- `discarding_writer& opShl(uint64 value)`
+- `discarding_writer& opShl(uint8 value)`
+- `discarding_writer& opShr(double&out value)`
+- `discarding_writer& opShr(float&out value)`
+- `discarding_writer& opShr(int&out value)`
+- `discarding_writer& opShr(int16&out value)`
+- `discarding_writer& opShr(int64&out value)`
+- `discarding_writer& opShr(int8&out value)`
+- `discarding_writer& opShr(string&out value)`
+- `discarding_writer& opShr(uint&out value)`
+- `discarding_writer& opShr(uint16&out value)`
+- `discarding_writer& opShr(uint64&out value)`
+- `discarding_writer& opShr(uint8&out value)`
+- `discarding_writer& write_double(double value)`
+- `discarding_writer& write_float(float value)`
+- `discarding_writer& write_int(int value)`
+- `discarding_writer& write_int16(int16 value)`
+- `discarding_writer& write_int64(int64 value)`
+- `discarding_writer& write_int8(int8 value)`
+- `discarding_writer& write_string(string value)`
+- `discarding_writer& write_uint(uint value)`
+- `discarding_writer& write_uint16(uint16 value)`
+- `discarding_writer& write_uint64(uint64 value)`
+- `discarding_writer& write_uint8(uint8 value)`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
 
 ### Class `dns_host_entry`
 ##### Behaviours / Constructors
+- `void dns_host_entry()`
+- `void dns_host_entry(const dns_host_entry&in other)`
 - `void f()`
-- `void f(const dns_host_entry&in)`
+- `void f(const dns_host_entry&in other)`
 ##### Methods
+- `array<spec::ip_address>@ get_addresses() const`
 - `const string& get_name() const property`
 - `dns_host_entry& opAssign(const dns_host_entry&in e)`
 - `spec::ip_address[]@ get_addresses() const`
 - `string[]@ get_aliases() const`
 
 ### Class `duplicating_reader`
+##### Behaviours / Constructors
+- `duplicating_reader@ duplicating_reader()`
+- `duplicating_reader@ duplicating_reader(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
 ##### Methods
-- `duplicating_reader@ add(datastream@)`
-- `duplicating_reader@ opAdd(datastream@)`
-- `duplicating_reader@ opAddAssign(datastream@)`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `duplicating_reader& opShl(double value)`
+- `duplicating_reader& opShl(float value)`
+- `duplicating_reader& opShl(int value)`
+- `duplicating_reader& opShl(int16 value)`
+- `duplicating_reader& opShl(int64 value)`
+- `duplicating_reader& opShl(int8 value)`
+- `duplicating_reader& opShl(string value)`
+- `duplicating_reader& opShl(uint value)`
+- `duplicating_reader& opShl(uint16 value)`
+- `duplicating_reader& opShl(uint64 value)`
+- `duplicating_reader& opShl(uint8 value)`
+- `duplicating_reader& opShr(double&out value)`
+- `duplicating_reader& opShr(float&out value)`
+- `duplicating_reader& opShr(int&out value)`
+- `duplicating_reader& opShr(int16&out value)`
+- `duplicating_reader& opShr(int64&out value)`
+- `duplicating_reader& opShr(int8&out value)`
+- `duplicating_reader& opShr(string&out value)`
+- `duplicating_reader& opShr(uint&out value)`
+- `duplicating_reader& opShr(uint16&out value)`
+- `duplicating_reader& opShr(uint64&out value)`
+- `duplicating_reader& opShr(uint8&out value)`
+- `duplicating_reader& write_double(double value)`
+- `duplicating_reader& write_float(float value)`
+- `duplicating_reader& write_int(int value)`
+- `duplicating_reader& write_int16(int16 value)`
+- `duplicating_reader& write_int64(int64 value)`
+- `duplicating_reader& write_int8(int8 value)`
+- `duplicating_reader& write_string(string value)`
+- `duplicating_reader& write_uint(uint value)`
+- `duplicating_reader& write_uint16(uint16 value)`
+- `duplicating_reader& write_uint64(uint64 value)`
+- `duplicating_reader& write_uint8(uint8 value)`
+- `duplicating_reader@ add(datastream@ stream)`
+- `duplicating_reader@ opAdd(datastream@ stream)`
+- `duplicating_reader@ opAddAssign(datastream@ stream)`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
 
 ### Class `duplicating_writer`
+##### Behaviours / Constructors
+- `duplicating_writer@ duplicating_writer(const string&in encoding = "", int byteorder = 1)`
+- `duplicating_writer@ duplicating_writer(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
 ##### Methods
-- `duplicating_writer@ add(datastream@)`
-- `duplicating_writer@ opAdd(datastream@)`
-- `duplicating_writer@ opAddAssign(datastream@)`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(const string&in encoding = "", int byteorder = 1)`
+- `bool open(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `duplicating_writer& opShl(double value)`
+- `duplicating_writer& opShl(float value)`
+- `duplicating_writer& opShl(int value)`
+- `duplicating_writer& opShl(int16 value)`
+- `duplicating_writer& opShl(int64 value)`
+- `duplicating_writer& opShl(int8 value)`
+- `duplicating_writer& opShl(string value)`
+- `duplicating_writer& opShl(uint value)`
+- `duplicating_writer& opShl(uint16 value)`
+- `duplicating_writer& opShl(uint64 value)`
+- `duplicating_writer& opShl(uint8 value)`
+- `duplicating_writer& opShr(double&out value)`
+- `duplicating_writer& opShr(float&out value)`
+- `duplicating_writer& opShr(int&out value)`
+- `duplicating_writer& opShr(int16&out value)`
+- `duplicating_writer& opShr(int64&out value)`
+- `duplicating_writer& opShr(int8&out value)`
+- `duplicating_writer& opShr(string&out value)`
+- `duplicating_writer& opShr(uint&out value)`
+- `duplicating_writer& opShr(uint16&out value)`
+- `duplicating_writer& opShr(uint64&out value)`
+- `duplicating_writer& opShr(uint8&out value)`
+- `duplicating_writer& write_double(double value)`
+- `duplicating_writer& write_float(float value)`
+- `duplicating_writer& write_int(int value)`
+- `duplicating_writer& write_int16(int16 value)`
+- `duplicating_writer& write_int64(int64 value)`
+- `duplicating_writer& write_int8(int8 value)`
+- `duplicating_writer& write_string(string value)`
+- `duplicating_writer& write_uint(uint value)`
+- `duplicating_writer& write_uint16(uint16 value)`
+- `duplicating_writer& write_uint64(uint64 value)`
+- `duplicating_writer& write_uint8(uint8 value)`
+- `duplicating_writer@ add(datastream@ stream)`
+- `duplicating_writer@ opAdd(datastream@ stream)`
+- `duplicating_writer@ opAddAssign(datastream@ stream)`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `engine_character_event`
+##### Methods
+- `bool insert(engine_character_event_callback@ listener, int index = -1)`
+- `bool insert(engine_character_event_listener@ listener, int index = -1)`
+- `bool insert(engine_character_event_passthrough_callback@ listener, int index = -1)`
+- `bool opAddAssign(engine_character_event_callback@ listener)`
+- `bool opAddAssign(engine_character_event_listener@ listener)`
+- `bool opAddAssign(engine_character_event_passthrough_callback@ listener)`
+- `bool opSubAssign(engine_character_event_callback@ listener)`
+- `bool opSubAssign(engine_character_event_listener@ listener)`
+- `bool opSubAssign(engine_character_event_passthrough_callback@ listener)`
+- `bool remove(engine_character_event_callback@ listener)`
+- `bool remove(engine_character_event_listener@ listener)`
+- `bool remove(engine_character_event_passthrough_callback@ listener)`
+- `bool remove(uint index)`
+- `int find(engine_character_event_callback@ listener) const`
+- `int find(engine_character_event_listener@ listener) const`
+- `int find(engine_character_event_passthrough_callback@ listener) const`
+- `uint get_count() const property`
+- `void clear()`
+- `void opCall(string character)`
+
+### Class `engine_key_event`
+##### Methods
+- `bool insert(engine_key_event_callback@ listener, int index = -1)`
+- `bool insert(engine_key_event_listener@ listener, int index = -1)`
+- `bool insert(engine_key_event_passthrough_callback@ listener, int index = -1)`
+- `bool opAddAssign(engine_key_event_callback@ listener)`
+- `bool opAddAssign(engine_key_event_listener@ listener)`
+- `bool opAddAssign(engine_key_event_passthrough_callback@ listener)`
+- `bool opSubAssign(engine_key_event_callback@ listener)`
+- `bool opSubAssign(engine_key_event_listener@ listener)`
+- `bool opSubAssign(engine_key_event_passthrough_callback@ listener)`
+- `bool remove(engine_key_event_callback@ listener)`
+- `bool remove(engine_key_event_listener@ listener)`
+- `bool remove(engine_key_event_passthrough_callback@ listener)`
+- `bool remove(uint index)`
+- `int find(engine_key_event_callback@ listener) const`
+- `int find(engine_key_event_listener@ listener) const`
+- `int find(engine_key_event_passthrough_callback@ listener) const`
+- `uint get_count() const property`
+- `void clear()`
+- `void opCall(int key)`
+
+### Class `engine_touch_event`
+##### Methods
+- `bool insert(engine_touch_event_callback@ listener, int index = -1)`
+- `bool insert(engine_touch_event_listener@ listener, int index = -1)`
+- `bool insert(engine_touch_event_passthrough_callback@ listener, int index = -1)`
+- `bool opAddAssign(engine_touch_event_callback@ listener)`
+- `bool opAddAssign(engine_touch_event_listener@ listener)`
+- `bool opAddAssign(engine_touch_event_passthrough_callback@ listener)`
+- `bool opSubAssign(engine_touch_event_callback@ listener)`
+- `bool opSubAssign(engine_touch_event_listener@ listener)`
+- `bool opSubAssign(engine_touch_event_passthrough_callback@ listener)`
+- `bool remove(engine_touch_event_callback@ listener)`
+- `bool remove(engine_touch_event_listener@ listener)`
+- `bool remove(engine_touch_event_passthrough_callback@ listener)`
+- `bool remove(uint index)`
+- `int find(engine_touch_event_callback@ listener) const`
+- `int find(engine_touch_event_listener@ listener) const`
+- `int find(engine_touch_event_passthrough_callback@ listener) const`
+- `uint get_count() const property`
+- `void clear()`
+- `void opCall(uint64 device, const touch_finger&inout finger)`
+
+### Class `engine_touch_motion_event`
+##### Methods
+- `bool insert(engine_touch_motion_event_callback@ listener, int index = -1)`
+- `bool insert(engine_touch_motion_event_listener@ listener, int index = -1)`
+- `bool insert(engine_touch_motion_event_passthrough_callback@ listener, int index = -1)`
+- `bool opAddAssign(engine_touch_motion_event_callback@ listener)`
+- `bool opAddAssign(engine_touch_motion_event_listener@ listener)`
+- `bool opAddAssign(engine_touch_motion_event_passthrough_callback@ listener)`
+- `bool opSubAssign(engine_touch_motion_event_callback@ listener)`
+- `bool opSubAssign(engine_touch_motion_event_listener@ listener)`
+- `bool opSubAssign(engine_touch_motion_event_passthrough_callback@ listener)`
+- `bool remove(engine_touch_motion_event_callback@ listener)`
+- `bool remove(engine_touch_motion_event_listener@ listener)`
+- `bool remove(engine_touch_motion_event_passthrough_callback@ listener)`
+- `bool remove(uint index)`
+- `int find(engine_touch_motion_event_callback@ listener) const`
+- `int find(engine_touch_motion_event_listener@ listener) const`
+- `int find(engine_touch_motion_event_passthrough_callback@ listener) const`
+- `uint get_count() const property`
+- `void clear()`
+- `void opCall(uint64 device, const touch_finger&inout finger, float relative_x, float relative_y)`
+
+### Class `fast_mutex`
+##### Behaviours / Constructors
+- `fast_mutex@ fast_mutex()`
+##### Methods
+- `bool try_lock()`
+- `bool try_lock(uint milliseconds)`
+- `void lock()`
+- `void lock(uint milliseconds)`
+- `void unlock()`
+
+### Class `fast_mutex_lock`
+##### Behaviours / Constructors
+- `void fast_mutex_lock()`
+- `void fast_mutex_lock(fast_mutex@ target)`
+- `void fast_mutex_lock(fast_mutex@ target, uint milliseconds)`
+##### Methods
+- `void unlock()`
 
 ### Class `file`
 ##### Behaviours / Constructors
-- `file@ d(const string&in, const string&in, const string&in = \`
+- `file@ d(const string&in path, const string&in mode, const string&in encoding = "", int byteorder = 1)`
+- `file@ file()`
+- `file@ file(const string&in path, const string&in mode, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
 ##### Methods
-- `bool open(const string&in, const string&in, const string&in = \`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(const string&in path, const string&in mode, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `file& opShl(double value)`
+- `file& opShl(float value)`
+- `file& opShl(int value)`
+- `file& opShl(int16 value)`
+- `file& opShl(int64 value)`
+- `file& opShl(int8 value)`
+- `file& opShl(string value)`
+- `file& opShl(uint value)`
+- `file& opShl(uint16 value)`
+- `file& opShl(uint64 value)`
+- `file& opShl(uint8 value)`
+- `file& opShr(double&out value)`
+- `file& opShr(float&out value)`
+- `file& opShr(int&out value)`
+- `file& opShr(int16&out value)`
+- `file& opShr(int64&out value)`
+- `file& opShr(int8&out value)`
+- `file& opShr(string&out value)`
+- `file& opShr(uint&out value)`
+- `file& opShr(uint16&out value)`
+- `file& opShr(uint64&out value)`
+- `file& opShr(uint8&out value)`
+- `file& write_double(double value)`
+- `file& write_float(float value)`
+- `file& write_int(int value)`
+- `file& write_int16(int16 value)`
+- `file& write_int64(int64 value)`
+- `file& write_int8(int8 value)`
+- `file& write_string(string value)`
+- `file& write_uint(uint value)`
+- `file& write_uint16(uint16 value)`
+- `file& write_uint64(uint64 value)`
+- `file& write_uint8(uint8 value)`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
 - `uint64 get_size() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `ftp_client`
+##### Behaviours / Constructors
+- `ftp_client@ ftp_client(const string&in host, uint16 port = 21, const string&in username = "", const string&in password = "", uint16 active_data_port = 0)`
+- `ftp_client@ ftp_client(uint16 active_data_port = 0)`
+##### Methods
+- `bool get_is_logged_in() const property`
+- `bool get_is_open() const property`
+- `bool get_is_secure() const property`
+- `bool get_passive() const property`
+- `const string& get_welcome_message() const property`
+- `datastream@ begin_download(const string&in path, const string&in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
+- `datastream@ begin_list(const string&in path = "", bool extended = false, const string&in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
+- `datastream@ begin_upload(const string&in path, const string&in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
+- `ftp_file_type get_file_type() const property`
+- `int send_command(const string&in command, const string&in argument, string&inout response)`
+- `int send_command(const string&in command, string&inout response)`
+- `string get_working_directory()`
+- `string system_type()`
+- `void abort()`
+- `void cdup()`
+- `void close()`
+- `void create_directory(const string&in path)`
+- `void end_download()`
+- `void end_list()`
+- `void end_upload()`
+- `void login(const string&in username, const string&in password)`
+- `void logout()`
+- `void open(const string&in host, uint16 port, const string&in username = "", const string&in password = "")`
+- `void remove(const string&in path)`
+- `void remove_directory(const string&in path)`
+- `void rename(const string&in source, const string&in destination)`
+- `void set_file_type(ftp_file_type type)`
+- `void set_passive(bool passive, bool use_rfc1738 = true)`
+- `void set_working_directory(const string&in path)`
 
 ### Class `game_window`
 ##### Behaviours / Constructors
 - `game_window@ f(const string&in title, uint w, uint h, uint flags = 0)`
-- `void f()`
+- `game_window@ game_window(const string&in title, uint w, uint h, uint flags = 0)`
 ##### Methods
 - `bool clear(uint r, uint g, uint b)`
 - `bool destroy_surface()`
@@ -1124,15 +3972,13 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint64 measure_text_wrapped(const string&in text, int wrap_width) const`
 - `void draw_circle(float cx, float cy, int radius, uint r, uint g, uint b, bool filled = false)`
 - `void draw_line(float x1, float y1, float x2, float y2, uint r, uint g, uint b)`
-- `void draw_menu(string[]@ items, float x, float y)`
+- `void draw_menu(string[]@+ items, float x, float y)`
 - `void draw_rect(float x, float y, float w, float h, uint r, uint g, uint b, bool filled = false)`
 - `void draw_text(const string&in text, float x, float y, uint r, uint g, uint b)`
 - `void draw_text_wrapped(const string&in text, float x, float y, int wrap_width, uint r, uint g, uint b)`
 - `void set_font(text_font@+ font) property`
 
 ### Class `graphic`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `blend_mode get_blend_mode() const`
 - `bool flip(flip_mode mode)`
@@ -1156,7 +4002,7 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `graphics_renderer`
 ##### Behaviours / Constructors
 - `graphics_renderer@ f()`
-- `void f()`
+- `graphics_renderer@ graphics_renderer()`
 ##### Methods
 - `blend_mode get_draw_blend_mode() const property`
 - `bool clear()`
@@ -1194,8 +4040,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string get_name() const property`
 
 ### Class `graphics_texture`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `blend_mode get_blend_mode() const`
 - `bool get_color_mod(uint&out r, uint&out g, uint&out b) const`
@@ -1207,10 +4051,206 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_width() const property`
 - `uint get_alpha_mod() const`
 
+### Class `grid<class T>`
+
+### Class `grid<T>`
+##### Behaviours / Constructors
+- `bool f()`
+- `bool f(int&in, bool&out)`
+- `grid<T>@ $list(int&in type, int&in list) { repeat { repeat_same T } }`
+- `grid<T>@ f(int&in type)`
+- `grid<T>@ f(int&in type, int&in list) {repeat {repeat_same T}}`
+- `grid<T>@ f(int&in type, uint width, uint height)`
+- `grid<T>@ f(int&in type, uint width, uint height, const T &in value)`
+- `grid<T>@ grid(int&in type)`
+- `grid<T>@ grid(int&in type, uint width, uint height)`
+- `grid<T>@ grid(int&in type, uint width, uint height, const T&in value)`
+- `int f()`
+- `void f()`
+- `void f(int&in)`
+##### Methods
+- `const T &opIndex(uint x, uint y) const`
+- `const T& opIndex(uint x, uint y) const`
+- `T &opIndex(uint x, uint y)`
+- `T& opIndex(uint x, uint y)`
+- `uint height() const`
+- `uint width() const`
+- `void resize(uint width, uint height)`
+
+### Class `hex_decoder`
+##### Behaviours / Constructors
+- `hex_decoder@ hex_decoder()`
+- `hex_decoder@ hex_decoder(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `hex_decoder& opShl(double value)`
+- `hex_decoder& opShl(float value)`
+- `hex_decoder& opShl(int value)`
+- `hex_decoder& opShl(int16 value)`
+- `hex_decoder& opShl(int64 value)`
+- `hex_decoder& opShl(int8 value)`
+- `hex_decoder& opShl(string value)`
+- `hex_decoder& opShl(uint value)`
+- `hex_decoder& opShl(uint16 value)`
+- `hex_decoder& opShl(uint64 value)`
+- `hex_decoder& opShl(uint8 value)`
+- `hex_decoder& opShr(double&out value)`
+- `hex_decoder& opShr(float&out value)`
+- `hex_decoder& opShr(int&out value)`
+- `hex_decoder& opShr(int16&out value)`
+- `hex_decoder& opShr(int64&out value)`
+- `hex_decoder& opShr(int8&out value)`
+- `hex_decoder& opShr(string&out value)`
+- `hex_decoder& opShr(uint&out value)`
+- `hex_decoder& opShr(uint16&out value)`
+- `hex_decoder& opShr(uint64&out value)`
+- `hex_decoder& opShr(uint8&out value)`
+- `hex_decoder& write_double(double value)`
+- `hex_decoder& write_float(float value)`
+- `hex_decoder& write_int(int value)`
+- `hex_decoder& write_int16(int16 value)`
+- `hex_decoder& write_int64(int64 value)`
+- `hex_decoder& write_int8(int8 value)`
+- `hex_decoder& write_string(string value)`
+- `hex_decoder& write_uint(uint value)`
+- `hex_decoder& write_uint16(uint16 value)`
+- `hex_decoder& write_uint64(uint64 value)`
+- `hex_decoder& write_uint8(uint8 value)`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `hex_encoder`
+##### Behaviours / Constructors
+- `hex_encoder@ hex_encoder()`
+- `hex_encoder@ hex_encoder(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `hex_encoder& opShl(double value)`
+- `hex_encoder& opShl(float value)`
+- `hex_encoder& opShl(int value)`
+- `hex_encoder& opShl(int16 value)`
+- `hex_encoder& opShl(int64 value)`
+- `hex_encoder& opShl(int8 value)`
+- `hex_encoder& opShl(string value)`
+- `hex_encoder& opShl(uint value)`
+- `hex_encoder& opShl(uint16 value)`
+- `hex_encoder& opShl(uint64 value)`
+- `hex_encoder& opShl(uint8 value)`
+- `hex_encoder& opShr(double&out value)`
+- `hex_encoder& opShr(float&out value)`
+- `hex_encoder& opShr(int&out value)`
+- `hex_encoder& opShr(int16&out value)`
+- `hex_encoder& opShr(int64&out value)`
+- `hex_encoder& opShr(int8&out value)`
+- `hex_encoder& opShr(string&out value)`
+- `hex_encoder& opShr(uint&out value)`
+- `hex_encoder& opShr(uint16&out value)`
+- `hex_encoder& opShr(uint64&out value)`
+- `hex_encoder& opShr(uint8&out value)`
+- `hex_encoder& write_double(double value)`
+- `hex_encoder& write_float(float value)`
+- `hex_encoder& write_int(int value)`
+- `hex_encoder& write_int16(int16 value)`
+- `hex_encoder& write_int64(int64 value)`
+- `hex_encoder& write_int8(int8 value)`
+- `hex_encoder& write_string(string value)`
+- `hex_encoder& write_uint(uint value)`
+- `hex_encoder& write_uint16(uint16 value)`
+- `hex_encoder& write_uint64(uint64 value)`
+- `hex_encoder& write_uint8(uint8 value)`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
 ### Class `http`
 ##### Behaviours / Constructors
 - `http@ f()`
-- `void f()`
+- `http@ http()`
 ##### Methods
 - `bool connect(const spec::uri&in url, const string&in body, const name_value_collection@+ headers = null, const http_credentials@+ creds = null)`
 - `bool delete(const spec::uri&in url, const string&in body, const name_value_collection@+ headers = null, const http_credentials@+ creds = null)`
@@ -1247,49 +4287,435 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_receive_timeout(uint timeout) property`
 - `void set_retry_delay(uint delay = 0) property`
 - `void set_send_timeout(uint timeout) property`
-- `void set_user_agent(const string&in agent = \`
+- `void set_user_agent(const string&in agent = "") property`
 - `void wait()`
 
 ### Class `http_client`
+##### Behaviours / Constructors
+- `http_client@ http_client(const string&in host, uint16 port = 80)`
 ##### Methods
+- `bool get_connected() const property`
+- `bool get_keep_alive() const property`
+- `bool get_secure() const property`
+- `bool peek_response(http_response&inout response)`
+- `const string& get_host() const property`
+- `datastream@ receive_response(http_response&inout response, const string&in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
+- `datastream@ send_request(http_request&inout request, const string&in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
 - `https_client@ opCast()`
+- `timespan get_keep_alive_timeout() const property`
+- `timespan get_receive_timeout() const property`
+- `timespan get_send_timeout() const property`
+- `uint16 get_port() const property`
+- `void abort()`
+- `void flush_request()`
+- `void reset()`
+- `void set_host(const string&in host) property`
+- `void set_keep_alive(bool enabled) property`
+- `void set_keep_alive_timeout(const timespan&in timeout) property`
+- `void set_port(uint16 port) property`
+- `void set_receive_timeout(const timespan&in timeout) property`
+- `void set_send_timeout(const timespan&in timeout) property`
 
 ### Class `http_credentials`
 ##### Behaviours / Constructors
 - `http_credentials@ f()`
 - `http_credentials@ f(const string&in username, const string&in password)`
+- `http_credentials@ http_credentials()`
+- `http_credentials@ http_credentials(const string&in username, const string&in password)`
 ##### Methods
 - `bool get_empty() const property`
 - `string get_host() const property`
 - `string get_password() const property`
 - `string get_username() const property`
 - `void authenticate(http_request& request, const http_response&in response)`
+- `void authenticate(http_request&inout request, const http_response&in response)`
 - `void clear()`
 - `void from_uri(const spec::uri&in uri)`
 - `void from_user_info(const string&in user_info)`
 - `void proxy_authenticate(http_request& request, const http_response&in response)`
+- `void proxy_authenticate(http_request&inout request, const http_response&in response)`
 - `void set_host(const string&in host) property`
 - `void set_password(const string&in password) property`
 - `void set_username(const string&in username) property`
 - `void update_auth_info(http_request& request)`
+- `void update_auth_info(http_request&inout request)`
 - `void update_proxy_auth_info(http_request& request)`
+- `void update_proxy_auth_info(http_request&inout request)`
+
+### Class `http_request`
+##### Behaviours / Constructors
+- `http_request@ $list(int&in) { repeat { string, string } }`
+- `http_request@ http_request()`
+- `http_request@ http_request(const http_request&in other)`
+- `http_request@ http_request(const string&in method, const string&in uri, const string&in version = HTTP_1_1)`
+##### Methods
+- `bool empty() const`
+- `bool exists(const string&in name) const`
+- `bool get_auto_decode() const property`
+- `bool get_chunked_transfer_encoding() const property`
+- `bool get_expect_continue() const property`
+- `bool get_has_content_length() const property`
+- `bool get_has_credentials() const property`
+- `bool get_has_proxy_credentials() const property`
+- `bool get_keep_alive() const property`
+- `bool has_token(const string&in name, const string&in token)`
+- `bool read(datastream@ stream)`
+- `bool write(datastream@ stream) const`
+- `const string& get(const string&in name, const string&in default_value = "") const`
+- `const string& get_host() const property`
+- `const string& get_method() const property`
+- `const string& get_opIndex(const string&in name) const property`
+- `const string& get_uri() const property`
+- `const string& get_version() const property`
+- `const string& name_at(uint index) const`
+- `const string& value_at(uint index) const`
+- `http_request& opAssign(const http_request&in other)`
+- `int get_field_limit() const property`
+- `int get_name_length_limit() const property`
+- `int get_value_length_limit() const property`
+- `int64 get_content_length() const property`
+- `internet_message_header@ opImplCast()`
+- `string get_content_type() const property`
+- `string get_decoded(const string&in name, const string&in default_value = "")`
+- `string get_transfer_encoding() const property`
+- `uint64 size() const`
+- `void add(const string&in name, const string&in value)`
+- `void clear()`
+- `void erase(const string&in name)`
+- `void get_cookies(name_value_collection&inout cookies) const`
+- `void get_credentials(string&inout scheme, string&inout auth_info) const`
+- `void get_proxy_credentials(string&inout scheme, string&inout auth_info) const`
+- `void remove_credentials()`
+- `void remove_proxy_credentials()`
+- `void secure_erase(const string&in name)`
+- `void set(const string&in name, const string&in value)`
+- `void set_auto_decode(bool enabled) property`
+- `void set_chunked_transfer_encoding(bool enabled) property`
+- `void set_content_length(int64 length) property`
+- `void set_content_type(const string&in media_type) property`
+- `void set_cookies(const name_value_collection&inout cookies)`
+- `void set_credentials(const string&in scheme, const string&in auth_info)`
+- `void set_expect_continue(bool expect) property`
+- `void set_field_limit(int limit) property`
+- `void set_host(const string&in host) property`
+- `void set_host(const string&in host, uint16 port) property`
+- `void set_keep_alive(bool enabled) property`
+- `void set_method(const string&in method) property`
+- `void set_name_length_limit(int limit) property`
+- `void set_opIndex(const string&in name, const string&in value) property`
+- `void set_proxy_credentials(const string&in scheme, const string&in auth_info)`
+- `void set_transfer_encoding(const string&in encoding) property`
+- `void set_uri(const string&in uri) property`
+- `void set_value_length_limit(int limit) property`
+- `void set_version(const string&in version) property`
+
+### Class `http_response`
+##### Behaviours / Constructors
+- `http_response@ $list(int&in) { repeat { string, string } }`
+- `http_response@ http_response()`
+- `http_response@ http_response(const http_response&in other)`
+- `http_response@ http_response(const string&in version, http_status status)`
+- `http_response@ http_response(const string&in version, http_status status, const string&in reason)`
+- `http_response@ http_response(http_status status)`
+- `http_response@ http_response(http_status status, const string&in reason)`
+##### Methods
+- `bool empty() const`
+- `bool exists(const string&in name) const`
+- `bool get_auto_decode() const property`
+- `bool get_chunked_transfer_encoding() const property`
+- `bool get_has_content_length() const property`
+- `bool get_keep_alive() const property`
+- `bool has_token(const string&in name, const string&in token)`
+- `bool read(datastream@ stream)`
+- `bool write(datastream@ stream) const`
+- `const string& get(const string&in name, const string&in default_value = "") const`
+- `const string& get_opIndex(const string&in name) const property`
+- `const string& get_reason() const property`
+- `const string& get_version() const property`
+- `const string& name_at(uint index) const`
+- `const string& value_at(uint index) const`
+- `http_response& opAssign(const http_response&in other)`
+- `http_status get_status() const property`
+- `int get_field_limit() const property`
+- `int get_name_length_limit() const property`
+- `int get_value_length_limit() const property`
+- `int64 get_content_length() const property`
+- `internet_message_header@ opImplCast()`
+- `string get_content_type() const property`
+- `string get_decoded(const string&in name, const string&in default_value = "")`
+- `string get_transfer_encoding() const property`
+- `uint64 size() const`
+- `void add(const string&in name, const string&in value)`
+- `void clear()`
+- `void erase(const string&in name)`
+- `void secure_erase(const string&in name)`
+- `void set(const string&in name, const string&in value)`
+- `void set_auto_decode(bool enabled) property`
+- `void set_chunked_transfer_encoding(bool enabled) property`
+- `void set_content_length(int64 length) property`
+- `void set_content_type(const string&in media_type) property`
+- `void set_field_limit(int limit) property`
+- `void set_keep_alive(bool enabled) property`
+- `void set_name_length_limit(int limit) property`
+- `void set_opIndex(const string&in name, const string&in value) property`
+- `void set_reason(const string&in reason) property`
+- `void set_status(const string&in status)`
+- `void set_status(http_status status) property`
+- `void set_status_and_reason(http_status status)`
+- `void set_status_and_reason(http_status status, const string&in reason)`
+- `void set_transfer_encoding(const string&in encoding) property`
+- `void set_value_length_limit(int limit) property`
+- `void set_version(const string&in version) property`
 
 ### Class `https_client`
+##### Behaviours / Constructors
+- `https_client@ https_client(const string&in host, uint16 port = 443)`
 ##### Methods
+- `bool get_connected() const property`
+- `bool get_keep_alive() const property`
+- `bool get_secure() const property`
+- `bool peek_response(http_response&inout response)`
+- `const string& get_host() const property`
+- `datastream@ receive_response(http_response&inout response, const string&in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
+- `datastream@ send_request(http_request&inout request, const string&in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
 - `http_client@ opImplCast()`
+- `timespan get_keep_alive_timeout() const property`
+- `timespan get_receive_timeout() const property`
+- `timespan get_send_timeout() const property`
+- `uint16 get_port() const property`
+- `void abort()`
+- `void flush_request()`
+- `void reset()`
+- `void set_host(const string&in host) property`
+- `void set_keep_alive(bool enabled) property`
+- `void set_keep_alive_timeout(const timespan&in timeout) property`
+- `void set_port(uint16 port) property`
+- `void set_receive_timeout(const timespan&in timeout) property`
+- `void set_send_timeout(const timespan&in timeout) property`
+
+### Class `inflating_reader`
+##### Behaviours / Constructors
+- `inflating_reader@ inflating_reader()`
+- `inflating_reader@ inflating_reader(datastream@ stream, compression_method compression = COMPRESSION_METHOD_ZLIB, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, compression_method compression = COMPRESSION_METHOD_ZLIB, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `inflating_reader& opShl(double value)`
+- `inflating_reader& opShl(float value)`
+- `inflating_reader& opShl(int value)`
+- `inflating_reader& opShl(int16 value)`
+- `inflating_reader& opShl(int64 value)`
+- `inflating_reader& opShl(int8 value)`
+- `inflating_reader& opShl(string value)`
+- `inflating_reader& opShl(uint value)`
+- `inflating_reader& opShl(uint16 value)`
+- `inflating_reader& opShl(uint64 value)`
+- `inflating_reader& opShl(uint8 value)`
+- `inflating_reader& opShr(double&out value)`
+- `inflating_reader& opShr(float&out value)`
+- `inflating_reader& opShr(int&out value)`
+- `inflating_reader& opShr(int16&out value)`
+- `inflating_reader& opShr(int64&out value)`
+- `inflating_reader& opShr(int8&out value)`
+- `inflating_reader& opShr(string&out value)`
+- `inflating_reader& opShr(uint&out value)`
+- `inflating_reader& opShr(uint16&out value)`
+- `inflating_reader& opShr(uint64&out value)`
+- `inflating_reader& opShr(uint8&out value)`
+- `inflating_reader& write_double(double value)`
+- `inflating_reader& write_float(float value)`
+- `inflating_reader& write_int(int value)`
+- `inflating_reader& write_int16(int16 value)`
+- `inflating_reader& write_int64(int64 value)`
+- `inflating_reader& write_int8(int8 value)`
+- `inflating_reader& write_string(string value)`
+- `inflating_reader& write_uint(uint value)`
+- `inflating_reader& write_uint16(uint16 value)`
+- `inflating_reader& write_uint64(uint64 value)`
+- `inflating_reader& write_uint8(uint8 value)`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `inflating_writer`
+##### Behaviours / Constructors
+- `inflating_writer@ inflating_writer()`
+- `inflating_writer@ inflating_writer(datastream@ stream, compression_method compression = COMPRESSION_METHOD_ZLIB, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, compression_method compression = COMPRESSION_METHOD_ZLIB, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `inflating_writer& opShl(double value)`
+- `inflating_writer& opShl(float value)`
+- `inflating_writer& opShl(int value)`
+- `inflating_writer& opShl(int16 value)`
+- `inflating_writer& opShl(int64 value)`
+- `inflating_writer& opShl(int8 value)`
+- `inflating_writer& opShl(string value)`
+- `inflating_writer& opShl(uint value)`
+- `inflating_writer& opShl(uint16 value)`
+- `inflating_writer& opShl(uint64 value)`
+- `inflating_writer& opShl(uint8 value)`
+- `inflating_writer& opShr(double&out value)`
+- `inflating_writer& opShr(float&out value)`
+- `inflating_writer& opShr(int&out value)`
+- `inflating_writer& opShr(int16&out value)`
+- `inflating_writer& opShr(int64&out value)`
+- `inflating_writer& opShr(int8&out value)`
+- `inflating_writer& opShr(string&out value)`
+- `inflating_writer& opShr(uint&out value)`
+- `inflating_writer& opShr(uint16&out value)`
+- `inflating_writer& opShr(uint64&out value)`
+- `inflating_writer& opShr(uint8&out value)`
+- `inflating_writer& write_double(double value)`
+- `inflating_writer& write_float(float value)`
+- `inflating_writer& write_int(int value)`
+- `inflating_writer& write_int16(int16 value)`
+- `inflating_writer& write_int64(int64 value)`
+- `inflating_writer& write_int8(int8 value)`
+- `inflating_writer& write_string(string value)`
+- `inflating_writer& write_uint(uint value)`
+- `inflating_writer& write_uint16(uint16 value)`
+- `inflating_writer& write_uint64(uint64 value)`
+- `inflating_writer& write_uint8(uint8 value)`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `internet_message_header`
+##### Behaviours / Constructors
+- `internet_message_header@ $list(int&in) { repeat { string, string } }`
+- `internet_message_header@ internet_message_header()`
+- `internet_message_header@ internet_message_header(const internet_message_header&in other)`
+##### Methods
+- `bool empty() const`
+- `bool exists(const string&in name) const`
+- `bool get_auto_decode() const property`
+- `bool has_token(const string&in name, const string&in token)`
+- `bool read(datastream@ stream)`
+- `bool write(datastream@ stream) const`
+- `const string& get(const string&in name, const string&in default_value = "") const`
+- `const string& get_opIndex(const string&in name) const property`
+- `const string& name_at(uint index) const`
+- `const string& value_at(uint index) const`
+- `http_request@ opCast()`
+- `http_response@ opCast()`
+- `int get_field_limit() const property`
+- `int get_name_length_limit() const property`
+- `int get_value_length_limit() const property`
+- `internet_message_header& opAssign(const internet_message_header&in other)`
+- `name_value_collection@ opImplCast()`
+- `string get_decoded(const string&in name, const string&in default_value = "")`
+- `uint64 size() const`
+- `void add(const string&in name, const string&in value)`
+- `void clear()`
+- `void erase(const string&in name)`
+- `void secure_erase(const string&in name)`
+- `void set(const string&in name, const string&in value)`
+- `void set_auto_decode(bool enabled) property`
+- `void set_field_limit(int limit) property`
+- `void set_name_length_limit(int limit) property`
+- `void set_opIndex(const string&in name, const string&in value) property`
+- `void set_value_length_limit(int limit) property`
 
 ### Class `ip_address`
 ##### Behaviours / Constructors
 - `void f()`
-- `void f(const ip_address&in)`
+- `void f(const ip_address&in other)`
 - `void f(const string&in addr)`
-- `void f(const string&in addr, ip_address_family)`
-- `void f(ip_address_family)`
+- `void f(const string&in addr, ip_address_family family)`
+- `void f(ip_address_family family)`
+- `void ip_address()`
+- `void ip_address(const spec::ip_address&in other)`
+- `void ip_address(const string&in addr)`
+- `void ip_address(const string&in addr, spec::ip_address_family family)`
+- `void ip_address(spec::ip_address_family family)`
 ##### Methods
-- `bool get_is_IPV4_compatible() const property`
-- `bool get_is_IPV4_mapped() const property`
 - `bool get_is_broadcast() const property`
 - `bool get_is_global_multicast() const property`
+- `bool get_is_IPV4_compatible() const property`
+- `bool get_is_IPV4_mapped() const property`
 - `bool get_is_link_local() const property`
 - `bool get_is_link_local_multicast() const property`
 - `bool get_is_loopback() const property`
@@ -1304,23 +4730,33 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool get_is_well_known_multicast() const property`
 - `bool get_is_wildcard() const property`
 - `bool opEquals(const ip_address&in addr) const`
-- `int opCmp(const ip_address&in)`
+- `bool opEquals(const spec::ip_address&in addr) const`
+- `int opCmp(const ip_address&in other)`
+- `int opCmp(const spec::ip_address&in other)`
 - `ip_address opAnd(const ip_address&in addr) const`
 - `ip_address opCom() const`
 - `ip_address opOr(const ip_address&in addr) const`
 - `ip_address opXor(const ip_address&in addr) const`
 - `ip_address& opAssign(const ip_address&in addr)`
 - `ip_address_family get_family() const property`
+- `spec::ip_address opAnd(const spec::ip_address&in addr) const`
+- `spec::ip_address opCom() const`
+- `spec::ip_address opOr(const spec::ip_address&in addr) const`
+- `spec::ip_address opXor(const spec::ip_address&in addr) const`
+- `spec::ip_address& opAssign(const spec::ip_address&in addr)`
+- `spec::ip_address_family get_family() const property`
 - `string opImplConv() const`
 - `uint get_prefix_length() const property`
 - `uint get_scope() const property`
 - `void mask(const ip_address&in mask)`
 - `void mask(const ip_address&in mask, const ip_address&in set)`
+- `void mask(const spec::ip_address&in mask)`
+- `void mask(const spec::ip_address&in mask, const spec::ip_address&in set)`
 
 ### Class `joystick`
 ##### Behaviours / Constructors
 - `joystick@ f()`
-- `void f()`
+- `joystick@ joystick()`
 ##### Methods
 - `bool button_down(int button)`
 - `bool button_pressed(int button)`
@@ -1398,8 +4834,11 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `joystick_power_info`
 ##### Behaviours / Constructors
 - `void f()`
-- `void f(const joystick_power_info&in)`
-- `void f(int, int)`
+- `void f(const joystick_power_info&in other)`
+- `void f(int state, int percentage)`
+- `void joystick_power_info()`
+- `void joystick_power_info(const joystick_power_info&in other)`
+- `void joystick_power_info(int state, int percentage)`
 ##### Properties
 - `int percentage`
 - `int state`
@@ -1412,17 +4851,19 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `json_array`
 ##### Behaviours / Constructors
 - `json_array @a()`
-- `json_array @a(json_array@ other)`
+- `json_array @a(json_array@+ other)`
+- `json_array@ $list(int&in) { repeat var@ }`
 - `json_array@ f(int&in) {repeat var@}`
-- `void f()`
+- `json_array@ json_array()`
+- `json_array@ json_array(json_array@ other)`
 ##### Methods
 - `bool get_empty() property`
 - `bool get_escape_unicode() property`
 - `bool is_array(uint index)`
 - `bool is_null(uint index)`
 - `bool is_object(uint index)`
-- `json_array& extend(const json_array@ array)`
-- `json_array& opAssign(json_array@ other)`
+- `json_array& extend(const json_array@+ array)`
+- `json_array& opAssign(json_array@+ other)`
 - `json_array@ get_array(uint index) const`
 - `json_object@ get_object(uint index) const`
 - `string stringify(uint indent = 0, int step = -1)`
@@ -1435,14 +4876,16 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void remove(uint index)`
 - `void set_escape_unicode(bool value) property`
 - `void set_opIndex(uint index, const var&in value) property`
-- `void stringify(datastream@ stream, uint indent = 0, int step = -1)`
+- `void stringify(datastream@+ stream, uint indent = 0, int step = -1)`
 
 ### Class `json_object`
 ##### Behaviours / Constructors
 - `json_object @o()`
-- `json_object @o(json_object@ other)`
+- `json_object @o(json_object@+ other)`
+- `json_object@ $list(int&in) { repeat { string, var@ } }`
 - `json_object@ f(int&in) {repeat {string, var@}}`
-- `void f()`
+- `json_object@ json_object()`
+- `json_object@ json_object(json_object@ other)`
 ##### Methods
 - `bool exists(const string&in key) const`
 - `bool get_escape_unicode() const property`
@@ -1450,7 +4893,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool is_null(const string&in key) const`
 - `bool is_object(const string&in key) const`
 - `json_array@ get_array(const string&in key) const`
-- `json_object& opAssign(json_object@ other)`
+- `json_object& opAssign(json_object@+ other)`
 - `json_object@ get_object(const string&in key) const`
 - `string stringify(uint indent = 0, int step = -1) const`
 - `string[]@ get_keys() const`
@@ -1463,26 +4906,214 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set(const string&in key, const var&in value)`
 - `void set_escape_unicode(bool value) property`
 - `void set_opIndex(const string&in key, const var&in value) property`
-- `void stringify(datastream@ stream, uint indent = 0, int step = -1) const`
+- `void stringify(datastream@+ stream, uint indent = 0, int step = -1) const`
 
 ### Class `library`
+##### Behaviours / Constructors
+- `library @l()`
+- `library@ library()`
+##### Methods
+- `bool get_active() const property`
+- `bool load(const string&in filename)`
+- `bool unload()`
+- `library_function@ get(const string&in sig)`
+- `var@ call(const string&in sig, ?&in...)`
 
 ### Class `library_function`
+##### Methods
+- `bool get_valid() const property`
+- `string get_error() const property`
+- `var@ opCall(?&in...)`
+
+### Class `line_converting_reader`
+##### Behaviours / Constructors
+- `line_converting_reader@ line_converting_reader()`
+- `line_converting_reader@ line_converting_reader(datastream@ stream, const string&in line_ending = spec::NEWLINE_DEFAULT, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, const string&in line_ending = spec::NEWLINE_DEFAULT, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `line_converting_reader& opShl(double value)`
+- `line_converting_reader& opShl(float value)`
+- `line_converting_reader& opShl(int value)`
+- `line_converting_reader& opShl(int16 value)`
+- `line_converting_reader& opShl(int64 value)`
+- `line_converting_reader& opShl(int8 value)`
+- `line_converting_reader& opShl(string value)`
+- `line_converting_reader& opShl(uint value)`
+- `line_converting_reader& opShl(uint16 value)`
+- `line_converting_reader& opShl(uint64 value)`
+- `line_converting_reader& opShl(uint8 value)`
+- `line_converting_reader& opShr(double&out value)`
+- `line_converting_reader& opShr(float&out value)`
+- `line_converting_reader& opShr(int&out value)`
+- `line_converting_reader& opShr(int16&out value)`
+- `line_converting_reader& opShr(int64&out value)`
+- `line_converting_reader& opShr(int8&out value)`
+- `line_converting_reader& opShr(string&out value)`
+- `line_converting_reader& opShr(uint&out value)`
+- `line_converting_reader& opShr(uint16&out value)`
+- `line_converting_reader& opShr(uint64&out value)`
+- `line_converting_reader& opShr(uint8&out value)`
+- `line_converting_reader& write_double(double value)`
+- `line_converting_reader& write_float(float value)`
+- `line_converting_reader& write_int(int value)`
+- `line_converting_reader& write_int16(int16 value)`
+- `line_converting_reader& write_int64(int64 value)`
+- `line_converting_reader& write_int8(int8 value)`
+- `line_converting_reader& write_string(string value)`
+- `line_converting_reader& write_uint(uint value)`
+- `line_converting_reader& write_uint16(uint16 value)`
+- `line_converting_reader& write_uint64(uint64 value)`
+- `line_converting_reader& write_uint8(uint8 value)`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
+
+### Class `line_converting_writer`
+##### Behaviours / Constructors
+- `line_converting_writer@ line_converting_writer()`
+- `line_converting_writer@ line_converting_writer(datastream@ stream, const string&in line_ending = spec::NEWLINE_DEFAULT, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(datastream@ stream, const string&in line_ending = spec::NEWLINE_DEFAULT, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `line_converting_writer& opShl(double value)`
+- `line_converting_writer& opShl(float value)`
+- `line_converting_writer& opShl(int value)`
+- `line_converting_writer& opShl(int16 value)`
+- `line_converting_writer& opShl(int64 value)`
+- `line_converting_writer& opShl(int8 value)`
+- `line_converting_writer& opShl(string value)`
+- `line_converting_writer& opShl(uint value)`
+- `line_converting_writer& opShl(uint16 value)`
+- `line_converting_writer& opShl(uint64 value)`
+- `line_converting_writer& opShl(uint8 value)`
+- `line_converting_writer& opShr(double&out value)`
+- `line_converting_writer& opShr(float&out value)`
+- `line_converting_writer& opShr(int&out value)`
+- `line_converting_writer& opShr(int16&out value)`
+- `line_converting_writer& opShr(int64&out value)`
+- `line_converting_writer& opShr(int8&out value)`
+- `line_converting_writer& opShr(string&out value)`
+- `line_converting_writer& opShr(uint&out value)`
+- `line_converting_writer& opShr(uint16&out value)`
+- `line_converting_writer& opShr(uint64&out value)`
+- `line_converting_writer& opShr(uint8&out value)`
+- `line_converting_writer& write_double(double value)`
+- `line_converting_writer& write_float(float value)`
+- `line_converting_writer& write_int(int value)`
+- `line_converting_writer& write_int16(int16 value)`
+- `line_converting_writer& write_int64(int64 value)`
+- `line_converting_writer& write_int8(int8 value)`
+- `line_converting_writer& write_string(string value)`
+- `line_converting_writer& write_uint(uint value)`
+- `line_converting_writer& write_uint16(uint16 value)`
+- `line_converting_writer& write_uint64(uint64 value)`
+- `line_converting_writer& write_uint8(uint8 value)`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
 
 ### Class `mail_message`
 ##### Behaviours / Constructors
 - `mail_message@ f()`
-- `void f()`
+- `mail_message@ mail_message()`
 ##### Methods
 - `array<mail_recipient@>@ get_recipients() const`
-- `bool add_attachment_file(const string &in, const string &in)`
-- `bool add_attachment_string(const string &in, const string &in, const string &in = \`
+- `bool add_attachment_file(const string &in name, const string &in path)`
+- `bool add_attachment_file(const string&in name, const string&in path)`
+- `bool add_attachment_string(const string &in name, const string &in content, const string &in media_type = "application/octet-stream")`
+- `bool add_attachment_string(const string&in name, const string&in content, const string&in media_type = "application/octet-stream")`
 - `int get_priority() const property`
-- `string add_inline_attachment_file(const string &in, const string &in = \`
-- `string add_inline_attachment_string(const string &in, const string &in, const string &in)`
+- `string add_inline_attachment_file(const string &in path, const string &in content_id = "")`
+- `string add_inline_attachment_file(const string&in path, const string&in content_id = "")`
+- `string add_inline_attachment_string(const string &in content, const string &in media_type, const string &in content_id)`
+- `string add_inline_attachment_string(const string&in content, const string&in media_type, const string&in content_id)`
 - `string get_content() const property`
 - `string get_disposition_notification_to() const property`
-- `string get_header(const string &in) const`
+- `string get_header(const string &in name) const`
+- `string get_header(const string&in name) const`
 - `string get_in_reply_to() const property`
 - `string get_last_error() const property`
 - `string get_message_id() const property`
@@ -1491,27 +5122,42 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string get_return_receipt_to() const property`
 - `string get_sender() const property`
 - `string get_subject() const property`
-- `void add_header(const string &in, const string &in)`
-- `void add_recipient(const mail_recipient &in)`
-- `void add_recipient(const string &in, mail_recipient_type = RECIPIENT_TO)`
-- `void set_content(const string &in, const string &in = \`
-- `void set_disposition_notification_to(const string &in) property`
-- `void set_html_content(const string &in, const string &in = \`
-- `void set_in_reply_to(const string &in) property`
-- `void set_message_id(const string &in) property`
-- `void set_priority(mail_priority)`
-- `void set_read_receipt(const string &in)`
-- `void set_references(const string &in) property`
-- `void set_reply_to(const string &in) property`
-- `void set_return_receipt_to(const string &in) property`
-- `void set_sender(const string &in)`
-- `void set_subject(const string &in)`
+- `void add_header(const string &in name, const string &in value)`
+- `void add_header(const string&in name, const string&in value)`
+- `void add_recipient(const mail_recipient &in recipient)`
+- `void add_recipient(const mail_recipient&in recipient)`
+- `void add_recipient(const string &in address, mail_recipient_type type = RECIPIENT_TO)`
+- `void add_recipient(const string&in address, mail_recipient_type type = RECIPIENT_TO)`
+- `void set_content(const string &in content, const string &in content_type = "text/plain")`
+- `void set_content(const string&in content, const string&in content_type = "text/plain")`
+- `void set_disposition_notification_to(const string &in address) property`
+- `void set_disposition_notification_to(const string&in address) property`
+- `void set_html_content(const string &in html, const string &in plain_alternative = "")`
+- `void set_html_content(const string&in html, const string&in plain_alternative = "")`
+- `void set_in_reply_to(const string &in message_id) property`
+- `void set_in_reply_to(const string&in message_id) property`
+- `void set_message_id(const string &in message_id) property`
+- `void set_message_id(const string&in message_id) property`
+- `void set_priority(mail_priority priority)`
+- `void set_read_receipt(const string &in address)`
+- `void set_read_receipt(const string&in address)`
+- `void set_references(const string &in references) property`
+- `void set_references(const string&in references) property`
+- `void set_reply_to(const string &in address) property`
+- `void set_reply_to(const string&in address) property`
+- `void set_return_receipt_to(const string &in address) property`
+- `void set_return_receipt_to(const string&in address) property`
+- `void set_sender(const string &in address)`
+- `void set_sender(const string&in address)`
+- `void set_subject(const string &in subject)`
+- `void set_subject(const string&in subject)`
 
 ### Class `mail_recipient`
 ##### Behaviours / Constructors
 - `mail_recipient@ f()`
-- `mail_recipient@ f(mail_recipient_type, const string &in, const string &in = \`
-- `void f()`
+- `mail_recipient@ f(mail_recipient_type type, const string &in address, const string &in real_name = "")`
+- `mail_recipient@ mail_recipient()`
+- `mail_recipient@ mail_recipient(mail_recipient_type type, const string&in address, const string&in real_name = "")`
 ##### Properties
 - `mail_recipient_type type`
 - `string address`
@@ -1522,6 +5168,9 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void f()`
 - `void f(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3)`
 - `void f(float value)`
+- `void matrix3x3()`
+- `void matrix3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3)`
+- `void matrix3x3(float value)`
 ##### Methods
 - `bool opEquals(const matrix3x3&in)`
 - `const vector& opIndex(int row) const`
@@ -1549,79 +5198,491 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_to_identity()`
 - `void set_to_zero()`
 
+### Class `memory_buffer<class T>`
+
 ### Class `memory_buffer<T>`
 ##### Behaviours / Constructors
 - `bool f(int&in subtype, bool&out no_gc)`
-- `void f()`
 - `void f(int&in subtype, const memory_buffer<T>&in other)`
 - `void f(int&in subtype, uint64 ptr, uint64 size)`
+- `void memory_buffer()`
+- `void memory_buffer(int&in subtype, const memory_buffer<T>&in other)`
+- `void memory_buffer(int&in subtype, uint64 ptr, uint64 size)`
 ##### Properties
 - `uint64 address`
 - `uint64 size`
 ##### Methods
-- `T& opIndex(uint64 index)`
 - `array<T>@ opImplConv() const`
 - `const T& opIndex(uint64 index) const`
 - `int get_element_size() const property`
-- `memory_buffer<T>& opAssign(array<T>@ array)`
-
-### Class `memory_buffer<class T>`
+- `memory_buffer<T>& opAssign(array<T>@+ array)`
+- `T& opIndex(uint64 index)`
 
 ### Class `memory_reader`
 ##### Behaviours / Constructors
-- `memory_reader@ d(uint64, uint64, const string&in encoding = \`
+- `memory_reader@ d(uint64 address, uint64 size, const string&in encoding = "", int byteorder = 1)`
+- `memory_reader@ memory_reader()`
+- `memory_reader@ memory_reader(uint64 address, uint64 size, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
 ##### Methods
-- `bool open(uint64, uint64, const string&in encoding = \`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(uint64 address, uint64 size, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `memory_reader& opShl(double value)`
+- `memory_reader& opShl(float value)`
+- `memory_reader& opShl(int value)`
+- `memory_reader& opShl(int16 value)`
+- `memory_reader& opShl(int64 value)`
+- `memory_reader& opShl(int8 value)`
+- `memory_reader& opShl(string value)`
+- `memory_reader& opShl(uint value)`
+- `memory_reader& opShl(uint16 value)`
+- `memory_reader& opShl(uint64 value)`
+- `memory_reader& opShl(uint8 value)`
+- `memory_reader& opShr(double&out value)`
+- `memory_reader& opShr(float&out value)`
+- `memory_reader& opShr(int&out value)`
+- `memory_reader& opShr(int16&out value)`
+- `memory_reader& opShr(int64&out value)`
+- `memory_reader& opShr(int8&out value)`
+- `memory_reader& opShr(string&out value)`
+- `memory_reader& opShr(uint&out value)`
+- `memory_reader& opShr(uint16&out value)`
+- `memory_reader& opShr(uint64&out value)`
+- `memory_reader& opShr(uint8&out value)`
+- `memory_reader& write_double(double value)`
+- `memory_reader& write_float(float value)`
+- `memory_reader& write_int(int value)`
+- `memory_reader& write_int16(int16 value)`
+- `memory_reader& write_int64(int64 value)`
+- `memory_reader& write_int8(int8 value)`
+- `memory_reader& write_string(string value)`
+- `memory_reader& write_uint(uint value)`
+- `memory_reader& write_uint16(uint16 value)`
+- `memory_reader& write_uint64(uint64 value)`
+- `memory_reader& write_uint8(uint8 value)`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
 
 ### Class `memory_writer`
 ##### Behaviours / Constructors
-- `memory_writer@ d(uint64, uint64, const string&in encoding = \`
+- `memory_writer@ d(uint64 address, uint64 size, const string&in encoding = "", int byteorder = 1)`
+- `memory_writer@ memory_writer()`
+- `memory_writer@ memory_writer(uint64 address, uint64 size, const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
 ##### Methods
-- `bool open(uint64, uint64, const string&in encoding = \`
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(uint64 address, uint64 size, const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `memory_writer& opShl(double value)`
+- `memory_writer& opShl(float value)`
+- `memory_writer& opShl(int value)`
+- `memory_writer& opShl(int16 value)`
+- `memory_writer& opShl(int64 value)`
+- `memory_writer& opShl(int8 value)`
+- `memory_writer& opShl(string value)`
+- `memory_writer& opShl(uint value)`
+- `memory_writer& opShl(uint16 value)`
+- `memory_writer& opShl(uint64 value)`
+- `memory_writer& opShl(uint8 value)`
+- `memory_writer& opShr(double&out value)`
+- `memory_writer& opShr(float&out value)`
+- `memory_writer& opShr(int&out value)`
+- `memory_writer& opShr(int16&out value)`
+- `memory_writer& opShr(int64&out value)`
+- `memory_writer& opShr(int8&out value)`
+- `memory_writer& opShr(string&out value)`
+- `memory_writer& opShr(uint&out value)`
+- `memory_writer& opShr(uint16&out value)`
+- `memory_writer& opShr(uint64&out value)`
+- `memory_writer& opShr(uint8&out value)`
+- `memory_writer& write_double(double value)`
+- `memory_writer& write_float(float value)`
+- `memory_writer& write_int(int value)`
+- `memory_writer& write_int16(int16 value)`
+- `memory_writer& write_int64(int64 value)`
+- `memory_writer& write_int8(int8 value)`
+- `memory_writer& write_string(string value)`
+- `memory_writer& write_uint(uint value)`
+- `memory_writer& write_uint16(uint16 value)`
+- `memory_writer& write_uint64(uint64 value)`
+- `memory_writer& write_uint8(uint8 value)`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
 
 ### Class `microphone`
 ##### Behaviours / Constructors
-- `microphone@ m(int device = -1, audio_engine@ engine = sound_default_engine)`
+- `microphone@ m(int device = -1, audio_engine@+ engine = sound_default_engine)`
+- `microphone@ microphone(int device = -1, audio_engine@ engine = sound_default_engine)`
 ##### Methods
+- `array<float>@ read(uint64 frame_count = 0)`
+- `audio_data_source@ get_current() const property`
+- `audio_data_source@ get_next() const property`
+- `audio_data_source@ opImplCast()`
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `audio_ring_buffer@ opImplCast()`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool get_active() const property`
+- `bool get_looping() const property`
+- `bool seek_frames(uint64 frame_index)`
+- `bool seek_milliseconds(float ms)`
+- `bool set_current(audio_data_source@ new_current)`
 - `bool set_device(int device)`
+- `bool set_loop_point(uint64 start_frame, uint64 end_frame)`
+- `bool set_looping(bool looping)`
+- `bool set_next(audio_data_source@ new_next)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_range(uint64 start_frame, uint64 end_frame)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_cursor_milliseconds() const property`
+- `float get_length_milliseconds() const property`
+- `float get_output_bus_volume(uint bus)`
 - `float get_volume() const property`
+- `float skip_milliseconds(float ms)`
 - `int get_device() const property`
+- `uint get_advised_read_frame_count() const property`
+- `uint get_available_read() const property`
+- `uint get_available_write() const property`
+- `uint get_channels() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint get_sample_rate() const property`
+- `uint write(const array<float>@ frames)`
+- `uint write(const memory_buffer<float>&inout frames)`
+- `uint64 get_cursor_frames() const property`
+- `uint64 get_length_frames() const property`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+- `uint64 skip_frames(uint64 frame_count)`
+- `void get_loop_point(uint64&out start_frame, uint64&out end_frame) const`
+- `void get_range(uint64&out start_frame, uint64&out end_frame) const`
+- `void reset()`
 - `void set_volume(float volume)`
 
 ### Class `mixer`
 ##### Behaviours / Constructors
 - `mixer@ m()`
+- `mixer@ mixer()`
+##### Methods
+- `audio_engine@ get_engine() const property`
+- `audio_node@ opImplCast()`
+- `audio_node_chain@ get_effects_chain() property`
+- `audio_node_chain@ get_internal_node_chain() property`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `audio_pan_mode get_pan_mode() const property`
+- `audio_positioning_mode get_positioning() const property`
+- `audio_splitter_node@ get_reverb3d_attachment() const property`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool get_hrtf() const property`
+- `bool get_playing() const property`
+- `bool get_spatialization_enabled() const property`
+- `bool play(bool reset_loop_state = true)`
+- `bool play_looped()`
+- `bool set_mixer(mixer@ parent_mixer)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_shape(ref shape)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `bool stop()`
+- `float get_current_fade_volume() const property`
+- `float get_directional_attenuation_factor() const property`
+- `float get_distance_to_listener() const`
+- `float get_doppler_factor() const property`
+- `float get_max_distance() const property`
+- `float get_max_gain() const property`
+- `float get_min_distance() const property`
+- `float get_min_gain() const property`
+- `float get_output_bus_volume(uint bus)`
+- `float get_pan() const property`
+- `float get_pitch() const property`
+- `float get_rolloff() const property`
+- `float get_volume() const property`
+- `int get_3d_attenuator() const property`
+- `int get_3d_panner() const property`
+- `int get_preferred_3d_attenuator() const property`
+- `int get_preferred_3d_panner() const property`
+- `mixer@ get_mixer() const`
+- `ref get_shape() const property`
+- `reverb3d@ get_reverb3d() const property`
+- `reverb3d_placement get_reverb3d_placement() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_listener() const property`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint get_pinned_listener() const property`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+- `vector get_direction() const`
+- `vector get_direction_to_listener() const`
+- `vector get_position_3d() const`
+- `vector get_velocity() const`
+- `void get_cone(float&out inner_radians, float&out outer_radians, float&out outer_gain)`
+- `void set_3d_attenuator(int attenuator_id)`
+- `void set_3d_panner(int panner_id)`
+- `void set_cone(float inner_radians, float outer_radians, float outer_gain)`
+- `void set_direction(const vector&in direction)`
+- `void set_direction(float x, float y, float z)`
+- `void set_directional_attenuation_factor(float factor) property`
+- `void set_doppler_factor(float factor) property`
+- `void set_fade(float start_volume, float end_volume, uint64 length)`
+- `void set_fade_in_frames(float start_volume, float end_volume, uint64 length_frames)`
+- `void set_fade_in_milliseconds(float start_volume, float end_volume, uint64 length_ms)`
+- `void set_hrtf(bool enabled) property`
+- `void set_max_distance(float distance) property`
+- `void set_max_gain(float gain) property`
+- `void set_min_distance(float distance) property`
+- `void set_min_gain(float gain) property`
+- `void set_pan(float pan) property`
+- `void set_pan_mode(audio_pan_mode mode) property`
+- `void set_pinned_listener(uint index) property`
+- `void set_pitch(float pitch) property`
+- `void set_position_3d(const vector&in position)`
+- `void set_position_3d(float x, float y, float z)`
+- `void set_positioning(audio_positioning_mode mode) property`
+- `void set_reverb3d(reverb3d@ reverb) property`
+- `void set_reverb3d_at(reverb3d@ reverb, reverb3d_placement placement)`
+- `void set_rolloff(float rolloff) property`
+- `void set_spatialization_enabled(bool enabled) property`
+- `void set_start_time(uint64 absolute_time) property`
+- `void set_stop_time(uint64 absolute_time)`
+- `void set_velocity(const vector&in velocity)`
+- `void set_velocity(float x, float y, float z)`
+- `void set_volume(float volume) property`
+
+### Class `mutex`
+##### Behaviours / Constructors
+- `mutex@ mutex()`
+##### Methods
+- `bool try_lock()`
+- `bool try_lock(uint milliseconds)`
+- `void lock()`
+- `void lock(uint milliseconds)`
+- `void unlock()`
+
+### Class `mutex_lock`
+##### Behaviours / Constructors
+- `void mutex_lock()`
+- `void mutex_lock(mutex@ target)`
+- `void mutex_lock(mutex@ target, uint milliseconds)`
+##### Methods
+- `void unlock()`
+
+### Class `name_value_collection`
+##### Behaviours / Constructors
+- `name_value_collection@ $list(int&in) { repeat { string, string } }`
+- `name_value_collection@ name_value_collection()`
+- `name_value_collection@ name_value_collection(const name_value_collection&in other)`
+##### Methods
+- `bool empty() const`
+- `bool exists(const string&in name) const`
+- `const string& get(const string&in name, const string&in default_value = "") const`
+- `const string& get_opIndex(const string&in name) const property`
+- `const string& name_at(uint index) const`
+- `const string& value_at(uint index) const`
+- `internet_message_header@ opCast()`
+- `name_value_collection& opAssign(const name_value_collection&in other)`
+- `uint64 size() const`
+- `void add(const string&in name, const string&in value)`
+- `void clear()`
+- `void erase(const string&in name)`
+- `void secure_erase(const string&in name)`
+- `void set(const string&in name, const string&in value)`
+- `void set_opIndex(const string&in name, const string&in value) property`
+
+### Class `named_mutex`
+##### Behaviours / Constructors
+- `named_mutex@ named_mutex(const string&in name)`
+##### Methods
+- `bool try_lock()`
+- `void lock()`
+- `void unlock()`
+
+### Class `named_mutex_lock`
+##### Behaviours / Constructors
+- `void named_mutex_lock()`
+- `void named_mutex_lock(named_mutex@ target)`
+##### Methods
+- `void unlock()`
 
 ### Class `network`
+##### Behaviours / Constructors
+- `network @n()`
+- `network@ network()`
+##### Properties
+- `bool IPV6enabled`
+- `bool receive_timeout_event`
+- `bool send_immediately`
+##### Methods
+- `bool disconnect_peer(uint64 peer_id)`
+- `bool disconnect_peer_forcefully(uint64 peer_id)`
+- `bool disconnect_peer_softly(uint64 peer_id)`
+- `bool flush()`
+- `bool get_active() const property`
+- `bool get_packet_compression() const property`
+- `bool send(uint64 peer_id, const string& in message, uint8 channel, bool reliable = true)`
+- `bool send_peer(uint64 peer_pointer, const string& in message, uint8 channel, bool reliable = true)`
+- `bool send_reliable(uint64 peer_id, const string& in message, uint8 channel)`
+- `bool send_reliable_peer(uint64 peer_pointer, const string& in message, uint8 channel)`
+- `bool send_unreliable(uint64 peer_id, const string& in message, uint8 channel)`
+- `bool send_unreliable_peer(uint64 peer_pointer, const string& in message, uint8 channel)`
+- `bool setup_client(uint8 max_channels, uint16 max_peers)`
+- `bool setup_local_server(uint16 port, uint8 max_channels, uint16 max_peers)`
+- `bool setup_server(uint16 port, uint8 max_channels, uint16 max_peers)`
+- `const network_event@ request(uint timeout = 0)`
+- `string get_peer_address(uint64 peer_id) const`
+- `uint get_bytes_received() const property`
+- `uint get_bytes_sent() const property`
+- `uint get_duplicate_peers() const property`
+- `uint get_packets_received() const property`
+- `uint get_packets_sent() const property`
+- `uint get_peer_average_round_trip_time(uint64 peer_id) const`
+- `uint64 connect(const string& in host, uint16 port)`
+- `uint64 get_connected_peers() const property`
+- `uint64[]@ get_peer_list() const`
+- `void destroy(bool flush = true)`
+- `void set_bandwidth_limits(uint max_incoming_bytes_per_second, uint max_outgoing_bytes_per_second)`
+- `void set_duplicate_peers(uint max_duplicates) property`
+- `void set_packet_compression(bool compressed) property`
 
 ### Class `network_event`
+##### Behaviours / Constructors
+- `network_event @e()`
+- `network_event@ network_event()`
+##### Properties
+- `const network_event_type type`
+- `const string message`
+- `const uint channel`
+- `const uint64 peer_id`
+##### Methods
+- `network_event& opAssign(const network_event &in other)`
+- `network_event& opAssign(const network_event&in other)`
 
 ### Class `pack_file`
 ##### Behaviours / Constructors
 - `pack_file@ a()`
-- `void b()`
-- `void c()`
+- `pack_file@ pack_file()`
 ##### Methods
 - `bool add_file(const string &in filename, const string &in internal_name)`
+- `bool add_file(const string&in filename, const string&in internal_name)`
 - `bool add_memory(const string &in internal_name, const string&in data)`
-- `bool add_stream(const string &in internal_name, datastream@ ds)`
+- `bool add_memory(const string&in internal_name, const string&in data)`
+- `bool add_stream(const string &in internal_name, datastream@+ ds)`
+- `bool add_stream(const string&in internal_name, datastream@ ds)`
 - `bool close()`
-- `bool create(const string &in filename, const string&in key = \`
+- `bool create(const string &in filename, const string&in key = "")`
+- `bool create(const string&in filename, const string&in key = "")`
 - `bool extract_file(const string &in internal_name, const string &in file_on_disk)`
+- `bool extract_file(const string&in internal_name, const string&in file_on_disk)`
 - `bool file_exists(const string &in filename)`
+- `bool file_exists(const string&in filename)`
 - `bool get_active() const property`
-- `bool open(const string &in filename, const string &in key = \`
-- `datastream @get_file(const string &in filename, const string &in encoding = \`
+- `bool open(const string &in filename, const string &in key = "", uint64 pack_offset = 0, uint64 pack_size = 0)`
+- `bool open(const string&in filename, const string&in key = "", uint64 pack_offset = 0, uint64 pack_size = 0)`
+- `datastream @get_file(const string &in filename, const string &in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
+- `datastream@ get_file(const string&in filename, const string&in encoding = "", int byteorder = STREAM_BYTE_ORDER_NATIVE)`
 - `int64 get_file_count() const property`
 - `int64 get_file_size(const string &in filename)`
+- `int64 get_file_size(const string&in filename)`
 - `pack_interface@ opImplCast()`
 - `string get_pack_name() const property`
 - `string[]@ list_files() const`
 
 ### Class `pack_interface`
-##### Behaviours / Constructors
-- `void b()`
-- `void c()`
 ##### Methods
 - `pack_file@ opCast()`
 
@@ -1634,6 +5695,13 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void f(const path&in parent, const string&in filename)`
 - `void f(const string&in path)`
 - `void f(const string&in path, path_style style)`
+- `void path()`
+- `void path(bool absolute)`
+- `void path(const spec::path&in other)`
+- `void path(const spec::path&in parent, const spec::path&in relative)`
+- `void path(const spec::path&in parent, const string&in filename)`
+- `void path(const string&in path)`
+- `void path(const string&in path, spec::path_style style)`
 ##### Methods
 - `bool get_is_absolute() const property`
 - `bool get_is_directory() const property`
@@ -1641,6 +5709,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool get_is_relative() const property`
 - `bool parse(const string&in path)`
 - `bool parse(const string&in path, path_style style)`
+- `bool parse(const string&in path, spec::path_style style)`
 - `const string& get_device() const property`
 - `const string& get_filename() const property`
 - `const string& get_node() const property`
@@ -1648,7 +5717,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `const string& get_vms_version() const property`
 - `int get_depth() const property`
 - `path absolute() const`
-- `path absolute(const path&in) const`
+- `path absolute(const path&in base) const`
 - `path get_parent() const property`
 - `path opDiv(const path&in append) const`
 - `path opDiv(const string&in append) const`
@@ -1675,16 +5744,46 @@ This document contains the API definitions automatically extracted from the NVGT
 - `path& set_extension(const string&in extension)`
 - `path& set_filename(const string&in filename)`
 - `path& set_node(const string&in node)`
+- `spec::path absolute() const`
+- `spec::path absolute(const spec::path&in base) const`
+- `spec::path get_parent() const property`
+- `spec::path opDiv(const spec::path&in append) const`
+- `spec::path opDiv(const string&in append) const`
+- `spec::path& append(const spec::path&in path)`
+- `spec::path& assign(const spec::path&in other)`
+- `spec::path& assign(const string&in path)`
+- `spec::path& assign(const string&in path, spec::path_style style)`
+- `spec::path& assign_directory(const string&in directory)`
+- `spec::path& assign_directory(const string&in directory, spec::path_style style)`
+- `spec::path& clear()`
+- `spec::path& make_absolute()`
+- `spec::path& make_absolute(const spec::path&in base)`
+- `spec::path& make_directory()`
+- `spec::path& make_file()`
+- `spec::path& make_parent()`
+- `spec::path& opAssign(const spec::path&in other)`
+- `spec::path& opAssign(const string&in path)`
+- `spec::path& pop_directory()`
+- `spec::path& pop_front_directory()`
+- `spec::path& push_directory(const string&in directory_name)`
+- `spec::path& resolve(const spec::path&in path)`
+- `spec::path& set_basename(const string&in basename)`
+- `spec::path& set_device(const string&in device)`
+- `spec::path& set_extension(const string&in extension)`
+- `spec::path& set_filename(const string&in filename)`
+- `spec::path& set_node(const string&in node)`
 - `string get_basename() const property`
 - `string get_extension() const property`
 - `string opImplConv() const`
 - `string to_string(path_style style = spec::PATH_STYLE_NATIVE) const`
+- `string to_string(spec::path_style style = spec::PATH_STYLE_NATIVE) const`
 
 ### Class `pathfinder`
 ##### Behaviours / Constructors
 - `bool f()`
 - `int f()`
-- `pathfinder @p(int = 1024, bool = true)`
+- `pathfinder @p(int size = 1024, bool cache = true)`
+- `pathfinder@ pathfinder(int size = 1024, bool cache = true)`
 - `void f()`
 - `void f(int&in)`
 ##### Properties
@@ -1695,54 +5794,129 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int search_range`
 ##### Methods
 - `int get_desperation_factor() const property`
-- `vector[]@ find(int, int, int, int, int, int, any@+ = null)`
-- `vector[]@ find(int, int, int, int, string = \`
+- `vector[]@ find(int start_x, int start_y, int end_x, int end_y, string user_data = "")`
+- `vector[]@ find(int start_x, int start_y, int start_z, int end_x, int end_y, int end_z, any@+ callback_data = null)`
 - `void cancel()`
 - `void reset()`
-- `void set_callback_function(pathfinder_callback@)`
-- `void set_callback_function(pathfinder_callback_ex@)`
-- `void set_callback_function(pathfinder_callback_legacy@)`
+- `void set_callback_function(pathfinder_callback@ callback)`
+- `void set_callback_function(pathfinder_callback_ex@ callback)`
+- `void set_callback_function(pathfinder_callback_legacy@ callback)`
 - `void set_desperation_factor(int factor) property`
 
 ### Class `phonon_binaural_node`
 ##### Behaviours / Constructors
-- `phonon_binaural_node@ n(audio_engine@ engine, int channels, int sample_rate, int frame_size = 0)`
+- `phonon_binaural_node@ n(audio_engine@+ engine, int channels, int sample_rate, int frame_size = 0)`
+- `phonon_binaural_node@ phonon_binaural_node(audio_engine@ engine, int channels, int sample_rate, int frame_size = 0)`
 ##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_output_bus_volume(uint bus)`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_direction(const vector&in direction, float distance)`
 - `void set_direction(float x, float y, float z, float distance)`
 - `void set_spatial_blend_max_distance(float max_distance)`
 
 ### Class `physics_body`
+##### Methods
+- `aabb get_aabb() const property`
+- `any@ get_user_data() const`
+- `bool get_is_active() const property`
+- `bool get_is_debug_enabled() const property`
+- `bool raycast(const ray&inout point, raycast_info&inout raycast_info) const`
+- `bool test_aabb_overlap(const aabb&in world_aabb) const`
+- `bool test_point_inside(const vector&in point) const`
+- `const physics_collider& get_collider(uint index) const`
+- `const physics_transform& get_transform() const property`
+- `physics_collider& get_collider(uint index)`
+- `physics_collider@ add_collider(physics_collision_shape@ shape, const physics_transform&in transform)`
+- `physics_entity get_entity() const property`
+- `uint get_nb_colliders() const property`
+- `vector get_local_point(const vector&in world_point) const`
+- `vector get_local_vector(const vector&in world_vector) const`
+- `vector get_world_point(const vector&in local_point) const`
+- `vector get_world_vector(const vector&in local_vector) const`
+- `void remove_collider(physics_collider&in collider)`
+- `void set_debug_enabled(bool enabled) property`
+- `void set_is_active(bool is_active) property`
+- `void set_transform(const physics_transform&in transform) property`
+- `void set_user_data(any@ userData)`
 
 ### Class `physics_box_shape`
 ##### Behaviours / Constructors
 - `physics_box_shape@ f(const vector&in half_extents)`
+- `physics_box_shape@ physics_box_shape(const vector&in half_extents)`
 ##### Methods
+- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
+- `aabb get_local_bounds() const`
+- `bool get_is_convex() const property`
+- `bool get_is_polyhedron() const property`
 - `const physics_collision_shape@ opImplCast() const`
+- `const physics_half_edge_structure_edge& get_half_edge(uint edge_index) const`
+- `const physics_half_edge_structure_face& get_face(uint face_index)`
+- `const physics_half_edge_structure_vertex& get_vertex(uint vertex_index)`
+- `const vector get_face_normal(uint vertex_index)`
+- `const vector get_vertex_position(uint vertex_index)`
+- `float get_margin() const property`
+- `float get_volume() const property`
+- `int get_id() const property`
 - `physics_collision_shape@ opImplCast()`
+- `physics_shape_name get_name() const property`
+- `physics_shape_type get_type() const property`
+- `string opImplConv() const`
+- `uint find_most_anti_parallel_face(const vector&in direction) const`
+- `uint get_nb_faces() const property`
+- `uint get_nb_half_edges() const property`
+- `uint get_nb_vertices() const property`
+- `vector get_centroid() const property`
+- `vector get_local_inertia_tensor(float mass) const`
 - `vector& get_half_extents() const property`
 - `void set_half_extents(const vector&in half_extents) property`
 
 ### Class `physics_capsule_shape`
 ##### Behaviours / Constructors
 - `physics_capsule_shape@ f(float radius, float height)`
+- `physics_capsule_shape@ physics_capsule_shape(float radius, float height)`
 ##### Methods
+- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
+- `aabb get_local_bounds() const`
+- `bool get_is_convex() const property`
+- `bool get_is_polyhedron() const property`
 - `const physics_collision_shape@ opImplCast() const`
 - `float get_height() const property`
+- `float get_margin() const property`
 - `float get_radius() const property`
+- `float get_volume() const property`
+- `int get_id() const property`
 - `physics_collision_shape@ opImplCast()`
+- `physics_shape_name get_name() const property`
+- `physics_shape_type get_type() const property`
 - `string opImplConv()`
+- `string opImplConv() const`
+- `vector get_local_inertia_tensor(float mass) const`
 - `void set_height(float height) property`
 - `void set_radius(float radius) property`
 
 ### Class `physics_collider`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `bool get_is_simulation_collider() const property`
 - `bool get_is_trigger() const property`
 - `bool get_is_world_query_collider() const property`
 - `bool raycast(const ray&in ray, raycast_info& raycast_info)`
+- `bool raycast(const ray&in ray, raycast_info&inout raycast_info)`
 - `bool test_aabb_overlap(const aabb&in world_aabb) const`
 - `bool test_point_inside(const vector&in world_point)`
 - `const aabb get_world_aabb() const property`
@@ -1770,25 +5944,52 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint get_nb_contact_pairs() const property`
 
 ### Class `physics_collision_shape`
+##### Methods
+- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
+- `aabb get_local_bounds() const`
+- `bool get_is_convex() const property`
+- `bool get_is_polyhedron() const property`
+- `float get_volume() const property`
+- `int get_id() const property`
+- `physics_shape_name get_name() const property`
+- `physics_shape_type get_type() const property`
+- `string opImplConv() const`
+- `vector get_local_inertia_tensor(float mass) const`
 
 ### Class `physics_concave_mesh_shape`
 ##### Behaviours / Constructors
 - `physics_concave_mesh_shape@ f(physics_triangle_mesh@ triangle_mesh, const vector&in scaling = vector(1,1,1))`
+- `physics_concave_mesh_shape@ physics_concave_mesh_shape(physics_triangle_mesh@ triangle_mesh, const vector&in scaling = vector(1,1,1))`
 ##### Methods
+- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
+- `aabb get_local_bounds() const`
+- `bool get_is_convex() const property`
+- `bool get_is_polyhedron() const property`
 - `const physics_collision_shape@ opImplCast() const`
 - `const vector& get_vertex_normal(uint vertex_index) const`
+- `float get_volume() const property`
+- `int get_id() const property`
 - `physics_collision_shape@ opImplCast()`
+- `physics_shape_name get_name() const property`
+- `physics_shape_type get_type() const property`
+- `physics_triangle_raycast_side get_raycast_test_type() const property`
+- `string opImplConv() const`
 - `uint get_nb_triangles() const property`
 - `uint get_nb_vertices() const property`
+- `vector get_local_inertia_tensor(float mass) const`
+- `vector get_scale() const property`
 - `vector get_vertex(uint vertex_index) const`
 - `void get_triangle_vertices(uint triangle_index, vector&out v1, vector&out v2, vector&out v3) const`
 - `void get_triangle_vertices_indices(uint triangle_index, uint&out v1_index, uint&out v2_index, uint&out v3_index) const`
 - `void get_triangle_vertices_normals(uint triangle_index, vector&out n1, vector&out n2, vector&out n3) const`
+- `void set_raycast_test_type(physics_triangle_raycast_side side) property`
+- `void set_scale(const vector&in scale) property`
 
 ### Class `physics_contact_pair`
 ##### Behaviours / Constructors
-- `void f()`
 - `void f(const physics_contact_pair&in pair)`
+- `void physics_contact_pair()`
+- `void physics_contact_pair(const physics_contact_pair&in pair)`
 ##### Methods
 - `physics_body@ get_body1() const property`
 - `physics_body@ get_body2() const property`
@@ -1799,16 +6000,12 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint get_nb_contact_points() const property`
 
 ### Class `physics_contact_point`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `const vector& get_local_point_on_collider1() const property`
 - `const vector& get_local_point_on_collider2() const property`
 - `const vector& get_world_normal() const property`
 
 ### Class `physics_convex_mesh`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `const aabb& get_bounds() const property`
 - `const physics_half_edge_structure& get_half_edge_structure() const property`
@@ -1823,11 +6020,34 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `physics_convex_mesh_shape`
 ##### Behaviours / Constructors
 - `physics_convex_mesh_shape@ f(physics_convex_mesh@ convex_mesh, const vector&in scaling = vector(1,1,1))`
+- `physics_convex_mesh_shape@ physics_convex_mesh_shape(physics_convex_mesh@ convex_mesh, const vector&in scaling = vector(1,1,1))`
 ##### Methods
+- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
+- `aabb get_local_bounds() const`
+- `bool get_is_convex() const property`
+- `bool get_is_polyhedron() const property`
 - `const physics_collision_shape@ opImplCast() const`
+- `const physics_half_edge_structure_edge& get_half_edge(uint edge_index) const`
+- `const physics_half_edge_structure_face& get_face(uint face_index)`
+- `const physics_half_edge_structure_vertex& get_vertex(uint vertex_index)`
+- `const vector get_face_normal(uint vertex_index)`
+- `const vector get_vertex_position(uint vertex_index)`
+- `float get_margin() const property`
+- `float get_volume() const property`
+- `int get_id() const property`
 - `physics_collision_shape@ opImplCast()`
+- `physics_shape_name get_name() const property`
+- `physics_shape_type get_type() const property`
+- `string opImplConv() const`
+- `uint find_most_anti_parallel_face(const vector&in direction) const`
+- `uint get_nb_faces() const property`
+- `uint get_nb_half_edges() const property`
+- `uint get_nb_vertices() const property`
+- `vector get_centroid() const property`
+- `vector get_local_inertia_tensor(float mass) const`
 - `vector& get_scale() const property`
 - `void set_scale(vector& scale) const property`
+- `void set_scale(vector&inout scale) const property`
 
 ### Class `physics_default_logger`
 ##### Methods
@@ -1838,8 +6058,9 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `physics_entity`
 ##### Behaviours / Constructors
-- `void f()`
 - `void f(uint index, uint generation)`
+- `void physics_entity()`
+- `void physics_entity(uint index, uint generation)`
 ##### Properties
 - `uint id`
 ##### Methods
@@ -1859,6 +6080,7 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `physics_half_edge_structure_edge`
 ##### Behaviours / Constructors
 - `void f()`
+- `void physics_half_edge_structure_edge()`
 ##### Properties
 - `uint face_index`
 - `uint next_edge_index`
@@ -1872,15 +6094,14 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `physics_half_edge_structure_vertex`
 ##### Behaviours / Constructors
-- `void f()`
 - `void f(uint vertex_coords_index)`
+- `void physics_half_edge_structure_vertex()`
+- `void physics_half_edge_structure_vertex(uint vertex_coords_index)`
 ##### Properties
 - `uint vertex_edge_index`
 - `uint vertex_point_index`
 
 ### Class `physics_height_field`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `aabb& get_bounds() const property`
 - `float get_height_at(uint x, uint y) const`
@@ -1896,15 +6117,28 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `physics_height_field_shape`
 ##### Behaviours / Constructors
 - `physics_height_field_shape@ f(physics_height_field@ height_field, const vector&in scaling = vector(1,1,1))`
+- `physics_height_field_shape@ physics_height_field_shape(physics_height_field@ height_field, const vector&in scaling = vector(1,1,1))`
 ##### Methods
+- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
+- `aabb get_local_bounds() const`
+- `bool get_is_convex() const property`
+- `bool get_is_polyhedron() const property`
 - `const physics_collision_shape@ opImplCast() const`
+- `float get_volume() const property`
+- `int get_id() const property`
 - `physics_collision_shape@ opImplCast()`
 - `physics_height_field@ get_height_field() const property`
+- `physics_shape_name get_name() const property`
+- `physics_shape_type get_type() const property`
+- `physics_triangle_raycast_side get_raycast_test_type() const property`
+- `string opImplConv() const`
+- `vector get_local_inertia_tensor(float mass) const`
+- `vector get_scale() const property`
 - `vector get_vertex_at(uint x, uint y) const`
+- `void set_raycast_test_type(physics_triangle_raycast_side side) property`
+- `void set_scale(const vector&in scale) property`
 
 ### Class `physics_joint`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `bool get_is_collision_enabled() const property`
 - `physics_entity get_entity() const property`
@@ -1917,8 +6151,9 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `physics_joint_info`
 ##### Behaviours / Constructors
-- `void f()`
 - `void f(physics_rigid_body@ body1, physics_rigid_body@ body2, physics_joint_type constraint_type)`
+- `void physics_joint_info()`
+- `void physics_joint_info(physics_rigid_body@ body1, physics_rigid_body@ body2, physics_joint_type constraint_type)`
 ##### Properties
 - `bool isCollisionEnabled`
 - `physics_joint_type type`
@@ -1931,8 +6166,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void log(physics_logger_level level, const string&in worldName, physics_logger_category category, const string&in message)`
 
 ### Class `physics_material`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `float get_bounciness() const property`
 - `float get_friction_coefficient() const property`
@@ -1945,8 +6178,9 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `physics_message`
 ##### Behaviours / Constructors
-- `void f()`
 - `void f(string text, physics_message_type type = PHYSICS_MESSAGE_ERROR)`
+- `void physics_message()`
+- `void physics_message(string text, physics_message_type type = PHYSICS_MESSAGE_ERROR)`
 ##### Properties
 - `physics_message_type type`
 - `string text`
@@ -1958,8 +6192,9 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `physics_overlap_pair`
 ##### Behaviours / Constructors
-- `void f()`
 - `void f(const physics_overlap_pair&in pair)`
+- `void physics_overlap_pair()`
+- `void physics_overlap_pair(const physics_overlap_pair&in pair)`
 ##### Methods
 - `physics_body& get_body1() const property`
 - `physics_body& get_body2() const property`
@@ -1970,11 +6205,9 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `physics_polygon_data`
 ##### Behaviours / Constructors
 - `physics_polygon_data@ f(float[]@ vertices, array<array<uint>>@ faces)`
-- `void f()`
+- `physics_polygon_data@ physics_polygon_data(array<float>@ vertices, array<array<uint>>@ faces)`
 
 ### Class `physics_polygon_face`
-##### Behaviours / Constructors
-- `void f()`
 ##### Properties
 - `uint index_base`
 - `uint nb_vertices`
@@ -1993,8 +6226,17 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `physics_rigid_body`
 ##### Methods
+- `aabb get_aabb() const property`
+- `any@ get_user_data() const`
+- `bool get_is_active() const property`
+- `bool get_is_debug_enabled() const property`
 - `bool get_is_gravity_enabled() const property`
+- `bool raycast(const ray&inout point, raycast_info&inout raycast_info) const`
+- `bool test_aabb_overlap(const aabb&in world_aabb) const`
+- `bool test_point_inside(const vector&in point) const`
 - `const physics_body@ opImplCast() const`
+- `const physics_collider& get_collider(uint index) const`
+- `const physics_transform& get_transform() const property`
 - `const vector& get_angular_lock_axis_factor() const property`
 - `const vector& get_linear_lock_axis_factor() const property`
 - `const vector& get_local_center_of_mass() const property`
@@ -2004,11 +6246,22 @@ This document contains the API definitions automatically extracted from the NVGT
 - `float get_mass() const property`
 - `physics_body@ opImplCast()`
 - `physics_body_type get_type() const property`
+- `physics_collider& get_collider(uint index)`
+- `physics_collider@ add_collider(physics_collision_shape@ shape, const physics_transform&in transform)`
+- `physics_entity get_entity() const property`
+- `uint get_nb_colliders() const property`
 - `vector get_angular_velocity() const property`
 - `vector get_linear_velocity() const property`
+- `vector get_local_point(const vector&in world_point) const`
+- `vector get_local_vector(const vector&in world_vector) const`
+- `vector get_world_point(const vector&in local_point) const`
+- `vector get_world_vector(const vector&in local_vector) const`
+- `void remove_collider(physics_collider&in collider)`
 - `void set_angular_damping(float angular_damping) property`
 - `void set_angular_lock_axis_factor(const vector&in angular_lock_axis_factor) property`
 - `void set_angular_velocity(const vector&in angular_velocity) property`
+- `void set_debug_enabled(bool enabled) property`
+- `void set_is_active(bool is_active) property`
 - `void set_is_gravity_enabled(bool enabled) property`
 - `void set_is_sleeping(bool enabled)`
 - `void set_linear_damping(float linear_damping) property`
@@ -2017,7 +6270,9 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_local_center_of_mass(const vector&in local_center_of_mass) property`
 - `void set_local_inertia_tensor(const vector&in local_inertia_tensor) property`
 - `void set_mass(float mass) property`
+- `void set_transform(const physics_transform&in transform) property`
 - `void set_type(physics_body_type type) property`
+- `void set_user_data(any@ userData)`
 - `void update_local_center_of_mass_from_colliders()`
 - `void update_local_inertia_tensor_from_colliders()`
 - `void update_mass_from_colliders()`
@@ -2026,11 +6281,23 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `physics_sphere_shape`
 ##### Behaviours / Constructors
 - `physics_sphere_shape@ f(float radius)`
+- `physics_sphere_shape@ physics_sphere_shape(float radius)`
 ##### Methods
+- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
+- `aabb get_local_bounds() const`
+- `bool get_is_convex() const property`
+- `bool get_is_polyhedron() const property`
 - `const physics_collision_shape@ opImplCast() const`
+- `float get_margin() const property`
 - `float get_radius() const property`
+- `float get_volume() const property`
+- `int get_id() const property`
 - `physics_collision_shape@ opImplCast()`
+- `physics_shape_name get_name() const property`
+- `physics_shape_type get_type() const property`
 - `string opImplConv()`
+- `string opImplConv() const`
+- `vector get_local_inertia_tensor(float mass) const`
 - `void set_radius(float radius) property`
 
 ### Class `physics_transform`
@@ -2038,6 +6305,9 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void f()`
 - `void f(const vector&in position, const matrix3x3&in orientation)`
 - `void f(const vector&in position, const quaternion&in orientation)`
+- `void physics_transform()`
+- `void physics_transform(const vector&in position, const matrix3x3&in orientation)`
+- `void physics_transform(const vector&in position, const quaternion&in orientation)`
 ##### Methods
 - `bool get_is_valid() const property`
 - `bool opEquals(const physics_transform&in) const`
@@ -2057,11 +6327,10 @@ This document contains the API definitions automatically extracted from the NVGT
 ##### Behaviours / Constructors
 - `physics_triangle_data@ f(float[]@ vertices, float[]@ normals, uint[]@ indices)`
 - `physics_triangle_data@ f(float[]@ vertices, uint[]@ indices)`
-- `void f()`
+- `physics_triangle_data@ physics_triangle_data(array<float>@ vertices, array<float>@ normals, array<uint>@ indices)`
+- `physics_triangle_data@ physics_triangle_data(array<float>@ vertices, array<uint>@ indices)`
 
 ### Class `physics_triangle_mesh`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `const aabb& get_bounds() const property`
 - `const vector& get_vertex(uint vertex_index) const`
@@ -2074,9 +6343,30 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `physics_triangle_shape`
 ##### Methods
+- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
+- `aabb get_local_bounds() const`
+- `bool get_is_convex() const property`
+- `bool get_is_polyhedron() const property`
 - `const physics_collision_shape@ opImplCast() const`
+- `const physics_half_edge_structure_edge& get_half_edge(uint edge_index) const`
+- `const physics_half_edge_structure_face& get_face(uint face_index)`
+- `const physics_half_edge_structure_vertex& get_vertex(uint vertex_index)`
+- `const vector get_face_normal(uint vertex_index)`
+- `const vector get_vertex_position(uint vertex_index)`
+- `float get_margin() const property`
+- `float get_volume() const property`
+- `int get_id() const property`
 - `physics_collision_shape@ opImplCast()`
+- `physics_shape_name get_name() const property`
+- `physics_shape_type get_type() const property`
 - `physics_triangle_raycast_side get_raycast_test_type() const property`
+- `string opImplConv() const`
+- `uint find_most_anti_parallel_face(const vector&in direction) const`
+- `uint get_nb_faces() const property`
+- `uint get_nb_half_edges() const property`
+- `uint get_nb_vertices() const property`
+- `vector get_centroid() const property`
+- `vector get_local_inertia_tensor(float mass) const`
 - `void set_raycast_test_type(physics_triangle_raycast_side test_type) property`
 
 ### Class `physics_triangle_vertex_array`
@@ -2104,12 +6394,12 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `physics_vertex_data`
 ##### Behaviours / Constructors
 - `physics_vertex_data@ f(float[]@ vertices)`
-- `void f()`
+- `physics_vertex_data@ physics_vertex_data(array<float>@ vertices)`
 
 ### Class `physics_world`
 ##### Behaviours / Constructors
+- `physics_world@ physics_world(const physics_world_settings&in world_settings)`
 - `physics_world@ w(const physics_world_settings&in world_settings)`
-- `void f()`
 ##### Methods
 - `aabb get_world_aabb(const physics_collider@ collider) const`
 - `bool get_is_gravity_enabled() const property`
@@ -2128,7 +6418,9 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint16 get_nb_iterations_velocity_solver() const property`
 - `vector get_gravity() const property`
 - `void destroy_joint(physics_joint& joint)`
+- `void destroy_joint(physics_joint&inout joint)`
 - `void destroy_rigid_body(physics_rigid_body& body)`
+- `void destroy_rigid_body(physics_rigid_body&inout body)`
 - `void raycast(const ray&in ray, physics_raycast_callback@ callback, uint16 category_mask = 0xffff)`
 - `void set_callbacks(physics_collision_callback@ collision_callback, physics_overlap_callback@ trigger_callback)`
 - `void set_contacts_position_correction_technique(physics_contact_position_correction_technique technique) property`
@@ -2151,6 +6443,8 @@ This document contains the API definitions automatically extracted from the NVGT
 ##### Behaviours / Constructors
 - `void f()`
 - `void f(const physics_world_settings &in)`
+- `void physics_world_settings()`
+- `void physics_world_settings(const physics_world_settings&in)`
 ##### Properties
 - `bool is_sleeping_enabled`
 - `float cos_angle_similar_contact_manifold`
@@ -2167,14 +6461,27 @@ This document contains the API definitions automatically extracted from the NVGT
 - `vector gravity`
 ##### Methods
 - `physics_world_settings &opAssign(const physics_world_settings &in)`
+- `physics_world_settings& opAssign(const physics_world_settings&in)`
 - `string opImplConv()`
 
 ### Class `process`
+##### Methods
+- `bool get_running() const property`
+- `bool get_valid() const property`
+- `bool kill(bool force = true)`
+- `datastream@+ get_stderr() property`
+- `datastream@+ get_stdin() property`
+- `datastream@+ get_stdout() property`
+- `int wait()`
+- `int64 get_pid() const property`
+- `string read()`
 
 ### Class `quaternion`
 ##### Behaviours / Constructors
 - `void f()`
-- `void f(float x, float y, float z, float w)`
+- `void f(float x, float y, float  z, float w)`
+- `void quaternion()`
+- `void quaternion(float x, float y, float z, float w)`
 ##### Properties
 - `float w`
 - `float x`
@@ -2185,6 +6492,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool get_is_unit() const property`
 - `bool get_is_valid() const property`
 - `bool opEquals(const quaternion &in) const`
+- `bool opEquals(const quaternion&in) const`
 - `float dot(const quaternion&in) const`
 - `float length() const`
 - `float length_square() const`
@@ -2195,9 +6503,13 @@ This document contains the API definitions automatically extracted from the NVGT
 - `quaternion get_inversed() const property`
 - `quaternion get_unit() const property`
 - `quaternion opAdd(const quaternion &in)`
+- `quaternion opAdd(const quaternion&in)`
 - `quaternion opMul(const quaternion&in)`
 - `quaternion opMul(float) const`
 - `quaternion opSub(const quaternion &in)`
+- `quaternion opSub(const quaternion&in)`
+- `quaternion& opAddAssign(const quaternion&in)`
+- `quaternion& opSubAssign(const quaternion&in)`
 - `string opImplConv() const`
 - `vector get_v() const property`
 - `void get_rotation_angle_axis(float&out angle, vector&out axis) const`
@@ -2208,21 +6520,196 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_to_zero()`
 
 ### Class `random_gamerand`
+##### Behaviours / Constructors
+- `random_gamerand@ f()`
+- `random_gamerand@ f(uint seed)`
+- `random_gamerand@ random_gamerand()`
+- `random_gamerand@ random_gamerand(uint seed)`
+##### Methods
+- `bool next_bool(int percent = 50)`
+- `bool set_state(const string &in state)`
+- `bool set_state(const string&in state)`
+- `float nextf()`
+- `int range(int min, int max)`
+- `random_interface@ opImplCast()`
+- `string get_state() const`
+- `string next_character(const string &in min, const string &in max)`
+- `string next_character(const string&in min, const string&in max)`
+- `uint next()`
+- `void seed(uint s)`
 
 ### Class `random_generator`
+##### Methods
+- `bool next_bool(int percent = 50)`
+- `float nextf()`
+- `int range(int min, int max)`
+- `string next_character(const string &in min, const string &in max)`
+- `uint next()`
 
 ### Class `random_interface`
+##### Methods
+- `bool next_bool(int percent = 50)`
+- `bool set_state(const string &in state)`
+- `bool set_state(const string&in state)`
+- `float nextf()`
+- `int range(int min, int max)`
+- `string get_state() const`
+- `string next_character(const string &in min, const string &in max)`
+- `string next_character(const string&in min, const string&in max)`
+- `uint next()`
+- `void seed(uint s)`
+- `void seed64(uint64 s)`
 
 ### Class `random_pcg`
+##### Behaviours / Constructors
+- `random_pcg@ f()`
+- `random_pcg@ f(uint seed)`
+- `random_pcg@ random_pcg()`
+- `random_pcg@ random_pcg(uint seed)`
+##### Methods
+- `bool next_bool(int percent = 50)`
+- `bool set_state(const string &in state)`
+- `bool set_state(const string&in state)`
+- `float nextf()`
+- `int range(int min, int max)`
+- `random_interface@ opImplCast()`
+- `string get_state() const`
+- `string next_character(const string &in min, const string &in max)`
+- `string next_character(const string&in min, const string&in max)`
+- `uint next()`
+- `void seed(uint s)`
+
+### Class `random_reader`
+##### Behaviours / Constructors
+- `random_reader@ random_reader(const string&in encoding = "", int byteorder = 1)`
+##### Properties
+- `bool autoflush`
+- `bool binary`
+- `bool skip_eof`
+- `bool sync_rw_cursors`
+##### Methods
+- `bool close(bool close_all = false)`
+- `bool close_all()`
+- `bool get_active() const property`
+- `bool get_bad() const property`
+- `bool get_eof() const property`
+- `bool get_fail() const property`
+- `bool get_good() const property`
+- `bool open(const string&in encoding = "", int byteorder = 1)`
+- `bool rseek(uint64 offset)`
+- `bool rseek_end(uint64 offset = 0)`
+- `bool rseek_relative(int64 offset)`
+- `bool seek(uint64 offset)`
+- `bool seek_end(uint64 offset = 0)`
+- `bool seek_relative(int64 offset)`
+- `bool wseek(uint64 offset)`
+- `bool wseek_end(uint64 offset = 0)`
+- `bool wseek_relative(int64 offset)`
+- `datastream@ opImplCast()`
+- `double read_double()`
+- `float read_float()`
+- `int read_int()`
+- `int16 read_int16()`
+- `int64 get_pos() const property`
+- `int64 get_rpos() const property`
+- `int64 get_wpos() const property`
+- `int64 read_int64()`
+- `int8 read_int8()`
+- `random_reader& opShl(double value)`
+- `random_reader& opShl(float value)`
+- `random_reader& opShl(int value)`
+- `random_reader& opShl(int16 value)`
+- `random_reader& opShl(int64 value)`
+- `random_reader& opShl(int8 value)`
+- `random_reader& opShl(string value)`
+- `random_reader& opShl(uint value)`
+- `random_reader& opShl(uint16 value)`
+- `random_reader& opShl(uint64 value)`
+- `random_reader& opShl(uint8 value)`
+- `random_reader& opShr(double&out value)`
+- `random_reader& opShr(float&out value)`
+- `random_reader& opShr(int&out value)`
+- `random_reader& opShr(int16&out value)`
+- `random_reader& opShr(int64&out value)`
+- `random_reader& opShr(int8&out value)`
+- `random_reader& opShr(string&out value)`
+- `random_reader& opShr(uint&out value)`
+- `random_reader& opShr(uint16&out value)`
+- `random_reader& opShr(uint64&out value)`
+- `random_reader& opShr(uint8&out value)`
+- `random_reader& write_double(double value)`
+- `random_reader& write_float(float value)`
+- `random_reader& write_int(int value)`
+- `random_reader& write_int16(int16 value)`
+- `random_reader& write_int64(int64 value)`
+- `random_reader& write_int8(int8 value)`
+- `random_reader& write_string(string value)`
+- `random_reader& write_uint(uint value)`
+- `random_reader& write_uint16(uint16 value)`
+- `random_reader& write_uint64(uint64 value)`
+- `random_reader& write_uint8(uint8 value)`
+- `string read(uint count = 0)`
+- `string read_line()`
+- `string read_string()`
+- `string read_until(const string&in text, bool require_full)`
+- `uint read_uint()`
+- `uint write(const string&in data)`
+- `uint16 read_uint16()`
+- `uint64 get_available() const property`
+- `uint64 read_7bit_encoded()`
+- `uint64 read_uint64()`
+- `uint8 read_uint8()`
+- `void flush()`
+- `void read_7bit_encoded(uint64&out integer)`
+- `void write_7bit_encoded(uint64 integer)`
 
 ### Class `random_well`
+##### Behaviours / Constructors
+- `random_well@ f()`
+- `random_well@ f(uint seed)`
+- `random_well@ random_well()`
+- `random_well@ random_well(uint seed)`
+##### Methods
+- `bool next_bool(int percent = 50)`
+- `bool set_state(const string &in state)`
+- `bool set_state(const string&in state)`
+- `float nextf()`
+- `int range(int min, int max)`
+- `random_interface@ opImplCast()`
+- `string get_state() const`
+- `string next_character(const string &in min, const string &in max)`
+- `string next_character(const string&in min, const string&in max)`
+- `uint next()`
+- `void seed(uint s)`
 
 ### Class `random_xorshift`
+##### Behaviours / Constructors
+- `random_xorshift@ f()`
+- `random_xorshift@ f(uint seed)`
+- `random_xorshift@ f(uint64 seed)`
+- `random_xorshift@ random_xorshift()`
+- `random_xorshift@ random_xorshift(uint seed)`
+- `random_xorshift@ random_xorshift(uint64 seed)`
+##### Methods
+- `bool next_bool(int percent = 50)`
+- `bool set_state(const string &in state)`
+- `bool set_state(const string&in state)`
+- `float nextf()`
+- `int range(int min, int max)`
+- `int64 next64()`
+- `random_interface@ opImplCast()`
+- `string get_state() const`
+- `string next_character(const string &in min, const string &in max)`
+- `string next_character(const string&in min, const string&in max)`
+- `uint next()`
+- `void seed(uint s)`
+- `void seed64(uint64 s)`
 
 ### Class `ray`
 ##### Behaviours / Constructors
-- `void f()`
 - `void f(const vector&in p1, const vector&in p2, float max_frac = 1.0f)`
+- `void ray()`
+- `void ray(const vector&in p1, const vector&in p2, float max_frac = 1.0f)`
 ##### Properties
 - `float max_fraction`
 - `vector point1`
@@ -2231,6 +6718,7 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `raycast_info`
 ##### Behaviours / Constructors
 - `void f()`
+- `void raycast_info()`
 ##### Properties
 - `float hit_fraction`
 - `int triangle_index`
@@ -2239,18 +6727,45 @@ This document contains the API definitions automatically extracted from the NVGT
 - `vector world_normal`
 - `vector world_point`
 
+### Class `ref`
+##### Behaviours / Constructors
+- `void f()`
+- `void f(const ?&in value)`
+- `void f(const ref &in other)`
+- `void f(int&in)`
+- `void ref()`
+- `void ref(const ?&in value)`
+- `void ref(const ref&in other)`
+##### Methods
+- `bool opEquals(const ?&in value) const`
+- `bool opEquals(const ref &in other) const`
+- `bool opEquals(const ref&in other) const`
+- `ref &opHndlAssign(const ?&in value)`
+- `ref &opHndlAssign(const ref &in other)`
+- `ref& opHndlAssign(const ?&in value)`
+- `ref& opHndlAssign(const ref&in other)`
+- `void opCast(?&out value)`
+
 ### Class `refstring`
+##### Behaviours / Constructors
+- `refstring @s()`
+- `refstring@ refstring()`
+##### Properties
+- `string str`
 
 ### Class `regexp`
 ##### Behaviours / Constructors
-- `void f()`
 - `void f(const string&in pattern, regexp_options options = RE_UTF8)`
+- `void regexp()`
+- `void regexp(const string&in pattern, regexp_options options = RE_UTF8)`
 ##### Methods
 - `bool match(const string&in text, uint64 offset = 0) const`
 - `bool match(const string&in text, uint64 offset, int options) const`
 - `bool opEquals(const string&in text) const`
 - `int subst(string& text, const string&in replacement, int options = RE_UTF8) const`
 - `int subst(string& text, uint64 offset, const string&in replacement, int options = RE_UTF8) const`
+- `int subst(string&inout text, const string&in replacement, int options = RE_UTF8) const`
+- `int subst(string&inout text, uint64 offset, const string&in replacement, int options = RE_UTF8) const`
 - `string extract(const string&in text, uint64 offset = 0) const`
 - `string extract(const string&in text, uint64 offset, int options) const`
 - `string[]@ split(const string&in text, uint64 offset = 0) const`
@@ -2258,57 +6773,142 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `reverb3d`
 ##### Behaviours / Constructors
-- `reverb3d@ n(audio_node@ reverb, mixer@ destination = mixer(), audio_engine@+ engine = sound_default_engine)`
+- `reverb3d@ n(audio_node@+ reverb, mixer@+ destination = mixer(), audio_engine@+ engine = sound_default_engine)`
+- `reverb3d@ reverb3d(audio_node@ reverb, mixer@ destination = mixer(), audio_engine@ engine = sound_default_engine)`
 ##### Methods
+- `audio_node@ opImplCast()`
 - `audio_node@+ get_reverb() const property`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
 - `audio_splitter_node@ create_attachment(audio_node@+ dry_input = null, audio_node@+ dry_output = null)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
 - `float get_max_audible_distance() const property`
 - `float get_max_volume() const property`
 - `float get_max_volume_distance() const property`
 - `float get_min_volume() const property`
+- `float get_output_bus_volume(uint bus)`
 - `float get_volume_at(float distance) const`
 - `float get_volume_curve() const property`
 - `mixer@+ get_mixer() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
 - `void set_max_audible_distance(float distance) property`
 - `void set_max_volume(float max_volume) property`
 - `void set_max_volume_distance(float distance) property`
 - `void set_min_volume(float min_volume) property`
-- `void set_mixer(mixer@ mix) property`
-- `void set_reverb(audio_node@ reverb) property`
+- `void set_mixer(mixer@+ mix) property`
+- `void set_reverb(audio_node@+ reverb) property`
 - `void set_volume_curve(float volume_curve) property`
+
+### Class `rw_lock`
+##### Behaviours / Constructors
+- `rw_lock@ l()`
+- `rw_lock@ rw_lock()`
+##### Methods
+- `bool try_read_lock()`
+- `bool try_write_lock()`
+- `void read_lock()`
+- `void unlock()`
+- `void write_lock()`
 
 ### Class `rw_read_lock`
 ##### Behaviours / Constructors
-- `void f()`
-- `void f(rw_lock@)`
+- `void f(rw_lock@ target)`
+- `void rw_read_lock()`
+- `void rw_read_lock(rw_lock@ target)`
 
 ### Class `rw_scoped_lock`
 ##### Behaviours / Constructors
-- `void f()`
 - `void f(rw_lock@ lock, bool write)`
+- `void rw_scoped_lock()`
+- `void rw_scoped_lock(rw_lock@ lock, bool write)`
 
 ### Class `rw_write_lock`
 ##### Behaviours / Constructors
-- `void f()`
-- `void f(rw_lock@)`
+- `void f(rw_lock@ target)`
+- `void rw_write_lock()`
+- `void rw_write_lock(rw_lock@ target)`
 
 ### Class `script_function`
+##### Methods
+- `bool get_is_explicit() property`
+- `bool get_is_final() property`
+- `bool get_is_override() property`
+- `bool get_is_private() property`
+- `bool get_is_property() property`
+- `bool get_is_protected() property`
+- `bool get_is_read_only() property`
+- `bool get_is_shared() property`
+- `bool retrieve(?&out)`
+- `dictionary@ call(dictionary@ args, string[]@ errors = null, int max_statement_count = 0)`
+- `dictionary@ opCall(dictionary@ args, string[]@ errors = null, int max_statement_count = 0)`
+- `int get_line() property`
+- `string get_decl() property`
+- `string get_decl(bool include_object_name, bool include_namespace = true, bool include_param_names = true)`
+- `string get_declared_at(int& row, int& column)`
+- `string get_declared_at(int&inout row, int&inout column)`
+- `string get_name() property`
+- `string get_namespace() property`
+- `string get_script() property`
 
 ### Class `script_module`
+##### Properties
+- `uint max_statement_count`
+##### Methods
+- `any@ get_global(uint index)`
+- `const string get_global_decl(uint index)`
+- `const string get_global_name(uint index)`
+- `const string get_imported_function_decl(uint index)`
+- `const string get_imported_function_module(uint index)`
+- `int add_section(const string&in name, const string&in code, uint line_offset = 0)`
+- `int bind_all_imported_functions()`
+- `int bind_imported_function(uint index, script_function@+ func)`
+- `int build(string[]@ errors=null)`
+- `int compile_global(const string&in section_name, const string&in code, uint line_offset = 0)`
+- `int get_global_index_by_decl(const string&in decl)`
+- `int get_global_index_by_name(const string&in name)`
+- `int get_imported_function_index(const string&in decl)`
+- `int reset_globals(string[]@ errors=null)`
+- `int set_bytecode(const string&in code, bool&out debug_info_was_stripped, string[]@ errors=null)`
+- `script_function@ compile_function(const string&in section_name, const string&in code, array<string>@ errors = null, bool add_to_module = false, uint line_offset = 0)`
+- `script_function@+ get_function_by_decl(const string&in decl)`
+- `script_function@+ get_function_by_index(uint index)`
+- `script_function@+ get_function_by_name(const string&in name)`
+- `string get_bytecode(bool strip_debug_info)`
+- `string get_name() property`
+- `uint get_function_count()`
+- `uint get_global_count()`
+- `uint get_imported_function_count()`
+- `uint set_access_mask(uint mask)`
+- `void discard()`
+- `void set_name(const string&in name) property`
 
 ### Class `smtp_client`
 ##### Behaviours / Constructors
 - `smtp_client@ f()`
-- `void f()`
+- `smtp_client@ smtp_client()`
 ##### Methods
 - `bool connect()`
 - `bool get_is_authenticated() const property`
 - `bool get_is_connected() const property`
 - `bool get_use_ssl() const property`
-- `bool login(const string &in, const string &in, smtp_auth_method = SMTP_AUTH_LOGIN)`
-- `bool login_oauth2(const string &in, const string &in)`
-- `bool send_message(mail_message@)`
-- `bool send_messages(array<mail_message@>@)`
+- `bool login(const string &in username, const string &in password, smtp_auth_method method = SMTP_AUTH_LOGIN)`
+- `bool login(const string&in username, const string&in password, smtp_auth_method method = SMTP_AUTH_LOGIN)`
+- `bool login_oauth2(const string &in username, const string &in access_token)`
+- `bool login_oauth2(const string&in username, const string&in access_token)`
+- `bool send_message(mail_message@+ message)`
+- `bool send_messages(array<mail_message@>@+ messages)`
 - `int get_port() const property`
 - `int get_timeout() const property`
 - `string get_host() const property`
@@ -2316,26 +6916,91 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string get_server_capabilities() const property`
 - `string query_server_capabilities()`
 - `void close()`
-- `void set_host(const string &in) property`
-- `void set_port(int) property`
-- `void set_timeout(int) property`
-- `void set_use_ssl(bool) property`
+- `void set_host(const string &in host) property`
+- `void set_host(const string&in host) property`
+- `void set_port(int port) property`
+- `void set_timeout(int timeout) property`
+- `void set_use_ssl(bool enabled) property`
+
+### Class `socket`
+##### Behaviours / Constructors
+- `socket@ socket()`
+- `socket@ socket(const socket&in sock)`
+##### Methods
+- `bool get_blocking() const property`
+- `bool get_is_datagram() const property`
+- `bool get_is_null() const property`
+- `bool get_is_raw() const property`
+- `bool get_is_stream() const property`
+- `bool get_keep_alive() const property`
+- `bool get_no_delay() const property`
+- `bool get_oob_inline() const property`
+- `bool get_reuse_address() const property`
+- `bool get_reuse_port() const property`
+- `bool get_secure() const property`
+- `bool poll(const timespan&inout timeout, int mode) const`
+- `int get_available() const property`
+- `int get_error() const property`
+- `int get_receive_buffer_size() const property`
+- `int get_send_buffer_size() const property`
+- `int opCmp(const socket&in other)`
+- `socket& opAssign(const socket&in socket)`
+- `socket_address get_address() const property`
+- `socket_address get_peer_address() const property`
+- `socket_type get_type() const property`
+- `timespan get_receive_timeout() const property`
+- `timespan get_send_timeout() const property`
+- `void close()`
+- `void get_linger(bool&out on, int&out seconds)`
+- `void get_option(int level, int option, int&out value) const`
+- `void get_option(int level, int option, spec::ip_address&out value)`
+- `void get_option(int level, int option, timespan&out value) const`
+- `void get_option(int level, int option, uint&out value) const`
+- `void get_option(int level, int option, uint8&out value) const`
+- `void init(int af)`
+- `void set_blocking(bool flag) property`
+- `void set_keep_alive(bool flag) property`
+- `void set_linger(bool on, int seconds)`
+- `void set_no_delay(bool flag) property`
+- `void set_oob_inline(bool flag) property`
+- `void set_option(int level, int option, const spec::ip_address&in value)`
+- `void set_option(int level, int option, const timespan&in value)`
+- `void set_option(int level, int option, int value)`
+- `void set_option(int level, int option, uint value)`
+- `void set_option(int level, int option, uint8 value)`
+- `void set_receive_buffer_size(int size) property`
+- `void set_receive_timeout(const timespan&in timeout) property`
+- `void set_reuse_address(bool flag) property`
+- `void set_reuse_port(bool flag) property`
+- `void set_send_buffer_size(int size) property`
+- `void set_send_timeout(const timespan&in timeout) property`
 
 ### Class `socket_address`
 ##### Behaviours / Constructors
 - `void f()`
-- `void f(const socket_address&in)`
+- `void f(const socket_address&in other)`
 - `void f(const spec::ip_address&in addr, uint16 port)`
 - `void f(const string&in host, uint16 port)`
 - `void f(const string&in host_and_port)`
-- `void f(spec::ip_address_family) explicit`
-- `void f(spec::ip_address_family, const string&in addr)`
-- `void f(spec::ip_address_family, const string&in host, const string&in port)`
-- `void f(spec::ip_address_family, const string&in host, uint16 port)`
-- `void f(spec::ip_address_family, uint16 port)`
+- `void f(spec::ip_address_family family) explicit`
+- `void f(spec::ip_address_family family, const string&in addr)`
+- `void f(spec::ip_address_family family, const string&in host, const string&in port)`
+- `void f(spec::ip_address_family family, const string&in host, uint16 port)`
+- `void f(spec::ip_address_family family, uint16 port)`
 - `void f(uint16 port) explicit`
+- `void socket_address()`
+- `void socket_address(const socket_address&in other)`
+- `void socket_address(const spec::ip_address&in addr, uint16 port)`
+- `void socket_address(const string&in host, uint16 port)`
+- `void socket_address(const string&in host_and_port)`
+- `void socket_address(spec::ip_address_family family)`
+- `void socket_address(spec::ip_address_family family, const string&in addr)`
+- `void socket_address(spec::ip_address_family family, const string&in host, const string&in port)`
+- `void socket_address(spec::ip_address_family family, const string&in host, uint16 port)`
+- `void socket_address(spec::ip_address_family family, uint16 port)`
+- `void socket_address(uint16 port)`
 ##### Methods
-- `int opCmp(const socket_address&in)`
+- `int opCmp(const socket_address&in other)`
 - `socket_address& opAssign(const socket_address&in addr)`
 - `spec::ip_address get_host() const property`
 - `spec::ip_address_family get_family() const property`
@@ -2345,66 +7010,159 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `sound`
 ##### Behaviours / Constructors
 - `sound@ s()`
+- `sound@ sound()`
 ##### Methods
 - `audio_data_source@+ get_datasource() const property`
+- `audio_engine@ get_engine() const property`
+- `audio_node@ opImplCast()`
+- `audio_node_chain@ get_effects_chain() property`
+- `audio_node_chain@ get_internal_node_chain() property`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `audio_pan_mode get_pan_mode() const property`
+- `audio_positioning_mode get_positioning() const property`
+- `audio_splitter_node@ get_reverb3d_attachment() const property`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
 - `bool close()`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
 - `bool get_active() const property`
 - `bool get_at_end() const property`
 - `bool get_autoclose() const property`
+- `bool get_data_format(audio_format&out format, uint&out channels, uint&out sample_rate)`
 - `bool get_data_format(audio_format&out format, uint32&out channels, uint32&out sample_rate)`
+- `bool get_hrtf() const property`
 - `bool get_load_complete() const property`
 - `bool get_looping() const property`
 - `bool get_paused() const property`
-- `bool load(const string&in filename, const pack_interface@ pack = sound_default_pack)`
+- `bool get_playing() const property`
+- `bool get_spatialization_enabled() const property`
+- `bool load(const string&in filename, const pack_interface@+ pack = sound_default_pack)`
 - `bool load_memory(const string&in data)`
-- `bool load_pcm(const float[]@ data, int samplerate, int channels)`
-- `bool load_pcm(const int16[]@ data, int samplerate, int channels)`
-- `bool load_pcm(const int[]@ data, int samplerate, int channels)`
+- `bool load_pcm(const float[]@+ data, int samplerate, int channels)`
+- `bool load_pcm(const int16[]@+ data, int samplerate, int channels)`
+- `bool load_pcm(const int[]@+ data, int samplerate, int channels)`
 - `bool load_pcm(const memory_buffer<float>&in data, int samplerate, int channels)`
 - `bool load_pcm(const memory_buffer<int16>&in data, int samplerate, int channels)`
 - `bool load_pcm(const memory_buffer<int>&in data, int samplerate, int channels)`
 - `bool load_pcm(const memory_buffer<uint8>&in data, int samplerate, int channels)`
-- `bool load_pcm(const uint8[]@ data, int samplerate, int channels)`
+- `bool load_pcm(const uint8[]@+ data, int samplerate, int channels)`
 - `bool open(audio_data_source@ datasource)`
 - `bool pause()`
 - `bool pause_fade(const uint64 length)`
 - `bool pause_fade_in_frames(const uint64 length_in_frames)`
 - `bool pause_fade_in_milliseconds(const uint64 length_in_milliseconds)`
+- `bool play(bool reset_loop_state = true)`
+- `bool play_looped()`
 - `bool play_wait()`
 - `bool seek(const uint64 position)`
 - `bool seek_in_frames(const uint64 position)`
 - `bool seek_in_milliseconds(const uint64 position)`
-- `bool stream(const string&in filename, const pack_interface@ pack = sound_default_pack)`
-- `bool stream_pcm(const float[]@ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
-- `bool stream_pcm(const int16[]@ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
-- `bool stream_pcm(const int[]@ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
+- `bool set_mixer(mixer@ parent_mixer)`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_shape(ref shape)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `bool stop()`
+- `bool stream(const string&in filename, const pack_interface@+ pack = sound_default_pack)`
+- `bool stream_pcm(const float[]@+ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
+- `bool stream_pcm(const int16[]@+ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
+- `bool stream_pcm(const int[]@+ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
 - `bool stream_pcm(const memory_buffer<float>&in data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
 - `bool stream_pcm(const memory_buffer<int16>&in data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
 - `bool stream_pcm(const memory_buffer<int>&in data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
 - `bool stream_pcm(const memory_buffer<uint8>&in data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
-- `bool stream_pcm(const uint8[]@ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
+- `bool stream_pcm(const uint8[]@+ data, uint sample_rate = 0, uint channels = 0, uint buffer_size = 0)`
 - `bool stream_url(const string&in url)`
 - `const string& get_loaded_filename() const property`
 - `double get_pitch_lower_limit() const property`
+- `float get_current_fade_volume() const property`
+- `float get_directional_attenuation_factor() const property`
+- `float get_distance_to_listener() const`
+- `float get_doppler_factor() const property`
+- `float get_max_distance() const property`
+- `float get_max_gain() const property`
+- `float get_min_distance() const property`
+- `float get_min_gain() const property`
+- `float get_output_bus_volume(uint bus)`
+- `float get_pan() const property`
+- `float get_pitch() const property`
+- `float get_rolloff() const property`
+- `float get_volume() const property`
+- `int get_3d_attenuator() const property`
+- `int get_3d_panner() const property`
+- `int get_preferred_3d_attenuator() const property`
+- `int get_preferred_3d_panner() const property`
+- `mixer@ get_mixer() const`
+- `ref get_shape() const property`
+- `reverb3d@ get_reverb3d() const property`
+- `reverb3d_placement get_reverb3d_placement() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_listener() const property`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint get_pinned_listener() const property`
 - `uint64 get_length() property`
 - `uint64 get_length_in_frames( ) const property`
+- `uint64 get_length_in_milliseconds() const property`
 - `uint64 get_length_in_ms() const property`
 - `uint64 get_position() property`
 - `uint64 get_position_in_frames() const property`
 - `uint64 get_position_in_milliseconds() const property`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+- `vector get_direction() const`
+- `vector get_direction_to_listener() const`
+- `vector get_position_3d() const`
+- `vector get_velocity() const`
+- `void get_cone(float&out inner_radians, float&out outer_radians, float&out outer_gain)`
+- `void set_3d_attenuator(int attenuator_id)`
+- `void set_3d_panner(int panner_id)`
 - `void set_autoclose(bool enabled = true) property`
+- `void set_cone(float inner_radians, float outer_radians, float outer_gain)`
+- `void set_direction(const vector&in direction)`
+- `void set_direction(float x, float y, float z)`
+- `void set_directional_attenuation_factor(float factor) property`
+- `void set_doppler_factor(float factor) property`
+- `void set_fade(float start_volume, float end_volume, uint64 length)`
+- `void set_fade_in_frames(float start_volume, float end_volume, uint64 length_frames)`
+- `void set_fade_in_milliseconds(float start_volume, float end_volume, uint64 length_ms)`
+- `void set_hrtf(bool enabled) property`
 - `void set_looping(bool looping) property`
+- `void set_max_distance(float distance) property`
+- `void set_max_gain(float gain) property`
+- `void set_min_distance(float distance) property`
+- `void set_min_gain(float gain) property`
+- `void set_pan(float pan) property`
+- `void set_pan_mode(audio_pan_mode mode) property`
+- `void set_pinned_listener(uint index) property`
+- `void set_pitch(float pitch) property`
+- `void set_position_3d(const vector&in position)`
+- `void set_position_3d(float x, float y, float z)`
+- `void set_positioning(audio_positioning_mode mode) property`
+- `void set_reverb3d(reverb3d@ reverb) property`
+- `void set_reverb3d_at(reverb3d@ reverb, reverb3d_placement placement)`
+- `void set_rolloff(float rolloff) property`
+- `void set_spatialization_enabled(bool enabled) property`
+- `void set_start_time(uint64 absolute_time) property`
+- `void set_stop_time(uint64 absolute_time)`
 - `void set_stop_time_with_fade(uint64 absolute_time, uint64 fade_length)`
 - `void set_stop_time_with_fade_in_frames(uint64 absolute_time, uint64 fade_length)`
 - `void set_stop_time_with_fade_in_milliseconds(uint64 absolute_time, uint64 fade_length)`
 - `void set_timed_fade(float start_volume, float end_volume, uint64 length, uint64 absolute_time)`
 - `void set_timed_fade_in_frames(float start_volume, float end_volume, uint64 length, uint64 absolute_time)`
 - `void set_timed_fade_in_milliseconds(float start_volume, float end_volume, uint64 length, uint64 absolute_time)`
+- `void set_velocity(const vector&in velocity)`
+- `void set_velocity(float x, float y, float z)`
+- `void set_volume(float volume) property`
 
 ### Class `sound_aabb_shape`
 ##### Behaviours / Constructors
 - `sound_aabb_shape@ s(int left_range, int right_range, int backward_range, int forward_range, int lower_range, int upper_range)`
-- `void f()`
+- `sound_aabb_shape@ sound_aabb_shape(int left_range, int right_range, int backward_range, int forward_range, int lower_range, int upper_range)`
 ##### Properties
 - `int backward_range`
 - `int forward_range`
@@ -2413,42 +7171,239 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int right_range`
 - `int upper_range`
 
-### Class `string`
+### Class `spinlock_mutex`
+##### Behaviours / Constructors
+- `spinlock_mutex@ spinlock_mutex()`
 ##### Methods
+- `bool try_lock()`
+- `bool try_lock(uint milliseconds)`
+- `void lock()`
+- `void lock(uint milliseconds)`
+- `void unlock()`
+
+### Class `spinlock_mutex_lock`
+##### Behaviours / Constructors
+- `void spinlock_mutex_lock()`
+- `void spinlock_mutex_lock(spinlock_mutex@ target)`
+- `void spinlock_mutex_lock(spinlock_mutex@ target, uint milliseconds)`
+##### Methods
+- `void unlock()`
+
+### Class `stream_socket`
+##### Behaviours / Constructors
+- `stream_socket@ stream_socket()`
+- `stream_socket@ stream_socket(const socket&in sock)`
+- `stream_socket@ stream_socket(const socket_address&in address)`
+- `stream_socket@ stream_socket(const spec::ip_address_family family)`
+- `stream_socket@ stream_socket(const stream_socket&in sock)`
+##### Methods
+- `bool bind(const socket_address&in address, bool reuse_address = false, bool IPv6_only = false)`
+- `bool get_blocking() const property`
+- `bool get_is_datagram() const property`
+- `bool get_is_null() const property`
+- `bool get_is_raw() const property`
+- `bool get_is_stream() const property`
+- `bool get_keep_alive() const property`
+- `bool get_no_delay() const property`
+- `bool get_oob_inline() const property`
+- `bool get_reuse_address() const property`
+- `bool get_reuse_port() const property`
+- `bool get_secure() const property`
+- `bool poll(const timespan&inout timeout, int mode) const`
+- `int get_available() const property`
+- `int get_error() const property`
+- `int get_receive_buffer_size() const property`
+- `int get_send_buffer_size() const property`
+- `int opCmp(const stream_socket&in other)`
+- `int send_bytes(const string&in data, int flags = 0)`
+- `int shutdown()`
+- `int shutdown_send()`
+- `socket_address get_address() const property`
+- `socket_address get_peer_address() const property`
+- `socket_type get_type() const property`
+- `stream_socket& opAssign(const socket&in sock)`
+- `stream_socket& opAssign(const stream_socket&in socket)`
+- `string receive_bytes(int flags = 0, const timespan&in timeout = 100000)`
+- `string receive_bytes(int length, int flags = 0)`
+- `timespan get_receive_timeout() const property`
+- `timespan get_send_timeout() const property`
+- `void close()`
+- `void connect(const socket_address&in address)`
+- `void connect(const socket_address&in address, const timespan&in timeout)`
+- `void connect_nonblocking(const socket_address&in address)`
+- `void get_linger(bool&out on, int&out seconds)`
+- `void get_option(int level, int option, int&out value) const`
+- `void get_option(int level, int option, spec::ip_address&out value)`
+- `void get_option(int level, int option, timespan&out value) const`
+- `void get_option(int level, int option, uint&out value) const`
+- `void get_option(int level, int option, uint8&out value) const`
+- `void init(int af)`
+- `void set_blocking(bool flag) property`
+- `void set_keep_alive(bool flag) property`
+- `void set_linger(bool on, int seconds)`
+- `void set_no_delay(bool flag) property`
+- `void set_oob_inline(bool flag) property`
+- `void set_option(int level, int option, const spec::ip_address&in value)`
+- `void set_option(int level, int option, const timespan&in value)`
+- `void set_option(int level, int option, int value)`
+- `void set_option(int level, int option, uint value)`
+- `void set_option(int level, int option, uint8 value)`
+- `void set_receive_buffer_size(int size) property`
+- `void set_receive_timeout(const timespan&in timeout) property`
+- `void set_reuse_address(bool flag) property`
+- `void set_reuse_port(bool flag) property`
+- `void set_send_buffer_size(int size) property`
+- `void set_send_timeout(const timespan&in timeout) property`
+- `void shutdown_receive()`
+
+### Class `string`
+##### Behaviours / Constructors
+- `void f()`
+- `void f(bool value)`
+- `void f(const ?&in,`
+- `void f(const string &in other)`
+- `void f(double value)`
+- `void f(float value)`
+- `void f(int value)`
+- `void f(int64 value)`
+- `void f(uint value)`
+- `void f(uint64 value)`
+- `void string()`
+- `void string(bool value)`
+- `void string(const ?&in, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null)`
+- `void string(const string&in other)`
+- `void string(double value)`
+- `void string(float value)`
+- `void string(int value)`
+- `void string(int64 value)`
+- `void string(uint value)`
+- `void string(uint64 value)`
+##### Methods
+- `array<string>@ split(const string &in delimiter, bool full = true, bool allow_blanks = false) const`
+- `array<string>@ split(const string&in delimiter, bool full = true, bool allow_blanks = false) const`
+- `bool empty() const`
 - `bool ends_with(const string&in text) const`
-- `bool is_alphabetic(const string&in encoding = \`
-- `bool is_alphanumeric(const string&in encoding = \`
-- `bool is_digits(const string&in encoding = \`
-- `bool is_lower(const string&in encoding = \`
-- `bool is_punctuation(const string&in encoding = \`
-- `bool is_upper(const string&in encoding = \`
-- `bool is_whitespace(const string&in encoding = \`
+- `bool is_alphabetic(const string&in encoding = "") const`
+- `bool is_alphanumeric(const string&in encoding = "") const`
+- `bool is_digits(const string&in encoding = "") const`
+- `bool is_empty() const`
+- `bool is_lower(const string&in encoding = "") const`
+- `bool is_punctuation(const string&in encoding = "") const`
+- `bool is_upper(const string&in encoding = "") const`
+- `bool is_whitespace(const string&in encoding = "") const`
+- `bool opEquals(const string &in other) const`
+- `bool opEquals(const string&in other) const`
 - `bool starts_with(const string&in text) const`
+- `const string get_opIndex(uint index) const property`
+- `const uint8 &opIndex(uint index) const`
+- `int find(const string &in search, uint start = 0) const`
+- `int find(const string&in search, uint start = 0) const`
+- `int find_first(const string &in search, uint start = 0) const`
+- `int find_first(const string&in search, uint start = 0) const`
+- `int find_first_not_of(const string &in search, uint start = 0) const`
+- `int find_first_not_of(const string&in search, uint start = 0) const`
+- `int find_first_of(const string &in search, uint start = 0) const`
+- `int find_first_of(const string&in search, uint start = 0) const`
+- `int find_firstNotOf(const string &in search, uint start = 0) const`
+- `int find_firstOf(const string &in search, uint start = 0) const`
+- `int find_last(const string &in search, int start = -1) const`
+- `int find_last(const string&in search, int start = -1) const`
+- `int find_last_not_of(const string &in search, int start = -1) const`
+- `int find_last_not_of(const string&in search, int start = -1) const`
+- `int find_last_of(const string &in search, int start = -1) const`
+- `int find_last_of(const string&in search, int start = -1) const`
+- `int find_lastNotOf(const string &in search, int start = -1) const`
+- `int find_lastOf(const string &in search, int start = -1) const`
+- `int opCmp(const string &in other) const`
+- `int opCmp(const string&in other) const`
+- `int rfind(const string &in search, int start = -1) const`
+- `int rfind(const string&in search, int start = -1) const`
+- `string &opAddAssign(bool value)`
+- `string &opAddAssign(const string &in other)`
+- `string &opAddAssign(double value)`
+- `string &opAddAssign(float value)`
+- `string &opAddAssign(int64 value)`
+- `string &opAddAssign(uint64 value)`
+- `string &opAssign(bool value)`
+- `string &opAssign(const string &in other)`
+- `string &opAssign(double value)`
+- `string &opAssign(float value)`
+- `string &opAssign(int64 value)`
+- `string &opAssign(uint64 value)`
 - `string escape(bool strict_json = false) const`
+- `string format(`
+- `string format(const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null) const`
+- `string format(string[]@+ elements) const`
 - `string lower() const`
-- `string opAdd(const var&in) const`
+- `string opAdd(bool value) const`
+- `string opAdd(const string &in other) const`
+- `string opAdd(const string&in other) const`
+- `string opAdd(const var&in value) const`
+- `string opAdd(double value) const`
+- `string opAdd(float value) const`
+- `string opAdd(int64 value) const`
+- `string opAdd(uint64 value) const`
+- `string opAdd_r(bool value) const`
+- `string opAdd_r(double value) const`
+- `string opAdd_r(float value) const`
+- `string opAdd_r(int64 value) const`
+- `string opAdd_r(uint64 value) const`
+- `string opMul(uint count) const`
+- `string replace(const string& in search, const string& in replacement, bool replace_all = true, uint offset = 0) const`
 - `string replace_characters(const string&in characters, const string&in replace_with) const`
-- `string reverse(const string&in encoding = \`
+- `string replace_range(uint start, int count, const string& in replacement) const`
+- `string reverse(const string&in encoding = "") const`
+- `string reverse_bytes() const`
+- `string slice(int start = 0, int end = 0) const`
+- `string substr(int start, int count = -1) const`
+- `string substr(uint start = 0, int count = -1) const`
 - `string trim_whitespace() const`
 - `string trim_whitespace_left() const`
 - `string trim_whitespace_right() const`
 - `string unescape() const`
 - `string upper() const`
 - `string& lower_this()`
-- `string& opAddAssign(const var&in)`
-- `string& opAssign(const var&in)`
+- `string& opAddAssign(bool value)`
+- `string& opAddAssign(const string&in other)`
+- `string& opAddAssign(const var&in value)`
+- `string& opAddAssign(double value)`
+- `string& opAddAssign(float value)`
+- `string& opAddAssign(int64 value)`
+- `string& opAddAssign(uint64 value)`
+- `string& opAssign(bool value)`
+- `string& opAssign(const string&in other)`
+- `string& opAssign(const var&in value)`
+- `string& opAssign(double value)`
+- `string& opAssign(float value)`
+- `string& opAssign(int64 value)`
+- `string& opAssign(uint64 value)`
+- `string& opMulAssign(uint count)`
 - `string& replace_characters_this(const string&in characters, const string&in replace_with)`
+- `string& replace_range_this(uint start, int count, const string& in replacement)`
+- `string& replace_this(const string& in search, const string& in replacement, bool replace_all = true, uint offset = 0)`
 - `string& trim_whitespace_left_this()`
 - `string& trim_whitespace_right_this()`
 - `string& trim_whitespace_this()`
 - `string& upper_this()`
+- `uint get_length() const property`
+- `uint length() const`
+- `uint size() const`
+- `uint64 count(const string&in search, uint64 start = 0) const`
 - `uint64 get_address() const property`
+- `uint8 &opIndex(uint index)`
+- `void erase(uint pos, int count = -1)`
+- `void insert(uint pos, const string &in other)`
+- `void insert(uint pos, const string&in other)`
 - `void remove_UTF8_BOM()`
+- `void reserve(uint length)`
+- `void resize(uint length)`
+- `void set_length(uint length) property`
+- `void set_opIndex(uint index, const string&in value) property`
 
 ### Class `system_tray`
 ##### Behaviours / Constructors
-- `system_tray@ f(const string&in tooltip, graphic@ icon = null)`
-- `void f()`
+- `system_tray@ f(const string&in tooltip, graphic@+ icon = null)`
+- `system_tray@ system_tray(const string&in tooltip, graphic@ icon = null)`
 ##### Methods
 - `bool get_valid() const property`
 - `system_tray_menu@+ get_menu() property`
@@ -2456,20 +7411,16 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_tooltip(const string&in tooltip)`
 
 ### Class `system_tray_menu`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `array<system_tray_menu_item@>@ get_entries() const property`
 - `int get_entry_count() const property`
-- `system_tray_menu_item@+ insert_checkbox(const string&in label, bool checked = false, system_tray_callback@ callback = null, bool disabled = false, int pos = -1)`
-- `system_tray_menu_item@+ insert_item(const string&in label, system_tray_callback@ callback = null, bool disabled = false, int pos = -1)`
+- `system_tray_menu_item@+ insert_checkbox(const string&in label, bool checked = false, system_tray_callback@+ callback = null, bool disabled = false, int pos = -1)`
+- `system_tray_menu_item@+ insert_item(const string&in label, system_tray_callback@+ callback = null, bool disabled = false, int pos = -1)`
 - `system_tray_menu_item@+ insert_separator(int pos = -1)`
 - `system_tray_menu_item@+ insert_submenu(const string&in label, bool disabled = false, int pos = -1)`
 - `void remove_entry(system_tray_menu_item@+ item)`
 
 ### Class `system_tray_menu_item`
-##### Behaviours / Constructors
-- `void f()`
 ##### Methods
 - `bool get_checked() const property`
 - `bool get_enabled() const property`
@@ -2478,7 +7429,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `system_tray_menu@+ get_submenu() property`
 - `system_tray_menu_item_type get_type() const property`
 - `void click()`
-- `void set_callback(system_tray_callback@ func)`
+- `void set_callback(system_tray_callback@+ func)`
 - `void set_checked(bool checked) property`
 - `void set_enabled(bool enabled) property`
 - `void set_label(const string&in label) property`
@@ -2486,7 +7437,7 @@ This document contains the API definitions automatically extracted from the NVGT
 ### Class `text_font`
 ##### Behaviours / Constructors
 - `text_font@ f(const string&in name, float size, uint style = FONT_STYLE_NORMAL)`
-- `void f()`
+- `text_font@ text_font(const string&in name, float size, uint style = FONT_STYLE_NORMAL)`
 ##### Methods
 - `bool add_fallback_font(text_font@+ font)`
 - `bool get_dpi(int&out hdpi, int&out vdpi) const`
@@ -2542,11 +7493,38 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_style(uint style) property`
 - `void set_wrap_alignment(font_align alignment) property`
 
+### Class `thread`
+##### Behaviours / Constructors
+- `thread@ t()`
+- `thread@ t(const string&in name)`
+- `thread@ thread()`
+- `thread@ thread(const string&in name)`
+##### Methods
+- `bool get_running() const property`
+- `bool join(uint ms)`
+- `int get_id() const property`
+- `string get_name() const property`
+- `thread_priority get_priority() const property`
+- `void join()`
+- `void set_name(const string&in name) property`
+- `void set_priority(thread_priority priority) property`
+- `void start(thread_callback@ routine, dictionary@ args = null)`
+- `void wake_up()`
+
 ### Class `thread_event`
 ##### Behaviours / Constructors
 - `thread_event@ e(thread_event_type type = THREAD_EVENT_AUTO_RESET)`
+- `thread_event@ thread_event(thread_event_type type = THREAD_EVENT_AUTO_RESET)`
+##### Methods
+- `bool try_wait(uint ms)`
+- `void reset()`
+- `void set()`
+- `void wait()`
+- `void wait(uint ms)`
 
 ### Class `thread_pool`
+##### Behaviours / Constructors
+- `thread_pool@ thread_pool(int min_capacity = 2, int max_capacity = 16, int idle_time = 60, int stack_size = 0)`
 ##### Methods
 - `const string& get_name() const property`
 - `int get_allocated() const property`
@@ -2558,21 +7536,78 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void collect()`
 - `void join_all()`
 - `void set_stack_size(int size) property`
+- `void start(thread_callback@ routine, dictionary@ args = null)`
+- `void start(thread_callback@ routine, dictionary@ args, const string&in name)`
+- `void start(thread_callback@ routine, dictionary@ args, const string&in name, thread_priority priority)`
+- `void start(thread_callback@ routine, dictionary@ args, thread_priority priority)`
 - `void stop_all()`
 
 ### Class `timer`
+##### Behaviours / Constructors
+- `timer@ t()`
+- `timer@ t(bool speedhack_protection)`
+- `timer@ t(int64 initial_elapsed, bool speedhack_protection = speedhack_protection)`
+- `timer@ t(int64 initial_elapsed, uint64 accuracy, bool speedhack_protection = speedhack_protection)`
+- `timer@ timer()`
+- `timer@ timer(bool speedhack_protection)`
+- `timer@ timer(int64 initial_elapsed, bool speedhack_protection = speedhack_protection)`
+- `timer@ timer(int64 initial_elapsed, uint64 accuracy, bool speedhack_protection = speedhack_protection)`
+##### Properties
+- `uint64 accuracy`
+##### Methods
+- `bool get_paused() const property`
+- `bool get_running() const property`
+- `bool get_secure() const property`
+- `bool has_elapsed(int64 time_units) const`
+- `bool pause()`
+- `bool resume()`
+- `bool set_paused(bool paused)`
+- `bool tick(int64 time_units)`
+- `int64 get_elapsed() const property`
+- `void adjust(int64 mod_elapsed)`
+- `void force(int64 elapsed)`
+- `void restart()`
+- `void set_elapsed(int64 time_units) property`
+- `void set_secure(bool secure) property`
+- `void toggle_pause()`
 
 ### Class `timer_queue`
+##### Behaviours / Constructors
+- `timer_queue @q()`
+- `timer_queue@ timer_queue()`
+##### Properties
+- `const string failures`
+##### Methods
+- `bool delete(const string&in timer_id)`
+- `bool exists(const string&in timer_id) const`
+- `bool is_repeating(const string&in timer_id) const`
+- `bool loop(int max_timers = 0, int max_catchup_milliseconds = 100)`
+- `bool restart(const string&in timer_id)`
+- `bool set_timeout(const string&in timer_id, uint64 milliseconds, bool repeating = false)`
+- `string[]@ list_timers()`
+- `uint size() const`
+- `uint64 elapsed(const string&in timer_id) const`
+- `uint64 ticks_to_next_event(uint64 max = 100) const`
+- `uint64 timeout(const string&in timer_id) const`
+- `void flush()`
+- `void reset()`
+- `void set(const string&in timer_id, timer_callback@ callback, const string&in callback_data, uint64 milliseconds, bool repeating = false)`
+- `void set(const string&in timer_id, timer_callback@ callback, uint64 milliseconds, bool repeating = false)`
 
 ### Class `timespan`
 ##### Behaviours / Constructors
 - `void f()`
-- `void f(const timespan&in)`
+- `void f(const timespan&in other)`
 - `void f(int days, int hours, int minutes, int seconds, int microseconds)`
 - `void f(int seconds, int microseconds)`
 - `void f(int64 microseconds)`
+- `void timespan()`
+- `void timespan(const timespan&in other)`
+- `void timespan(int days, int hours, int minutes, int seconds, int microseconds)`
+- `void timespan(int seconds, int microseconds)`
+- `void timespan(int64 microseconds)`
 ##### Methods
-- `bool opEquals(const timespan&in) const`
+- `bool opEquals(const timespan&in other) const`
 - `bool opEquals(int64 microseconds) const`
 - `int get_days() const property`
 - `int get_hours() const property`
@@ -2586,50 +7621,53 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_total_minutes() const property`
 - `int get_total_seconds() const property`
 - `int get_useconds() const property`
-- `int opCmp(const timespan&in) const`
+- `int opCmp(const timespan&in other) const`
 - `int opCmp(int64 microseconds) const`
-- `string format(const string&in fmt = \`
-- `timespan opAdd(const timespan&in) const`
+- `string format(const string&in fmt = "%dd %H:%M:%S.%i")`
+- `timespan opAdd(const timespan&in other) const`
 - `timespan opAdd(int64 microseconds) const`
-- `timespan opSub(const timespan&in) const`
+- `timespan opSub(const timespan&in other) const`
 - `timespan opSub(int64 microseconds) const`
-- `timespan& opAddAssign(const timespan&in)`
-- `timespan& opAddAssign(int64 milliseconds)`
-- `timespan& opAssign(const timespan&in)`
+- `timespan& opAddAssign(const timespan&in other)`
+- `timespan& opAddAssign(int64 microseconds)`
+- `timespan& opAssign(const timespan&in other)`
 - `timespan& opAssign(int64 microseconds)`
-- `timespan& opSubAssign(const timespan&in)`
-- `timespan& opSubAssign(int64 milliseconds)`
+- `timespan& opSubAssign(const timespan&in other)`
+- `timespan& opSubAssign(int64 microseconds)`
 
 ### Class `timestamp`
 ##### Behaviours / Constructors
 - `void f()`
-- `void f(const timestamp&in)`
-- `void f(int64)`
+- `void f(const timestamp&in other)`
+- `void f(int64 microseconds)`
+- `void timestamp()`
+- `void timestamp(const timestamp&in other)`
+- `void timestamp(int64 microseconds)`
 ##### Methods
-- `bool has_elapsed(int64) const`
-- `bool opEquals(const timestamp&in) const`
-- `int opCmp(const timestamp&in) const`
-- `int64 get_UTC_time() const property`
+- `bool has_elapsed(int64 microseconds) const`
+- `bool opEquals(const timestamp&in other) const`
+- `int opCmp(const timestamp&in other) const`
 - `int64 get_elapsed() const property`
+- `int64 get_UTC_time() const property`
 - `int64 opImplConv() const`
-- `int64 opSub(const timestamp&in) const`
+- `int64 opSub(const timestamp&in other) const`
 - `string format(const string&in fmt, int tzd = 0xffff)`
-- `timestamp opAdd(const timespan&in) const`
-- `timestamp opAdd(int64) const`
-- `timestamp opSub(const timespan&in) const`
-- `timestamp opSub(int64) const`
-- `timestamp& opAddAssign(const timespan&in)`
-- `timestamp& opAddAssign(int64)`
-- `timestamp& opAssign(const timestamp&in)`
-- `timestamp& opAssign(int64)`
-- `timestamp& opSubAssign(const timespan&in)`
-- `timestamp& opSubAssign(int64)`
+- `timestamp opAdd(const timespan&in value) const`
+- `timestamp opAdd(int64 microseconds) const`
+- `timestamp opSub(const timespan&in value) const`
+- `timestamp opSub(int64 microseconds) const`
+- `timestamp& opAddAssign(const timespan&in value)`
+- `timestamp& opAddAssign(int64 microseconds)`
+- `timestamp& opAssign(const timestamp&in other)`
+- `timestamp& opAssign(int64 microseconds)`
+- `timestamp& opSubAssign(const timespan&in value)`
+- `timestamp& opSubAssign(int64 microseconds)`
 - `void update()`
 
 ### Class `tone_synth`
 ##### Behaviours / Constructors
 - `tone_synth@ f()`
-- `void f()`
+- `tone_synth@ tone_synth()`
 ##### Methods
 - `bool freq(double freq, double length)`
 - `bool freq_bend(double freq, int bend_amount, double length, double bend_start, double bend_length)`
@@ -2648,6 +7686,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool seek_ms(int position)`
 - `bool set_edge_fades(int start, int end)`
 - `bool write_wave_file(const string &in filename)`
+- `bool write_wave_file(const string&in filename)`
 - `double get_freq_transpose() const property`
 - `double get_length() const property`
 - `double get_note_transpose() const property`
@@ -2661,6 +7700,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_sample_rate() property`
 - `int get_waveform_type() const property`
 - `int16[]@ write_samples()`
+- `sound@ write_wave_sound()`
 - `void reset()`
 - `void set_allow_silent_output(bool silence) property`
 - `void set_freq_transpose(double value) property`
@@ -2679,8 +7719,8 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `tts_voice`
 ##### Behaviours / Constructors
-- `tts_voice @t(const string&in engines = \`
-- `void f()`
+- `tts_voice @t(const string&in engines = "")`
+- `tts_voice@ tts_voice(const string&in engines = "")`
 ##### Methods
 - `array<string>@ get_voice_names() const`
 - `array<string>@ list_voices() const`
@@ -2690,20 +7730,27 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool set_language(const string& in language)`
 - `bool set_voice(int index)`
 - `bool speak(const string &in text, bool interrupt = false)`
+- `bool speak(const string&in text, bool interrupt = false)`
 - `bool speak_interrupt(const string &in text)`
+- `bool speak_interrupt(const string&in text)`
 - `bool speak_interrupt_wait(const string &in text)`
+- `bool speak_interrupt_wait(const string&in text)`
 - `bool speak_to_file(const string& in filename, const string &in text)`
+- `bool speak_to_file(const string&in filename, const string&in text)`
 - `bool speak_wait(const string &in text, bool interrupt = false)`
+- `bool speak_wait(const string&in text, bool interrupt = false)`
 - `bool stop()`
 - `float get_pitch() const property`
 - `float get_rate() const property`
 - `float get_volume() const property`
 - `int get_voice() const property`
 - `int get_voice_count() const property`
+- `sound@ speak_to_sound(const string&in text)`
 - `string get_language() const property`
 - `string get_voice_language(int index) const`
 - `string get_voice_name(int index) const`
 - `string speak_to_memory(const string &in text)`
+- `string speak_to_memory(const string&in text)`
 - `void set_pitch(float pitch) property`
 - `void set_rate(float rate) property`
 - `void set_volume(float volume) property`
@@ -2718,18 +7765,31 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void f(const string&in scheme, const string&in path_etc)`
 - `void f(const string&in uri)`
 - `void f(const uri&in base_uri, const string&in relative_uri)`
-- `void f(const uri&in)`
+- `void f(const uri&in other)`
+- `void uri()`
+- `void uri(const spec::path&in path)`
+- `void uri(const spec::uri&in base_uri, const string&in relative_uri)`
+- `void uri(const spec::uri&in other)`
+- `void uri(const string&in scheme, const string&in authority, const string&in path, const string&in query)`
+- `void uri(const string&in scheme, const string&in authority, const string&in path, const string&in query, const string&in fragment)`
+- `void uri(const string&in scheme, const string&in authority, const string&in path_etc)`
+- `void uri(const string&in scheme, const string&in path_etc)`
+- `void uri(const string&in uri)`
 ##### Methods
+- `array<array<string>>@ get_query_parameters(bool plus_as_space = true) const`
 - `bool get_is_empty() const property`
 - `bool get_is_relative() const property`
 - `bool normalize()`
+- `bool opEquals(const spec::uri&in other)`
 - `bool opEquals(const string&in uri)`
-- `bool opEquals(const uri&in)`
+- `bool opEquals(const uri&in other)`
 - `const string& get_host() const property`
 - `const string& get_path() const property`
 - `const string& get_raw_query() const property`
 - `const string& get_scheme() const property`
 - `const string& get_user_info() const property`
+- `spec::uri& opAssign(const spec::uri&in other)`
+- `spec::uri& opAssign(const string&in uri)`
 - `string get_authority() const property`
 - `string get_fragment() const property`
 - `string get_path_and_query() const property`
@@ -2742,9 +7802,10 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint16 get_port() const property`
 - `uint16 get_specified_port() const property`
 - `uri& opAssign(const string&in uri)`
-- `uri& opAssign(const uri&in)`
-- `void add_query_parameter(const string&in param, const string&in value = \`
+- `uri& opAssign(const uri&in other)`
+- `void add_query_parameter(const string&in param, const string&in value = "")`
 - `void clear()`
+- `void resolve(const spec::uri&in relative_uri)`
 - `void resolve(const string&in relative_uri)`
 - `void resolve(const uri&in relative_uri)`
 - `void set_authority(const string&in authority) property`
@@ -2763,29 +7824,44 @@ This document contains the API definitions automatically extracted from the NVGT
 ##### Behaviours / Constructors
 - `void f()`
 - `void f(const string&in str)`
-- `void f(const uuid&in)`
+- `void f(const uuid&in other)`
+- `void uuid()`
+- `void uuid(const string&in str)`
+- `void uuid(const uuid&in other)`
 ##### Methods
 - `bool get_is_null() const property`
-- `bool opEquals(const uuid&in) const`
-- `bool try_parse(const string&in)`
+- `bool opEquals(const uuid&in other) const`
+- `bool try_parse(const string&in str)`
 - `int get_variant() const property`
 - `int get_version() const property`
-- `int opCmp(const uuid&in)`
+- `int opCmp(const uuid&in other)`
 - `string get_bytes() const`
 - `string get_str() const property`
 - `string opConv() const`
 - `string opImplConv() const`
 - `string to_string() const`
-- `uuid& opAssign(const uuid&in)`
-- `void parse(const string&in)`
-- `void set_bytes(const string&in)`
+- `uuid& opAssign(const uuid&in other)`
+- `void parse(const string&in str)`
+- `void set_bytes(const string&in bytes)`
 
 ### Class `var`
 ##### Behaviours / Constructors
 - `var @v()`
-- `var @v(const json_array&in)`
-- `var @v(const json_object&in)`
-- `void f()`
+- `var @v(const json_array&in value)`
+- `var @v(const json_object&in value)`
+- `var@ var()`
+- `var@ var(const bool&in value)`
+- `var@ var(const double&in value)`
+- `var@ var(const float&in value)`
+- `var@ var(const int&in value)`
+- `var@ var(const int16&in value)`
+- `var@ var(const int64&in value)`
+- `var@ var(const json_array&in value)`
+- `var@ var(const json_object&in value)`
+- `var@ var(const string&in value)`
+- `var@ var(const uint&in value)`
+- `var@ var(const uint16&in value)`
+- `var@ var(const uint64&in value)`
 ##### Methods
 - `bool get_empty() const property`
 - `bool get_is_boolean() const property`
@@ -2793,12 +7869,112 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool get_is_numeric() const property`
 - `bool get_is_signed() const property`
 - `bool get_is_string() const property`
-- `int opCmp(const var&in) const`
+- `bool opAdd(const bool&in value) const`
+- `bool opAddAssign(const bool&in value)`
+- `bool opImplConv() const`
+- `double opAdd(const double&in value) const`
+- `double opAddAssign(const double&in value)`
+- `double opDiv(const double&in value) const`
+- `double opDivAssign(const double&in value)`
+- `double opImplConv() const`
+- `double opMul(const double&in value) const`
+- `double opMulAssign(const double&in value)`
+- `double opSub(const double&in value) const`
+- `double opSubAssign(const double&in value)`
+- `float opAdd(const float&in value) const`
+- `float opAddAssign(const float&in value)`
+- `float opDiv(const float&in value) const`
+- `float opDivAssign(const float&in value)`
+- `float opImplConv() const`
+- `float opMul(const float&in value) const`
+- `float opMulAssign(const float&in value)`
+- `float opSub(const float&in value) const`
+- `float opSubAssign(const float&in value)`
+- `int opAdd(const int&in value) const`
+- `int opAddAssign(const int&in value)`
+- `int opCmp(const var&in other) const`
+- `int opDiv(const int&in value) const`
+- `int opDivAssign(const int&in value)`
+- `int opImplConv() const`
+- `int opMod(const int&in value) const`
+- `int opModAssign(const int&in value)`
+- `int opMul(const int&in value) const`
+- `int opMulAssign(const int&in value)`
+- `int opSub(const int&in value) const`
+- `int opSubAssign(const int&in value)`
+- `int16 opAdd(const int16&in value) const`
+- `int16 opAddAssign(const int16&in value)`
+- `int16 opDiv(const int16&in value) const`
+- `int16 opDivAssign(const int16&in value)`
+- `int16 opImplConv() const`
+- `int16 opMod(const int16&in value) const`
+- `int16 opModAssign(const int16&in value)`
+- `int16 opMul(const int16&in value) const`
+- `int16 opMulAssign(const int16&in value)`
+- `int16 opSub(const int16&in value) const`
+- `int16 opSubAssign(const int16&in value)`
+- `int64 opAdd(const int64&in value) const`
+- `int64 opAddAssign(const int64&in value)`
+- `int64 opDiv(const int64&in value) const`
+- `int64 opDivAssign(const int64&in value)`
+- `int64 opImplConv() const`
+- `int64 opMod(const int64&in value) const`
+- `int64 opModAssign(const int64&in value)`
+- `int64 opMul(const int64&in value) const`
+- `int64 opMulAssign(const int64&in value)`
+- `int64 opSub(const int64&in value) const`
+- `int64 opSubAssign(const int64&in value)`
 - `json_array@ opImplCast() const`
 - `json_object@ opImplCast() const`
-- `var& opAssign(const json_array&in) const`
-- `var& opAssign(const json_object&in) const`
-- `var& opAssign(const var&in)`
+- `string opAdd(const string&in value) const`
+- `string opAddAssign(const string&in value)`
+- `string opImplConv() const`
+- `uint opAdd(const uint&in value) const`
+- `uint opAddAssign(const uint&in value)`
+- `uint opDiv(const uint&in value) const`
+- `uint opDivAssign(const uint&in value)`
+- `uint opImplConv() const`
+- `uint opMod(const uint&in value) const`
+- `uint opModAssign(const uint&in value)`
+- `uint opMul(const uint&in value) const`
+- `uint opMulAssign(const uint&in value)`
+- `uint opSub(const uint&in value) const`
+- `uint opSubAssign(const uint&in value)`
+- `uint16 opAdd(const uint16&in value) const`
+- `uint16 opAddAssign(const uint16&in value)`
+- `uint16 opDiv(const uint16&in value) const`
+- `uint16 opDivAssign(const uint16&in value)`
+- `uint16 opImplConv() const`
+- `uint16 opMod(const uint16&in value) const`
+- `uint16 opModAssign(const uint16&in value)`
+- `uint16 opMul(const uint16&in value) const`
+- `uint16 opMulAssign(const uint16&in value)`
+- `uint16 opSub(const uint16&in value) const`
+- `uint16 opSubAssign(const uint16&in value)`
+- `uint64 opAdd(const uint64&in value) const`
+- `uint64 opAddAssign(const uint64&in value)`
+- `uint64 opDiv(const uint64&in value) const`
+- `uint64 opDivAssign(const uint64&in value)`
+- `uint64 opImplConv() const`
+- `uint64 opMod(const uint64&in value) const`
+- `uint64 opModAssign(const uint64&in value)`
+- `uint64 opMul(const uint64&in value) const`
+- `uint64 opMulAssign(const uint64&in value)`
+- `uint64 opSub(const uint64&in value) const`
+- `uint64 opSubAssign(const uint64&in value)`
+- `var& opAssign(const bool&in value)`
+- `var& opAssign(const double&in value)`
+- `var& opAssign(const float&in value)`
+- `var& opAssign(const int&in value)`
+- `var& opAssign(const int16&in value)`
+- `var& opAssign(const int64&in value)`
+- `var& opAssign(const json_array&in value) const`
+- `var& opAssign(const json_object&in value) const`
+- `var& opAssign(const string&in value)`
+- `var& opAssign(const uint&in value)`
+- `var& opAssign(const uint16&in value)`
+- `var& opAssign(const uint64&in value)`
+- `var& opAssign(const var&in other)`
 - `var& opPostDec()`
 - `var& opPostInc()`
 - `void clear()`
@@ -2807,6 +7983,8 @@ This document contains the API definitions automatically extracted from the NVGT
 ##### Behaviours / Constructors
 - `void f()`
 - `void f(float x, float y, float z = 0.0f)`
+- `void vector()`
+- `void vector(float x, float y, float z = 0.0f)`
 ##### Properties
 - `float x`
 - `float y`
@@ -2816,6 +7994,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool get_is_unit() const property`
 - `bool get_is_zero() const property`
 - `bool opEquals(const vector &in) const`
+- `bool opEquals(const vector&in) const`
 - `const float& opIndex(int index) const`
 - `float dot(const vector&in) const`
 - `float get_max_value() const property`
@@ -2833,25 +8012,114 @@ This document contains the API definitions automatically extracted from the NVGT
 - `vector cross(const vector&in) const`
 - `vector get_absolute() const property`
 - `vector opAdd(const vector &in) const`
+- `vector opAdd(const vector&in) const`
 - `vector opDiv(const vector &in) const`
+- `vector opDiv(const vector&in) const`
 - `vector opDiv(float) const`
 - `vector opMul(const vector &in) const`
+- `vector opMul(const vector&in) const`
 - `vector opMul(float) const`
 - `vector opSub(const vector &in) const`
+- `vector opSub(const vector&in) const`
+- `vector& opAddAssign(const vector&in)`
+- `vector& opDivAssign(float)`
+- `vector& opMulAssign(float)`
+- `vector& opSubAssign(const vector&in)`
 - `void normalize()`
 - `void set(float x, float y, float z)`
 - `void setToZero()`
+
+### Class `weakref<class T>`
+
+### Class `weakref<T>`
+##### Behaviours / Constructors
+- `bool f(int&in, bool&out)`
+- `void f(int&in)`
+- `void f(int&in, T@+ object) explicit`
+- `void weakref()`
+- `void weakref(int&in)`
+- `void weakref(int&in, T@ object)`
+##### Methods
+- `bool opEquals(const T@+ object) const`
+- `bool opEquals(const weakref<T> &in other) const`
+- `bool opEquals(const weakref<T>&in other) const`
+- `T@ get() const`
+- `T@ opImplCast()`
+- `weakref<T> &opAssign(const weakref<T> &in other)`
+- `weakref<T> &opHndlAssign(const weakref<T> &in other)`
+- `weakref<T> &opHndlAssign(T@ object)`
+- `weakref<T>& opAssign(const weakref<T>&in other)`
+- `weakref<T>& opHndlAssign(const weakref<T>&in other)`
+- `weakref<T>& opHndlAssign(T@ object)`
 
 ### Class `web_socket`
 ##### Behaviours / Constructors
 - `web_socket@ s(http_client& cs, http_request& request, http_response& response)`
 - `web_socket@ s(http_client& cs, http_request& request, http_response& response, http_credentials& credentials)`
+- `web_socket@ web_socket(const socket&in sock)`
+- `web_socket@ web_socket(const web_socket&in sock)`
+- `web_socket@ web_socket(http_client&inout cs, http_request&inout request, http_response&inout response)`
+- `web_socket@ web_socket(http_client&inout cs, http_request&inout request, http_response&inout response, http_credentials&inout credentials)`
 ##### Methods
+- `bool get_blocking() const property`
+- `bool get_is_datagram() const property`
+- `bool get_is_null() const property`
+- `bool get_is_raw() const property`
+- `bool get_is_stream() const property`
+- `bool get_keep_alive() const property`
+- `bool get_no_delay() const property`
+- `bool get_oob_inline() const property`
+- `bool get_reuse_address() const property`
+- `bool get_reuse_port() const property`
+- `bool get_secure() const property`
+- `bool poll(const timespan&inout timeout, int mode) const`
+- `int get_available() const property`
+- `int get_error() const property`
 - `int get_max_payload_size() const property`
+- `int get_receive_buffer_size() const property`
+- `int get_send_buffer_size() const property`
+- `int opCmp(const web_socket&in other)`
+- `int send_bytes(const string&in data, int flags = 0)`
 - `int send_frame(const string&in data, int flags = WS_FRAME_TEXT)`
-- `int shutdown(uint16 status_code, const string&in status_message = \`
+- `int shutdown()`
+- `int shutdown(uint16 status_code, const string&in status_message = "")`
+- `int shutdown_send()`
+- `socket_address get_address() const property`
+- `socket_address get_peer_address() const property`
+- `socket_type get_type() const property`
+- `string receive_bytes(int flags = 0, const timespan&in timeout = 100000)`
+- `string receive_bytes(int length, int flags = 0)`
 - `string receive_frame(int&out flags)`
+- `timespan get_receive_timeout() const property`
+- `timespan get_send_timeout() const property`
+- `void close()`
+- `void get_linger(bool&out on, int&out seconds)`
+- `void get_option(int level, int option, int&out value) const`
+- `void get_option(int level, int option, spec::ip_address&out value)`
+- `void get_option(int level, int option, timespan&out value) const`
+- `void get_option(int level, int option, uint&out value) const`
+- `void get_option(int level, int option, uint8&out value) const`
+- `void init(int af)`
+- `void set_blocking(bool flag) property`
+- `void set_keep_alive(bool flag) property`
+- `void set_linger(bool on, int seconds)`
 - `void set_max_payload_size(int size) property`
+- `void set_no_delay(bool flag) property`
+- `void set_oob_inline(bool flag) property`
+- `void set_option(int level, int option, const spec::ip_address&in value)`
+- `void set_option(int level, int option, const timespan&in value)`
+- `void set_option(int level, int option, int value)`
+- `void set_option(int level, int option, uint value)`
+- `void set_option(int level, int option, uint8 value)`
+- `void set_receive_buffer_size(int size) property`
+- `void set_receive_timeout(const timespan&in timeout) property`
+- `void set_reuse_address(bool flag) property`
+- `void set_reuse_port(bool flag) property`
+- `void set_send_buffer_size(int size) property`
+- `void set_send_timeout(const timespan&in timeout) property`
+- `void shutdown_receive()`
+- `web_socket& opAssign(const socket&in sock)`
+- `web_socket& opAssign(const web_socket&in socket)`
 - `web_socket_mode get_mode() const property`
 
 ## Enums
@@ -2875,26 +8143,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `ARCH_S390`
 - `ARCH_SH`
 - `ARCH_SPARC`
-
-### Enum `OPERATING_SYSTEM`
-- `OS_AIX`
-- `OS_ANDROID`
-- `OS_CYGWIN`
-- `OS_DARWIN`
-- `OS_FREE_BSD`
-- `OS_HPUX`
-- `OS_IRIX`
-- `OS_LINUX`
-- `OS_NACL`
-- `OS_NET_BSD`
-- `OS_OPEN_BSD`
-- `OS_QNX`
-- `OS_SOLARIS`
-- `OS_TRU64`
-- `OS_UNKNOWN_UNIX`
-- `OS_VMS`
-- `OS_VXWORKS`
-- `OS_WINDOWS_NT`
 
 ### Enum `audio_attenuator`
 - `audio_attenuator_basic`
@@ -2944,23 +8192,18 @@ This document contains the API definitions automatically extracted from the NVGT
 - `AUDIO_ERROR_STATE_FAILED_TO_START_BACKEND_DEVICE`
 - `AUDIO_ERROR_STATE_FAILED_TO_STOP_BACKEND_DEVICE`
 - `AUDIO_ERROR_STATE_FORMAT_NOT_SUPPORTED`
+- `AUDIO_ERROR_STATE_IN_PROGRESS`
 - `AUDIO_ERROR_STATE_INTERRUPT`
 - `AUDIO_ERROR_STATE_INVALID_ARGS`
 - `AUDIO_ERROR_STATE_INVALID_DATA`
 - `AUDIO_ERROR_STATE_INVALID_DEVICE_CONFIG`
 - `AUDIO_ERROR_STATE_INVALID_FILE`
 - `AUDIO_ERROR_STATE_INVALID_OPERATION`
-- `AUDIO_ERROR_STATE_IN_PROGRESS`
 - `AUDIO_ERROR_STATE_IO_ERROR`
 - `AUDIO_ERROR_STATE_IS_DIRECTORY`
 - `AUDIO_ERROR_STATE_LOOP`
 - `AUDIO_ERROR_STATE_MEMORY_ALREADY_MAPPED`
 - `AUDIO_ERROR_STATE_NAME_TOO_LONG`
-- `AUDIO_ERROR_STATE_NOT_CONNECTED`
-- `AUDIO_ERROR_STATE_NOT_DIRECTORY`
-- `AUDIO_ERROR_STATE_NOT_IMPLEMENTED`
-- `AUDIO_ERROR_STATE_NOT_SOCKET`
-- `AUDIO_ERROR_STATE_NOT_UNIQUE`
 - `AUDIO_ERROR_STATE_NO_ADDRESS`
 - `AUDIO_ERROR_STATE_NO_BACKEND`
 - `AUDIO_ERROR_STATE_NO_DATA_AVAILABLE`
@@ -2969,6 +8212,11 @@ This document contains the API definitions automatically extracted from the NVGT
 - `AUDIO_ERROR_STATE_NO_MESSAGE`
 - `AUDIO_ERROR_STATE_NO_NETWORK`
 - `AUDIO_ERROR_STATE_NO_SPACE`
+- `AUDIO_ERROR_STATE_NOT_CONNECTED`
+- `AUDIO_ERROR_STATE_NOT_DIRECTORY`
+- `AUDIO_ERROR_STATE_NOT_IMPLEMENTED`
+- `AUDIO_ERROR_STATE_NOT_SOCKET`
+- `AUDIO_ERROR_STATE_NOT_UNIQUE`
 - `AUDIO_ERROR_STATE_OUT_OF_MEMORY`
 - `AUDIO_ERROR_STATE_OUT_OF_RANGE`
 - `AUDIO_ERROR_STATE_PATH_TOO_LONG`
@@ -3082,13 +8330,74 @@ This document contains the API definitions automatically extracted from the NVGT
 - `GLOB_IGNORE_HIDDEN`
 
 ### Enum `http_status`
+- `HTTP_ACCEPTED`
+- `HTTP_ALREADY_REPORTED`
+- `HTTP_BAD_GATEWAY`
+- `HTTP_BAD_REQUEST`
+- `HTTP_CONFLICT`
+- `HTTP_CONTINUE`
+- `HTTP_CREATED`
+- `HTTP_ENCHANCE_YOUR_CALM`
+- `HTTP_EXPECTATION_FAILED`
+- `HTTP_FAILED_DEPENDENCY`
+- `HTTP_FORBIDDEN`
+- `HTTP_FOUND`
+- `HTTP_GATEWAY_TIMEOUT`
+- `HTTP_GONE`
+- `HTTP_IM_A_TEAPOT`
+- `HTTP_IM_USED`
+- `HTTP_INSUFFICIENT_STORAGE`
+- `HTTP_INTERNAL_SERVER_ERROR`
+- `HTTP_LENGTH_REQUIRED`
+- `HTTP_LOCKED`
+- `HTTP_LOOP_DETECTED`
+- `HTTP_METHOD_NOT_ALLOWED`
+- `HTTP_MISDIRECTED_REQUEST`
+- `HTTP_MOVED_PERMANENTLY`
+- `HTTP_MULTI_STATUS`
+- `HTTP_MULTIPLE_CHOICES`
+- `HTTP_NETWORK_AUTHENTICATION_REQUIRED`
+- `HTTP_NO_CONTENT`
+- `HTTP_NONAUTHORITATIVE`
+- `HTTP_NOT_ACCEPTABLE`
+- `HTTP_NOT_EXTENDED`
+- `HTTP_NOT_FOUND`
+- `HTTP_NOT_IMPLEMENTED`
+- `HTTP_NOT_MODIFIED`
+- `HTTP_OK`
+- `HTTP_PARTIAL_CONTENT`
+- `HTTP_PAYMENT_REQUIRED`
+- `HTTP_PERMANENT_REDIRECT`
+- `HTTP_PRECONDITION_FAILED`
+- `HTTP_PRECONDITION_REQUIRED`
+- `HTTP_PROCESSING`
+- `HTTP_PROXY_AUTHENTICATION_REQUIRED`
+- `HTTP_REQUEST_ENTITY_TOO_LARGE`
+- `HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE`
+- `HTTP_REQUEST_TIMEOUT`
+- `HTTP_REQUEST_URI_TOO_LONG`
+- `HTTP_REQUESTED_RANGE_NOT_SATISFIABLE`
+- `HTTP_RESET_CONTENT`
+- `HTTP_SEE_OTHER`
+- `HTTP_SERVICE_UNAVAILABLE`
+- `HTTP_SWITCHING_PROTOCOLS`
+- `HTTP_TEMPORARY_REDIRECT`
+- `HTTP_TOO_EARLY`
+- `HTTP_TOO_MANY_REQUESTS`
+- `HTTP_UNAUTHORIZED`
+- `HTTP_UNAVAILABLE_FOR_LEGAL_REASONS`
+- `HTTP_UNPROCESSABLE_ENTITY`
+- `HTTP_UNSUPPORTED_MEDIA_TYPE`
+- `HTTP_UPGRADE_REQUIRED`
+- `HTTP_USE_PROXY`
+- `HTTP_VARIANT_ALSO_NEGOTIATES`
+- `HTTP_VERSION_NOT_SUPPORTED`
 
 ### Enum `ip_address_family`
 - `IP_FAMILY_IPV4`
 - `IP_FAMILY_IPV6`
+- `IP_FAMILY_unix_local`
 - `IP_FAMILY_UNKNOWN`
-- `IP_FAMILY_unix_local`
-- `IP_FAMILY_unix_local`
 
 ### Enum `joystick_bind_type`
 - `JOYSTICK_BIND_TYPE_AXIS`
@@ -3409,13 +8718,18 @@ This document contains the API definitions automatically extracted from the NVGT
 - `RECIPIENT_TO`
 
 ### Enum `memory_order`
-- `MEMORY_ORDER_ACQUIRE`
 - `MEMORY_ORDER_ACQ_REL`
+- `MEMORY_ORDER_ACQUIRE`
 - `MEMORY_ORDER_RELAXED`
 - `MEMORY_ORDER_RELEASE`
 - `MEMORY_ORDER_SEQ_CST`
 
 ### Enum `message_box_flags`
+- `MESSAGE_BOX_BUTTONS_LEFT_TO_RIGHT`
+- `MESSAGE_BOX_BUTTONS_RIGHT_TO_LEFT`
+- `MESSAGE_BOX_ERROR`
+- `MESSAGE_BOX_INFORMATION`
+- `MESSAGE_BOX_WARNING`
 
 ### Enum `network_event_type`
 - `event_connect`
@@ -3423,6 +8737,26 @@ This document contains the API definitions automatically extracted from the NVGT
 - `event_disconnect_timeout`
 - `event_none`
 - `event_receive`
+
+### Enum `OPERATING_SYSTEM`
+- `OS_AIX`
+- `OS_ANDROID`
+- `OS_CYGWIN`
+- `OS_DARWIN`
+- `OS_FREE_BSD`
+- `OS_HPUX`
+- `OS_IRIX`
+- `OS_LINUX`
+- `OS_NACL`
+- `OS_NET_BSD`
+- `OS_OPEN_BSD`
+- `OS_QNX`
+- `OS_SOLARIS`
+- `OS_TRU64`
+- `OS_UNKNOWN_UNIX`
+- `OS_VMS`
+- `OS_VXWORKS`
+- `OS_WINDOWS_NT`
 
 ### Enum `opus_application_type`
 - `OPUS_APPLICATION_AUDIO`
@@ -3435,6 +8769,12 @@ This document contains the API definitions automatically extracted from the NVGT
 - `OPUS_SIGNAL_VOICE`
 
 ### Enum `path_style`
+- `PATH_STYLE_AUTO`
+- `PATH_STYLE_NATIVE`
+- `PATH_STYLE_UNIX`
+- `PATH_STYLE_URI`
+- `PATH_STYLE_VMS`
+- `PATH_STYLE_WINDOWS`
 
 ### Enum `physics_body_type`
 - `PHYSICS_BODY_DYNAMIC`
@@ -3552,6 +8892,14 @@ This document contains the API definitions automatically extracted from the NVGT
 - `PIXELFORMAT_XRGB8888`
 
 ### Enum `process_flags`
+- `PROCESS_BACKGROUND`
+- `PROCESS_CAPTURE`
+- `PROCESS_FAIL_EXCEPTION`
+- `PROCESS_PIPE_STDERR`
+- `PROCESS_PIPE_STDIN`
+- `PROCESS_PIPE_STDOUT`
+- `PROCESS_STDERR_TO_STDOUT`
+- `PROCESS_WAIT`
 
 ### Enum `regexp_options`
 - `RE_ANCHORED`
@@ -3569,12 +8917,12 @@ This document contains the API definitions automatically extracted from the NVGT
 - `RE_NEWLINE_CR`
 - `RE_NEWLINE_CRLF`
 - `RE_NEWLINE_LF`
-- `RE_NOT_BOL`
-- `RE_NOT_EMPTY`
-- `RE_NOT_EOL`
 - `RE_NO_AUTO_CAPTURE`
 - `RE_NO_UTF8_CHECK`
 - `RE_NO_VARS`
+- `RE_NOT_BOL`
+- `RE_NOT_EMPTY`
+- `RE_NOT_EOL`
 - `RE_UNGREEDY`
 - `RE_UTF8`
 
@@ -3718,4 +9066,3 @@ This document contains the API definitions automatically extracted from the NVGT
 - `PROGRESS_STATE_NONE`
 - `PROGRESS_STATE_NORMAL`
 - `PROGRESS_STATE_PAUSED`
-

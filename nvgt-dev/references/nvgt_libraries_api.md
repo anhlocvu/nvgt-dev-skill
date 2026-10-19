@@ -8,20 +8,60 @@
 **Syntax to use:** `#include "basic_character_controller.nvgt"`
 
 ### Global Functions
-- `shared abstract class basic_character_controller`
-- `shared enum coordinate_handedness`
 - `shared float nearest_compass_point(const float deg, const float step = 2.8125)`
 - `shared float snap_to_degree(const float deg, const float[] snaps)`
 - `shared string translate_yaw_to_direction(const float yaw)`
+
+### Classes
+#### Class `basic_character_controller`
+- `basic_character_controller(const coordinate_handedness handedness = COORDINATE_HANDEDNESS_RIGHT)`
+- `bool move_forward, move_backward, turn_left, turn_right, strafe_left, strafe_right, jump`
+- `private bool is_right_handed`
+- `protected bool is_grounded, is_crouching, is_running`
+- `protected float max_speed, walk_speed, run_speed, crouch_speed, acceleration, deceleration, air_control, rotation_speed, current_speed, jump_force, gravity, ground_friction, air_friction, player_height, crouch_height, stand_height, mass, step_distance, distance_traveled, step_cycle, run_step_length, walk_step_length, crouch_step_length, yaw, target_yaw, old_yaw`
+- `protected vector old_position, old_velocity, old_forward, old_up, old_right`
+- `vector position, velocity, forward, up, right`
+- `coordinate_handedness get_handedness() property final`
+- `float get_target_yaw() property`
+- `float get_yaw() property`
+- `private float PI = acosf(-1.0)`
+- `private void set_yaw(const float value) property`
+- `private void update_initial_orientation_vectors() final`
+- `protected bool on_friction_applied()`
+- `protected bool on_horizontal_movement()`
+- `protected bool on_position_changed()`
+- `protected bool on_rotation_changed()`
+- `protected bool on_vertical_movement()`
+- `protected bool should_run()`
+- `protected float get_step_length() const`
+- `protected float get_target_speed() const`
+- `protected void apply_friction(const float dt) final`
+- `protected void handle_horizontal_movement(const float dt) final`
+- `protected void handle_rotation(const float dt) final`
+- `protected void handle_vertical_movement(const float dt) final`
+- `protected void on_step_cycle()`
+- `protected void update_running_state() final`
+- `protected void update_step_cycle(const float distance_moved) final`
+- `void realign_to_nearest_degree(const float step=2.8125) final`
+- `void rotate_left_by(const float degree, const float step = 2.8125, const bool snap = false) final`
+- `void rotate_right_by(const float degree, const float step = 2.8125, const bool snap = true) final`
+- `void set_grounded(const bool grounded) property final`
+- `void set_handedness(const coordinate_handedness value) property final`
+- `void set_target_yaw(const float value) property`
+- `void toggle_crouch() final`
+- `void turn_around() final`
+- `void update(const float delta_time) final`
+
+### Enums
+#### Enum `coordinate_handedness`
+- `COORDINATE_HANDEDNESS_LEFT`
+- `COORDINATE_HANDEDNESS_RIGHT`
 
 ---
 ## Library: `bgt_compat.nvgt`
 **Syntax to use:** `#include "bgt_compat.nvgt"`
 
 ### Global Functions
-- `#endif #if_not plugin_legacy_sound pack_file@open_pack(const string&in filename, const string&in key = "", bool force_encryption = false)`
-- `#endif bool generate_profile(const string& in filename)`
-- `#if plugin_legacy_sound string get_sound_storage()`
 - `bool clipboard_copy_text(const string& in text)`
 - `bool file_decrypt(const string&in input_file, const string&in output_file, string key)`
 - `bool file_encrypt(const string&in input_file, const string&in output_file, string key)`
@@ -78,16 +118,71 @@
 - `string string_trim_right(const string& in str, uint count)`
 - `uint string_len(const string& in str)`
 
+### Global Properties
+- `const int JAWS = 1, WINDOW_EYES = 2, SYSTEM_ACCESS = 3, NVDA = 4`
+- `const string DIRECTORY_DESKTOP = ""`
+- `const string DIRECTORY_DESKTOP_VIRTUAL = ""`
+- `const uint KEY_ADD = KEY_NUMPAD_PLUS`
+- `const uint KEY_APPS = KEY_APPLICATION`
+- `const uint KEY_CAPITAL = KEY_CAPSLOCK`
+- `const uint KEY_DASH = KEY_MINUS`
+- `const uint KEY_DECIMAL = KEY_NUMPAD_PERIOD`
+- `const uint KEY_DIVIDE = KEY_NUMPAD_DIVIDE`
+- `const uint KEY_LBRACKET = KEY_LEFTBRACKET`
+- `const uint KEY_LCONTROL = KEY_LCTRL`
+- `const uint KEY_LMENU = KEY_LALT`
+- `const uint KEY_LWIN = KEY_LGUI`
+- `const uint KEY_MEDIASELECT = KEY_MEDIA_SELECT`
+- `const uint KEY_MEDIASTOP = KEY_MEDIA_STOP`
+- `const uint KEY_MULTIPLY = KEY_NUMPAD_MULTIPLY`
+- `const uint KEY_NEXT = KEY_PAGEDOWN`
+- `const uint KEY_NEXTTRACK = KEY_MEDIA_NEXT_TRACK`
+- `const uint KEY_NUMLOCK = KEY_NUMLOCKCLEAR`
+- `const uint KEY_NUMPAD0 = KEY_NUMPAD_0`
+- `const uint KEY_NUMPAD1 = KEY_NUMPAD_1`
+- `const uint KEY_NUMPAD2 = KEY_NUMPAD_2`
+- `const uint KEY_NUMPAD3 = KEY_NUMPAD_3`
+- `const uint KEY_NUMPAD4 = KEY_NUMPAD_4`
+- `const uint KEY_NUMPAD5 = KEY_NUMPAD_5`
+- `const uint KEY_NUMPAD6 = KEY_NUMPAD_6`
+- `const uint KEY_NUMPAD7 = KEY_NUMPAD_7`
+- `const uint KEY_NUMPAD8 = KEY_NUMPAD_8`
+- `const uint KEY_NUMPAD9 = KEY_NUMPAD_9`
+- `const uint KEY_NUMPADCOMMA = KEY_NUMPAD_COMMA`
+- `const uint KEY_NUMPADENTER = KEY_NUMPAD_ENTER`
+- `const uint KEY_NUMPADEQUALS = KEY_NUMPAD_EQUALS`
+- `const uint KEY_PLAYPAUSE = KEY_MEDIA_PLAY`
+- `const uint KEY_PREVTRACK = KEY_MEDIA_PREVIOUS_TRACK`
+- `const uint KEY_PRIOR = KEY_PAGEUP`
+- `const uint KEY_RBRACKET = KEY_RIGHTBRACKET`
+- `const uint KEY_RCONTROL = KEY_RCTRL`
+- `const uint KEY_RMENU = KEY_RALT`
+- `const uint KEY_RWIN = KEY_RGUI`
+- `const uint KEY_SCROLL = KEY_SCROLLLOCK`
+- `const uint KEY_SUBTRACT = KEY_NUMPAD_MINUS`
+- `const uint KEY_SYSRQ = KEY_SYSREQ`
+- `const uint KEY_WEBBACK = KEY_AC_BACK`
+- `const uint KEY_WEBFAVORITES = KEY_AC_BOOKMARKS`
+- `const uint KEY_WEBFORWARD = KEY_AC_FORWARD`
+- `const uint KEY_WEBHOME = KEY_AC_HOME`
+- `const uint KEY_WEBREFRESH = KEY_AC_REFRESH`
+- `const uint KEY_WEBSEARCH = KEY_AC_SEARCH`
+- `const uint KEY_WEBSTOP = KEY_AC_STOP`
+- `typedef int long`
+- `typedef int16 short`
+- `typedef uint ulong`
+- `typedef uint16 ushort`
+
 ---
 ## Library: `bgt_dynamic_menu.nvgt`
 **Syntax to use:** `#include "bgt_dynamic_menu.nvgt"`
 
 ### Global Functions
-- `#include "bgt_compat.nvgt" class dynamic_menu_item`
 - `funcdef int menu_callback(dynamic_menu@, string)`
 
 ### Classes
 #### Class `dynamic_menu`
+- `dynamic_menu()`
 - `bool allow_escape`
 - `bool enable_home_and_end`
 - `bool running`
@@ -109,7 +204,6 @@
 - `bool set_sound_object(sound@ handle)`
 - `bool set_speech_mode(int speech_output)`
 - `bool set_tts_object(tts_voice@ handle)`
-- `dynamic_menu()`
 - `int add_item(string filename, string name = "")`
 - `int add_item_extended(string filename, bool is_filename, string name = "")`
 - `int add_item_tts(string text, string name = "")`
@@ -120,6 +214,12 @@
 - `int[] add_multiple_items(string[][] items)`
 - `string get_item_name(int menu_item)`
 
+#### Class `dynamic_menu_item`
+- `dynamic_menu_item()`
+- `bool is_filename`
+- `string name`
+- `string option`
+
 ---
 ## Library: `clear_compiled_basename.nvgt`
 **Syntax to use:** `#include "clear_compiled_basename.nvgt"`
@@ -128,8 +228,13 @@
 ## Library: `db_props.nvgt`
 **Syntax to use:** `#include "db_props.nvgt"`
 
+### Global Properties
+- `database_object@ __DBO_CONSTRUCTING__`
+
 ### Classes
 #### Class `database_bool`
+- `database_bool(const string& in column_name)`
+- `database_bool(const string& in column_name, bool default_value)`
 - `private bool val`
 - `bool bind(sqlite3statement@ s, int idx)`
 - `bool get()`
@@ -138,20 +243,18 @@
 - `bool opEquals(database_bool@ val)`
 - `bool opImplConv()`
 - `bool retrieve(sqlite3statement@ s, int idx, sqlite3@ db)`
-- `database_bool(const string& in column_name)`
-- `database_bool(const string& in column_name, bool default_value)`
 - `string get_type() property`
 - `string text()`
 - `void opAssign(database_property@ other)`
 
 #### Class `database_double`
+- `database_double(const string& in column_name)`
+- `database_double(const string& in column_name, double default_value)`
+- `database_double(database_double& other)`
 - `private double val = 0`
 - `bool bind(sqlite3statement@ s, int idx)`
 - `bool opEquals(double val)`
 - `bool retrieve(sqlite3statement@ s, int idx, sqlite3@ db)`
-- `database_double(const string& in column_name)`
-- `database_double(const string& in column_name, double default_value)`
-- `database_double(database_double& other)`
 - `double get()`
 - `double opAdd(double val)`
 - `double opAddAssign(double val)`
@@ -180,15 +283,15 @@
 - `void opAssign(database_property@ other)`
 
 #### Class `database_int`
+- `database_int(const string& in column_name)`
+- `database_int(const string& in column_name, const string& in modifier)`
+- `database_int(const string& in column_name, int64 default_value)`
+- `database_int(database_int& other)`
 - `bool autoincrementing`
 - `private int64 val = 0`
 - `bool bind(sqlite3statement@ s, int idx)`
 - `bool opEquals(int64 val)`
 - `bool retrieve(sqlite3statement@ s, int idx, sqlite3@ db)`
-- `database_int(const string& in column_name)`
-- `database_int(const string& in column_name, const string& in modifier)`
-- `database_int(const string& in column_name, int64 default_value)`
-- `database_int(database_int& other)`
 - `int opCmp(int64 val)`
 - `int64 get()`
 - `int64 opAdd(int64 val)`
@@ -230,17 +333,17 @@
 - `void set_autoincrement_value(int64 v)`
 
 #### Class `database_list`
-- `string delimiter = "\x1f"`
+- `database_list(const string& in column_name)`
+- `database_list(const string& in column_name, string[]@ default_value)`
+- `database_list(database_list& other)`
+- `private string[] val =`
+- `string delimiter = "1f"`
 - `bool bind(sqlite3statement@ s, int idx)`
 - `bool is_empty()`
 - `bool opEquals(string[]@ val)`
 - `bool retrieve(sqlite3statement@ s, int idx, sqlite3@ db)`
-- `database_list(const string& in column_name)`
-- `database_list(const string& in column_name, string[]@ default_value)`
-- `database_list(database_list& other)`
 - `int find(const string& in v)`
 - `int find(int start, const string& in v)`
-- `private string[] val =`
 - `private string[]@ get_value() property`
 - `string get_opIndex(int idx) property`
 - `string get_type() property`
@@ -260,6 +363,7 @@
 - `void set_opIndex(int idx, const string& in v) property`
 
 #### Class `database_object`
+- `database_object(sqlite3@ db, const string& in table, const string& in primary_column = "rowid")`
 - `database_property@[] properties`
 - `dictionary property_names`
 - `private bool exists_in_table = false`
@@ -270,13 +374,14 @@
 - `string table`
 - `bool commit()`
 - `bool drop()`
-- `database_object(sqlite3@ db, const string& in table, const string& in primary_column = "rowid")`
 - `string dump(bool multiline_data = false)`
 - `string get_row_filter() property`
 - `string get_schema() property`
 - `void postconstruct(sqlite3statement@ s = null)`
 
 #### Class `database_property`
+- `database_property(const string& in column_name)`
+- `database_property(database_property& other)`
 - `bool modified = false`
 - `bool retrieved = false`
 - `string column_name`
@@ -287,13 +392,14 @@
 - `bool retrieve(sqlite3statement@ s, int idx)`
 - `bool retrieve(sqlite3statement@ s, int idx, database_object@ p)`
 - `bool retrieve(sqlite3statement@ s, int idx, sqlite3@ db)`
-- `database_property(const string& in column_name)`
-- `database_property(database_property& other)`
 - `string get_type() property`
 - `string text()`
 - `void opAssign(database_property@ other)`
 
 #### Class `database_string`
+- `database_string(const string& in column_name)`
+- `database_string(const string& in column_name, const string& in default_value)`
+- `database_string(database_string& other)`
 - `bool blob = false`
 - `private string val = ""`
 - `bool bind(sqlite3statement@ s, int idx)`
@@ -306,9 +412,6 @@
 - `bool is_upper()`
 - `bool opEquals(const string& in val)`
 - `bool retrieve(sqlite3statement@ s, int idx, sqlite3@ db)`
-- `database_string(const string& in column_name)`
-- `database_string(const string& in column_name, const string& in default_value)`
-- `database_string(database_string& other)`
 - `int find(const string& in text, int start = 0)`
 - `int find_first_not_of(const string& in text, int start = 0)`
 - `int find_first_of(const string& in text, int start = 0)`
@@ -349,31 +452,33 @@
 - `double dgetn(dictionary@ d, const string& in key, double def = 0.0)`
 - `string dgets(dictionary@ d, const string& in key, string def = "")`
 - `string[] dgetsl(dictionary@ d, const string& in key, string[] def = dgetsl_default)`
+- `string[] dgetsl_default(0)`
 
 ---
 ## Library: `form.nvgt`
 **Syntax to use:** `#include "form.nvgt"`
 
 ### Global Functions
-- `#include "speech.nvgt" enum clipboard_flags`
 - `bool key_repeating(int key, int repeat_delay, int prerepeat_delay)`
-- `enum audioform_errorcodes`
-- `enum control_event_type`
-- `enum control_types`
-- `enum text_edit_mode_constants`
-- `enum text_entry_speech_flags`
-- `interface utility_form`
-- `shared int bgt_string_contains(const string& in str, const string& in search, int occurance = 1)`
-- `shared string audioform_keyboard_echo_string(int keyboard_echo)`
-- `shared uint audioform_change_keyboard_echo(int keyboard_echo, int dir = 1)`
-- `string audioform_word_separators = "_ .,!\\\"/[`
 - `funcdef bool form_background_callback(audio_form@ f)`
 - `funcdef bool kb_echo_update_callback(audio_form@ f, int echo)`
 - `funcdef int on_control_event_callback(audio_form@ f, int c, control_event_type event, dictionary@ args)`
 - `funcdef void prespeech_callback(audio_form@ f)`
+- `shared int bgt_string_contains(const string& in str, const string& in search, int occurance = 1)`
+- `shared string audioform_keyboard_echo_string(int keyboard_echo)`
+- `shared uint audioform_change_keyboard_echo(int keyboard_echo, int dir = 1)`
+
+### Global Properties
+- `bool audioform_input_disable_ralt = true`
+- `form_background_callback@ audioform_default_background_callback = null`
+- `int audioform_keyboard_echo = textflag_characters`
+- `int key_repeating_last_key_pressed`
+- `int key_repeating_status`
+- `timer key_repeating_timer`
 
 ### Classes
 #### Class `audio_form`
+- `audio_form()`
 - `bool active`
 - `bool speak_control_attributes_separately`
 - `bool subform = false`
@@ -391,7 +496,6 @@
 - `private int speech_output`
 - `private tts_voice@ ui_speech`
 - `utility_form@ utility_form = null`
-- `audio_form()`
 - `audio_form@ get_current_form() property`
 - `bool activate_progress_timer(int control_index)`
 - `bool add_list_item(int control_index, const string& in option, int position = -1, bool selected = false, bool focus_if_first = true)`
@@ -508,6 +612,7 @@
 - `void reset(bool reset_to_default_keyboard_echo = true)`
 
 #### Class `control`
+- `control()`
 - `audio_form@ subform = null`
 - `bool active`
 - `bool beeping_progress`
@@ -581,7 +686,6 @@
 - `bool search(const string& in text, int dir = 1, bool silent = false)`
 - `bool set_line(int line, int col = 1, bool silent = false)`
 - `bool trim_to_length(string content, int position)`
-- `control()`
 - `int current_line_start_position(bool word = false)`
 - `int get_line_column()`
 - `int get_line_number()`
@@ -635,26 +739,83 @@
 - `void speak_progress(bool interrupt)`
 
 #### Class `go_to_index`
+- `go_to_index(audio_form@ parent, int control_index)`
 - `audio_form f`
 - `audio_form@ parent`
 - `int control_index`
 - `int f_index, f_col, f_ok, f_cancel`
-- `go_to_index(audio_form@ parent, int control_index)`
 - `void monitor()`
 
 #### Class `list_item`
+- `list_item()`
 - `bool checked`
 - `string id`
 - `string item`
-- `list_item()`
 
 #### Class `search_for`
+- `search_for(audio_form@ parent, int control_index)`
 - `audio_form f`
 - `audio_form@ parent`
 - `int control_index`
 - `int f_text, f_next, f_prev, f_cancel`
-- `search_for(audio_form@ parent, int control_index)`
 - `void monitor()`
+
+### Interfaces
+#### Interface `utility_form`
+- `void monitor()`
+
+### Enums
+#### Enum `audioform_errorcodes`
+- `form_error_control_invisible`
+- `form_error_invalid_control`
+- `form_error_invalid_index`
+- `form_error_invalid_list_index`
+- `form_error_invalid_operation`
+- `form_error_invalid_value`
+- `form_error_list_empty`
+- `form_error_list_full`
+- `form_error_no_controls_visible`
+- `form_error_no_window`
+- `form_error_none`
+- `form_error_text_too_long`
+- `form_error_window_full`
+
+#### Enum `clipboard_flags`
+- `clipboard_flag_copy`
+- `clipboard_flag_cut`
+- `clipboard_flag_paste`
+
+#### Enum `control_event_type`
+- `event_button`
+- `event_checkbox`
+- `event_focus`
+- `event_list_cursor`
+- `event_none`
+- `event_slider`
+- `event_text_cursor`
+
+#### Enum `control_types`
+- `ct_button`
+- `ct_checkbox`
+- `ct_form`
+- `ct_input`
+- `ct_keyboard_area`
+- `ct_link`
+- `ct_list`
+- `ct_progress`
+- `ct_slider`
+- `ct_status_bar`
+
+#### Enum `text_edit_mode_constants`
+- `edit_mode_append_to_end`
+- `edit_mode_replace`
+- `edit_mode_trim_to_length`
+
+#### Enum `text_entry_speech_flags`
+- `textflag_characters`
+- `textflag_characters_words`
+- `textflag_none`
+- `textflag_words`
 
 ---
 ## Library: `ini.nvgt`
@@ -662,39 +823,101 @@
 
 ### Global Functions
 - `shared bool INI_IS_VALID_IDENT_CHAR(const string& in char)`
-- `shared class ini`
-- `shared class ini_section`
 - `shared string INI_ESCAPE_STRING(const string&in value)`
 - `shared string INI_UNESCAPE_STRING(const string&in value)`
 - `shared string INI_VERIFY_IDENT(const string& in identifier)`
 - `shared string[]@ get_lines(const string& in the_string)`
 
+### Classes
+#### Class `ini`
+- `ini(string filename = "")`
+- `private dictionary sections_dict`
+- `private ini_section@[] sections`
+- `private int last_error_line`
+- `private string last_error`
+- `private string[] wildcard_sections`
+- `string loaded_filename`
+- `bool clear_section(const string& in section)`
+- `bool create_section(const string& in section_name)`
+- `bool delete_key(const string& in section, const string& in key)`
+- `bool delete_section(const string& in section)`
+- `bool get_bool(const string& in section, const string& in key, bool default_value = false)`
+- `bool is_empty()`
+- `bool key_exists(const string& in section, const string& in key)`
+- `bool load(string filename, bool robust = true)`
+- `bool load_string(string data, const string& in filename = "*")`
+- `bool save(string filename, bool indent = false)`
+- `bool save_robust(string filename, bool indent = false)`
+- `bool section_exists(const string& in section)`
+- `bool set_bool(const string& in section, const string& in key, bool value)`
+- `bool set_bool_list(const string& in section, const string& in key, bool[]@ value, string sep = ",")`
+- `bool set_double(const string& in section, const string& in key, double value)`
+- `bool set_double_list(const string& in section, const string& in key, double[]@ value, string sep = ",")`
+- `bool set_string(const string& in section, const string& in key, const string& in value)`
+- `bool set_string_list(const string& in section, const string& in key, string[]@ value, string sep = ",")`
+- `bool[]@ get_bool_list(const string& in section, const string& in key)`
+- `const string[]@ list_wildcard_sections()`
+- `double get_double(const string& in section, const string& in key, double default_value = 0)`
+- `double[]@ get_double_list(const string& in section, const string& in key)`
+- `ini_section@ get_section_verified(const string& in section, const string& in key, bool check_existing, const string& in verifying_function)`
+- `int get_error_line()`
+- `private ini_section@ get_section(const string& in name)`
+- `private string section_key_verification(const string& in section, const string& in key, bool check_existing = false)`
+- `private void set_error(string error, int line = -1)`
+- `string dump(bool indent = false)`
+- `string get_error_text()`
+- `string get_string(const string& in section, const string& in key, const string&in default_value = "")`
+- `string[]@ get_string_list(const string& in section, const string& in key)`
+- `string[]@ list_keys(const string& in section)`
+- `string[]@ list_sections(bool include_blank_section = false)`
+- `void reset(bool make_blank_section = true)`
+
+#### Class `ini_section`
+- `ini_section(string name)`
+- `dictionary keys`
+- `string name`
+- `string[] key_names`
+- `bool delete_key(const string& in key_name)`
+- `string dump(bool indent = false)`
+- `string get_string(const string& in key_name, bool raw = false)`
+- `void set_string(const string& in key_name, const string&in value, bool raw = false)`
+
 ---
 ## Library: `input_forms.nvgt`
 **Syntax to use:** `#include "input_forms.nvgt"`
 
-### Global Functions
-- `#include"form.nvgt" class input_field`
-
 ### Classes
 #### Class `checkbox_field`
+- `checkbox_field(input_form@parent, string name, string label, bool default_value = false, bool required = false, bool require_check = true)`
 - `bool default_value = false`
 - `bool require_check = true`
 - `bool configure()`
 - `bool is_ok()`
 - `bool set_value(dictionary@d)`
-- `checkbox_field(input_form@parent, string name, string label, bool default_value = false, bool required = false, bool require_check = true)`
 
 #### Class `choice_input_field`
-- `string[] choices`
+- `choice_input_field(input_form@parent, string name, string label, bool required = false, string[] choices =`
 - `)`
+- `string[] choices`
 - `bool configure()`
 - `bool is_ok()`
 - `bool set_value(dictionary@d)`
-- `choice_input_field(input_form@parent, string name, string label, bool required = false, string[] choices =`
 - `void add_choice(string choice)`
 
+#### Class `input_field`
+- `input_field(input_form@parent, string name, string label, bool required = false)`
+- `bool required = false`
+- `input_form@parent`
+- `int control_id`
+- `string name, label`
+- `bool configure()`
+- `bool fill(dictionary@d)`
+- `bool get_valid_input() property`
+- `bool is_ok()`
+- `bool set_value(dictionary@d)`
+
 #### Class `input_form`
+- `input_form(string title, audio_form@form = null)`
 - `audio_form@main_form`
 - `bool is_dialog = true`
 - `bool user_canceled = false`
@@ -715,14 +938,14 @@
 - `bool setup()`
 - `dictionary@ monitor()`
 - `dictionary@ run()`
-- `input_form(string title, audio_form@form = null)`
 
 #### Class `number_text_field`
+- `number_text_field(input_form@parent, string name, string label, int default_value = -1, bool required = false)`
 - `bool is_valid_text()`
 - `bool set_value(dictionary@d)`
-- `number_text_field(input_form@parent, string name, string label, int default_value = -1, bool required = false)`
 
 #### Class `text_field`
+- `text_field(input_form@parent, string name, string label, string default_value = "", bool required = false)`
 - `bool multiline = false, readonly = false`
 - `bool only_use_disallowed_chars = false`
 - `bool secure = false`
@@ -734,7 +957,6 @@
 - `bool is_valid_text()`
 - `bool set_disallowed_chars(string chars, bool only_use_disallowed_chars, string char_disallowed_description = "")`
 - `bool set_value(dictionary@d)`
-- `text_field(input_form@parent, string name, string label, string default_value = "", bool required = false)`
 
 ---
 ## Library: `instance.nvgt`
@@ -742,13 +964,12 @@
 
 ### Classes
 #### Class `instance`
+- `instance(const string&in app_id = "")`
 - `private bool already_locked = false`
 - `private named_mutex@ mtx`
 - `private string mtx_name`
 - `bool get_is_already_running() property`
-- `instance(const string&in app_id = "")`
 - `void wait_until_standalone()`
-- `~instance()`
 
 ---
 ## Library: `int_to_byte.nvgt`
@@ -757,6 +978,10 @@
 ### Global Functions
 - `int byte_to_int(string the_bytes, uint8 endian = int_to_byte_little_endian)`
 - `string int_to_byte(int the_int, uint8 endian = int_to_byte_little_endian, int compress = 4)`
+
+### Global Properties
+- `uint8 int_to_byte_big_endian = 1`
+- `uint8 int_to_byte_little_endian = 0`
 
 ---
 ## Library: `legacy_file_contents.nvgt`
@@ -772,6 +997,7 @@
 
 ### Classes
 #### Class `sound_pool`
+- `sound_pool(int default_item_size = 100)`
 - `bool hrtf = true`
 - `bool occlude = true`
 - `bool y_is_elevation = sound_pool_default_y_elevation`
@@ -837,7 +1063,6 @@
 - `int play_stationary_extended(string filename, bool looping, double offset, float start_pan, float start_volume, float start_pitch, bool persistent = false, mixer@ mix = null, string[]@ fx = null)`
 - `int play_stationary_extended(string filename, pack@ packfile, bool looping, double offset, float start_pan, float start_volume, float start_pitch, bool persistent = false, mixer@ mix = null, string[]@ fx = null)`
 - `int reserve_slot()`
-- `sound_pool(int default_item_size = 100)`
 - `void clean_unused()`
 - `void destroy_all()`
 - `void find_highest_slot(uint limit)`
@@ -849,6 +1074,7 @@
 - `void update_listener_3d(vector listener, double rotation = 0.0, bool refresh_y_is_elevation = true)`
 
 #### Class `sound_pool_item`
+- `sound_pool_item()`
 - `bool is_3d`
 - `bool looping`
 - `bool occlude`
@@ -882,7 +1108,6 @@
 - `timer last_memory_push`
 - `vector pivit`
 - `int get_total_distance(float listener_x, float listener_y, float listener_z)`
-- `sound_pool_item()`
 - `void reset()`
 - `void update(float listener_x, float listener_y, float listener_z, double rotation, int max_distance)`
 - `void update_listener_position(float listener_x, float listener_y, float listener_z, float rotation)`
@@ -893,6 +1118,7 @@
 
 ### Classes
 #### Class `logger`
+- `logger()`
 - `bool always_include_header`
 - `bool date_all_entries`
 - `bool overwrite_file`
@@ -901,7 +1127,6 @@
 - `string footer_text`
 - `string header_text`
 - `bool write(string filename, bool reset_text)`
-- `logger()`
 - `string parse_time()`
 - `void add_entry(string the_entry)`
 - `void reset()`
@@ -911,9 +1136,76 @@
 **Syntax to use:** `#include "menu.nvgt"`
 
 ### Global Functions
-- `#include "form.nvgt" class menu`
 - `bool yes_no(const string&in prompt, menu@ m = null, string yes = "yes", string no = "no")`
-- `void learn_game_sounds_menu(const name_value_collection&in sfx, const string&in audio_prefix = "", menu@ m = null, string go_back = "Go back")`
+- `funcdef void menu_callback(menu@, string)`
+- `funcdef void menu_item_selected_callback(menu@, int)`
+- `int choose_number(const string&in intro, int low, int high, int current)`
+
+### Classes
+#### Class `menu`
+- `menu()`
+- `#endif #if_not plugin_legacy_sound pack_file@ pack_file = null`
+- `#endif bool first_letter_nav = true`
+- `#if plugin_legacy_sound pack@ pack_file = null`
+- `#if plugin_legacy_sound private sound@[] playing_sounds`
+- `audio_form form`
+- `bool automatic_intro = true`
+- `bool focus_first_item = false`
+- `bool intro_interrupt = true`
+- `bool repeat_boundary_items = false`
+- `bool wrap = false`
+- `dictionary user_data`
+- `menu_callback@ background_callback = null`
+- `menu_item_selected_callback@ item_selected_callback = null`
+- `private bool _allow_escape = true`
+- `private bool _allow_go_to_index = true`
+- `private bool _allow_search = true`
+- `private int f_list, f_ok, f_cancel`
+- `private int last_selected_index`
+- `private string last_selected_id`
+- `string background_callback_data`
+- `string click_sound`
+- `string close_sound`
+- `string edge_sound`
+- `string intro_text`
+- `string open_sound`
+- `string select_sound`
+- `string sounds_prefix`
+- `string sounds_suffix`
+- `string wrap_sound`
+- `uint wrap_delay = 10`
+- `#endif #if_not plugin_legacy_sound bool play(const string&in soundpath)`
+- `#endif private int on_form_list_event(audio_form@ f, int c, control_event_type event, dictionary@ args)`
+- `bool delete_all_items()`
+- `bool delete_item(int index, bool reset_cursor = true)`
+- `bool get_allow_escape() const property`
+- `bool get_allow_go_to_index() const property`
+- `bool get_allow_search() const property`
+- `bool get_first_letter_navigation() property`
+- `bool monitor()`
+- `bool play(const string&in soundpath)`
+- `bool set_focused_item(int index, bool speak_change)`
+- `bool set_item_id(int index, const string&in new_id)`
+- `bool set_item_text(int index, const string&in new_text)`
+- `funcdef void menu_callback(menu@, string)`
+- `funcdef void menu_item_selected_callback(menu@, int)`
+- `int add_item(const string&in text, const string&in id = "", int position = -1)`
+- `int get_focused_item() property`
+- `int get_item_count() property`
+- `int get_item_index(const string&in id)`
+- `int get_selected_item() const property`
+- `int run()`
+- `string get_item_id(int index)`
+- `string get_item_text(int index)`
+- `string get_selected_item_id() const property`
+- `void add_items(const string[]@ item_list)`
+- `void intro()`
+- `void reset(bool reset_settings = false)`
+- `void set_allow_escape(bool enabled) property`
+- `void set_allow_go_to_index(bool enabled) property`
+- `void set_allow_search(bool enabled) property`
+- `void set_first_letter_navigation(bool state) property`
+- `void set_focused_item(int index) property`
 
 ---
 ## Library: `music.nvgt`
@@ -944,6 +1236,7 @@
 - `void stop(int fade_ms = 0, bool blocking = false)`
 
 #### Class `music_track`
+- `music_track(string data, music_manager@ parent = null)`
 - `bool intro_repeating = false`
 - `bool paused = false`
 - `bool prerepeat = false`
@@ -970,7 +1263,6 @@
 - `bool get_playing() property`
 - `bool set_option(string varname, string value = "")`
 - `int get_position() property`
-- `music_track(string data, music_manager@ parent = null)`
 - `sound@ load_sound(sound@ s, string filename)`
 - `void loop(uint64 t)`
 - `void pause(int fade_ms = 0)`
@@ -985,6 +1277,7 @@
 
 ### Classes
 #### Class `number_speaker`
+- `number_speaker()`
 - `#endif #if_not plugin_legacy_sound pack_file@ pack = null`
 - `#endif bool include_and`
 - `#if plugin_legacy_sound pack@ pack = null`
@@ -999,23 +1292,40 @@
 - `int speak(double the_number)`
 - `int speak_next()`
 - `int speak_wait(double the_number)`
-- `number_speaker()`
 - `void stop()`
 
 ---
 ## Library: `nvgt_subsystems.nvgt`
 **Syntax to use:** `#include "nvgt_subsystems.nvgt"`
 
-### Global Functions
-- `enum NVGT_SUBSYSTEM`
+### Enums
+#### Enum `NVGT_SUBSYSTEM`
+- `NVGT_SUBSYSTEM_DATA`
+- `NVGT_SUBSYSTEM_DATETIME`
+- `NVGT_SUBSYSTEM_EVERYTHING`
+- `NVGT_SUBSYSTEM_FS`
+- `NVGT_SUBSYSTEM_GENERAL`
+- `NVGT_SUBSYSTEM_INPUT`
+- `NVGT_SUBSYSTEM_MAP`
+- `NVGT_SUBSYSTEM_NET`
+- `NVGT_SUBSYSTEM_OS`
+- `NVGT_SUBSYSTEM_PATHFINDER`
+- `NVGT_SUBSYSTEM_SCRIPTING`
+- `NVGT_SUBSYSTEM_SCRIPTING_SANDBOX`
+- `NVGT_SUBSYSTEM_SOUND`
+- `NVGT_SUBSYSTEM_SPEECH`
+- `NVGT_SUBSYSTEM_SQLITE3`
+- `NVGT_SUBSYSTEM_TERMINAL`
+- `NVGT_SUBSYSTEM_TMRQ`
+- `NVGT_SUBSYSTEM_UI`
+- `NVGT_SUBSYSTEM_UNCLASSIFIED`
+- `NVGT_SUBSYSTEM_VC`
 
 ---
 ## Library: `rotation.nvgt`
 **Syntax to use:** `#include "rotation.nvgt"`
 
 ### Global Functions
-- `const string[] detailed_rotation_directions =`
-- `const string[] rotation_directions =`
 - `double getdir(double facing)`
 - `double snapleft(double deg, int direction, double inc = 45)`
 - `double snapright(double deg, int direction, double inc = 45)`
@@ -1039,21 +1349,34 @@
 - `string calculate_x_y_string3d(double deg, double z1, double z2)`
 - `string dir_to_string(int direction, bool more_detail = true)`
 
+### Global Properties
+- `const double pi = 3.1415926535897932384626433832795`
+- `const int east = 90`
+- `const int half_down = 135`
+- `const int half_up = 45`
+- `const int north = 0`
+- `const int northeast = 45`
+- `const int northwest = 315`
+- `const int south = 180`
+- `const int southeast = 135`
+- `const int southwest = 225`
+- `const int straight_down = 180`
+- `const int straight_up = 90`
+- `const int west = 270`
+
 ---
 ## Library: `settings.nvgt`
 **Syntax to use:** `#include "settings.nvgt"`
 
 ### Global Functions
-- `#include"ini.nvgt" class settings_helper`
 - `bool ensure_data_path(const string&in filename, bool absolute = true)`
-- `dictionary available_settings_formats =`
-- `settings_helper@ ini_settings_factory(settings@ parent)`
+- `funcdef settings_helper@ settings_helper_factory(settings@ parent)`
 - `settings_helper@ json_settings_factory(settings@ parent)`
 - `settings_helper@ nvgt_settings_factory(settings@ parent)`
-- `funcdef settings_helper@ settings_helper_factory(settings@ parent)`
 
 ### Classes
 #### Class `ini_settings_helper`
+- `ini_settings_helper(settings@parent)`
 - `ini@config`
 - `bool clear()`
 - `bool close(bool save = true)`
@@ -1065,7 +1388,6 @@
 - `bool write_bool(const string&in key, bool value)`
 - `bool write_number(const string&in key, double number)`
 - `bool write_string(const string&in key, const string&in value)`
-- `ini_settings_helper(settings@parent)`
 - `string get_file_extension()`
 - `string raw_dump()`
 - `string read_string(const string&in key)`
@@ -1073,6 +1395,7 @@
 - `var@get_value(string&in key)`
 
 #### Class `json_settings_helper`
+- `json_settings_helper(settings@parent)`
 - `json_object@config`
 - `bool clear()`
 - `bool close(bool save = true)`
@@ -1084,7 +1407,6 @@
 - `bool write_bool(const string&in key, bool value)`
 - `bool write_number(const string&in key, double number)`
 - `bool write_string(const string&in key, const string&in value)`
-- `json_settings_helper(settings@parent)`
 - `string get_file_extension()`
 - `string raw_dump()`
 - `string read_string(const string&in key)`
@@ -1092,6 +1414,7 @@
 - `var@get_value(string&in key)`
 
 #### Class `nvgt_settings_helper`
+- `nvgt_settings_helper(settings@parent)`
 - `dictionary@config`
 - `bool clear()`
 - `bool close(bool save = true)`
@@ -1104,7 +1427,6 @@
 - `bool write_number(const string&in key, double number)`
 - `bool write_string(const string&in key, const string&in value)`
 - `double read_number(const string&in key)`
-- `nvgt_settings_helper(settings@parent)`
 - `string get_file_extension()`
 - `string raw_dump()`
 - `string read_string(const string&in key)`
@@ -1112,6 +1434,7 @@
 - `var@get_value(string&in key)`
 
 #### Class `settings`
+- `settings()`
 - `bool instant_save = true`
 - `bool local_path = false`
 - `private string settings_filename`
@@ -1133,7 +1456,6 @@
 - `bool write_number(const string&in key, double number)`
 - `bool write_string(const string&in key, const string&in value)`
 - `double read_number(const string&in key, double default_value = 0)`
-- `settings()`
 - `string get_filename() property`
 - `string get_raw_dump()`
 - `string read_string(const string&in key, const string&in default_value = "")`
@@ -1142,13 +1464,49 @@
 - `void set_filename(string&in fname) property`
 - `void set_opIndex(string key, var value) property`
 
+#### Class `settings_helper`
+- `settings_helper(settings@ parent)`
+- `bool local_path`
+- `private bool can_encrypt_data = false`
+- `settings@parent`
+- `string company_name, product`
+- `string[] is_bool_list =`
+- `bool clear()`
+- `bool close(bool save = true)`
+- `bool dump()`
+- `bool exists(const string&in key)`
+- `bool get_active() property`
+- `bool get_encrypt_data() const property`
+- `bool get_instant_save() const property`
+- `bool is_active()`
+- `bool open()`
+- `bool read_bool(const string&in key)`
+- `bool remove_value(const string&in key)`
+- `bool setup(string company, string product, bool local_path)`
+- `bool write_bool(const string&in key, bool value)`
+- `bool write_number(const string&in key, double number)`
+- `bool write_string(const string&in key, const string&in value)`
+- `double read_number(const string&in key)`
+- `string get_data_path()`
+- `string get_encryption_key() const property`
+- `string get_file_extension()`
+- `string raw_dump()`
+- `string read_string(const string&in key)`
+- `string[]@list_keys()`
+- `var@get_value(string&in key)`
+
 ---
 ## Library: `size.nvgt`
 **Syntax to use:** `#include "size.nvgt"`
 
 ### Global Functions
-- `const string[] SIZE_TO_STRING_UNITS =`
+- `const uint64 TERABYTES = uint64(1024)** 4`
 - `string size_to_string(uint64 size, uint8 round_place = 2)`
+
+### Global Properties
+- `const uint64 GIGABYTES = 1024 ** 3`
+- `const uint64 KILOBYTES = 1024`
+- `const uint64 MEGABYTES = 1024 ** 2`
 
 ---
 ## Library: `sound_pool.nvgt`
@@ -1156,6 +1514,7 @@
 
 ### Classes
 #### Class `sound_pool`
+- `sound_pool(int default_item_size = 100)`
 - `bool hrtf = true`
 - `bool occlude = true`
 - `bool y_is_elevation = sound_pool_default_y_elevation`
@@ -1219,7 +1578,6 @@
 - `int play_stationary_extended(string filename, bool looping, double offset, float start_pan, float start_volume, float start_pitch, bool persistent = false, mixer@ mix = null, string[]@ fx = null)`
 - `int play_stationary_extended(string filename, pack_interface@ packfile, bool looping, double offset, float start_pan, float start_volume, float start_pitch, bool persistent = false, mixer@ mix = null, string[]@ fx = null)`
 - `int reserve_slot()`
-- `sound_pool(int default_item_size = 100)`
 - `void clean_unused()`
 - `void destroy_all()`
 - `void find_highest_slot(uint limit)`
@@ -1231,6 +1589,7 @@
 - `void update_listener_3d(vector listener, double rotation = 0.0, bool refresh_y_is_elevation = true)`
 
 #### Class `sound_pool_item`
+- `sound_pool_item()`
 - `bool is_3d`
 - `bool looping`
 - `bool occlude`
@@ -1264,7 +1623,6 @@
 - `timer last_memory_push`
 - `vector pivit`
 - `int get_total_distance(float listener_x, float listener_y, float listener_z)`
-- `sound_pool_item()`
 - `void reset()`
 - `void update(float listener_x, float listener_y, float listener_z, double rotation, int max_distance)`
 - `void update_listener_position(float listener_x, float listener_y, float listener_z, float rotation)`
@@ -1273,8 +1631,44 @@
 ## Library: `soundtrack.nvgt`
 **Syntax to use:** `#include "soundtrack.nvgt"`
 
-### Global Functions
-- `#include "bgt_compat.nvgt" class soundtrack`
+### Classes
+#### Class `soundtrack`
+- `soundtrack()`
+- `int attack`
+- `int channel_count`
+- `int default_length`
+- `int default_octave`
+- `int instrument`
+- `int quantization`
+- `int release`
+- `int tempo`
+- `int transpose`
+- `int volume`
+- `string channel_input`
+- `tone_synth synth`
+- `bool check_number(string channel_input, uint cursor)`
+- `bool write(string filename)`
+- `sound@ write_sound()`
+- `uint cmd_a(string channel_input, uint cursor)`
+- `uint cmd_at(string channel_input, uint cursor)`
+- `uint cmd_d(string channel_input, uint cursor)`
+- `uint cmd_gt(string channel_input, uint cursor)`
+- `uint cmd_l(string channel_input, uint cursor)`
+- `uint cmd_lt(string channel_input, uint cursor)`
+- `uint cmd_n(string channel_input, uint cursor)`
+- `uint cmd_note(string channel_input, uint cursor)`
+- `uint cmd_o(string channel_input, uint cursor)`
+- `uint cmd_p(string channel_input, uint cursor)`
+- `uint cmd_q(string channel_input, uint cursor)`
+- `uint cmd_r(string channel_input, uint cursor)`
+- `uint cmd_repeat(string channel_input, uint cursor)`
+- `uint cmd_t(string channel_input, uint cursor)`
+- `uint cmd_u(string channel_input, uint cursor)`
+- `uint cmd_v(string channel_input, uint cursor)`
+- `uint get_number(string channel_input, uint cursor, int &out number)`
+- `uint process_commands(string commands, uint cursor)`
+- `void add_channel(string commands)`
+- `void signal_error(string message, uint cursor)`
 
 ---
 ## Library: `speech.nvgt`
@@ -1283,27 +1677,180 @@
 ### Global Functions
 - `bool speak(string text, bool interrupt = tts_default_interrupt, text_processing_callback@ processing_callback = tts_default_text_processing_callback, bool braille = true)`
 - `bool tts_load_config(string c, tts_voice@ v)`
+- `funcdef string text_processing_callback(const string&in text)`
 - `string tts_dump_config(tts_voice@ v, bool save_screen_reader_setting = false)`
 - `void raw_speak(string text, bool interrupt)`
 - `void stop_speech()`
 - `void tts_config(tts_voice@ v, bool main_config = false)`
-- `funcdef string text_processing_callback(const string&in text)`
+
+### Global Properties
+- `audio_form@ tts_config_form = null`
+- `bool tts_default_interrupt = true`
+- `bool use_sr = true`
+- `string speechbuff`
+- `string voicename = "SR"`
+- `text_processing_callback@ tts_default_text_processing_callback = null`
 
 ---
 ## Library: `sqlite3constants.nvgt`
 **Syntax to use:** `#include "sqlite3constants.nvgt"`
+
+### Global Properties
+- `int SQLITE3_TEXT = 3`
+- `int SQLITE_ABORT = 4`
+- `int SQLITE_ALTER_TABLE = 26`
+- `int SQLITE_ANALYZE = 28`
+- `int SQLITE_ATTACH = 24`
+- `int SQLITE_AUTH = 23`
+- `int SQLITE_BLOB = 4`
+- `int SQLITE_BUSY = 5`
+- `int SQLITE_CANTOPEN = 14`
+- `int SQLITE_CONSTRAINT = 19`
+- `int SQLITE_COPY = 0`
+- `int SQLITE_CORRUPT = 11`
+- `int SQLITE_CREATE_INDEX = 1`
+- `int SQLITE_CREATE_TABLE = 2`
+- `int SQLITE_CREATE_TEMP_INDEX = 3`
+- `int SQLITE_CREATE_TEMP_TABLE = 4`
+- `int SQLITE_CREATE_TEMP_TRIGGER = 5`
+- `int SQLITE_CREATE_TEMP_VIEW = 6`
+- `int SQLITE_CREATE_TRIGGER = 7`
+- `int SQLITE_CREATE_VIEW = 8`
+- `int SQLITE_CREATE_VTABLE = 29`
+- `int SQLITE_DBSTATUS_CACHE_HIT = 7`
+- `int SQLITE_DBSTATUS_CACHE_MISS = 8`
+- `int SQLITE_DBSTATUS_CACHE_SPILL = 12`
+- `int SQLITE_DBSTATUS_CACHE_USED = 1`
+- `int SQLITE_DBSTATUS_CACHE_USED_SHARED = 11`
+- `int SQLITE_DBSTATUS_CACHE_WRITE = 9`
+- `int SQLITE_DBSTATUS_DEFERRED_FKS = 10`
+- `int SQLITE_DBSTATUS_LOOKASIDE_HIT = 4`
+- `int SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL = 6`
+- `int SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE = 5`
+- `int SQLITE_DBSTATUS_LOOKASIDE_USED = 0`
+- `int SQLITE_DBSTATUS_MAX = 12`
+- `int SQLITE_DBSTATUS_SCHEMA_USED = 2`
+- `int SQLITE_DBSTATUS_STMT_USED = 3`
+- `int SQLITE_DELETE = 9`
+- `int SQLITE_DENY = 1`
+- `int SQLITE_DETACH = 25`
+- `int SQLITE_DONE = 101`
+- `int SQLITE_DROP_INDEX = 10`
+- `int SQLITE_DROP_TABLE = 11`
+- `int SQLITE_DROP_TEMP_INDEX = 12`
+- `int SQLITE_DROP_TEMP_TABLE = 13`
+- `int SQLITE_DROP_TEMP_TRIGGER = 14`
+- `int SQLITE_DROP_TEMP_VIEW = 15`
+- `int SQLITE_DROP_TRIGGER = 16`
+- `int SQLITE_DROP_VIEW = 17`
+- `int SQLITE_DROP_VTABLE = 30`
+- `int SQLITE_EMPTY = 16`
+- `int SQLITE_ERROR = 1`
+- `int SQLITE_FLOAT = 2`
+- `int SQLITE_FORMAT = 24`
+- `int SQLITE_FULL = 13`
+- `int SQLITE_FUNCTION = 31`
+- `int SQLITE_IGNORE = 2`
+- `int SQLITE_INSERT = 18`
+- `int SQLITE_INTEGER = 1`
+- `int SQLITE_INTERNAL = 2`
+- `int SQLITE_INTERRUPT = 9`
+- `int SQLITE_IOERR = 10`
+- `int SQLITE_LIMIT_ATTACHED = 7`
+- `int SQLITE_LIMIT_COLUMN = 2`
+- `int SQLITE_LIMIT_COMPOUND_SELECT = 4`
+- `int SQLITE_LIMIT_EXPR_DEPTH = 3`
+- `int SQLITE_LIMIT_FUNCTION_ARG = 6`
+- `int SQLITE_LIMIT_LENGTH = 0`
+- `int SQLITE_LIMIT_LIKE_PATTERN_LENGTH = 8`
+- `int SQLITE_LIMIT_SQL_LENGTH = 1`
+- `int SQLITE_LIMIT_TRIGGER_DEPTH = 10`
+- `int SQLITE_LIMIT_VARIABLE_NUMBER = 9`
+- `int SQLITE_LIMIT_VDBE_OP = 5`
+- `int SQLITE_LIMIT_WORKER_THREADS = 11`
+- `int SQLITE_LOCKED = 6`
+- `int SQLITE_MISMATCH = 20`
+- `int SQLITE_MISUSE = 21`
+- `int SQLITE_NOLFS = 22`
+- `int SQLITE_NOMEM = 7`
+- `int SQLITE_NOTADB = 26`
+- `int SQLITE_NOTFOUND = 12`
+- `int SQLITE_NOTICE = 27`
+- `int SQLITE_NULL = 5`
+- `int SQLITE_OK = 0`
+- `int SQLITE_OPEN_AUTOPROXY = 0x00000020`
+- `int SQLITE_OPEN_CREATE = 0x00000004`
+- `int SQLITE_OPEN_DELETEONCLOSE = 0x00000008`
+- `int SQLITE_OPEN_EXCLUSIVE = 0x00000010`
+- `int SQLITE_OPEN_EXRESCODE = 0x02000000`
+- `int SQLITE_OPEN_FULLMUTEX = 0x00010000`
+- `int SQLITE_OPEN_MAIN_DB = 0x00000100`
+- `int SQLITE_OPEN_MAIN_JOURNAL = 0x00000800`
+- `int SQLITE_OPEN_MEMORY = 0x00000080`
+- `int SQLITE_OPEN_NOFOLLOW = 0x01000000`
+- `int SQLITE_OPEN_NOMUTEX = 0x00008000`
+- `int SQLITE_OPEN_PRIVATECACHE = 0x00040000`
+- `int SQLITE_OPEN_READONLY = 0x00000001`
+- `int SQLITE_OPEN_READWRITE = 0x00000002`
+- `int SQLITE_OPEN_SHAREDCACHE = 0x00020000`
+- `int SQLITE_OPEN_SUBJOURNAL = 0x00002000`
+- `int SQLITE_OPEN_SUPER_JOURNAL = 0x00004000`
+- `int SQLITE_OPEN_TEMP_DB = 0x00000200`
+- `int SQLITE_OPEN_TEMP_JOURNAL = 0x00001000`
+- `int SQLITE_OPEN_TRANSIENT_DB = 0x00000400`
+- `int SQLITE_OPEN_URI = 0x00000040`
+- `int SQLITE_OPEN_WAL = 0x00080000`
+- `int SQLITE_PERM = 3`
+- `int SQLITE_PRAGMA = 19`
+- `int SQLITE_PROTOCOL = 15`
+- `int SQLITE_RANGE = 25`
+- `int SQLITE_READ = 20`
+- `int SQLITE_READONLY = 8`
+- `int SQLITE_RECURSIVE = 33`
+- `int SQLITE_REINDEX = 27`
+- `int SQLITE_ROW = 100`
+- `int SQLITE_SAVEPOINT = 32`
+- `int SQLITE_SCHEMA = 17`
+- `int SQLITE_SELECT = 21`
+- `int SQLITE_STATUS_MALLOC_COUNT = 9`
+- `int SQLITE_STATUS_MALLOC_SIZE = 5`
+- `int SQLITE_STATUS_MEMORY_USED = 0`
+- `int SQLITE_STATUS_PAGECACHE_OVERFLOW = 2`
+- `int SQLITE_STATUS_PAGECACHE_SIZE = 7`
+- `int SQLITE_STATUS_PAGECACHE_USED = 1`
+- `int SQLITE_STATUS_PARSER_STACK = 6`
+- `int SQLITE_STATUS_SCRATCH_OVERFLOW = 4`
+- `int SQLITE_STATUS_SCRATCH_SIZE = 8`
+- `int SQLITE_STATUS_SCRATCH_USED = 3`
+- `int SQLITE_STMTSTATUS_AUTOINDEX = 3`
+- `int SQLITE_STMTSTATUS_FILTER_HIT = 8`
+- `int SQLITE_STMTSTATUS_FILTER_MISS = 7`
+- `int SQLITE_STMTSTATUS_FULLSCAN_STEP = 1`
+- `int SQLITE_STMTSTATUS_MEMUSED = 99`
+- `int SQLITE_STMTSTATUS_REPREPARE = 5`
+- `int SQLITE_STMTSTATUS_RUN = 6`
+- `int SQLITE_STMTSTATUS_SORT = 2`
+- `int SQLITE_STMTSTATUS_VM_STEP = 4`
+- `int SQLITE_TOOBIG = 18`
+- `int SQLITE_TRANSACTION = 22`
+- `int SQLITE_UPDATE = 23`
+- `int SQLITE_WARNING = 28`
 
 ---
 ## Library: `stat_set.nvgt`
 **Syntax to use:** `#include "stat_set.nvgt"`
 
 ### Global Functions
-- `enum stat_sort_mode`
-- `string default_stat_callback_impl(stat@ stat)`
 - `funcdef string stat_callback(stat@)`
+- `string default_stat_callback_impl(stat@ stat)`
+
+### Global Properties
+- `stat_callback@ default_stat_callback = default_stat_callback_impl`
+- `uint64 _next_stat = 0`
 
 ### Classes
 #### Class `stat`
+- `stat(const string&in name, var@ val, string text = "", stat_callback@ callback = default_stat_callback, dictionary@ user = null)`
 - `dictionary user`
 - `stat_callback@ callback`
 - `string name`
@@ -1320,20 +1867,23 @@
 - `double opModAssign(int64 value)`
 - `double opMul(double value)`
 - `double opMulAssign(double value)`
+- `double opPostDec()`
+- `double opPostInc()`
 - `double opSub(double value)`
 - `double opSubAssign(double value)`
-- `int opPostDec()`
-- `int opPostInc()`
-- `stat(const string&in name, var@ val, string text = "", stat_callback@ callback = default_stat_callback, dictionary@ user = null)`
 - `string opImplConv()`
 - `var@ opAddAssign(const string&in value)`
 - `var@ opAssign(const string&in value)`
 
 #### Class `stat_set`
-- `dictionary stats`
+- `stat_set()`
+- `stat_set(const stat_set&in other)`
 - `) const`
 - `, const string[]@ sort_behind =`
+- `dictionary stats`
+- `string[]@ list(stat_sort_mode sort_mode = STAT_SORT_MODE_NONE, const string[]@ sort_in_front =`
 - `bool delete(const string&in name)`
+- `bool deserialize(const string&in data)`
 - `bool deserialize(datastream@ ds)`
 - `bool deserialize_linear(const string&in data)`
 - `bool exists(const string&in stat_name) const`
@@ -1341,29 +1891,37 @@
 - `private bool string_is_number(const string&in str)`
 - `stat@ add(const string&in name, var@ value, const string&in text = "", stat_callback@ callback = null, dictionary@ user = null)`
 - `stat@ opIndex(const string&in stat_name) const`
-- `stat@[] get_stats()`
-- `stat_set()`
-- `stat_set(const stat_set&in other)`
+- `stat@[]@ get_stats() const`
 - `stat_set@ opAddAssign(const stat_set&in other)`
 - `stat_set@ opAssign(const stat_set&in other)`
 - `string serialize()`
 - `string serialize_linear()`
-- `string[]@ list(stat_sort_mode sort_mode = STAT_SORT_MODE_NONE, const string[]@ sort_in_front =`
 - `string[]@ opImplConv() const`
 - `void mod(const string&in name, double value)`
 - `void mod(const string&in name, int64 value)`
 - `void reset()`
 - `void update(const string&in name, var@ value)`
 
+### Enums
+#### Enum `stat_sort_mode`
+- `STAT_SORT_MODE_ADD_ORDER`
+- `STAT_SORT_MODE_NONE`
+- `STAT_SORT_MODE_VALUE`
+
 ---
 ## Library: `token_gen.nvgt`
 **Syntax to use:** `#include "token_gen.nvgt"`
 
 ### Global Functions
-- `enum token_gen_flag`
-- `string generate_custom_token(int token_length, const string&in characters)`
-- `string generate_custom_token(int token_length, string[]@ values)`
+- `string generate_custom_token(int token_length, const string &in characters)`
+- `string generate_custom_token(int token_length, const string[] &in values)`
 - `string generate_token(int token_length, int mode = TOKEN_CHARACTERS | TOKEN_NUMBERS)`
+
+### Enums
+#### Enum `token_gen_flag`
+- `TOKEN_CHARACTERS`
+- `TOKEN_NUMBERS`
+- `TOKEN_SYMBOLS`
 
 ---
 ## Library: `touch.nvgt`
@@ -1376,15 +1934,20 @@
 - `bool _touch_evt_up(uint64 device, const touch_finger&inout finger)`
 - `bool simulate_keys_down(int[] keys)`
 - `bool simulate_keys_up(int[] keys)`
-- `enum swipe_touch_directions`
+- `funcdef void tap_func(touch_screen_finger@finger, uint tap_count, uint finger_count)`
 - `int detect_swipe_direction(vector diff)`
 - `string get_swipe_name(int dir)`
 - `void _touch_manager_register(touch_gesture_manager@ mgr)`
 - `void _touch_manager_unregister(touch_gesture_manager@ mgr)`
-- `funcdef void tap_func(touch_screen_finger@finger, uint tap_count, uint finger_count)`
+
+### Global Properties
+- `array<touch_gesture_manager@>@ _g_active_touch_managers = null`
+- `bool touch_enable_8_way_swipes = false`
+- `const float TOUCH_UNCOORDINATED = -10.0f`
 
 ### Classes
 #### Class `touch_gesture_manager`
+- `touch_gesture_manager()`
 - `dictionary finger_map`
 - `float flick_velocity_threshold = 1.5f`
 - `float hold_jitter_threshold = 0.05f`
@@ -1407,13 +1970,12 @@
 - `bool is_available()`
 - `bool set_touch_interfaces(touch_interface@[] interfaces, bool append = false)`
 - `int64 get_last_input_time() const property`
-- `touch_gesture_manager()`
 - `void clear_touch_interfaces()`
 - `void dispatch_release(touch_screen_finger@ finger)`
 - `void monitor()`
-- `~touch_gesture_manager()`
 
 #### Class `touch_interface`
+- `touch_interface(touch_gesture_manager@ parent, float minx = TOUCH_UNCOORDINATED, float maxx = TOUCH_UNCOORDINATED, float miny = TOUCH_UNCOORDINATED, float maxy = TOUCH_UNCOORDINATED)`
 - `bool allow_passthrough = false`
 - `bool coordinated = false`
 - `float minx, maxx, miny, maxy`
@@ -1428,7 +1990,6 @@
 - `vector last_tap_pos`
 - `bool in_bounds(float x, float y)`
 - `bool is_tap_chain_supported(uint s, uint f)`
-- `touch_interface(touch_gesture_manager@ parent, float minx = TOUCH_UNCOORDINATED, float maxx = TOUCH_UNCOORDINATED, float miny = TOUCH_UNCOORDINATED, float maxy = TOUCH_UNCOORDINATED)`
 - `void _exec_tap(touch_screen_finger@ finger, uint tap_count, uint finger_count)`
 - `void _monitor()`
 - `void _process_tap(touch_screen_finger@ finger)`
@@ -1455,13 +2016,13 @@
 - `void on_tripple_tap(touch_screen_finger@ f, uint fc)`
 
 #### Class `touch_keyboard_interface`
+- `touch_keyboard_interface(touch_gesture_manager@ p, dictionary@ m, float minx = TOUCH_UNCOORDINATED, float maxx = TOUCH_UNCOORDINATED, float miny = TOUCH_UNCOORDINATED, float maxy = TOUCH_UNCOORDINATED)`
 - `dictionary keymap`
 - `int[] active_pressed_keys`
 - `bool is_tap_chain_supported(uint start_check_from, uint finger_count)`
 - `bool simulate_mapped_key(string keyname, int[] & out key_codes = void)`
 - `bool trigger_mapped_key(string base_name, uint fingers, int[] & out result_codes = void)`
 - `string get_tap_key_name(uint tap_count, uint finger_count)`
-- `touch_keyboard_interface(touch_gesture_manager@ p, dictionary@ m, float minx = TOUCH_UNCOORDINATED, float maxx = TOUCH_UNCOORDINATED, float miny = TOUCH_UNCOORDINATED, float maxy = TOUCH_UNCOORDINATED)`
 - `void force_release_all()`
 - `void on_compound_swipe(touch_screen_finger@ finger, int[] directions)`
 - `void on_flick(touch_screen_finger@ finger, int direction, float velocity)`
@@ -1471,6 +2032,7 @@
 - `void on_tap(touch_screen_finger@ finger, uint tap_count, uint finger_count)`
 
 #### Class `touch_screen_finger`
+- `touch_screen_finger(const touch_finger&in internal)`
 - `bool has_swiped = false`
 - `bool is_long_press_triggered = false`
 - `bool is_moving_too_much_for_hold = false`
@@ -1486,18 +2048,41 @@
 - `float get_x() property`
 - `float get_y() property`
 - `int64 get_active_time() const property`
-- `touch_screen_finger(const touch_finger&in internal)`
 - `void update_position(float nx, float ny, float pressure)`
+
+### Enums
+#### Enum `swipe_touch_directions`
+- `swipe_touch_direction_down`
+- `swipe_touch_direction_down_left`
+- `swipe_touch_direction_down_right`
+- `swipe_touch_direction_left`
+- `swipe_touch_direction_right`
+- `swipe_touch_direction_up`
+- `swipe_touch_direction_up_left`
+- `swipe_touch_direction_up_right`
 
 ---
 ## Library: `virtual_dialogs.nvgt`
 **Syntax to use:** `#include "virtual_dialogs.nvgt"`
 
 ### Global Functions
-- `#include "form.nvgt" class virtual_dialogs`
 - `bool virtual_info_box(const string title, const string label, const string text)`
-- `int virtual_alert(const string title, const string text, const bool can_cancel = false, const int flags = 0)`
 - `int virtual_message_box(const string title, const string caption, string[]@ buttons, const int flags = 0)`
 - `int virtual_question(const string title, const string text, const bool can_cancel = false, const int flags = 0)`
 - `string virtual_input_box(const string title, const string text, const string default_text = "", const int flags = 0)`
 
+### Classes
+#### Class `virtual_dialogs`
+- `private audio_form form`
+- `private bool was_window_active = false, was_window_created = false, was_window_hidden = false`
+- `private string last_title = ""`
+- `bool info_box(const string title, const string label, const string text)`
+- `int alert(const string title, const string text, const bool can_cancel = false, const int flags = 0)`
+- `int message_box(const string title, const string caption, string[]@ buttons, int flags = 0)`
+- `int question(const string title, const string text, const bool can_cancel = false, const int flags = 0)`
+- `private bool create_window(const string title)`
+- `private bool destroy_window()`
+- `private void create_dialog(const string title)`
+- `private void handle_arrow_keys()`
+- `private void monitor()`
+- `string input_box(const string title, const string text, const string default_text = "", const int flags = 0)`
