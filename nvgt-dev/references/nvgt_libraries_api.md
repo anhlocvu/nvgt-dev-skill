@@ -1967,7 +1967,7 @@
 - `bool internal_on_down(const touch_finger&inout raw_finger)`
 - `bool internal_on_move(const touch_finger&inout raw_finger, float dx, float dy)`
 - `bool internal_on_up(const touch_finger&inout raw_finger)`
-- `bool is_available()`
+- `bool is_available() const`
 - `bool set_touch_interfaces(touch_interface@[] interfaces, bool append = false)`
 - `int64 get_last_input_time() const property`
 - `void clear_touch_interfaces()`

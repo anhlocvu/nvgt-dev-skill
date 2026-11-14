@@ -1177,8 +1177,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int opAssign(int val)`
 - `int opImplConv() const`
 - `int opOrAssign(int arg)`
-- `int opPostDec(int arg)`
-- `int opPostInc(int arg)`
+- `int opPostDec()`
+- `int opPostInc()`
 - `int opPreDec()`
 - `int opPreInc()`
 - `int opSubAssign(int arg)`
@@ -1210,8 +1210,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int16 opAssign(int16 val)`
 - `int16 opImplConv() const`
 - `int16 opOrAssign(int16 arg)`
-- `int16 opPostDec(int16 arg)`
-- `int16 opPostInc(int16 arg)`
+- `int16 opPostDec()`
+- `int16 opPostInc()`
 - `int16 opPreDec()`
 - `int16 opPreInc()`
 - `int16 opSubAssign(int16 arg)`
@@ -1243,8 +1243,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int opAssign(int val)`
 - `int opImplConv() const`
 - `int opOrAssign(int arg)`
-- `int opPostDec(int arg)`
-- `int opPostInc(int arg)`
+- `int opPostDec()`
+- `int opPostInc()`
 - `int opPreDec()`
 - `int opPreInc()`
 - `int opSubAssign(int arg)`
@@ -1276,8 +1276,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int64 opAssign(int64 val)`
 - `int64 opImplConv() const`
 - `int64 opOrAssign(int64 arg)`
-- `int64 opPostDec(int64 arg)`
-- `int64 opPostInc(int64 arg)`
+- `int64 opPostDec()`
+- `int64 opPostInc()`
 - `int64 opPreDec()`
 - `int64 opPreInc()`
 - `int64 opSubAssign(int64 arg)`
@@ -1309,8 +1309,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int8 opAssign(int8 val)`
 - `int8 opImplConv() const`
 - `int8 opOrAssign(int8 arg)`
-- `int8 opPostDec(int8 arg)`
-- `int8 opPostInc(int8 arg)`
+- `int8 opPostDec()`
+- `int8 opPostInc()`
 - `int8 opPreDec()`
 - `int8 opPreInc()`
 - `int8 opSubAssign(int8 arg)`
@@ -1342,8 +1342,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int64 opAssign(int64 val)`
 - `int64 opImplConv() const`
 - `int64 opOrAssign(int64 arg)`
-- `int64 opPostDec(int64 arg)`
-- `int64 opPostInc(int64 arg)`
+- `int64 opPostDec()`
+- `int64 opPostInc()`
 - `int64 opPreDec()`
 - `int64 opPreInc()`
 - `int64 opSubAssign(int64 arg)`
@@ -1375,8 +1375,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint opAssign(uint val)`
 - `uint opImplConv() const`
 - `uint opOrAssign(uint arg)`
-- `uint opPostDec(uint arg)`
-- `uint opPostInc(uint arg)`
+- `uint opPostDec()`
+- `uint opPostInc()`
 - `uint opPreDec()`
 - `uint opPreInc()`
 - `uint opSubAssign(uint arg)`
@@ -1408,8 +1408,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint16 opAssign(uint16 val)`
 - `uint16 opImplConv() const`
 - `uint16 opOrAssign(uint16 arg)`
-- `uint16 opPostDec(uint16 arg)`
-- `uint16 opPostInc(uint16 arg)`
+- `uint16 opPostDec()`
+- `uint16 opPostInc()`
 - `uint16 opPreDec()`
 - `uint16 opPreInc()`
 - `uint16 opSubAssign(uint16 arg)`
@@ -1441,8 +1441,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint opAssign(uint val)`
 - `uint opImplConv() const`
 - `uint opOrAssign(uint arg)`
-- `uint opPostDec(uint arg)`
-- `uint opPostInc(uint arg)`
+- `uint opPostDec()`
+- `uint opPostInc()`
 - `uint opPreDec()`
 - `uint opPreInc()`
 - `uint opSubAssign(uint arg)`
@@ -1474,8 +1474,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint64 opAssign(uint64 val)`
 - `uint64 opImplConv() const`
 - `uint64 opOrAssign(uint64 arg)`
-- `uint64 opPostDec(uint64 arg)`
-- `uint64 opPostInc(uint64 arg)`
+- `uint64 opPostDec()`
+- `uint64 opPostInc()`
 - `uint64 opPreDec()`
 - `uint64 opPreInc()`
 - `uint64 opSubAssign(uint64 arg)`
@@ -1507,8 +1507,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint8 opAssign(uint8 val)`
 - `uint8 opImplConv() const`
 - `uint8 opOrAssign(uint8 arg)`
-- `uint8 opPostDec(uint8 arg)`
-- `uint8 opPostInc(uint8 arg)`
+- `uint8 opPostDec()`
+- `uint8 opPostInc()`
 - `uint8 opPreDec()`
 - `uint8 opPreInc()`
 - `uint8 opSubAssign(uint8 arg)`
@@ -1540,8 +1540,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint64 opAssign(uint64 val)`
 - `uint64 opImplConv() const`
 - `uint64 opOrAssign(uint64 arg)`
-- `uint64 opPostDec(uint64 arg)`
-- `uint64 opPostInc(uint64 arg)`
+- `uint64 opPostDec()`
+- `uint64 opPostInc()`
 - `uint64 opPreDec()`
 - `uint64 opPreInc()`
 - `uint64 opSubAssign(uint64 arg)`

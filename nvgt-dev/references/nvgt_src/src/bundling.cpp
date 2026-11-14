@@ -75,7 +75,7 @@ void add_game_asset_to_bundle(const string& path, int flags) {
 	while (semi && semi != string::npos && path[semi -1] == '\\' ) semi = path.find_first_of(';', semi + 1);
 	return add_game_asset_to_bundle(path.substr(0, semi), path.substr(semi +1 ), flags);
 }
-set<string> g_bundle_libraries = {"nvdaControllerClient64", "phonon", "SAAPI64", "zdsrapi"};
+set<string> g_bundle_libraries;
 void nvgt_bundle_shared_library(const string& libname) {
 	g_bundle_libraries.insert(libname);
 }
@@ -325,6 +325,7 @@ protected:
 		// Copy any needed shared libraries to the output package, handling excludes and already existent files.
 		set_status("copying libraries...");
 		File libpathF(libpath);
+		if (g_bundle_libraries.empty()) return; // No libraries need bundling.
 		// Determine whether to create, replace, or update shared libraries.
 		if (!libpathF.exists()) libpathF.createDirectories();
 		else if(config.hasOption("build.shared_library_recopy")) libpathF.remove(true);
