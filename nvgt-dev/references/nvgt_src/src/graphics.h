@@ -93,6 +93,7 @@ public:
 	~text_font();
 	void duplicate() { asAtomicInc(_refcount); }
 	void release() { if (asAtomicDec(_refcount) < 1) delete this; }
+	bool is_valid() const { return _font != nullptr; }
 	unsigned int get_generation() const { return TTF_GetFontGeneration(_font); }
 	bool add_fallback_font(text_font* font);
 	bool remove_fallback_font(text_font* font);
@@ -195,6 +196,8 @@ public:
 	graphics_texture* create_texture(graphic* gfx);
 	bool render_texture(graphics_texture* tex, float dst_x, float dst_y);
 	bool render_texture_ex(graphics_texture* tex, float src_x, float src_y, float src_w, float src_h, float dst_x, float dst_y, float dst_w, float dst_h);
+	bool render_texture_rotated(graphics_texture* tex, float dst_x, float dst_y, double angle, int flip);
+	bool render_texture_rotated_ex(graphics_texture* tex, float src_x, float src_y, float src_w, float src_h, float dst_x, float dst_y, float dst_w, float dst_h, double angle, float center_x, float center_y, int flip);
 	bool set_logical_presentation(int w, int h, unsigned int mode);
 	bool get_logical_presentation(int& w, int& h, unsigned int& mode) const;
 	bool set_viewport(int x, int y, int w, int h);

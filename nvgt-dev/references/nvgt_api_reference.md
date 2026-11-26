@@ -3,7 +3,6 @@
 This document contains the API definitions automatically extracted from the NVGT C++ source code.
 
 ## Global Functions
-- `aabb aabb_create_from_triangle(const vector[]@ points)`
 - `ARCHITECTURE get_PROCESSOR_ARCHITECTURE() property`
 - `audio_engine@+ get_sound_default_engine() property`
 - `audio_error_state get_SOUNDSYSTEM_LAST_ERROR() property`
@@ -37,6 +36,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool get_KEYBOARD_AVAILABLE() property`
 - `bool get_MOUSE_AVAILABLE() property`
 - `bool get_mouse_grab() property`
+- `bool get_mouse_relative_mode() property`
 - `bool get_SCREEN_KEYBOARD_SUPPORTED() property`
 - `bool get_SCREEN_READER_AVAILABLE() property`
 - `bool get_SCRIPT_COMPILED() property`
@@ -101,6 +101,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool mouse_up(uint8 button)`
 - `bool natural_number_sort(const string&in string1, const string&in string2)`
 - `bool parse_ip_address(const string&in addr_in, ip_address&out addr_out)`
+- `bool physics_material_register(physics_material@ material)`
 - `bool random_bool(int percent = 50)`
 - `bool random_set_state(const string& in state)`
 - `bool regexp_match(const string&in text, const string&in pattern, int options = RE_UTF8)`
@@ -269,7 +270,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `float trunc(float x)`
 - `funcdef bool array<T>::less(const T&in if_handle_then_const a, const T&in if_handle_then_const b)`
 - `funcdef bool coordinate_map_filter_callback(coordinate_map_area@ area)`
-- `funcdef float physics_raycast_callback(const raycast_info&in info)`
 - `funcdef int pathfinder_callback(int x, int y, int z, any@ callback_data = null)`
 - `funcdef int pathfinder_callback_ex(int x, int y, int z, int parent_x, int parent_y, int parent_z, any@ callback_data = null)`
 - `funcdef int pathfinder_callback_legacy(int x, int y, int parent_x, int parent_y, string user_data)`
@@ -277,8 +277,9 @@ This document contains the API definitions automatically extracted from the NVGT
 - `funcdef void android_permission_request_callback(string permission, bool granted, string user_data)`
 - `funcdef void audio_engine_processing_callback(audio_engine@ engine, memory_buffer<float>& data, uint64 frames)`
 - `funcdef void coroutine(dictionary@ args)`
-- `funcdef void physics_collision_callback(const physics_collision_callback_data& data)`
-- `funcdef void physics_overlap_callback(const physics_overlap_callback_data& data)`
+- `funcdef void physics_contact_added_callback(const physics_body_id&in body1, const physics_body_id&in body2, const vector&in world_normal, float penetration_depth)`
+- `funcdef void physics_contact_persisted_callback(const physics_body_id&in body1, const physics_body_id&in body2, const vector&in world_normal, float penetration_depth)`
+- `funcdef void physics_contact_removed_callback(const physics_body_id&in body1, const physics_body_id&in body2)`
 - `funcdef void system_tray_callback(system_tray_menu_item@ item)`
 - `funcdef void thread_callback(dictionary@ args)`
 - `game_window@ show_window(const string& in title, uint flags = 0)`
@@ -372,30 +373,26 @@ This document contains the API definitions automatically extracted from the NVGT
 - `key_modifier get_keyboard_modifiers() property`
 - `mail_message@ parse_email_message(const string &in data)`
 - `mail_message@ parse_email_message(const string&in data)`
-- `matrix3x3 get_IDENTITY_MATRIX() property`
 - `OPERATING_SYSTEM get_OS() property`
 - `pack_interface@ get_sound_default_pack() property`
-- `physics_convex_mesh@ physics_convex_mesh_create(physics_vertex_data@ vertex_data)`
-- `physics_convex_mesh@ physics_convex_mesh_create_from_polygon(physics_polygon_data@ polygon_data)`
-- `physics_default_logger@ physics_default_logger_create()`
-- `physics_height_field@ physics_height_field_create(int nb_columns, int nb_rows, double[]@ height_data, float integer_height_scale = 1.0f)`
-- `physics_height_field@ physics_height_field_create(int nb_columns, int nb_rows, float[]@ height_data, float integer_height_scale = 1.0f)`
-- `physics_height_field@ physics_height_field_create(int nb_columns, int nb_rows, int[]@ height_data, float integer_height_scale = 1.0f)`
-- `physics_logger@ physics_logger_get_current()`
+- `physics_box_shape@ physics_box_shape_create(const vector&in half_extents, float convex_radius = 0.05f, physics_material@ mat = null)`
+- `physics_capsule_shape@ physics_capsule_shape_create(float half_height, float radius, physics_material@ mat = null)`
+- `physics_cylinder_shape@ physics_cylinder_shape_create(float half_height, float radius, float convex_radius = 0.05f, physics_material@ mat = null)`
+- `physics_material@ physics_material_create(float friction = 0.2f, float restitution = 0.0f, const string&in name = "")`
+- `physics_material@ physics_material_get(const string&in name)`
+- `physics_plane_shape@ physics_plane_shape_create(const plane&in plane, float half_extent = 1000.0f, physics_material@ mat = null)`
+- `physics_sphere_shape@ physics_sphere_shape_create(float radius, physics_material@ mat = null)`
+- `physics_tapered_capsule_shape@ physics_tapered_capsule_shape_create(float half_height, float top_radius, float bottom_radius, physics_material@ mat = null)`
+- `physics_tapered_cylinder_shape@ physics_tapered_cylinder_shape_create(float half_height, float top_radius, float bottom_radius, float convex_radius = 0.05f, physics_material@ mat = null)`
 - `physics_transform get_IDENTITY_TRANSFORM() property`
-- `physics_transform transforms_interpolate()`
-- `physics_triangle_mesh@ physics_triangle_mesh_create(physics_triangle_data@ triangle_data)`
 - `process@ run(const string[]& in args, int flags = 0, const string& in workdir = "")`
-- `quaternion get_IDENTITY_QUATERNION() property`
-- `quaternion quaternion_from_euler_angles(const vector& angles)`
-- `quaternion quaternion_from_euler_angles(const vector&inout angles)`
-- `quaternion quaternion_from_euler_angles(float angle_x, float angle_y, float angle_z)`
-- `quaternion quaternion_slerp(const quaternion& q1, const quaternion& q2, float t)`
-- `quaternion quaternion_slerp(const quaternion&inout q1, const quaternion&inout q2, float t)`
+- `quaternion@ get_IDENTITY_QUATERNION() property`
+- `quaternion@ quaternion_from_axis_angle(const vector&in axis, float angle)`
+- `quaternion@ quaternion_from_euler_angles(const vector&in angles)`
 - `random_interface@ get_default_random()`
 - `script_module@ script_get_module(const string&in name, int mode = 1)`
-- `sound@ sound_play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = 0.0, float pan = 0.0, float pitch = 100.0, mixer@ mix = null, const pack_interface@ pack_file = sound_default_pack, bool autoplay = true)`
-- `sound@ sound_play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = 0.0, float pan = 0.0, float pitch = 100.0, mixer@+ mix = null, const pack_interface@+ pack_file = sound_default_pack, bool autoplay = true)`
+- `sound@ sound_play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = FLOAT_MAX, float pan = FLOAT_MAX, float pitch = FLOAT_MAX, mixer@ mix = null, const pack_interface@ pack_file = sound_default_pack, bool autoplay = true)`
+- `sound@ sound_play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = FLOAT_MAX, float pan = FLOAT_MAX, float pitch = FLOAT_MAX, mixer@+ mix = null, const pack_interface@+ pack_file = sound_default_pack, bool autoplay = true)`
 - `spec::ip_address dns_resolve_single(const string&in address)`
 - `string ascii_to_character(uint8 character_code)`
 - `string clipboard_get_text()`
@@ -455,8 +452,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string number_to_words(int64 number, bool include_and = true)`
 - `string open_file_dialog(const string &in filters = "", const string&in default_location = "")`
 - `string open_file_dialog(const string&in filters = "", const string&in default_location = "")`
-- `string physics_logger_get_category_name(physics_logger_category category)`
-- `string physics_logger_get_level_name(physics_logger_level level)`
 - `string random_bytes(uint count)`
 - `string random_character(const string& in min, const string& in max)`
 - `string random_get_state()`
@@ -494,6 +489,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string[]@ find_files(const string& in pattern)`
 - `string[]@ get_preferred_locales()`
 - `string[]@ glob(const string& in pattern, glob_options options = GLOB_DEFAULT)`
+- `string[]@ physics_material_list()`
 - `system_power_state system_power_info(int&out seconds = void, int&out percent = void)`
 - `text_font@ get_font(const string&in name, float size, uint style = FONT_STYLE_NORMAL, bool allow_caching = true)`
 - `thread@+ get_thread_current() property`
@@ -535,7 +531,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint[]@ get_keyboards()`
 - `uint[]@ get_mice()`
 - `uuid uuid_create_from_name(const uuid&in namespace_id, const string&in name)`
-- `uuid uuid_create_from_name_sha1(const uuid&in namespace_id, const string&in name)`
+- `uuid uuid_create_from_name_md5(const uuid&in namespace_id, const string&in name)`
 - `uuid uuid_generate()`
 - `uuid uuid_generate_random()`
 - `uuid uuid_generate_time()`
@@ -547,8 +543,13 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uuid uuid_namespace_x500()`
 - `var@ parse_json(const string&in payload)`
 - `var@ parse_json(datastream@+ stream)`
-- `vector rotate(const vector&in point, const vector&in origin, double theta, bool maintain_z = true)`
-- `vector sound_get_listener_position(uint listener_index = 0)`
+- `vector@ get_VEC3_AXIS_X() property`
+- `vector@ get_VEC3_AXIS_Y() property`
+- `vector@ get_VEC3_AXIS_Z() property`
+- `vector@ get_VEC3_ONE() property`
+- `vector@ get_VEC3_ZERO() property`
+- `vector@ rotate(const vector&in point, const vector&in origin, double theta, bool maintain_z = true)`
+- `vector@ sound_get_listener_position(uint listener_index = 0)`
 - `void acquire_exclusive_lock()`
 - `void acquire_shared_lock()`
 - `void android_send_back_button()`
@@ -570,22 +571,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void mouse_update()`
 - `void nanosleep(uint64 ns)`
 - `void next_keyboard_layout()`
-- `void physics_box_shape_destroy(physics_box_shape@ shape)`
-- `void physics_capsule_shape_destroy(physics_capsule_shape@ shape)`
-- `void physics_concave_mesh_shape_destroy(physics_concave_mesh_shape@ shape)`
-- `void physics_convex_mesh_destroy(physics_convex_mesh@ mesh)`
-- `void physics_convex_mesh_shape_destroy(physics_convex_mesh_shape@ shape)`
-- `void physics_default_logger_destroy(physics_default_logger@ logger)`
-- `void physics_height_field_destroy(physics_height_field@ height_field)`
-- `void physics_height_field_shape_destroy(physics_height_field_shape@ shape)`
-- `void physics_logger_set_current(physics_logger@ logger)`
-- `void physics_shape_destroy(physics_collision_shape@ shape)`
-- `void physics_sphere_shape_destroy(physics_sphere_shape@ shape)`
-- `void physics_triangle_mesh_destroy(physics_triangle_mesh@ mesh)`
-- `void physics_triangle_shape_compute_smooth_triangle_mesh_contact(const physics_collision_shape &in shape1, const physics_collision_shape &in shape2, vector & local_contact_point_shape1, vector & local_contact_point_shape2, const physics_transform &in shape1_to_world, const physics_transform &in shape2_to_world, float penitration_depth, vector & out_smooth_vertex_normal)`
-- `void physics_triangle_shape_compute_smooth_triangle_mesh_contact(const physics_collision_shape&in shape1, const physics_collision_shape&in shape2, vector&inout local_contact_point_shape1, vector&inout local_contact_point_shape2, const physics_transform&in shape1_to_world, const physics_transform&in shape2_to_world, float penitration_depth, vector&inout out_smooth_vertex_normal)`
-- `void physics_world_destroy(physics_world& world)`
-- `void physics_world_destroy(physics_world&inout world)`
+- `void physics_material_define_acoustics(const string&in name, float abs_low, float abs_mid, float abs_high, float scattering, float trans_low, float trans_mid, float trans_high)`
 - `void print(`
 - `void print(const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null, const ?&in = null)`
 - `void printf(const string &in format,`
@@ -605,6 +591,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_garbage_collect_mode(int mode) property`
 - `void set_keyboard_modifiers(key_modifier modifier) property`
 - `void set_mouse_grab(bool grabbed) property`
+- `void set_mouse_relative_mode(bool enabled) property`
 - `void set_sound_3d_attenuator_enabled(int attenuator_id, bool enabled)`
 - `void set_sound_3d_panner_enabled(int panner_id, bool enabled)`
 - `void set_sound_default_3d_attenuator(int attenuator_id)`
@@ -634,7 +621,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `const double DOUBLE_MAX`
 - `const double DOUBLE_MIN_NORMALIZED`
 - `const double DOUBLE_NEG_EPSILON`
-- `const float EPSILON`
 - `const float FLOAT_EPSILON`
 - `const float FLOAT_MAX`
 - `const float FLOAT_MIN_NORMALIZED`
@@ -722,6 +708,10 @@ This document contains the API definitions automatically extracted from the NVGT
 - `engine_key_event on_key_press`
 - `engine_key_event on_key_release`
 - `engine_key_event on_key_repeat`
+- `engine_mouse_button_event on_mouse_button_down`
+- `engine_mouse_button_event on_mouse_button_up`
+- `engine_mouse_motion_event on_mouse_move`
+- `engine_mouse_wheel_event on_mouse_wheel`
 - `engine_touch_event on_touch_finger_cancel`
 - `engine_touch_event on_touch_finger_down`
 - `engine_touch_event on_touch_finger_up`
@@ -732,29 +722,35 @@ This document contains the API definitions automatically extracted from the NVGT
 ## Classes
 ### Class `aabb`
 ##### Behaviours / Constructors
-- `void aabb()`
-- `void aabb(const vector&in min, const vector&in max)`
-- `void f()`
-- `void f(const vector&in min, const vector&in max)`
+- `aabb@ aabb()`
+- `aabb@ aabb(const aabb&in)`
+- `aabb@ aabb(const vector&in center, float radius)`
+- `aabb@ aabb(const vector&in min, const vector&in max)`
+- `aabb@ f()`
+- `aabb@ f(const aabb&in)`
+- `aabb@ f(const vector&in center, float radius)`
+- `aabb@ f(const vector&in min, const vector&in max)`
 ##### Methods
-- `bool contains(const aabb&in aabb) const`
-- `bool contains(const vector&in point, float epsilon = EPSILON) const`
-- `bool raycast(const ray&in ray, vector&out hit_point)`
-- `bool test_collision(const aabb&in aabb) const`
-- `bool test_collision_triangle_aabb(const vector[]@ points) const`
-- `bool test_ray_intersect(const vector&in ray_origin, const vector&in ray_direction, float ray_max_fraction)`
-- `const vector& get_max() const property`
-- `const vector& get_min() const property`
+- `aabb& opAssign(const aabb&in)`
+- `aabb@ intersect(const aabb&in other) const`
+- `bool contains(const aabb&in box) const`
+- `bool contains(const vector&in point) const`
+- `bool get_is_valid() const property`
+- `bool opEquals(const aabb&in) const`
+- `bool overlaps(const aabb&in other) const`
+- `bool test_collision(const aabb&in other) const`
 - `float get_volume() const property`
-- `vector get_center() const property`
-- `vector get_extent() const property`
-- `void apply_scale(const vector&in scale)`
+- `vector@ get_center() const property`
+- `vector@ get_extent() const property`
+- `vector@ get_max() const property`
+- `vector@ get_min() const property`
+- `vector@ get_size() const property`
+- `void encapsulate(const aabb&in box)`
+- `void encapsulate(const vector&in point)`
 - `void inflate(float x, float y, float z)`
 - `void inflate_with_point(const vector&in point)`
-- `void merge(const aabb&in aabb1, const aabb&in aabb2)`
-- `void merge_with(const aabb&in aabb)`
-- `void set_max(const vector&in max) property`
-- `void set_min(const vector&in min) property`
+- `void set_max(const vector&in) property`
+- `void set_min(const vector&in) property`
 
 ### Class `any`
 ##### Behaviours / Constructors
@@ -776,11 +772,8 @@ This document contains the API definitions automatically extracted from the NVGT
 ##### Methods
 - `any &opAssign(any&in other)`
 - `any& opAssign(any&in other)`
-- `bool retrieve(?&out value)`
 - `bool retrieve(?&out value) const`
-- `bool retrieve(double&out value)`
 - `bool retrieve(double&out value) const`
-- `bool retrieve(int64&out value)`
 - `bool retrieve(int64&out value) const`
 - `void store(?&in value)`
 - `void store(const double&in value)`
@@ -1780,8 +1773,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_flags() const property`
 - `int get_sample_rate() const property`
 - `mixer@ mixer()`
-- `sound@ play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = 0.0, float pan = 0.0, float pitch = 100.0, mixer@ mix = null, const pack_interface@ pack_file = sound_default_pack, bool autoplay = true)`
-- `sound@ play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = 0.0, float pan = 0.0, float pitch = 100.0, mixer@+ mix = null, const pack_interface@+ pack_file = sound_default_pack, bool autoplay = true)`
+- `sound@ play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = FLOAT_MAX, float pan = FLOAT_MAX, float pitch = FLOAT_MAX, mixer@ mix = null, const pack_interface@ pack_file = sound_default_pack, bool autoplay = true)`
+- `sound@ play(const string&in path, const vector&in position = vector(FLOAT_MAX, FLOAT_MAX, FLOAT_MAX), float volume = FLOAT_MAX, float pan = FLOAT_MAX, float pitch = FLOAT_MAX, mixer@+ mix = null, const pack_interface@+ pack_file = sound_default_pack, bool autoplay = true)`
 - `sound@ sound()`
 - `uint get_input_bus_count() const property`
 - `uint get_input_channels(uint bus) const`
@@ -1792,10 +1785,10 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint64 get_time() const`
 - `uint64 get_time_in_frames() const property`
 - `uint64 get_time_in_milliseconds() const property`
-- `vector get_listener_direction(int index) const`
-- `vector get_listener_position(int index) const`
-- `vector get_listener_velocity(int index) const`
-- `vector get_listener_world_up(int index) const`
+- `vector@ get_listener_direction(int index) const`
+- `vector@ get_listener_position(int index) const`
+- `vector@ get_listener_velocity(int index) const`
+- `vector@ get_listener_world_up(int index) const`
 - `void get_listener_cone(int index, float&out inner_radians, float&out outer_radians, float&out outer_gain) const`
 - `void set_listener_cone(int index, float inner_radians, float outer_radians, float outer_gain)`
 - `void set_listener_direction(int index, const vector&in direction)`
@@ -1808,6 +1801,64 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_listener_world_up(int index, const vector&in world_up)`
 - `void set_listener_world_up(int index, float x, float y, float z)`
 - `void set_processing_callback(audio_engine_processing_callback@ cb) property`
+
+### Class `audio_fdn_reverb_node`
+##### Behaviours / Constructors
+- `audio_fdn_reverb_node@ audio_fdn_reverb_node(audio_engine@ engine = sound_default_engine)`
+- `audio_fdn_reverb_node@ n(audio_engine@+ engine = sound_default_engine)`
+##### Methods
+- `audio_node@ opImplCast()`
+- `audio_node_state get_state()`
+- `audio_node_state get_state_by_time(uint64 global_time)`
+- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
+- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
+- `bool detach_all_output_buses()`
+- `bool detach_output_bus(uint bus)`
+- `bool get_frozen() const property`
+- `bool set_output_bus_volume(uint bus, float volume)`
+- `bool set_state(audio_node_state state)`
+- `bool set_state_time(audio_node_state state, uint64 time)`
+- `bool set_time(uint64 local_time)`
+- `float get_diffusion() const property`
+- `float get_dry() const property`
+- `float get_hf_reference() const property`
+- `float get_hf_rolloff() const property`
+- `float get_input_highpass() const property`
+- `float get_input_lowpass() const property`
+- `float get_late_reflections_delay() const property`
+- `float get_lf_reference() const property`
+- `float get_lf_rolloff() const property`
+- `float get_mean_free_path() const property`
+- `float get_modulation_depth() const property`
+- `float get_modulation_frequency() const property`
+- `float get_output_bus_volume(uint bus)`
+- `float get_t60() const property`
+- `float get_tail_length() const property`
+- `float get_wet() const property`
+- `float get_width() const property`
+- `uint get_input_bus_count() const property`
+- `uint get_input_channels(uint bus) const`
+- `uint get_output_bus_count() const property`
+- `uint get_output_channels(uint bus) const`
+- `uint64 get_state_time(audio_node_state state)`
+- `uint64 get_time() const`
+- `void reset()`
+- `void set_diffusion(float value) property`
+- `void set_dry(float value) property`
+- `void set_frozen(bool value) property`
+- `void set_hf_reference(float value) property`
+- `void set_hf_rolloff(float value) property`
+- `void set_input_highpass(float value) property`
+- `void set_input_lowpass(float value) property`
+- `void set_late_reflections_delay(float value) property`
+- `void set_lf_reference(float value) property`
+- `void set_lf_rolloff(float value) property`
+- `void set_mean_free_path(float value) property`
+- `void set_modulation_depth(float value) property`
+- `void set_modulation_frequency(float value) property`
+- `void set_t60(float value) property`
+- `void set_wet(float value) property`
+- `void set_width(float value) property`
 
 ### Class `audio_freeverb_node`
 ##### Behaviours / Constructors
@@ -1877,8 +1928,8 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `audio_high_shelf_filter`
 ##### Behaviours / Constructors
-- `audio_high_shelf_filter@ audio_high_shelf_filter(double gain_db, double q, double frequency, audio_engine@ engine = sound_default_engine)`
-- `audio_high_shelf_filter@ f(double gain_db, double q, double frequency, audio_engine@+ engine = sound_default_engine)`
+- `audio_high_shelf_filter@ audio_high_shelf_filter(double frequency, double gain_db, double q = 0.707, audio_engine@ engine = sound_default_engine)`
+- `audio_high_shelf_filter@ f(double frequency, double gain_db, double q = 0.707, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
 - `audio_node@ opImplCast()`
 - `audio_node_state get_state()`
@@ -1935,8 +1986,8 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `audio_low_shelf_filter`
 ##### Behaviours / Constructors
-- `audio_low_shelf_filter@ audio_low_shelf_filter(double gain_db, double q, double frequency, audio_engine@ engine = sound_default_engine)`
-- `audio_low_shelf_filter@ f(double gain_db, double q, double frequency, audio_engine@+ engine = sound_default_engine)`
+- `audio_low_shelf_filter@ audio_low_shelf_filter(double frequency, double gain_db, double q = 0.707, audio_engine@ engine = sound_default_engine)`
+- `audio_low_shelf_filter@ f(double frequency, double gain_db, double q = 0.707, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
 - `audio_node@ opImplCast()`
 - `audio_node_state get_state()`
@@ -1971,6 +2022,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `audio_delay_node@ opCast()`
 - `audio_encoder@ opCast()`
 - `audio_engine@ opCast()`
+- `audio_fdn_reverb_node@ opCast()`
 - `audio_freeverb_node@ opCast()`
 - `audio_high_pass_filter@ opCast()`
 - `audio_high_shelf_filter@ opCast()`
@@ -1996,7 +2048,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `float get_output_bus_volume(uint bus)`
 - `microphone@ opCast()`
 - `mixer@ opCast()`
-- `phonon_binaural_node@ opCast()`
 - `reverb3d@ opCast()`
 - `sound@ opCast()`
 - `uint get_input_bus_count() const property`
@@ -2016,11 +2067,17 @@ This document contains the API definitions automatically extracted from the NVGT
 - `audio_node@+ get_first() const property`
 - `audio_node@+ get_last() const property`
 - `audio_node@+ opIndex(uint index) const`
+- `audio_node_chain@ opAddAssign(audio_node@+ node)`
+- `audio_node_chain@ opAddAssign(const array<audio_node@>@ nodes)`
+- `audio_node_chain@ opAddAssign(const audio_node@[]@+ nodes)`
+- `audio_node_chain@ opSubAssign(audio_node@+ node)`
 - `audio_node_state get_state()`
 - `audio_node_state get_state_by_time(uint64 global_time)`
 - `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
 - `bool add_node(audio_node@+ node, audio_node@+ after = null, uint input_bus_index = 0)`
 - `bool add_node(audio_node@+ node, int after, uint input_bus_index = 0)`
+- `bool add_nodes(const array<audio_node@>@ nodes)`
+- `bool add_nodes(const audio_node@[]@+ nodes)`
 - `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
 - `bool clear(bool detach_nodes = true)`
 - `bool detach_all_output_buses()`
@@ -2044,8 +2101,8 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `audio_notch_filter`
 ##### Behaviours / Constructors
-- `audio_notch_filter@ audio_notch_filter(double q, double frequency, audio_engine@ engine = sound_default_engine)`
-- `audio_notch_filter@ f(double q, double frequency, audio_engine@+ engine = sound_default_engine)`
+- `audio_notch_filter@ audio_notch_filter(double frequency, double q = 0.707, audio_engine@ engine = sound_default_engine)`
+- `audio_notch_filter@ f(double frequency, double q = 0.707, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
 - `audio_node@ opImplCast()`
 - `audio_node_state get_state()`
@@ -2126,8 +2183,8 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `audio_peak_filter`
 ##### Behaviours / Constructors
-- `audio_peak_filter@ audio_peak_filter(double gain_db, double q, double frequency, audio_engine@ engine = sound_default_engine)`
-- `audio_peak_filter@ f(double gain_db, double q, double frequency, audio_engine@+ engine = sound_default_engine)`
+- `audio_peak_filter@ audio_peak_filter(double frequency, double gain_db, double q = 0.707, audio_engine@ engine = sound_default_engine)`
+- `audio_peak_filter@ f(double frequency, double gain_db, double q = 0.707, audio_engine@+ engine = sound_default_engine)`
 ##### Methods
 - `audio_node@ opImplCast()`
 - `audio_node_state get_state()`
@@ -2210,8 +2267,8 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `audio_splitter_node`
 ##### Behaviours / Constructors
-- `audio_splitter_node@ audio_splitter_node(audio_engine@ engine, int channels)`
-- `audio_splitter_node@ n(audio_engine@+ engine, int channels)`
+- `audio_splitter_node@ audio_splitter_node(audio_engine@ engine = sound_default_engine, int channels = 0)`
+- `audio_splitter_node@ n(audio_engine@+ engine = sound_default_engine, int channels = 0)`
 ##### Methods
 - `audio_node@ opImplCast()`
 - `audio_node_state get_state()`
@@ -3722,6 +3779,72 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void clear()`
 - `void opCall(int key)`
 
+### Class `engine_mouse_button_event`
+##### Methods
+- `bool insert(engine_mouse_button_event_callback@ listener, int index = -1)`
+- `bool insert(engine_mouse_button_event_listener@ listener, int index = -1)`
+- `bool insert(engine_mouse_button_event_passthrough_callback@ listener, int index = -1)`
+- `bool opAddAssign(engine_mouse_button_event_callback@ listener)`
+- `bool opAddAssign(engine_mouse_button_event_listener@ listener)`
+- `bool opAddAssign(engine_mouse_button_event_passthrough_callback@ listener)`
+- `bool opSubAssign(engine_mouse_button_event_callback@ listener)`
+- `bool opSubAssign(engine_mouse_button_event_listener@ listener)`
+- `bool opSubAssign(engine_mouse_button_event_passthrough_callback@ listener)`
+- `bool remove(engine_mouse_button_event_callback@ listener)`
+- `bool remove(engine_mouse_button_event_listener@ listener)`
+- `bool remove(engine_mouse_button_event_passthrough_callback@ listener)`
+- `bool remove(uint index)`
+- `int find(engine_mouse_button_event_callback@ listener) const`
+- `int find(engine_mouse_button_event_listener@ listener) const`
+- `int find(engine_mouse_button_event_passthrough_callback@ listener) const`
+- `uint get_count() const property`
+- `void clear()`
+- `void opCall(int button, int clicks)`
+
+### Class `engine_mouse_motion_event`
+##### Methods
+- `bool insert(engine_mouse_motion_event_callback@ listener, int index = -1)`
+- `bool insert(engine_mouse_motion_event_listener@ listener, int index = -1)`
+- `bool insert(engine_mouse_motion_event_passthrough_callback@ listener, int index = -1)`
+- `bool opAddAssign(engine_mouse_motion_event_callback@ listener)`
+- `bool opAddAssign(engine_mouse_motion_event_listener@ listener)`
+- `bool opAddAssign(engine_mouse_motion_event_passthrough_callback@ listener)`
+- `bool opSubAssign(engine_mouse_motion_event_callback@ listener)`
+- `bool opSubAssign(engine_mouse_motion_event_listener@ listener)`
+- `bool opSubAssign(engine_mouse_motion_event_passthrough_callback@ listener)`
+- `bool remove(engine_mouse_motion_event_callback@ listener)`
+- `bool remove(engine_mouse_motion_event_listener@ listener)`
+- `bool remove(engine_mouse_motion_event_passthrough_callback@ listener)`
+- `bool remove(uint index)`
+- `int find(engine_mouse_motion_event_callback@ listener) const`
+- `int find(engine_mouse_motion_event_listener@ listener) const`
+- `int find(engine_mouse_motion_event_passthrough_callback@ listener) const`
+- `uint get_count() const property`
+- `void clear()`
+- `void opCall(float x, float y, float relative_x, float relative_y)`
+
+### Class `engine_mouse_wheel_event`
+##### Methods
+- `bool insert(engine_mouse_wheel_event_callback@ listener, int index = -1)`
+- `bool insert(engine_mouse_wheel_event_listener@ listener, int index = -1)`
+- `bool insert(engine_mouse_wheel_event_passthrough_callback@ listener, int index = -1)`
+- `bool opAddAssign(engine_mouse_wheel_event_callback@ listener)`
+- `bool opAddAssign(engine_mouse_wheel_event_listener@ listener)`
+- `bool opAddAssign(engine_mouse_wheel_event_passthrough_callback@ listener)`
+- `bool opSubAssign(engine_mouse_wheel_event_callback@ listener)`
+- `bool opSubAssign(engine_mouse_wheel_event_listener@ listener)`
+- `bool opSubAssign(engine_mouse_wheel_event_passthrough_callback@ listener)`
+- `bool remove(engine_mouse_wheel_event_callback@ listener)`
+- `bool remove(engine_mouse_wheel_event_listener@ listener)`
+- `bool remove(engine_mouse_wheel_event_passthrough_callback@ listener)`
+- `bool remove(uint index)`
+- `int find(engine_mouse_wheel_event_callback@ listener) const`
+- `int find(engine_mouse_wheel_event_listener@ listener) const`
+- `int find(engine_mouse_wheel_event_passthrough_callback@ listener) const`
+- `uint get_count() const property`
+- `void clear()`
+- `void opCall(float x, float y)`
+
 ### Class `engine_touch_event`
 ##### Methods
 - `bool insert(engine_touch_event_callback@ listener, int index = -1)`
@@ -3921,6 +4044,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool get_maximum_size(int&out w, int&out h) const`
 - `bool get_minimum_size(int&out w, int&out h) const`
 - `bool get_mouse_grab() const property`
+- `bool get_mouse_relative_mode() const property`
 - `bool get_position(int&out x, int&out y) const`
 - `bool get_size(int&out w, int&out h) const`
 - `bool get_size_in_pixels(int&out w, int&out h) const`
@@ -3944,6 +4068,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool set_minimum_size(int w, int h)`
 - `bool set_modal(bool modal)`
 - `bool set_mouse_grab(bool grabbed)`
+- `bool set_mouse_relative_mode(bool enabled)`
 - `bool set_opacity(float opacity)`
 - `bool set_position(int x, int y)`
 - `bool set_progress_state(uint state)`
@@ -4027,6 +4152,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool render_graphic(graphic@+ gfx, float src_x, float src_y, float src_w, float src_h, float dst_x, float dst_y, float dst_w, float dst_h)`
 - `bool render_texture(graphics_texture@+ tex, float dst_x, float dst_y)`
 - `bool render_texture(graphics_texture@+ tex, float src_x, float src_y, float src_w, float src_h, float dst_x, float dst_y, float dst_w, float dst_h)`
+- `bool render_texture_rotated(graphics_texture@+ tex, float dst_x, float dst_y, double angle, flip_mode flip = FLIP_NONE)`
+- `bool render_texture_rotated(graphics_texture@+ tex, float src_x, float src_y, float src_w, float src_h, float dst_x, float dst_y, float dst_w, float dst_h, double angle, float center_x, float center_y, flip_mode flip = FLIP_NONE)`
 - `bool set_clip_rect(int x, int y, int w, int h)`
 - `bool set_color_scale(float scale)`
 - `bool set_draw_blend_mode(blend_mode mode)`
@@ -4324,9 +4451,9 @@ This document contains the API definitions automatically extracted from the NVGT
 - `http_credentials@ http_credentials(const string&in username, const string&in password)`
 ##### Methods
 - `bool get_empty() const property`
-- `string get_host() const property`
-- `string get_password() const property`
-- `string get_username() const property`
+- `const string& get_host() const property`
+- `const string& get_password() const property`
+- `const string& get_username() const property`
 - `void authenticate(http_request& request, const http_response&in response)`
 - `void authenticate(http_request&inout request, const http_response&in response)`
 - `void clear()`
@@ -4361,7 +4488,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool has_token(const string&in name, const string&in token)`
 - `bool read(datastream@ stream)`
 - `bool write(datastream@ stream) const`
-- `const string& get(const string&in name, const string&in default_value = "") const`
 - `const string& get_host() const property`
 - `const string& get_method() const property`
 - `const string& get_opIndex(const string&in name) const property`
@@ -4375,6 +4501,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_value_length_limit() const property`
 - `int64 get_content_length() const property`
 - `internet_message_header@ opImplCast()`
+- `string get(const string&in name, const string&in default_value = "") const`
 - `string get_content_type() const property`
 - `string get_decoded(const string&in name, const string&in default_value = "")`
 - `string get_transfer_encoding() const property`
@@ -4428,7 +4555,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool has_token(const string&in name, const string&in token)`
 - `bool read(datastream@ stream)`
 - `bool write(datastream@ stream) const`
-- `const string& get(const string&in name, const string&in default_value = "") const`
 - `const string& get_opIndex(const string&in name) const property`
 - `const string& get_reason() const property`
 - `const string& get_version() const property`
@@ -4441,6 +4567,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_value_length_limit() const property`
 - `int64 get_content_length() const property`
 - `internet_message_header@ opImplCast()`
+- `string get(const string&in name, const string&in default_value = "") const`
 - `string get_content_type() const property`
 - `string get_decoded(const string&in name, const string&in default_value = "")`
 - `string get_transfer_encoding() const property`
@@ -4675,7 +4802,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `bool has_token(const string&in name, const string&in token)`
 - `bool read(datastream@ stream)`
 - `bool write(datastream@ stream) const`
-- `const string& get(const string&in name, const string&in default_value = "") const`
 - `const string& get_opIndex(const string&in name) const property`
 - `const string& name_at(uint index) const`
 - `const string& value_at(uint index) const`
@@ -4686,6 +4812,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_value_length_limit() const property`
 - `internet_message_header& opAssign(const internet_message_header&in other)`
 - `name_value_collection@ opImplCast()`
+- `string get(const string&in name, const string&in default_value = "") const`
 - `string get_decoded(const string&in name, const string&in default_value = "")`
 - `uint64 size() const`
 - `void add(const string&in name, const string&in value)`
@@ -5163,41 +5290,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string address`
 - `string real_name`
 
-### Class `matrix3x3`
-##### Behaviours / Constructors
-- `void f()`
-- `void f(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3)`
-- `void f(float value)`
-- `void matrix3x3()`
-- `void matrix3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3)`
-- `void matrix3x3(float value)`
-##### Methods
-- `bool opEquals(const matrix3x3&in)`
-- `const vector& opIndex(int row) const`
-- `float get_determinant() const property`
-- `float get_trace() const property`
-- `matrix3x3 get_absolute() const property`
-- `matrix3x3 get_inverse() const property`
-- `matrix3x3 get_inverse(float determinant) const`
-- `matrix3x3 get_transpose() const property`
-- `matrix3x3 opAdd(const matrix3x3&in matrix) const`
-- `matrix3x3 opMul(const matrix3x3&in matrix) const`
-- `matrix3x3 opMul(float value) const`
-- `matrix3x3 opMulR(float value) const`
-- `matrix3x3 opNeg() const`
-- `matrix3x3 opSub(const matrix3x3&in matrix) const`
-- `matrix3x3& opAddAssign(const matrix3x3&in matrix)`
-- `matrix3x3& opMulAssign(float value)`
-- `matrix3x3& opSubAssign(const matrix3x3&in matrix)`
-- `string opImplConv()`
-- `vector get_column(int i) const`
-- `vector get_row(int i) const`
-- `vector opMul(const vector&in value) const`
-- `vector& opIndex(int row)`
-- `void set(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3)`
-- `void set_to_identity()`
-- `void set_to_zero()`
-
 ### Class `memory_buffer<class T>`
 
 ### Class `memory_buffer<T>`
@@ -5454,6 +5546,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `mixer@ mixer()`
 ##### Methods
 - `audio_engine@ get_engine() const property`
+- `audio_node@ get_reverb3d_attachment() const property`
 - `audio_node@ opImplCast()`
 - `audio_node_chain@ get_effects_chain() property`
 - `audio_node_chain@ get_internal_node_chain() property`
@@ -5462,7 +5555,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
 - `audio_pan_mode get_pan_mode() const property`
 - `audio_positioning_mode get_positioning() const property`
-- `audio_splitter_node@ get_reverb3d_attachment() const property`
 - `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
 - `bool detach_all_output_buses()`
 - `bool detach_output_bus(uint bus)`
@@ -5507,10 +5599,10 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint get_pinned_listener() const property`
 - `uint64 get_state_time(audio_node_state state)`
 - `uint64 get_time() const`
-- `vector get_direction() const`
-- `vector get_direction_to_listener() const`
-- `vector get_position_3d() const`
-- `vector get_velocity() const`
+- `vector@ get_direction() const`
+- `vector@ get_direction_to_listener() const`
+- `vector@ get_position_3d() const`
+- `vector@ get_velocity() const`
 - `void get_cone(float&out inner_radians, float&out outer_radians, float&out outer_gain)`
 - `void set_3d_attenuator(int attenuator_id)`
 - `void set_3d_panner(int panner_id)`
@@ -5570,12 +5662,12 @@ This document contains the API definitions automatically extracted from the NVGT
 ##### Methods
 - `bool empty() const`
 - `bool exists(const string&in name) const`
-- `const string& get(const string&in name, const string&in default_value = "") const`
 - `const string& get_opIndex(const string&in name) const property`
 - `const string& name_at(uint index) const`
 - `const string& value_at(uint index) const`
 - `internet_message_header@ opCast()`
 - `name_value_collection& opAssign(const name_value_collection&in other)`
+- `string get(const string&in name, const string&in default_value = "") const`
 - `uint64 size() const`
 - `void add(const string&in name, const string&in value)`
 - `void clear()`
@@ -5803,666 +5895,400 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void set_callback_function(pathfinder_callback_legacy@ callback)`
 - `void set_desperation_factor(int factor) property`
 
-### Class `phonon_binaural_node`
-##### Behaviours / Constructors
-- `phonon_binaural_node@ n(audio_engine@+ engine, int channels, int sample_rate, int frame_size = 0)`
-- `phonon_binaural_node@ phonon_binaural_node(audio_engine@ engine, int channels, int sample_rate, int frame_size = 0)`
-##### Methods
-- `audio_node@ opImplCast()`
-- `audio_node_state get_state()`
-- `audio_node_state get_state_by_time(uint64 global_time)`
-- `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
-- `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
-- `bool detach_all_output_buses()`
-- `bool detach_output_bus(uint bus)`
-- `bool set_output_bus_volume(uint bus, float volume)`
-- `bool set_state(audio_node_state state)`
-- `bool set_state_time(audio_node_state state, uint64 time)`
-- `bool set_time(uint64 local_time)`
-- `float get_output_bus_volume(uint bus)`
-- `uint get_input_bus_count() const property`
-- `uint get_input_channels(uint bus) const`
-- `uint get_output_bus_count() const property`
-- `uint get_output_channels(uint bus) const`
-- `uint64 get_state_time(audio_node_state state)`
-- `uint64 get_time() const`
-- `void set_direction(const vector&in direction, float distance)`
-- `void set_direction(float x, float y, float z, float distance)`
-- `void set_spatial_blend_max_distance(float max_distance)`
-
-### Class `physics_body`
-##### Methods
-- `aabb get_aabb() const property`
-- `any@ get_user_data() const`
-- `bool get_is_active() const property`
-- `bool get_is_debug_enabled() const property`
-- `bool raycast(const ray&inout point, raycast_info&inout raycast_info) const`
-- `bool test_aabb_overlap(const aabb&in world_aabb) const`
-- `bool test_point_inside(const vector&in point) const`
-- `const physics_collider& get_collider(uint index) const`
-- `const physics_transform& get_transform() const property`
-- `physics_collider& get_collider(uint index)`
-- `physics_collider@ add_collider(physics_collision_shape@ shape, const physics_transform&in transform)`
-- `physics_entity get_entity() const property`
-- `uint get_nb_colliders() const property`
-- `vector get_local_point(const vector&in world_point) const`
-- `vector get_local_vector(const vector&in world_vector) const`
-- `vector get_world_point(const vector&in local_point) const`
-- `vector get_world_vector(const vector&in local_vector) const`
-- `void remove_collider(physics_collider&in collider)`
-- `void set_debug_enabled(bool enabled) property`
-- `void set_is_active(bool is_active) property`
-- `void set_transform(const physics_transform&in transform) property`
-- `void set_user_data(any@ userData)`
-
-### Class `physics_box_shape`
-##### Behaviours / Constructors
-- `physics_box_shape@ f(const vector&in half_extents)`
-- `physics_box_shape@ physics_box_shape(const vector&in half_extents)`
-##### Methods
-- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
-- `aabb get_local_bounds() const`
-- `bool get_is_convex() const property`
-- `bool get_is_polyhedron() const property`
-- `const physics_collision_shape@ opImplCast() const`
-- `const physics_half_edge_structure_edge& get_half_edge(uint edge_index) const`
-- `const physics_half_edge_structure_face& get_face(uint face_index)`
-- `const physics_half_edge_structure_vertex& get_vertex(uint vertex_index)`
-- `const vector get_face_normal(uint vertex_index)`
-- `const vector get_vertex_position(uint vertex_index)`
-- `float get_margin() const property`
-- `float get_volume() const property`
-- `int get_id() const property`
-- `physics_collision_shape@ opImplCast()`
-- `physics_shape_name get_name() const property`
-- `physics_shape_type get_type() const property`
-- `string opImplConv() const`
-- `uint find_most_anti_parallel_face(const vector&in direction) const`
-- `uint get_nb_faces() const property`
-- `uint get_nb_half_edges() const property`
-- `uint get_nb_vertices() const property`
-- `vector get_centroid() const property`
-- `vector get_local_inertia_tensor(float mass) const`
-- `vector& get_half_extents() const property`
-- `void set_half_extents(const vector&in half_extents) property`
-
-### Class `physics_capsule_shape`
-##### Behaviours / Constructors
-- `physics_capsule_shape@ f(float radius, float height)`
-- `physics_capsule_shape@ physics_capsule_shape(float radius, float height)`
-##### Methods
-- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
-- `aabb get_local_bounds() const`
-- `bool get_is_convex() const property`
-- `bool get_is_polyhedron() const property`
-- `const physics_collision_shape@ opImplCast() const`
-- `float get_height() const property`
-- `float get_margin() const property`
-- `float get_radius() const property`
-- `float get_volume() const property`
-- `int get_id() const property`
-- `physics_collision_shape@ opImplCast()`
-- `physics_shape_name get_name() const property`
-- `physics_shape_type get_type() const property`
-- `string opImplConv()`
-- `string opImplConv() const`
-- `vector get_local_inertia_tensor(float mass) const`
-- `void set_height(float height) property`
-- `void set_radius(float radius) property`
-
-### Class `physics_collider`
-##### Methods
-- `bool get_is_simulation_collider() const property`
-- `bool get_is_trigger() const property`
-- `bool get_is_world_query_collider() const property`
-- `bool raycast(const ray&in ray, raycast_info& raycast_info)`
-- `bool raycast(const ray&in ray, raycast_info&inout raycast_info)`
-- `bool test_aabb_overlap(const aabb&in world_aabb) const`
-- `bool test_point_inside(const vector&in world_point)`
-- `const aabb get_world_aabb() const property`
-- `const physics_collision_shape@ get_collision_shape() const property`
-- `const physics_transform get_local_to_world_transform() const`
-- `const physics_transform& get_local_to_body_transform() const property`
-- `physics_body@ get_body() const property`
-- `physics_collision_shape@ get_collision_shape() property`
-- `physics_entity get_entity() const property`
-- `physics_material& get_material() property`
-- `uint16 get_broad_phase_id() const property`
-- `uint16 get_collide_with_mask() const property`
-- `uint16 get_collision_category() const property`
-- `void set_collide_with_mask(uint16 bits) property`
-- `void set_collision_category(uint16 bits) property`
-- `void set_is_simulation_collider(bool is_simulation_collider) property`
-- `void set_is_trigger(bool is_trigger) property`
-- `void set_is_world_query_collider(bool is_world_query_collider) property`
-- `void set_local_to_body_transform(const physics_transform&in transform) property`
-- `void set_material(const physics_material&in material) property`
-
-### Class `physics_collision_callback_data`
-##### Methods
-- `physics_contact_pair get_contact_pair(uint64 index) const`
-- `uint get_nb_contact_pairs() const property`
-
-### Class `physics_collision_shape`
-##### Methods
-- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
-- `aabb get_local_bounds() const`
-- `bool get_is_convex() const property`
-- `bool get_is_polyhedron() const property`
-- `float get_volume() const property`
-- `int get_id() const property`
-- `physics_shape_name get_name() const property`
-- `physics_shape_type get_type() const property`
-- `string opImplConv() const`
-- `vector get_local_inertia_tensor(float mass) const`
-
-### Class `physics_concave_mesh_shape`
-##### Behaviours / Constructors
-- `physics_concave_mesh_shape@ f(physics_triangle_mesh@ triangle_mesh, const vector&in scaling = vector(1,1,1))`
-- `physics_concave_mesh_shape@ physics_concave_mesh_shape(physics_triangle_mesh@ triangle_mesh, const vector&in scaling = vector(1,1,1))`
-##### Methods
-- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
-- `aabb get_local_bounds() const`
-- `bool get_is_convex() const property`
-- `bool get_is_polyhedron() const property`
-- `const physics_collision_shape@ opImplCast() const`
-- `const vector& get_vertex_normal(uint vertex_index) const`
-- `float get_volume() const property`
-- `int get_id() const property`
-- `physics_collision_shape@ opImplCast()`
-- `physics_shape_name get_name() const property`
-- `physics_shape_type get_type() const property`
-- `physics_triangle_raycast_side get_raycast_test_type() const property`
-- `string opImplConv() const`
-- `uint get_nb_triangles() const property`
-- `uint get_nb_vertices() const property`
-- `vector get_local_inertia_tensor(float mass) const`
-- `vector get_scale() const property`
-- `vector get_vertex(uint vertex_index) const`
-- `void get_triangle_vertices(uint triangle_index, vector&out v1, vector&out v2, vector&out v3) const`
-- `void get_triangle_vertices_indices(uint triangle_index, uint&out v1_index, uint&out v2_index, uint&out v3_index) const`
-- `void get_triangle_vertices_normals(uint triangle_index, vector&out n1, vector&out n2, vector&out n3) const`
-- `void set_raycast_test_type(physics_triangle_raycast_side side) property`
-- `void set_scale(const vector&in scale) property`
-
-### Class `physics_contact_pair`
-##### Behaviours / Constructors
-- `void f(const physics_contact_pair&in pair)`
-- `void physics_contact_pair()`
-- `void physics_contact_pair(const physics_contact_pair&in pair)`
-##### Methods
-- `physics_body@ get_body1() const property`
-- `physics_body@ get_body2() const property`
-- `physics_collider@ get_collider1() const property`
-- `physics_collider@ get_collider2() const property`
-- `physics_contact_event_type get_event_type() const property`
-- `physics_contact_point@ get_contact_point(uint index) const`
-- `uint get_nb_contact_points() const property`
-
-### Class `physics_contact_point`
-##### Methods
-- `const vector& get_local_point_on_collider1() const property`
-- `const vector& get_local_point_on_collider2() const property`
-- `const vector& get_world_normal() const property`
-
-### Class `physics_convex_mesh`
-##### Methods
-- `const aabb& get_bounds() const property`
-- `const physics_half_edge_structure& get_half_edge_structure() const property`
-- `const vector& get_centroid() const property`
-- `const vector& get_face_normal(uint index) const`
-- `const vector& get_vertex(uint index) const`
-- `float get_volume() const property`
-- `uint get_nb_faces() const property`
-- `uint get_nb_vertices() const property`
-- `vector get_local_inertia_tensor(float mass, vector scale) const`
-
-### Class `physics_convex_mesh_shape`
-##### Behaviours / Constructors
-- `physics_convex_mesh_shape@ f(physics_convex_mesh@ convex_mesh, const vector&in scaling = vector(1,1,1))`
-- `physics_convex_mesh_shape@ physics_convex_mesh_shape(physics_convex_mesh@ convex_mesh, const vector&in scaling = vector(1,1,1))`
-##### Methods
-- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
-- `aabb get_local_bounds() const`
-- `bool get_is_convex() const property`
-- `bool get_is_polyhedron() const property`
-- `const physics_collision_shape@ opImplCast() const`
-- `const physics_half_edge_structure_edge& get_half_edge(uint edge_index) const`
-- `const physics_half_edge_structure_face& get_face(uint face_index)`
-- `const physics_half_edge_structure_vertex& get_vertex(uint vertex_index)`
-- `const vector get_face_normal(uint vertex_index)`
-- `const vector get_vertex_position(uint vertex_index)`
-- `float get_margin() const property`
-- `float get_volume() const property`
-- `int get_id() const property`
-- `physics_collision_shape@ opImplCast()`
-- `physics_shape_name get_name() const property`
-- `physics_shape_type get_type() const property`
-- `string opImplConv() const`
-- `uint find_most_anti_parallel_face(const vector&in direction) const`
-- `uint get_nb_faces() const property`
-- `uint get_nb_half_edges() const property`
-- `uint get_nb_vertices() const property`
-- `vector get_centroid() const property`
-- `vector get_local_inertia_tensor(float mass) const`
-- `vector& get_scale() const property`
-- `void set_scale(vector& scale) const property`
-- `void set_scale(vector&inout scale) const property`
-
-### Class `physics_default_logger`
-##### Methods
-- `const physics_logger@ opImplCast() const`
-- `physics_logger@ opImplCast()`
-- `void add_file_destination(const string&in filePath, uint logLevelFlag, physics_logger_format format)`
-- `void remove_all_destinations()`
-
-### Class `physics_entity`
-##### Behaviours / Constructors
-- `void f(uint index, uint generation)`
-- `void physics_entity()`
-- `void physics_entity(uint index, uint generation)`
-##### Properties
-- `uint id`
-##### Methods
-- `bool opEquals(const physics_entity&in entity) const`
-- `uint get_generation() const property`
-- `uint get_index() const property`
-
-### Class `physics_half_edge_structure`
-##### Methods
-- `const physics_half_edge_structure_face& get_face(uint index) const property`
-- `uint add_vertex(uint vertex_point_index)`
-- `uint get_nb_faces() const property`
-- `uint get_nb_half_edges() const property`
-- `uint get_nb_vertices() const property`
-- `void compute_half_edges()`
-
-### Class `physics_half_edge_structure_edge`
+### Class `physics_body_id`
 ##### Behaviours / Constructors
 - `void f()`
-- `void physics_half_edge_structure_edge()`
-##### Properties
-- `uint face_index`
-- `uint next_edge_index`
-- `uint twin_edge_index`
-- `uint vertex_index`
-
-### Class `physics_half_edge_structure_face`
+- `void f(const physics_body_id&in)`
+- `void f(uint raw_id)`
+- `void physics_body_id()`
+- `void physics_body_id(const physics_body_id&in)`
+- `void physics_body_id(uint raw_id)`
 ##### Methods
-- `uint[]@ get_face_vertices() const`
-- `void set_face_vertices(uint[]@ face_vertices)`
-
-### Class `physics_half_edge_structure_vertex`
-##### Behaviours / Constructors
-- `void f(uint vertex_coords_index)`
-- `void physics_half_edge_structure_vertex()`
-- `void physics_half_edge_structure_vertex(uint vertex_coords_index)`
-##### Properties
-- `uint vertex_edge_index`
-- `uint vertex_point_index`
-
-### Class `physics_height_field`
-##### Methods
-- `aabb& get_bounds() const property`
-- `float get_height_at(uint x, uint y) const`
-- `float get_integer_height_scale() const property`
-- `float get_max_height() const property`
-- `float get_min_height() const property`
-- `physics_height_data_type get_height_data_type() const property`
+- `bool get_is_invalid() const property`
+- `bool opEquals(const physics_body_id&in) const`
 - `string opImplConv() const`
-- `uint get_nb_columns() const property`
-- `uint get_nb_rows() const property`
-- `vector get_vertex_at(uint x, uint y) const`
+- `uint get_index() const property`
+- `uint get_raw() const property`
+- `uint8 get_sequence_number() const property`
 
-### Class `physics_height_field_shape`
-##### Behaviours / Constructors
-- `physics_height_field_shape@ f(physics_height_field@ height_field, const vector&in scaling = vector(1,1,1))`
-- `physics_height_field_shape@ physics_height_field_shape(physics_height_field@ height_field, const vector&in scaling = vector(1,1,1))`
+### Class `physics_box_shape`
 ##### Methods
-- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
-- `aabb get_local_bounds() const`
-- `bool get_is_convex() const property`
-- `bool get_is_polyhedron() const property`
-- `const physics_collision_shape@ opImplCast() const`
-- `float get_volume() const property`
-- `int get_id() const property`
-- `physics_collision_shape@ opImplCast()`
-- `physics_height_field@ get_height_field() const property`
-- `physics_shape_name get_name() const property`
-- `physics_shape_type get_type() const property`
-- `physics_triangle_raycast_side get_raycast_test_type() const property`
-- `string opImplConv() const`
-- `vector get_local_inertia_tensor(float mass) const`
-- `vector get_scale() const property`
-- `vector get_vertex_at(uint x, uint y) const`
-- `void set_raycast_test_type(physics_triangle_raycast_side side) property`
-- `void set_scale(const vector&in scale) property`
-
-### Class `physics_joint`
-##### Methods
-- `bool get_is_collision_enabled() const property`
-- `physics_entity get_entity() const property`
-- `physics_joint_type get_type() const property`
-- `physics_rigid_body@ get_body1() const property`
-- `physics_rigid_body@ get_body2() const property`
-- `string opImplConv()`
-- `vector get_reaction_force(float time_step) const`
-- `vector get_reaction_torque(float time_step) const`
-
-### Class `physics_joint_info`
-##### Behaviours / Constructors
-- `void f(physics_rigid_body@ body1, physics_rigid_body@ body2, physics_joint_type constraint_type)`
-- `void physics_joint_info()`
-- `void physics_joint_info(physics_rigid_body@ body1, physics_rigid_body@ body2, physics_joint_type constraint_type)`
-##### Properties
-- `bool isCollisionEnabled`
-- `physics_joint_type type`
-- `physics_joints_position_correction_technique position_correction_technique`
-- `physics_rigid_body@ body1`
-- `physics_rigid_body@ body2`
-
-### Class `physics_logger`
-##### Methods
-- `void log(physics_logger_level level, const string&in worldName, physics_logger_category category, const string&in message)`
-
-### Class `physics_material`
-##### Methods
-- `float get_bounciness() const property`
-- `float get_friction_coefficient() const property`
-- `float get_friction_coefficient_sqrt() const property`
-- `float get_mass_density() const property`
-- `string opImplConv()`
-- `void set_bounciness(float bounciness) property`
-- `void set_friction_coefficient(float friction_coefficient) property`
-- `void set_mass_density(float mass_density) property`
-
-### Class `physics_message`
-##### Behaviours / Constructors
-- `void f(string text, physics_message_type type = PHYSICS_MESSAGE_ERROR)`
-- `void physics_message()`
-- `void physics_message(string text, physics_message_type type = PHYSICS_MESSAGE_ERROR)`
-##### Properties
-- `physics_message_type type`
-- `string text`
-
-### Class `physics_overlap_callback_data`
-##### Methods
-- `physics_overlap_pair get_overlapping_pair(uint index) const`
-- `uint get_nb_overlap_pairs() const property`
-
-### Class `physics_overlap_pair`
-##### Behaviours / Constructors
-- `void f(const physics_overlap_pair&in pair)`
-- `void physics_overlap_pair()`
-- `void physics_overlap_pair(const physics_overlap_pair&in pair)`
-##### Methods
-- `physics_body& get_body1() const property`
-- `physics_body& get_body2() const property`
-- `physics_collider& get_collider1() const property`
-- `physics_collider& get_collider2() const property`
-- `physics_overlap_event_type get_event_type() const property`
-
-### Class `physics_polygon_data`
-##### Behaviours / Constructors
-- `physics_polygon_data@ f(float[]@ vertices, array<array<uint>>@ faces)`
-- `physics_polygon_data@ physics_polygon_data(array<float>@ vertices, array<array<uint>>@ faces)`
-
-### Class `physics_polygon_face`
-##### Properties
-- `uint index_base`
-- `uint nb_vertices`
-
-### Class `physics_polygon_vertex_array`
-##### Methods
-- `physics_polygon_face@ get_polygon_face(uint face_index) const`
-- `physics_polygon_index_data_type get_index_data_type() const property`
-- `physics_polygon_vertex_data_type get_vertex_data_type() const property`
-- `uint get_indices_stride() const property`
-- `uint get_nb_faces() const property`
-- `uint get_nb_vertices() const property`
-- `uint get_vertex_index_in_face(uint face_index, uint vertex_in_face) const`
-- `uint get_vertices_stride() const property`
-- `vector get_vertex(uint vertex_index) const`
-
-### Class `physics_rigid_body`
-##### Methods
-- `aabb get_aabb() const property`
-- `any@ get_user_data() const`
-- `bool get_is_active() const property`
-- `bool get_is_debug_enabled() const property`
-- `bool get_is_gravity_enabled() const property`
-- `bool raycast(const ray&inout point, raycast_info&inout raycast_info) const`
-- `bool test_aabb_overlap(const aabb&in world_aabb) const`
-- `bool test_point_inside(const vector&in point) const`
-- `const physics_body@ opImplCast() const`
-- `const physics_collider& get_collider(uint index) const`
-- `const physics_transform& get_transform() const property`
-- `const vector& get_angular_lock_axis_factor() const property`
-- `const vector& get_linear_lock_axis_factor() const property`
-- `const vector& get_local_center_of_mass() const property`
-- `const vector& get_local_inertia_tensor() const property`
-- `float get_angular_damping() const property`
-- `float get_linear_damping() const property`
+- `aabb@ get_local_bounds() const property`
+- `bool cast_ray(const vector&in origin, const vector&in direction, float&out hit_fraction) const`
+- `bool contains_point(const vector&in point) const`
+- `bool get_must_be_static() const property`
+- `bool is_valid_scale(const vector&in scale) const`
+- `float get_convex_radius() const property`
+- `float get_density() const property`
+- `float get_inner_radius() const property`
 - `float get_mass() const property`
-- `physics_body@ opImplCast()`
-- `physics_body_type get_type() const property`
-- `physics_collider& get_collider(uint index)`
-- `physics_collider@ add_collider(physics_collision_shape@ shape, const physics_transform&in transform)`
-- `physics_entity get_entity() const property`
-- `uint get_nb_colliders() const property`
-- `vector get_angular_velocity() const property`
-- `vector get_linear_velocity() const property`
-- `vector get_local_point(const vector&in world_point) const`
-- `vector get_local_vector(const vector&in world_vector) const`
-- `vector get_world_point(const vector&in local_point) const`
-- `vector get_world_vector(const vector&in local_vector) const`
-- `void remove_collider(physics_collider&in collider)`
-- `void set_angular_damping(float angular_damping) property`
-- `void set_angular_lock_axis_factor(const vector&in angular_lock_axis_factor) property`
-- `void set_angular_velocity(const vector&in angular_velocity) property`
-- `void set_debug_enabled(bool enabled) property`
-- `void set_is_active(bool is_active) property`
-- `void set_is_gravity_enabled(bool enabled) property`
-- `void set_is_sleeping(bool enabled)`
-- `void set_linear_damping(float linear_damping) property`
-- `void set_linear_lock_axis_factor(const vector&in linear_lock_axis_factor) property`
-- `void set_linear_velocity(const vector&in linear_velocity) property`
-- `void set_local_center_of_mass(const vector&in local_center_of_mass) property`
-- `void set_local_inertia_tensor(const vector&in local_inertia_tensor) property`
-- `void set_mass(float mass) property`
-- `void set_transform(const physics_transform&in transform) property`
-- `void set_type(physics_body_type type) property`
-- `void set_user_data(any@ userData)`
-- `void update_local_center_of_mass_from_colliders()`
-- `void update_local_inertia_tensor_from_colliders()`
-- `void update_mass_from_colliders()`
-- `void update_mass_properties_from_colliders()`
+- `float get_volume() const property`
+- `physics_convex_shape@ opImplCast()`
+- `physics_material@ get_material() const property`
+- `physics_shape@ opImplCast()`
+- `physics_shape@ scaled(const vector&in scale) const`
+- `uint8 get_sub_type() const property`
+- `uint8 get_type() const property`
+- `vector@ closest_point(const vector&in point) const`
+- `vector@ get_center_of_mass() const property`
+- `vector@ get_half_extent() const property`
+- `vector@ make_scale_valid(const vector&in scale) const`
+- `void set_density(float) property`
 
-### Class `physics_sphere_shape`
-##### Behaviours / Constructors
-- `physics_sphere_shape@ f(float radius)`
-- `physics_sphere_shape@ physics_sphere_shape(float radius)`
+### Class `physics_capsule_shape`
 ##### Methods
-- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
-- `aabb get_local_bounds() const`
-- `bool get_is_convex() const property`
-- `bool get_is_polyhedron() const property`
-- `const physics_collision_shape@ opImplCast() const`
-- `float get_margin() const property`
+- `aabb@ get_local_bounds() const property`
+- `bool cast_ray(const vector&in origin, const vector&in direction, float&out hit_fraction) const`
+- `bool contains_point(const vector&in point) const`
+- `bool get_must_be_static() const property`
+- `bool is_valid_scale(const vector&in scale) const`
+- `float get_density() const property`
+- `float get_half_height() const property`
+- `float get_inner_radius() const property`
+- `float get_mass() const property`
 - `float get_radius() const property`
 - `float get_volume() const property`
-- `int get_id() const property`
-- `physics_collision_shape@ opImplCast()`
-- `physics_shape_name get_name() const property`
-- `physics_shape_type get_type() const property`
-- `string opImplConv()`
-- `string opImplConv() const`
-- `vector get_local_inertia_tensor(float mass) const`
-- `void set_radius(float radius) property`
+- `physics_convex_shape@ opImplCast()`
+- `physics_material@ get_material() const property`
+- `physics_shape@ opImplCast()`
+- `physics_shape@ scaled(const vector&in scale) const`
+- `uint8 get_sub_type() const property`
+- `uint8 get_type() const property`
+- `vector@ closest_point(const vector&in point) const`
+- `vector@ get_center_of_mass() const property`
+- `vector@ make_scale_valid(const vector&in scale) const`
+- `void set_density(float) property`
+
+### Class `physics_character`
+##### Behaviours / Constructors
+- `physics_character@ f(physics_world@ world, float height, float radius, const vector&in position, float mass = 80.0f, float friction = 0.2f, uint16 layer = PHYSICS_LAYER_MOVING)`
+- `physics_character@ f(physics_world@ world, physics_shape@ shape, const vector&in position, const quaternion&in rotation = IDENTITY_QUATERNION, float mass = 80.0f, float friction = 0.2f, uint16 layer = PHYSICS_LAYER_MOVING)`
+- `physics_character@ physics_character(physics_world@ world, float height, float radius, const vector&in position, float mass = 80.0f, float friction = 0.2f, uint16 layer = PHYSICS_LAYER_MOVING)`
+- `physics_character@ physics_character(physics_world@ world, physics_shape@ shape, const vector&in position, const quaternion&in rotation = IDENTITY_QUATERNION, float mass = 80.0f, float friction = 0.2f, uint16 layer = PHYSICS_LAYER_MOVING)`
+##### Properties
+- `float max_separation_distance`
+##### Methods
+- `bool get_acoustically_transparent() const property`
+- `bool get_supported() const property`
+- `bool is_slope_too_steep(const vector&in normal) const`
+- `bool set_shape(physics_shape@ shape, float max_penetration_depth = FLOAT_MAX)`
+- `float get_max_slope_angle() const property`
+- `physics_body_id get_body() const property`
+- `physics_body_id get_ground_body() const property`
+- `physics_ground_state get_ground_state() const property`
+- `physics_material@ get_ground_material() const property`
+- `physics_shape@ get_shape() const property`
+- `physics_world@ get_world() const property`
+- `quaternion@ get_rotation() const property`
+- `uint16 get_layer() const property`
+- `vector@ get_center_of_mass_position() const property`
+- `vector@ get_ground_normal() const property`
+- `vector@ get_ground_position() const property`
+- `vector@ get_ground_velocity() const property`
+- `vector@ get_linear_velocity() const property`
+- `vector@ get_position() const property`
+- `vector@ get_up() const property`
+- `void activate()`
+- `void add_impulse(const vector&in impulse)`
+- `void add_linear_velocity(const vector&in velocity)`
+- `void set_acoustically_transparent(bool transparent) property`
+- `void set_layer(uint16 layer) property`
+- `void set_linear_velocity(const vector&in velocity) property`
+- `void set_max_slope_angle(float radians) property`
+- `void set_position(const vector&in position) property`
+- `void set_rotation(const quaternion&in rotation) property`
+- `void set_up(const vector&in up) property`
+
+### Class `physics_convex_shape`
+##### Methods
+- `aabb@ get_local_bounds() const property`
+- `bool cast_ray(const vector&in origin, const vector&in direction, float&out hit_fraction) const`
+- `bool contains_point(const vector&in point) const`
+- `bool get_must_be_static() const property`
+- `bool is_valid_scale(const vector&in scale) const`
+- `float get_density() const property`
+- `float get_inner_radius() const property`
+- `float get_mass() const property`
+- `float get_volume() const property`
+- `physics_box_shape@ opCast()`
+- `physics_capsule_shape@ opCast()`
+- `physics_cylinder_shape@ opCast()`
+- `physics_material@ get_material() const property`
+- `physics_shape@ opImplCast()`
+- `physics_shape@ scaled(const vector&in scale) const`
+- `physics_sphere_shape@ opCast()`
+- `physics_tapered_capsule_shape@ opCast()`
+- `physics_tapered_cylinder_shape@ opCast()`
+- `uint8 get_sub_type() const property`
+- `uint8 get_type() const property`
+- `vector@ closest_point(const vector&in point) const`
+- `vector@ get_center_of_mass() const property`
+- `vector@ make_scale_valid(const vector&in scale) const`
+- `void set_density(float) property`
+
+### Class `physics_cylinder_shape`
+##### Methods
+- `aabb@ get_local_bounds() const property`
+- `bool cast_ray(const vector&in origin, const vector&in direction, float&out hit_fraction) const`
+- `bool contains_point(const vector&in point) const`
+- `bool get_must_be_static() const property`
+- `bool is_valid_scale(const vector&in scale) const`
+- `float get_convex_radius() const property`
+- `float get_density() const property`
+- `float get_half_height() const property`
+- `float get_inner_radius() const property`
+- `float get_mass() const property`
+- `float get_radius() const property`
+- `float get_volume() const property`
+- `physics_convex_shape@ opImplCast()`
+- `physics_material@ get_material() const property`
+- `physics_shape@ opImplCast()`
+- `physics_shape@ scaled(const vector&in scale) const`
+- `uint8 get_sub_type() const property`
+- `uint8 get_type() const property`
+- `vector@ closest_point(const vector&in point) const`
+- `vector@ get_center_of_mass() const property`
+- `vector@ make_scale_valid(const vector&in scale) const`
+- `void set_density(float) property`
+
+### Class `physics_material`
+##### Properties
+- `bool acoustically_transparent`
+- `float acoustic_absorption_high`
+- `float acoustic_absorption_low`
+- `float acoustic_absorption_mid`
+- `float acoustic_scattering`
+- `float acoustic_transmission_high`
+- `float acoustic_transmission_low`
+- `float acoustic_transmission_mid`
+- `float friction`
+- `float restitution`
+##### Methods
+- `string get_name() const property`
+- `void set_name(const string&in) property`
+
+### Class `physics_plane_shape`
+##### Methods
+- `aabb@ get_local_bounds() const property`
+- `bool cast_ray(const vector&in origin, const vector&in direction, float&out hit_fraction) const`
+- `bool contains_point(const vector&in point) const`
+- `bool get_must_be_static() const property`
+- `bool is_valid_scale(const vector&in scale) const`
+- `float get_half_extent() const property`
+- `float get_inner_radius() const property`
+- `float get_mass() const property`
+- `float get_volume() const property`
+- `physics_material@ get_material() const property`
+- `physics_shape@ opImplCast()`
+- `physics_shape@ scaled(const vector&in scale) const`
+- `plane@ get_plane() const property`
+- `uint8 get_sub_type() const property`
+- `uint8 get_type() const property`
+- `vector@ closest_point(const vector&in point) const`
+- `vector@ get_center_of_mass() const property`
+- `vector@ make_scale_valid(const vector&in scale) const`
+
+### Class `physics_shape`
+##### Methods
+- `aabb@ get_local_bounds() const property`
+- `bool cast_ray(const vector&in origin, const vector&in direction, float&out hit_fraction) const`
+- `bool contains_point(const vector&in point) const`
+- `bool get_must_be_static() const property`
+- `bool is_valid_scale(const vector&in scale) const`
+- `float get_inner_radius() const property`
+- `float get_mass() const property`
+- `float get_volume() const property`
+- `physics_convex_shape@ opCast()`
+- `physics_plane_shape@ opCast()`
+- `physics_shape@ scaled(const vector&in scale) const`
+- `uint8 get_sub_type() const property`
+- `uint8 get_type() const property`
+- `vector@ closest_point(const vector&in point) const`
+- `vector@ get_center_of_mass() const property`
+- `vector@ make_scale_valid(const vector&in scale) const`
+
+### Class `physics_sphere_shape`
+##### Methods
+- `aabb@ get_local_bounds() const property`
+- `bool cast_ray(const vector&in origin, const vector&in direction, float&out hit_fraction) const`
+- `bool contains_point(const vector&in point) const`
+- `bool get_must_be_static() const property`
+- `bool is_valid_scale(const vector&in scale) const`
+- `float get_density() const property`
+- `float get_inner_radius() const property`
+- `float get_mass() const property`
+- `float get_radius() const property`
+- `float get_volume() const property`
+- `physics_convex_shape@ opImplCast()`
+- `physics_material@ get_material() const property`
+- `physics_shape@ opImplCast()`
+- `physics_shape@ scaled(const vector&in scale) const`
+- `uint8 get_sub_type() const property`
+- `uint8 get_type() const property`
+- `vector@ closest_point(const vector&in point) const`
+- `vector@ get_center_of_mass() const property`
+- `vector@ make_scale_valid(const vector&in scale) const`
+- `void set_density(float) property`
+
+### Class `physics_tapered_capsule_shape`
+##### Methods
+- `aabb@ get_local_bounds() const property`
+- `bool cast_ray(const vector&in origin, const vector&in direction, float&out hit_fraction) const`
+- `bool contains_point(const vector&in point) const`
+- `bool get_must_be_static() const property`
+- `bool is_valid_scale(const vector&in scale) const`
+- `float get_bottom_radius() const property`
+- `float get_density() const property`
+- `float get_half_height() const property`
+- `float get_inner_radius() const property`
+- `float get_mass() const property`
+- `float get_top_radius() const property`
+- `float get_volume() const property`
+- `physics_convex_shape@ opImplCast()`
+- `physics_material@ get_material() const property`
+- `physics_shape@ opImplCast()`
+- `physics_shape@ scaled(const vector&in scale) const`
+- `uint8 get_sub_type() const property`
+- `uint8 get_type() const property`
+- `vector@ closest_point(const vector&in point) const`
+- `vector@ get_center_of_mass() const property`
+- `vector@ make_scale_valid(const vector&in scale) const`
+- `void set_density(float) property`
+
+### Class `physics_tapered_cylinder_shape`
+##### Methods
+- `aabb@ get_local_bounds() const property`
+- `bool cast_ray(const vector&in origin, const vector&in direction, float&out hit_fraction) const`
+- `bool contains_point(const vector&in point) const`
+- `bool get_must_be_static() const property`
+- `bool is_valid_scale(const vector&in scale) const`
+- `float get_bottom_radius() const property`
+- `float get_convex_radius() const property`
+- `float get_density() const property`
+- `float get_half_height() const property`
+- `float get_inner_radius() const property`
+- `float get_mass() const property`
+- `float get_top_radius() const property`
+- `float get_volume() const property`
+- `physics_convex_shape@ opImplCast()`
+- `physics_material@ get_material() const property`
+- `physics_shape@ opImplCast()`
+- `physics_shape@ scaled(const vector&in scale) const`
+- `uint8 get_sub_type() const property`
+- `uint8 get_type() const property`
+- `vector@ closest_point(const vector&in point) const`
+- `vector@ get_center_of_mass() const property`
+- `vector@ make_scale_valid(const vector&in scale) const`
+- `void set_density(float) property`
 
 ### Class `physics_transform`
 ##### Behaviours / Constructors
 - `void f()`
-- `void f(const vector&in position, const matrix3x3&in orientation)`
-- `void f(const vector&in position, const quaternion&in orientation)`
+- `void f(const physics_transform&in)`
+- `void f(const vector&in position, const quaternion&in rotation)`
 - `void physics_transform()`
-- `void physics_transform(const vector&in position, const matrix3x3&in orientation)`
-- `void physics_transform(const vector&in position, const quaternion&in orientation)`
+- `void physics_transform(const physics_transform&in)`
+- `void physics_transform(const vector&in position, const quaternion&in rotation)`
+##### Properties
+- `float px`
+- `float py`
+- `float pz`
+- `float qw`
+- `float qx`
+- `float qy`
+- `float qz`
 ##### Methods
-- `bool get_is_valid() const property`
 - `bool opEquals(const physics_transform&in) const`
-- `const quaternion& get_orientation() const property`
-- `const vector& get_position() const property`
-- `float[]@ get_opengl_matrix() const`
-- `physics_transform get_inverse() const property`
-- `physics_transform opMul(const physics_transform&in) const`
-- `string opImplConv()`
-- `vector opMul(const vector&in) const`
-- `void set_from_opengl_matrix(float[]@ matrix)`
-- `void set_orientation(const quaternion&in orientation) property`
-- `void set_position(const vector&in position) property`
-- `void set_to_identity()`
-
-### Class `physics_triangle_data`
-##### Behaviours / Constructors
-- `physics_triangle_data@ f(float[]@ vertices, float[]@ normals, uint[]@ indices)`
-- `physics_triangle_data@ f(float[]@ vertices, uint[]@ indices)`
-- `physics_triangle_data@ physics_triangle_data(array<float>@ vertices, array<float>@ normals, array<uint>@ indices)`
-- `physics_triangle_data@ physics_triangle_data(array<float>@ vertices, array<uint>@ indices)`
-
-### Class `physics_triangle_mesh`
-##### Methods
-- `const aabb& get_bounds() const property`
-- `const vector& get_vertex(uint vertex_index) const`
-- `const vector& get_vertex_normal(uint vertex_index) const`
-- `uint get_nb_triangles() const property`
-- `uint get_nb_vertices() const property`
-- `void get_triangle_vertices(uint triangle_index, vector&out v1, vector&out v2, vector&out v3) const`
-- `void get_triangle_vertices_indices(uint triangle_index, uint&out v1_index, uint&out v2_index, uint&out v3_index) const`
-- `void get_triangle_vertices_normals(uint triangle_index, vector&out n1, vector&out n2, vector&out n3) const`
-
-### Class `physics_triangle_shape`
-##### Methods
-- `aabb compute_transformed_aabb(const physics_transform&in transform) const`
-- `aabb get_local_bounds() const`
-- `bool get_is_convex() const property`
-- `bool get_is_polyhedron() const property`
-- `const physics_collision_shape@ opImplCast() const`
-- `const physics_half_edge_structure_edge& get_half_edge(uint edge_index) const`
-- `const physics_half_edge_structure_face& get_face(uint face_index)`
-- `const physics_half_edge_structure_vertex& get_vertex(uint vertex_index)`
-- `const vector get_face_normal(uint vertex_index)`
-- `const vector get_vertex_position(uint vertex_index)`
-- `float get_margin() const property`
-- `float get_volume() const property`
-- `int get_id() const property`
-- `physics_collision_shape@ opImplCast()`
-- `physics_shape_name get_name() const property`
-- `physics_shape_type get_type() const property`
-- `physics_triangle_raycast_side get_raycast_test_type() const property`
-- `string opImplConv() const`
-- `uint find_most_anti_parallel_face(const vector&in direction) const`
-- `uint get_nb_faces() const property`
-- `uint get_nb_half_edges() const property`
-- `uint get_nb_vertices() const property`
-- `vector get_centroid() const property`
-- `vector get_local_inertia_tensor(float mass) const`
-- `void set_raycast_test_type(physics_triangle_raycast_side test_type) property`
-
-### Class `physics_triangle_vertex_array`
-##### Methods
-- `bool get_has_normals() const property`
-- `physics_triangle_index_data_type get_index_data_type() const property`
-- `physics_triangle_normal_data_type get_vertex_normal_data_type() const property`
-- `physics_triangle_vertex_data_type get_vertex_data_type() const property`
-- `uint get_indices_stride() const property`
-- `uint get_nb_triangles() const property`
-- `uint get_nb_vertices() const property`
-- `uint get_vertices_normals_stride() const property`
-- `uint get_vertices_stride() const property`
-- `vector get_vertex(uint vertex_index) const`
-- `vector get_vertex_normal(uint vertex_index) const`
-- `void get_triangle_vertices_indices(uint triangle_index, uint&out v1_index, uint&out v2_index, uint&out v3_index) const`
-
-### Class `physics_vertex_array`
-##### Methods
-- `physics_vertex_data_type get_data_type() const property`
-- `uint get_nb_vertices() const property`
-- `uint get_stride() const property`
-- `vector get_vertex(uint index) const`
-
-### Class `physics_vertex_data`
-##### Behaviours / Constructors
-- `physics_vertex_data@ f(float[]@ vertices)`
-- `physics_vertex_data@ physics_vertex_data(array<float>@ vertices)`
+- `quaternion@ get_rotation() const property`
+- `vector@ get_position() const property`
+- `void set_position(const vector&in) property`
+- `void set_rotation(const quaternion&in) property`
 
 ### Class `physics_world`
 ##### Behaviours / Constructors
-- `physics_world@ physics_world(const physics_world_settings&in world_settings)`
-- `physics_world@ w(const physics_world_settings&in world_settings)`
+- `physics_world@ f(uint max_bodies = 1024, uint max_body_pairs = 1024, uint max_contact_constraints = 1024)`
+- `physics_world@ physics_world(uint max_bodies = 1024, uint max_body_pairs = 1024, uint max_contact_constraints = 1024)`
 ##### Methods
-- `aabb get_world_aabb(const physics_collider@ collider) const`
-- `bool get_is_gravity_enabled() const property`
-- `bool get_is_sleeping_enabled() const property`
-- `bool test_overlap(physics_body@ body1, physics_body@ body2)`
-- `const physics_rigid_body& get_rigid_body(uint index) const`
-- `const string& get_name() const property`
-- `float get_sleep_angular_velocity() const property`
-- `float get_sleep_linear_velocity() const property`
-- `float get_time_before_sleep() const property`
-- `physics_joint@ create_joint(const physics_joint_info&in joint_info)`
-- `physics_rigid_body& get_rigid_body(uint index)`
-- `physics_rigid_body@ create_rigid_body(const physics_transform&in transform)`
-- `uint get_nb_rigid_bodies() const property`
-- `uint16 get_nb_iterations_position_solver() const property`
-- `uint16 get_nb_iterations_velocity_solver() const property`
-- `vector get_gravity() const property`
-- `void destroy_joint(physics_joint& joint)`
-- `void destroy_joint(physics_joint&inout joint)`
-- `void destroy_rigid_body(physics_rigid_body& body)`
-- `void destroy_rigid_body(physics_rigid_body&inout body)`
-- `void raycast(const ray&in ray, physics_raycast_callback@ callback, uint16 category_mask = 0xffff)`
-- `void set_callbacks(physics_collision_callback@ collision_callback, physics_overlap_callback@ trigger_callback)`
-- `void set_contacts_position_correction_technique(physics_contact_position_correction_technique technique) property`
-- `void set_gravity(const vector&in gravity) property`
-- `void set_is_gravity_enabled(bool enabled) property`
-- `void set_is_sleeping_enabled(bool enabled) property`
-- `void set_nb_iterations_position_solver(uint16 iterations) property`
-- `void set_nb_iterations_velocity_solver(uint16 iterations) property`
-- `void set_sleep_angular_velocity(float sleep_angular_velocity) property`
-- `void set_sleep_linear_velocity(float sleep_linear_velocity) property`
-- `void set_time_before_sleep(float time_before_sleep) property`
-- `void test_collision(physics_body@ body, physics_collision_callback@ callback)`
-- `void test_collision(physics_body@ body1, physics_body@ body2, physics_collision_callback@ callback)`
-- `void test_collision(physics_collision_callback@ callback)`
-- `void test_overlap(physics_body@ body, physics_overlap_callback@ callback)`
-- `void test_overlap(physics_overlap_callback@ callback)`
-- `void update(float time_step)`
+- `aabb@ get_world_space_bounds(const physics_body_id&in id) const`
+- `any@ get_user_data(const physics_body_id&in id) const`
+- `bool apply_buoyancy_impulse(const physics_body_id&in id, const vector&in surface_pos, const vector&in surface_normal, float buoyancy, float linear_drag, float angular_drag, const vector&in fluid_velocity, const vector&in gravity, float delta_time)`
+- `bool cast_ray(const vector&in origin, const vector&in direction, physics_body_id&out hit_body, float&out hit_fraction) const`
+- `bool is_active(const physics_body_id&in id) const`
+- `bool is_added(const physics_body_id&in id) const`
+- `bool were_bodies_in_contact(const physics_body_id&in a, const physics_body_id&in b) const`
+- `float get_friction(const physics_body_id&in id) const`
+- `float get_gravity_factor(const physics_body_id&in id) const`
+- `float get_max_angular_velocity(const physics_body_id&in id) const`
+- `float get_max_linear_velocity(const physics_body_id&in id) const`
+- `float get_restitution(const physics_body_id&in id) const`
+- `physics_body_id create_and_add_body(physics_shape@ shape, const vector&in position, const quaternion&in rotation, physics_body_type motion_type, uint16 layer = PHYSICS_LAYER_MOVING, physics_activation activation = PHYSICS_ACTIVATE)`
+- `physics_body_type get_motion_type(const physics_body_id&in id) const`
+- `physics_transform get_transform(const physics_body_id&in id) const`
+- `quaternion@ get_rotation(const physics_body_id&in id) const`
+- `uint get_num_active_bodies() const property`
+- `uint get_num_bodies() const property`
+- `vector@ get_angular_velocity(const physics_body_id&in id) const`
+- `vector@ get_center_of_mass_position(const physics_body_id&in id) const`
+- `vector@ get_closest_point(const physics_body_id&in id, const vector&in point) const`
+- `vector@ get_gravity() const property`
+- `vector@ get_linear_velocity(const physics_body_id&in id) const`
+- `vector@ get_position(const physics_body_id&in id) const`
+- `void activate_body(const physics_body_id&in id)`
+- `void add_angular_impulse(const physics_body_id&in id, const vector&in impulse)`
+- `void add_force(const physics_body_id&in id, const vector&in force)`
+- `void add_force(const physics_body_id&in id, const vector&in force, const vector&in point)`
+- `void add_impulse(const physics_body_id&in id, const vector&in impulse)`
+- `void add_impulse(const physics_body_id&in id, const vector&in impulse, const vector&in point)`
+- `void add_linear_velocity(const physics_body_id&in id, const vector&in v)`
+- `void add_torque(const physics_body_id&in id, const vector&in torque)`
+- `void deactivate_body(const physics_body_id&in id)`
+- `void destroy_body(const physics_body_id&in id)`
+- `void move_kinematic(const physics_body_id&in id, const vector&in target_pos, const quaternion&in target_rot, float delta_time)`
+- `void optimize_broadphase()`
+- `void remove_and_destroy_body(const physics_body_id&in id)`
+- `void remove_body(const physics_body_id&in id)`
+- `void set_angular_velocity(const physics_body_id&in id, const vector&in v)`
+- `void set_contact_listener(physics_contact_added_callback@ on_added, physics_contact_persisted_callback@ on_persisted, physics_contact_removed_callback@ on_removed)`
+- `void set_friction(const physics_body_id&in id, float v)`
+- `void set_gravity(const vector&in) property`
+- `void set_gravity_factor(const physics_body_id&in id, float v)`
+- `void set_linear_velocity(const physics_body_id&in id, const vector&in v)`
+- `void set_max_angular_velocity(const physics_body_id&in id, float v)`
+- `void set_max_linear_velocity(const physics_body_id&in id, float v)`
+- `void set_motion_type(const physics_body_id&in id, physics_body_type type, physics_activation activation = PHYSICS_ACTIVATE)`
+- `void set_position(const physics_body_id&in id, const vector&in pos, physics_activation activation = PHYSICS_ACTIVATE)`
+- `void set_position_and_rotation(const physics_body_id&in id, const vector&in pos, const quaternion&in rot, physics_activation activation = PHYSICS_ACTIVATE)`
+- `void set_restitution(const physics_body_id&in id, float v)`
+- `void set_rotation(const physics_body_id&in id, const quaternion&in rot, physics_activation activation = PHYSICS_ACTIVATE)`
+- `void set_shape(const physics_body_id&in id, physics_shape@ shape, bool update_mass = true, physics_activation activation = PHYSICS_ACTIVATE)`
+- `void set_user_data(const physics_body_id&in id, any@ data)`
+- `void update(float delta_time, int collision_steps = 1)`
 
-### Class `physics_world_settings`
+### Class `plane`
 ##### Behaviours / Constructors
-- `void f()`
-- `void f(const physics_world_settings &in)`
-- `void physics_world_settings()`
-- `void physics_world_settings(const physics_world_settings&in)`
-##### Properties
-- `bool is_sleeping_enabled`
-- `float cos_angle_similar_contact_manifold`
-- `float default_bounciness`
-- `float default_friction_coefficient`
-- `float default_sleep_angular_velocity`
-- `float default_sleep_linear_velocity`
-- `float default_time_before_sleep`
-- `float persistent_contact_distance_threshold`
-- `float restitution_velocity_threshold`
-- `string world_name`
-- `uint16 default_position_solver_iterations_count`
-- `uint16 default_velocity_solver_iterations_count`
-- `vector gravity`
+- `plane@ f()`
+- `plane@ f(const plane&in)`
+- `plane@ f(const vector&in normal, float constant)`
+- `plane@ f(const vector&in point, const vector&in normal)`
+- `plane@ f(const vector&in point1, const vector&in point2, const vector&in point3)`
+- `plane@ plane()`
+- `plane@ plane(const plane&in)`
+- `plane@ plane(const vector&in normal, float constant)`
+- `plane@ plane(const vector&in point, const vector&in normal)`
+- `plane@ plane(const vector&in point1, const vector&in point2, const vector&in point3)`
 ##### Methods
-- `physics_world_settings &opAssign(const physics_world_settings &in)`
-- `physics_world_settings& opAssign(const physics_world_settings&in)`
-- `string opImplConv()`
+- `bool opEquals(const plane&in) const`
+- `float get_constant() const property`
+- `float signed_distance(const vector&in point) const`
+- `plane& opAssign(const plane&in)`
+- `plane@ offset(float distance) const`
+- `plane@ scaled(const vector&in scale) const`
+- `plane@ transformed(const vector&in position, const quaternion&in rotation) const`
+- `string opImplConv() const`
+- `vector@ get_normal() const property`
+- `vector@ project_point(const vector&in point) const`
+- `void set_constant(float) property`
+- `void set_normal(const vector&in) property`
 
 ### Class `process`
 ##### Methods
@@ -6478,46 +6304,38 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `quaternion`
 ##### Behaviours / Constructors
-- `void f()`
-- `void f(float x, float y, float  z, float w)`
-- `void quaternion()`
-- `void quaternion(float x, float y, float z, float w)`
-##### Properties
-- `float w`
-- `float x`
-- `float y`
-- `float z`
+- `quaternion@ f()`
+- `quaternion@ f(const quaternion&in)`
+- `quaternion@ f(float x, float y, float z, float w)`
+- `quaternion@ quaternion()`
+- `quaternion@ quaternion(const quaternion&in)`
+- `quaternion@ quaternion(float x, float y, float z, float w)`
 ##### Methods
-- `bool get_is_finite() const property`
-- `bool get_is_unit() const property`
-- `bool get_is_valid() const property`
-- `bool opEquals(const quaternion &in) const`
+- `bool is_normalized(float tolerance = 1.0e-5f) const`
 - `bool opEquals(const quaternion&in) const`
 - `float dot(const quaternion&in) const`
+- `float get_rotation_angle(const vector&in axis) const`
+- `float get_w() const property`
+- `float get_x() const property`
+- `float get_y() const property`
+- `float get_z() const property`
 - `float length() const`
-- `float length_square() const`
-- `matrix3x3 get_matrix() const property`
-- `quaternion &opAddAssign(const quaternion &in)`
-- `quaternion &opSubAssign(const quaternion &in)`
-- `quaternion get_conjugate() const property`
-- `quaternion get_inversed() const property`
-- `quaternion get_unit() const property`
-- `quaternion opAdd(const quaternion &in)`
-- `quaternion opAdd(const quaternion&in)`
-- `quaternion opMul(const quaternion&in)`
-- `quaternion opMul(float) const`
-- `quaternion opSub(const quaternion &in)`
-- `quaternion opSub(const quaternion&in)`
-- `quaternion& opAddAssign(const quaternion&in)`
-- `quaternion& opSubAssign(const quaternion&in)`
+- `quaternion& opAssign(const quaternion&in)`
+- `quaternion@ conjugated() const`
+- `quaternion@ inversed() const`
+- `quaternion@ lerp(const quaternion&in dest, float t) const`
+- `quaternion@ normalized() const`
+- `quaternion@ opMul(const quaternion&in) const`
+- `quaternion@ slerp(const quaternion&in dest, float t) const`
 - `string opImplConv() const`
-- `vector get_v() const property`
-- `void get_rotation_angle_axis(float&out angle, vector&out axis) const`
-- `void inverse()`
-- `void normalize()`
-- `void set(float x, float y, float z, float w)`
-- `void set_to_identity()`
-- `void set_to_zero()`
+- `vector@ opMul(const vector&in) const`
+- `vector@ rotate_axis_x() const`
+- `vector@ rotate_axis_y() const`
+- `vector@ rotate_axis_z() const`
+- `void set_w(float) property`
+- `void set_x(float) property`
+- `void set_y(float) property`
+- `void set_z(float) property`
 
 ### Class `random_gamerand`
 ##### Behaviours / Constructors
@@ -6705,28 +6523,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void seed(uint s)`
 - `void seed64(uint64 s)`
 
-### Class `ray`
-##### Behaviours / Constructors
-- `void f(const vector&in p1, const vector&in p2, float max_frac = 1.0f)`
-- `void ray()`
-- `void ray(const vector&in p1, const vector&in p2, float max_frac = 1.0f)`
-##### Properties
-- `float max_fraction`
-- `vector point1`
-- `vector point2`
-
-### Class `raycast_info`
-##### Behaviours / Constructors
-- `void f()`
-- `void raycast_info()`
-##### Properties
-- `float hit_fraction`
-- `int triangle_index`
-- `physics_body@ body`
-- `physics_collider@ collider`
-- `vector world_normal`
-- `vector world_point`
-
 ### Class `ref`
 ##### Behaviours / Constructors
 - `void f()`
@@ -6863,8 +6659,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `string get_script() property`
 
 ### Class `script_module`
-##### Properties
-- `uint max_statement_count`
 ##### Methods
 - `any@ get_global(uint index)`
 - `const string get_global_decl(uint index)`
@@ -6875,7 +6669,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int bind_all_imported_functions()`
 - `int bind_imported_function(uint index, script_function@+ func)`
 - `int build(string[]@ errors=null)`
-- `int compile_global(const string&in section_name, const string&in code, uint line_offset = 0)`
+- `int compile_global(const string&in section_name, const string&in code, string[]@ errors=null, uint line_offset=0)`
 - `int get_global_index_by_decl(const string&in decl)`
 - `int get_global_index_by_name(const string&in name)`
 - `int get_imported_function_index(const string&in decl)`
@@ -6890,8 +6684,10 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint get_function_count()`
 - `uint get_global_count()`
 - `uint get_imported_function_count()`
+- `uint get_max_statement_count() const property`
 - `uint set_access_mask(uint mask)`
 - `void discard()`
+- `void set_max_statement_count(uint count) property`
 - `void set_name(const string&in name) property`
 
 ### Class `smtp_client`
@@ -7014,6 +6810,7 @@ This document contains the API definitions automatically extracted from the NVGT
 ##### Methods
 - `audio_data_source@+ get_datasource() const property`
 - `audio_engine@ get_engine() const property`
+- `audio_node@ get_reverb3d_attachment() const property`
 - `audio_node@ opImplCast()`
 - `audio_node_chain@ get_effects_chain() property`
 - `audio_node_chain@ get_internal_node_chain() property`
@@ -7022,7 +6819,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `audio_node_state get_state_by_time_range(uint64 global_time_begin, uint64 global_time_end)`
 - `audio_pan_mode get_pan_mode() const property`
 - `audio_positioning_mode get_positioning() const property`
-- `audio_splitter_node@ get_reverb3d_attachment() const property`
 - `bool attach_output_bus(uint output_bus, audio_node@ destination, uint destination_input_bus)`
 - `bool close()`
 - `bool detach_all_output_buses()`
@@ -7114,10 +6910,10 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uint64 get_position_in_milliseconds() const property`
 - `uint64 get_state_time(audio_node_state state)`
 - `uint64 get_time() const`
-- `vector get_direction() const`
-- `vector get_direction_to_listener() const`
-- `vector get_position_3d() const`
-- `vector get_velocity() const`
+- `vector@ get_direction() const`
+- `vector@ get_direction_to_listener() const`
+- `vector@ get_position_3d() const`
+- `vector@ get_velocity() const`
 - `void get_cone(float&out inner_radians, float&out outer_radians, float&out outer_gain)`
 - `void set_3d_attenuator(int attenuator_id)`
 - `void set_3d_panner(int panner_id)`
@@ -7161,15 +6957,15 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `sound_aabb_shape`
 ##### Behaviours / Constructors
-- `sound_aabb_shape@ s(int left_range, int right_range, int backward_range, int forward_range, int lower_range, int upper_range)`
-- `sound_aabb_shape@ sound_aabb_shape(int left_range, int right_range, int backward_range, int forward_range, int lower_range, int upper_range)`
+- `sound_aabb_shape@ s(float left_range, float right_range, float backward_range, float forward_range, float lower_range, float upper_range)`
+- `sound_aabb_shape@ sound_aabb_shape(float left_range, float right_range, float backward_range, float forward_range, float lower_range, float upper_range)`
 ##### Properties
-- `int backward_range`
-- `int forward_range`
-- `int left_range`
-- `int lower_range`
-- `int right_range`
-- `int upper_range`
+- `float backward_range`
+- `float forward_range`
+- `float left_range`
+- `float lower_range`
+- `float right_range`
+- `float upper_range`
 
 ### Class `spinlock_mutex`
 ##### Behaviours / Constructors
@@ -7279,8 +7075,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `void string(uint value)`
 - `void string(uint64 value)`
 ##### Methods
-- `array<string>@ split(const string &in delimiter, bool full = true, bool allow_blanks = false) const`
-- `array<string>@ split(const string&in delimiter, bool full = true, bool allow_blanks = false) const`
+- `array<string>@ split(const string &in delimiter, bool full = true, bool allow_blanks = false, int max_elements = 0) const`
+- `array<string>@ split(const string&in delimiter, bool full = true, bool allow_blanks = false, int max_elements = 0) const`
 - `bool empty() const`
 - `bool ends_with(const string&in text) const`
 - `bool is_alphabetic(const string&in encoding = "") const`
@@ -7616,13 +7412,13 @@ This document contains the API definitions automatically extracted from the NVGT
 - `int get_minutes() const property`
 - `int get_seconds() const property`
 - `int get_total_hours() const property`
-- `int get_total_microseconds() const property`
-- `int get_total_milliseconds() const property`
 - `int get_total_minutes() const property`
 - `int get_total_seconds() const property`
 - `int get_useconds() const property`
 - `int opCmp(const timespan&in other) const`
 - `int opCmp(int64 microseconds) const`
+- `int64 get_total_microseconds() const property`
+- `int64 get_total_milliseconds() const property`
 - `string format(const string&in fmt = "%dd %H:%M:%S.%i")`
 - `timespan opAdd(const timespan&in other) const`
 - `timespan opAdd(int64 microseconds) const`
@@ -7779,7 +7575,6 @@ This document contains the API definitions automatically extracted from the NVGT
 - `array<array<string>>@ get_query_parameters(bool plus_as_space = true) const`
 - `bool get_is_empty() const property`
 - `bool get_is_relative() const property`
-- `bool normalize()`
 - `bool opEquals(const spec::uri&in other)`
 - `bool opEquals(const string&in uri)`
 - `bool opEquals(const uri&in other)`
@@ -7805,6 +7600,7 @@ This document contains the API definitions automatically extracted from the NVGT
 - `uri& opAssign(const uri&in other)`
 - `void add_query_parameter(const string&in param, const string&in value = "")`
 - `void clear()`
+- `void normalize()`
 - `void resolve(const spec::uri&in relative_uri)`
 - `void resolve(const string&in relative_uri)`
 - `void resolve(const uri&in relative_uri)`
@@ -7981,52 +7777,55 @@ This document contains the API definitions automatically extracted from the NVGT
 
 ### Class `vector`
 ##### Behaviours / Constructors
-- `void f()`
-- `void f(float x, float y, float z = 0.0f)`
-- `void vector()`
-- `void vector(float x, float y, float z = 0.0f)`
-##### Properties
-- `float x`
-- `float y`
-- `float z`
+- `vector@ f()`
+- `vector@ f(const vector&in)`
+- `vector@ f(float x, float y, float z = 0.0f)`
+- `vector@ vector()`
+- `vector@ vector(const vector&in)`
+- `vector@ vector(float x, float y, float z = 0.0f)`
 ##### Methods
 - `bool get_is_finite() const property`
 - `bool get_is_unit() const property`
 - `bool get_is_zero() const property`
-- `bool opEquals(const vector &in) const`
+- `bool is_near_zero(float max_dist_sq = 1.0e-12f) const`
+- `bool is_normalized(float tolerance = 1.0e-6f) const`
 - `bool opEquals(const vector&in) const`
-- `const float& opIndex(int index) const`
 - `float dot(const vector&in) const`
 - `float get_max_value() const property`
 - `float get_min_value() const property`
+- `float get_opIndex(uint i) const property`
+- `float get_x() const property`
+- `float get_y() const property`
+- `float get_z() const property`
 - `float length() const`
+- `float length_sq() const`
 - `float length_square() const`
-- `float& opIndex(int index)`
 - `int get_max_axis() const property`
 - `int get_min_axis() const property`
 - `string opImplConv() const`
-- `vector &opAddAssign(const vector &in)`
-- `vector &opDivAssign(float)`
-- `vector &opMulAssign(float)`
-- `vector &opSubAssign(const vector &in)`
-- `vector cross(const vector&in) const`
-- `vector get_absolute() const property`
-- `vector opAdd(const vector &in) const`
-- `vector opAdd(const vector&in) const`
-- `vector opDiv(const vector &in) const`
-- `vector opDiv(const vector&in) const`
-- `vector opDiv(float) const`
-- `vector opMul(const vector &in) const`
-- `vector opMul(const vector&in) const`
-- `vector opMul(float) const`
-- `vector opSub(const vector &in) const`
-- `vector opSub(const vector&in) const`
 - `vector& opAddAssign(const vector&in)`
+- `vector& opAssign(const vector&in)`
 - `vector& opDivAssign(float)`
 - `vector& opMulAssign(float)`
 - `vector& opSubAssign(const vector&in)`
+- `vector@ abs() const`
+- `vector@ cross(const vector&in) const`
+- `vector@ get_absolute() const property`
+- `vector@ normalized() const`
+- `vector@ opAdd(const vector&in) const`
+- `vector@ opDiv(const vector&in) const`
+- `vector@ opDiv(float) const`
+- `vector@ opMul(const vector&in) const`
+- `vector@ opMul(float) const`
+- `vector@ opNeg() const`
+- `vector@ opSub(const vector&in) const`
 - `void normalize()`
 - `void set(float x, float y, float z)`
+- `void set_opIndex(uint i, float v) property`
+- `void set_to_zero()`
+- `void set_x(float) property`
+- `void set_y(float) property`
+- `void set_z(float) property`
 - `void setToZero()`
 
 ### Class `weakref<class T>`
@@ -8144,13 +7943,19 @@ This document contains the API definitions automatically extracted from the NVGT
 - `ARCH_SH`
 - `ARCH_SPARC`
 
+### Enum `ARCHITECTURE int`
+
 ### Enum `audio_attenuator`
 - `audio_attenuator_basic`
-- `audio_attenuator_phonon`
+- `audio_attenuator_hrtf`
+
+### Enum `audio_attenuator int`
 
 ### Enum `audio_encoder_flags`
 - `AUDIO_ENCODER_DEFAULTS`
 - `AUDIO_ENCODER_OVERWRITE`
+
+### Enum `audio_encoder_flags int`
 
 ### Enum `audio_engine_flags`
 - `AUDIO_ENGINE_DURATIONS_IN_FRAMES`
@@ -8158,6 +7963,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `AUDIO_ENGINE_NO_CLIP`
 - `AUDIO_ENGINE_NO_DEVICE`
 - `AUDIO_ENGINE_PERCENTAGE_ATTRIBUTES`
+
+### Enum `audio_engine_flags int`
 
 ### Enum `audio_error_state`
 - `AUDIO_ERROR_STATE_ACCESS_DENIED`
@@ -8232,6 +8039,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `AUDIO_ERROR_STATE_TOO_MANY_OPEN_FILES`
 - `AUDIO_ERROR_STATE_UNAVAILABLE`
 
+### Enum `audio_error_state int`
+
 ### Enum `audio_format`
 - `AUDIO_FORMAT_F32`
 - `AUDIO_FORMAT_S16`
@@ -8240,21 +8049,31 @@ This document contains the API definitions automatically extracted from the NVGT
 - `AUDIO_FORMAT_U8`
 - `AUDIO_FORMAT_UNKNOWN`
 
+### Enum `audio_format int`
+
 ### Enum `audio_node_state`
 - `AUDIO_NODE_STATE_STARTED`
 - `AUDIO_NODE_STATE_STOPPED`
+
+### Enum `audio_node_state int`
 
 ### Enum `audio_pan_mode`
 - `AUDIO_PAN_MODE_BALANCE`
 - `AUDIO_PAN_MODE_PAN`
 
+### Enum `audio_pan_mode int`
+
 ### Enum `audio_panner`
 - `audio_panner_basic`
-- `audio_panner_phonon_hrtf`
+- `audio_panner_hrtf`
+
+### Enum `audio_panner int`
 
 ### Enum `audio_positioning_mode`
 - `AUDIO_POSITIONING_ABSOLUTE`
 - `AUDIO_POSITIONING_RELATIVE`
+
+### Enum `audio_positioning_mode int`
 
 ### Enum `audio_wav_encoder_flags`
 - `AUDIO_ENCODER_WAV_F32`
@@ -8262,6 +8081,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `AUDIO_ENCODER_WAV_S24`
 - `AUDIO_ENCODER_WAV_S32`
 - `AUDIO_ENCODER_WAV_U8`
+
+### Enum `audio_wav_encoder_flags int`
 
 ### Enum `blend_mode`
 - `BLEND_MODE_ADD`
@@ -8272,9 +8093,13 @@ This document contains the API definitions automatically extracted from the NVGT
 - `BLEND_MODE_MUL`
 - `BLEND_MODE_NONE`
 
+### Enum `blend_mode int`
+
 ### Enum `compression_method`
 - `COMPRESSION_METHOD_GZIP`
 - `COMPRESSION_METHOD_ZLIB`
+
+### Enum `compression_method int`
 
 ### Enum `datastream_byte_order`
 - `STREAM_BYTE_ORDER_BIG_ENDIAN`
@@ -8282,10 +8107,14 @@ This document contains the API definitions automatically extracted from the NVGT
 - `STREAM_BYTE_ORDER_NATIVE`
 - `STREAM_BYTE_ORDER_NETWORK`
 
+### Enum `datastream_byte_order int`
+
 ### Enum `flip_mode`
 - `FLIP_HORIZONTAL`
 - `FLIP_NONE`
 - `FLIP_VERTICAL`
+
+### Enum `flip_mode int`
 
 ### Enum `floating_point_classification`
 - `FP_INFINITE`
@@ -8294,16 +8123,22 @@ This document contains the API definitions automatically extracted from the NVGT
 - `FP_SUBNORMAL`
 - `FP_ZERO`
 
+### Enum `floating_point_classification int`
+
 ### Enum `font_align`
 - `FONT_ALIGN_CENTER`
 - `FONT_ALIGN_LEFT`
 - `FONT_ALIGN_RIGHT`
+
+### Enum `font_align int`
 
 ### Enum `font_direction`
 - `FONT_DIRECTION_BTT`
 - `FONT_DIRECTION_LTR`
 - `FONT_DIRECTION_RTL`
 - `FONT_DIRECTION_TTB`
+
+### Enum `font_direction int`
 
 ### Enum `font_hinting`
 - `FONT_HINTING_LIGHT`
@@ -8312,6 +8147,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `FONT_HINTING_NONE`
 - `FONT_HINTING_NORMAL`
 
+### Enum `font_hinting int`
+
 ### Enum `font_style`
 - `FONT_STYLE_BOLD`
 - `FONT_STYLE_ITALIC`
@@ -8319,15 +8156,21 @@ This document contains the API definitions automatically extracted from the NVGT
 - `FONT_STYLE_STRIKETHROUGH`
 - `FONT_STYLE_UNDERLINE`
 
+### Enum `font_style int`
+
 ### Enum `ftp_file_type`
 - `FTP_FILE_TYPE_BINARY`
 - `FTP_FILE_TYPE_TEXT`
+
+### Enum `ftp_file_type int`
 
 ### Enum `glob_options`
 - `GLOB_CASELESS`
 - `GLOB_DEFAULT`
 - `GLOB_FOLLOW_SYMLINKS`
 - `GLOB_IGNORE_HIDDEN`
+
+### Enum `glob_options int`
 
 ### Enum `http_status`
 - `HTTP_ACCEPTED`
@@ -8393,17 +8236,23 @@ This document contains the API definitions automatically extracted from the NVGT
 - `HTTP_VARIANT_ALSO_NEGOTIATES`
 - `HTTP_VERSION_NOT_SUPPORTED`
 
+### Enum `http_status int`
+
 ### Enum `ip_address_family`
 - `IP_FAMILY_IPV4`
 - `IP_FAMILY_IPV6`
 - `IP_FAMILY_unix_local`
 - `IP_FAMILY_UNKNOWN`
 
+### Enum `ip_address_family int`
+
 ### Enum `joystick_bind_type`
 - `JOYSTICK_BIND_TYPE_AXIS`
 - `JOYSTICK_BIND_TYPE_BUTTON`
 - `JOYSTICK_BIND_TYPE_HAT`
 - `JOYSTICK_BIND_TYPE_NONE`
+
+### Enum `joystick_bind_type int`
 
 ### Enum `joystick_control_type`
 - `JOYSTICK_BUTTON_A`
@@ -8429,6 +8278,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `JOYSTICK_CONTROL_RIGHT_STICK`
 - `JOYSTICK_CONTROL_TOUCHPAD`
 
+### Enum `joystick_control_type int`
+
 ### Enum `joystick_power_state`
 - `JOYSTICK_POWER_CHARGED`
 - `JOYSTICK_POWER_CHARGING`
@@ -8436,6 +8287,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `JOYSTICK_POWER_NO_BATTERY`
 - `JOYSTICK_POWER_ON_BATTERY`
 - `JOYSTICK_POWER_UNKNOWN`
+
+### Enum `joystick_power_state int`
 
 ### Enum `joystick_type`
 - `JOYSTICK_TYPE_NINTENDO_SWITCH_JOYCON_LEFT`
@@ -8449,6 +8302,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `JOYSTICK_TYPE_UNKNOWN`
 - `JOYSTICK_TYPE_XBOX1`
 - `JOYSTICK_TYPE_XBOX360`
+
+### Enum `joystick_type int`
 
 ### Enum `key_code`
 - `KEY_0`
@@ -8686,6 +8541,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `KEY_Y`
 - `KEY_Z`
 
+### Enum `key_code int`
+
 ### Enum `key_modifier`
 - `KEYMOD_ALT`
 - `KEYMOD_CAPS`
@@ -8705,6 +8562,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `KEYMOD_SCROLL`
 - `KEYMOD_SHIFT`
 
+### Enum `key_modifier int`
+
 ### Enum `mail_priority`
 - `MAIL_PRIORITY_HIGH`
 - `MAIL_PRIORITY_HIGHEST`
@@ -8712,10 +8571,14 @@ This document contains the API definitions automatically extracted from the NVGT
 - `MAIL_PRIORITY_LOWEST`
 - `MAIL_PRIORITY_NORMAL`
 
+### Enum `mail_priority int`
+
 ### Enum `mail_recipient_type`
 - `RECIPIENT_BCC`
 - `RECIPIENT_CC`
 - `RECIPIENT_TO`
+
+### Enum `mail_recipient_type int`
 
 ### Enum `memory_order`
 - `MEMORY_ORDER_ACQ_REL`
@@ -8724,6 +8587,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `MEMORY_ORDER_RELEASE`
 - `MEMORY_ORDER_SEQ_CST`
 
+### Enum `memory_order int`
+
 ### Enum `message_box_flags`
 - `MESSAGE_BOX_BUTTONS_LEFT_TO_RIGHT`
 - `MESSAGE_BOX_BUTTONS_RIGHT_TO_LEFT`
@@ -8731,12 +8596,16 @@ This document contains the API definitions automatically extracted from the NVGT
 - `MESSAGE_BOX_INFORMATION`
 - `MESSAGE_BOX_WARNING`
 
+### Enum `message_box_flags int`
+
 ### Enum `network_event_type`
 - `event_connect`
 - `event_disconnect`
 - `event_disconnect_timeout`
 - `event_none`
 - `event_receive`
+
+### Enum `network_event_type int`
 
 ### Enum `OPERATING_SYSTEM`
 - `OS_AIX`
@@ -8758,15 +8627,21 @@ This document contains the API definitions automatically extracted from the NVGT
 - `OS_VXWORKS`
 - `OS_WINDOWS_NT`
 
+### Enum `OPERATING_SYSTEM int`
+
 ### Enum `opus_application_type`
 - `OPUS_APPLICATION_AUDIO`
 - `OPUS_APPLICATION_RESTRICTED_LOWDELAY`
 - `OPUS_APPLICATION_VOIP`
 
+### Enum `opus_application_type int`
+
 ### Enum `opus_signal_type`
 - `OPUS_AUTO`
 - `OPUS_SIGNAL_MUSIC`
 - `OPUS_SIGNAL_VOICE`
+
+### Enum `opus_signal_type int`
 
 ### Enum `path_style`
 - `PATH_STYLE_AUTO`
@@ -8776,104 +8651,70 @@ This document contains the API definitions automatically extracted from the NVGT
 - `PATH_STYLE_VMS`
 - `PATH_STYLE_WINDOWS`
 
+### Enum `path_style int`
+
+### Enum `physics_activation`
+- `PHYSICS_ACTIVATE`
+- `PHYSICS_DONT_ACTIVATE`
+
+### Enum `physics_activation int`
+
 ### Enum `physics_body_type`
 - `PHYSICS_BODY_DYNAMIC`
 - `PHYSICS_BODY_KINEMATIC`
 - `PHYSICS_BODY_STATIC`
 
-### Enum `physics_contact_event_type`
-- `PHYSICS_CONTACT_EXIT`
-- `PHYSICS_CONTACT_START`
-- `PHYSICS_CONTACT_STAY`
+### Enum `physics_body_type int`
 
-### Enum `physics_contact_position_correction_technique`
-- `POSITION_CORRECTION_TECHNIQUE_BAUMGARTE_CONTACTS`
-- `POSITION_CORRECTION_TECHNIQUE_SPLIT_IMPULSES`
+### Enum `physics_ground_state`
+- `PHYSICS_GROUND_STATE_IN_AIR`
+- `PHYSICS_GROUND_STATE_NOT_SUPPORTED`
+- `PHYSICS_GROUND_STATE_ON_GROUND`
+- `PHYSICS_GROUND_STATE_ON_STEEP_GROUND`
 
-### Enum `physics_height_data_type`
-- `PHYSICS_HEIGHT_DOUBLE_TYPE`
-- `PHYSICS_HEIGHT_FLOAT_TYPE`
-- `PHYSICS_HEIGHT_INT_TYPE`
+### Enum `physics_ground_state int`
 
-### Enum `physics_joint_type`
-- `BALL_SOCKET_JOINT`
-- `FIXED_JOINT`
-- `HINGE_JOINT`
-- `SLIDER_JOINT`
+### Enum `physics_motion_quality`
+- `PHYSICS_MOTION_QUALITY_DISCRETE`
+- `PHYSICS_MOTION_QUALITY_LINEAR_CAST`
 
-### Enum `physics_joints_position_correction_technique`
-- `JOINTS_CORRECTION_TECHNIQUE_BAUMGARTE_JOINTS`
-- `JOINTS_CORRECTION_TECHNIQUE_NON_LINEAR_GAUSS_SEIDEL`
+### Enum `physics_motion_quality int`
 
-### Enum `physics_logger_category`
-- `LOGGER_CATEGORY_BODY`
-- `LOGGER_CATEGORY_COLLIDER`
-- `LOGGER_CATEGORY_JOINT`
-- `LOGGER_CATEGORY_PHYSICS_COMMON`
-- `LOGGER_CATEGORY_WORLD`
+### Enum `physics_object_layer`
+- `PHYSICS_LAYER_MOVING`
+- `PHYSICS_LAYER_NON_MOVING`
 
-### Enum `physics_logger_format`
-- `LOGGER_FORMAT_HTML`
-- `LOGGER_FORMAT_TEXT`
+### Enum `physics_object_layer int`
 
-### Enum `physics_logger_level`
-- `LOGGER_LEVEL_ERROR`
-- `LOGGER_LEVEL_INFORMATION`
-- `LOGGER_LEVEL_WARNING`
+### Enum `physics_shape_sub_type`
+- `PHYSICS_SHAPE_BOX`
+- `PHYSICS_SHAPE_CAPSULE`
+- `PHYSICS_SHAPE_CONVEX_HULL`
+- `PHYSICS_SHAPE_CYLINDER`
+- `PHYSICS_SHAPE_HEIGHT_FIELD_SUBTYPE`
+- `PHYSICS_SHAPE_MESH_SUBTYPE`
+- `PHYSICS_SHAPE_MUTABLE_COMPOUND`
+- `PHYSICS_SHAPE_OFFSET_CENTER_OF_MASS`
+- `PHYSICS_SHAPE_PLANE_SUBTYPE`
+- `PHYSICS_SHAPE_ROTATED_TRANSLATED`
+- `PHYSICS_SHAPE_SCALED`
+- `PHYSICS_SHAPE_SPHERE`
+- `PHYSICS_SHAPE_STATIC_COMPOUND`
+- `PHYSICS_SHAPE_TAPERED_CAPSULE`
+- `PHYSICS_SHAPE_TAPERED_CYLINDER`
+- `PHYSICS_SHAPE_TRIANGLE`
 
-### Enum `physics_message_type`
-- `PHYSICS_MESSAGE_ERROR`
-- `PHYSICS_MESSAGE_INFORMATION`
-- `PHYSICS_MESSAGE_WARNING`
-
-### Enum `physics_overlap_event_type`
-- `PHYSICS_OVERLAP_EXIT`
-- `PHYSICS_OVERLAP_START`
-- `PHYSICS_OVERLAP_STAY`
-
-### Enum `physics_polygon_index_data_type`
-- `POLYGON_INDEX_INTEGER_TYPE`
-- `POLYGON_INDEX_SHORT_TYPE`
-
-### Enum `physics_polygon_vertex_data_type`
-- `POLYGON_VERTEX_DOUBLE_TYPE`
-- `POLYGON_VERTEX_FLOAT_TYPE`
-
-### Enum `physics_shape_name`
-- `SHAPE_BOX`
-- `SHAPE_CAPSULE`
-- `SHAPE_CONVEX_MESH`
-- `SHAPE_HEIGHTFIELD`
-- `SHAPE_SPHERE`
-- `SHAPE_TRIANGLE`
-- `SHAPE_TRIANGLE_MESH`
+### Enum `physics_shape_sub_type int`
 
 ### Enum `physics_shape_type`
-- `SHAPE_TYPE_CAPSULE`
-- `SHAPE_TYPE_CONCAVE`
-- `SHAPE_TYPE_CONVEX_POLYHEDRON`
-- `SHAPE_TYPE_SPHERE`
+- `PHYSICS_SHAPE_COMPOUND`
+- `PHYSICS_SHAPE_CONVEX`
+- `PHYSICS_SHAPE_DECORATED`
+- `PHYSICS_SHAPE_HEIGHT_FIELD`
+- `PHYSICS_SHAPE_MESH`
+- `PHYSICS_SHAPE_PLANE`
 
-### Enum `physics_triangle_index_data_type`
-- `TRIANGLE_INDEX_INTEGER_TYPE`
-- `TRIANGLE_INDEX_SHORT_TYPE`
-
-### Enum `physics_triangle_normal_data_type`
-- `TRIANGLE_NORMAL_DOUBLE_TYPE`
-- `TRIANGLE_NORMAL_FLOAT_TYPE`
-
-### Enum `physics_triangle_raycast_side`
-- `TRIANGLE_RAYCAST_SIDE_BACK`
-- `TRIANGLE_RAYCAST_SIDE_FRONT`
-- `TRIANGLE_RAYCAST_SIDE_FRONT_AND_BACK`
-
-### Enum `physics_triangle_vertex_data_type`
-- `TRIANGLE_VERTEX_DOUBLE_TYPE`
-- `TRIANGLE_VERTEX_FLOAT_TYPE`
-
-### Enum `physics_vertex_data_type`
-- `VERTEX_DOUBLE_TYPE`
-- `VERTEX_FLOAT_TYPE`
+### Enum `physics_shape_type int`
 
 ### Enum `pixel_format`
 - `PIXELFORMAT_ABGR32`
@@ -8891,6 +8732,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `PIXELFORMAT_XBGR8888`
 - `PIXELFORMAT_XRGB8888`
 
+### Enum `pixel_format int`
+
 ### Enum `process_flags`
 - `PROCESS_BACKGROUND`
 - `PROCESS_CAPTURE`
@@ -8900,6 +8743,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `PROCESS_PIPE_STDOUT`
 - `PROCESS_STDERR_TO_STDOUT`
 - `PROCESS_WAIT`
+
+### Enum `process_flags int`
 
 ### Enum `regexp_options`
 - `RE_ANCHORED`
@@ -8926,6 +8771,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `RE_UNGREEDY`
 - `RE_UTF8`
 
+### Enum `regexp_options int`
+
 ### Enum `renderer_logical_presentation`
 - `LOGICAL_PRESENTATION_DISABLED`
 - `LOGICAL_PRESENTATION_INTEGER_SCALE`
@@ -8933,15 +8780,21 @@ This document contains the API definitions automatically extracted from the NVGT
 - `LOGICAL_PRESENTATION_OVERSCAN`
 - `LOGICAL_PRESENTATION_STRETCH`
 
+### Enum `renderer_logical_presentation int`
+
 ### Enum `reverb3d_placement`
 - `reverb3d_postattenuate`
 - `reverb3d_postpan`
 - `reverb3d_prepan`
 
+### Enum `reverb3d_placement int`
+
 ### Enum `sdl_hint_priority`
 - `SDL_HINT_DEFAULT`
 - `SDL_HINT_NORMAL`
 - `SDL_HINT_OVERRIDE`
+
+### Enum `sdl_hint_priority int`
 
 ### Enum `smtp_auth_method`
 - `SMTP_AUTH_CRAM_MD5`
@@ -8952,21 +8805,29 @@ This document contains the API definitions automatically extracted from the NVGT
 - `SMTP_AUTH_PLAIN`
 - `SMTP_AUTH_XOAUTH2`
 
+### Enum `smtp_auth_method int`
+
 ### Enum `socket_select_mode`
 - `SOCKET_SELECT_ERROR`
 - `SOCKET_SELECT_READ`
 - `SOCKET_SELECT_WRITE`
+
+### Enum `socket_select_mode int`
 
 ### Enum `socket_type`
 - `SOCKET_TYPE_DATAGRAM`
 - `SOCKET_TYPE_RAW`
 - `SOCKET_TYPE_STREAM`
 
+### Enum `socket_type int`
+
 ### Enum `string_base64_options`
 - `STRING_BASE64_DEFAULT`
 - `STRING_BASE64_PADLESS`
 - `STRING_BASE64_URL`
 - `STRING_BASE64_URL_PADLESS`
+
+### Enum `string_base64_options int`
 
 ### Enum `system_power_state`
 - `POWER_STATE_CHARGED`
@@ -8976,15 +8837,21 @@ This document contains the API definitions automatically extracted from the NVGT
 - `POWER_STATE_ON_BATTERY`
 - `POWER_STATE_UNKNOWN`
 
+### Enum `system_power_state int`
+
 ### Enum `system_tray_menu_item_type`
 - `SYSTEM_TRAY_CHECKBOX`
 - `SYSTEM_TRAY_ITEM`
 - `SYSTEM_TRAY_SEPARATOR`
 - `SYSTEM_TRAY_SUBMENU`
 
+### Enum `system_tray_menu_item_type int`
+
 ### Enum `thread_event_type`
 - `THREAD_EVENT_AUTO_RESET`
 - `THREAD_EVENT_MANUAL_RESET`
+
+### Enum `thread_event_type int`
 
 ### Enum `thread_priority`
 - `THREAD_PRIORITY_HIGH`
@@ -8993,11 +8860,15 @@ This document contains the API definitions automatically extracted from the NVGT
 - `THREAD_PRIORITY_LOWEST`
 - `THREAD_PRIORITY_NORMAL`
 
+### Enum `thread_priority int`
+
 ### Enum `touch_device_type`
 - `TOUCH_DEVICE_DIRECT`
 - `TOUCH_DEVICE_INDIRECT_ABSOLUTE`
 - `TOUCH_DEVICE_INDIRECT_RELATIVE`
 - `TOUCH_DEVICE_TYPE_INVALID`
+
+### Enum `touch_device_type int`
 
 ### Enum `web_socket_error_codes`
 - `WS_ERR_HANDSHAKE_ACCEPT`
@@ -9009,8 +8880,12 @@ This document contains the API definitions automatically extracted from the NVGT
 - `WS_ERR_PAYLOAD_TOO_BIG`
 - `WS_ERR_UNAUTHORIZED`
 
+### Enum `web_socket_error_codes int`
+
 ### Enum `web_socket_frame_flags`
 - `WS_FRAME_FLAG_FIN`
+
+### Enum `web_socket_frame_flags int`
 
 ### Enum `web_socket_frame_opcodes`
 - `WS_FRAME_OP_BINARY`
@@ -9022,13 +8897,19 @@ This document contains the API definitions automatically extracted from the NVGT
 - `WS_FRAME_OP_SETRAW`
 - `WS_FRAME_OP_TEXT`
 
+### Enum `web_socket_frame_opcodes int`
+
 ### Enum `web_socket_mode`
 - `WS_CLIENT`
 - `WS_SERVER`
 
+### Enum `web_socket_mode int`
+
 ### Enum `web_socket_send_flags`
 - `WS_FRAME_BINARY`
 - `WS_FRAME_TEXT`
+
+### Enum `web_socket_send_flags int`
 
 ### Enum `web_socket_status_codes`
 - `WS_ENDPOINT_GOING_AWAY`
@@ -9045,6 +8926,8 @@ This document contains the API definitions automatically extracted from the NVGT
 - `WS_RESERVED_TLS_FAILURE`
 - `WS_UNEXPECTED_CONDITION`
 
+### Enum `web_socket_status_codes int`
+
 ### Enum `window_flags`
 - `WINDOW_FLAG_ALWAYS_ON_TOP`
 - `WINDOW_FLAG_BORDERLESS`
@@ -9054,10 +8937,14 @@ This document contains the API definitions automatically extracted from the NVGT
 - `WINDOW_FLAG_MINIMIZED`
 - `WINDOW_FLAG_RESIZABLE`
 
+### Enum `window_flags int`
+
 ### Enum `window_flash_operation`
 - `FLASH_BRIEFLY`
 - `FLASH_CANCEL`
 - `FLASH_UNTIL_FOCUSED`
+
+### Enum `window_flash_operation int`
 
 ### Enum `window_progress_state`
 - `PROGRESS_STATE_ERROR`
@@ -9066,3 +8953,5 @@ This document contains the API definitions automatically extracted from the NVGT
 - `PROGRESS_STATE_NONE`
 - `PROGRESS_STATE_NORMAL`
 - `PROGRESS_STATE_PAUSED`
+
+### Enum `window_progress_state int`

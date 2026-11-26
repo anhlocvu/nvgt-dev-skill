@@ -141,6 +141,106 @@
 - `void update()`
 
 ---
+## Plugin: `phonon`
+**Syntax to use:** `#pragma plugin("phonon")`
+
+### Global Functions
+- `funcdef void sound_environment_bake_callback(float progress)`
+
+### Global Properties
+- `const int audio_attenuator_phonon`
+- `const int audio_panner_phonon_hrtf`
+
+### Classes
+#### Class `phonon_binaural_node`
+##### Behaviours / Constructors
+- `phonon_binaural_node@ n(audio_engine@+ engine, int channels, int sample_rate, int frame_size = 0)`
+##### Methods
+- `audio_node@ get_node() property`
+- `audio_node@ opImplCast()`
+- `void set_direction(const vector&in direction, float distance)`
+- `void set_direction(float x, float y, float z, float distance)`
+- `void set_spatial_blend_max_distance(float max_distance)`
+
+#### Class `sound_environment`
+##### Behaviours / Constructors
+- `sound_environment@ f(audio_engine@+ engine = sound_default_engine)`
+##### Methods
+- `audio_engine@+ get_engine() const property`
+- `bool attach(mixer@+ sound_or_mixer)`
+- `bool attach(sound@+ snd)`
+- `bool bake(sound_environment_bake_callback@ progress = null, int rays = 16384, int bounces = 64)`
+- `bool get_has_baked_paths() const property`
+- `bool get_has_baked_reverb() const property`
+- `bool get_simulating_reflections() const property`
+- `bool load_baked_data(const string&in data)`
+- `bool set_raycaster(ref@ raycaster)`
+- `float get_direct_simulation_time() const property`
+- `float get_pathing_simulation_time() const property`
+- `float get_reflection_simulation_time() const property`
+- `mixer@ new_mixer()`
+- `mixer@+ get_output_mixer() const property`
+- `ref@ get_raycaster() const property`
+- `reverb3d@+ get_reverb3d() const property`
+- `sound@ new_sound()`
+- `sound_environment_source@ get_source(mixer@+ sound_or_mixer) const`
+- `sound_environment_source@ get_source(sound@+ snd) const`
+- `string save_baked_data() const`
+- `uint generate_probes(const vector&in minimum, const vector&in maximum, float spacing = 2, float height = 1.5)`
+- `uint get_active_reflection_groups() const property`
+- `uint get_probe_count() const property`
+- `uint get_reflection_simulations() const property`
+- `uint get_source_count() const property`
+- `void add_probe(const vector&in position, float radius = 2)`
+- `void clear_probes()`
+- `void detach(mixer@+ sound_or_mixer)`
+- `void detach(sound@+ snd)`
+- `void set_`
+- `void set_output_mixer(mixer@+ mix) property`
+- `void update()`
+
+#### Class `sound_environment_source`
+##### Methods
+- `bool get_apply_occlusion() const property`
+- `bool get_apply_pathing() const property`
+- `bool get_apply_reflections() const property`
+- `bool get_apply_transmission() const property`
+- `bool get_reflections_simulated() const property`
+- `bool get_simulated() const property`
+- `float get_occlusion() const property`
+- `float get_occlusion_radius() const property`
+- `float get_reflections_level() const property`
+- `float get_reverb_time_high() const property`
+- `float get_reverb_time_low() const property`
+- `float get_reverb_time_mid() const property`
+- `float get_transmission_high() const property`
+- `float get_transmission_low() const property`
+- `float get_transmission_mid() const property`
+- `int get_occlusion_samples() const property`
+- `int get_reflection_group() const property`
+- `int get_transmission_rays() const property`
+- `sound_environment_occlusion_type get_occlusion_type() const property`
+- `void set_apply_occlusion(bool enabled) property`
+- `void set_apply_pathing(bool enabled) property`
+- `void set_apply_reflections(bool enabled) property`
+- `void set_apply_transmission(bool enabled) property`
+- `void set_occlusion_radius(float radius) property`
+- `void set_occlusion_samples(int samples) property`
+- `void set_occlusion_type(sound_environment_occlusion_type type) property`
+- `void set_reflections_level(float level) property`
+- `void set_transmission_rays(int rays) property`
+
+### Enums
+#### Enum `sound_environment_occlusion_type`
+- `SOUND_ENVIRONMENT_OCCLUSION_RAYCAST`
+- `SOUND_ENVIRONMENT_OCCLUSION_VOLUMETRIC`
+
+#### Enum `sound_environment_reflection_type`
+- `SOUND_ENVIRONMENT_REFLECTIONS_CONVOLUTION`
+- `SOUND_ENVIRONMENT_REFLECTIONS_HYBRID`
+- `SOUND_ENVIRONMENT_REFLECTIONS_PARAMETRIC`
+
+---
 ## Plugin: `redis`
 **Syntax to use:** `#pragma plugin("redis")`
 
@@ -350,5 +450,6 @@
 **Syntax to use:** `#pragma plugin("test_plugin")`
 
 ### Global Functions
+- `bool test_plugin_got_sound(sound@+ snd)`
 - `void do_exception()`
 - `void do_test()`

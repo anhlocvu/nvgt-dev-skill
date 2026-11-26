@@ -1,10 +1,14 @@
 /**
-	Checks if a vector is considered finite (I.E. it has finite components).
-	bool vector::is_finite const;
+	Whether all three coordinates of the vector are real numbers, meaning none of them are infinite or NaN.
+	const bool vector::is_finite;
+	## Remarks:
+		Dividing by zero or normalizing a zero vector with `normalized()` are common ways to end up with a vector that is not finite.
 */
 
 // Example:
 void main() {
-	vector v(5, 4, 8);
-	alert("Is finite?", v.is_finite);
+	vector v(1, 2, 3);
+	alert("Is finite", "" + v.is_finite); // true
+	v /= 0;
+	alert("Is finite", "" + v.is_finite); // false
 }

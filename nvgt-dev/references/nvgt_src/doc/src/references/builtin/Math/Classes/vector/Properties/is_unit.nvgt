@@ -1,13 +1,14 @@
 /**
-	Checks if a vector has a length of 1 (I.E. the vector is normalised).
-	bool vector::is_unit const;
-	## Remarks
-		This method is more accurate than checking each axis for 0 directly, as it takes into account the inaccuracies that can be caused by floating point arithmetic.
+	Whether the vector's length is 1, allowing for a tiny rounding error.
+	const bool vector::is_unit;
+	## Remarks:
+		Use `is_normalized()` if you need to choose how much error is allowed.
 */
 
 // Example:
 void main() {
-	vector v(5, 4, 8);
+	vector v(3, 4, 0);
+	alert("Is unit", "" + v.is_unit); // false
 	v.normalize();
-	alert("Is unit?", v.is_unit);
+	alert("Is unit", "" + v.is_unit); // true
 }
